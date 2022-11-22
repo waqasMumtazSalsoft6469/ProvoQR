@@ -1,0 +1,61 @@
+{
+  "name": "provoQRCode",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.14.1",
+    "@react-native-community/blur": "^3.6.0",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/viewpager": "^5.0.11",
+    "@react-navigation/drawer": "6.1.8",
+    "@react-navigation/material-top-tabs": "^6.2.1",
+    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/stack": "^6.2.1",
+    "lottie-react-native": "^4.0.3",
+    "react": "18.1.0",
+    "react-native": "0.70.6",
+    "react-native-animated-splash": "1.3.6",
+    "react-native-countdown-component": "^2.7.1",
+    "react-native-dash": "^0.0.11",
+    "react-native-device-info": "^8.0.8",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-keyboard-aware-scroll-view": "^0.9.4",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-maps": "^0.28.0",
+    "react-native-masonry-list": "^2.16.1",
+    "react-native-material-ripple": "^0.9.1",
+    "react-native-paper": "^4.9.2",
+    "react-native-pulse": "^1.0.7",
+    "react-native-reanimated": "^2.8.0",
+    "react-native-safe-area-context": "^3.2.0",
+    "react-native-screens": "^3.0.0",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-star-rating": "^1.1.0",
+    "react-native-tab-view": "^2.x",
+    "react-native-thumbnail-grid": "^0.3.0",
+    "react-native-wheel-picker-android": "^2.0.6",
+    "react-redux": "^7.2.3",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.32.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "0.72.3",
+    "react-test-renderer": "18.1.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

@@ -1,0 +1,149 @@
+import React from 'react';
+import {
+  ImageBackground,
+  View,
+  Image,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {backgrounds, icons, sampleimage} from '../../assets/images';
+
+import TwoAlertModal from '../../components/Popups/TwoAlert';
+import Button from '../../components/Buttons/SimpleButton';
+import styles from './styles';
+import {vh, vw} from '../../Utils/Units';
+import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import OutfitLightText from '../../components/Text/OutfitLightText';
+import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import Dash from 'react-native-dash';
+import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
+
+class RegisterScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visibleModal: false,
+      cusines: [
+        {
+          name: 'Cuisine 01',
+        },
+        {
+          name: 'Cuisine 02',
+        },
+        {
+          name: 'Cuisine 03',
+        },
+      ],
+      ratings: [
+        {
+          rate: '102',
+        },
+        {
+          rate: '150',
+        },
+        {
+          rate: '200',
+        },
+      ],
+    };
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={backgrounds.grayBackground}
+          style={styles.imgbg}
+          resizeMode="cover"
+          imageStyle={{width: 100 * vw, height: 90 * vh}}>
+          <ScrollView contentContainerStyle={{height: vh * 135}}>
+            <View style={{alignItems: 'center', marginTop: 3 * vh}}>
+              <Image source={sampleimage.places} style={styles.cardimg} />
+            </View>
+            <View style={{paddingHorizontal: 6 * vw}}>
+              <View style={{flexDirection: 'row', marginTop: 2 * vh}}>
+                <OutfitSemiBoldText style={styles.recomend}>
+                  About The Reward
+                </OutfitSemiBoldText>
+              </View>
+
+              <OutfitLightText style={styles.rewtext}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since.
+              </OutfitLightText>
+              <OutfitLightText style={styles.redeem}>
+                (Make sure you are in the restaurant at time of redemption.)
+              </OutfitLightText>
+              <Image source={icons.rewardCup} style={styles.rewardIcon} />
+              <OutfitRegularText
+                style={{marginBottom: vh * 2, alignSelf: 'center'}}>
+                You are a gold member of this restaurant now!
+              </OutfitRegularText>
+            </View>
+            <Dash
+              style={{
+                width: 100 * vw,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: vh * 2,
+                marginBottom: vh * -2,
+              }}
+              dashColor="#E9E9E9"
+              dashLength={0}
+              dashGap={1 * vh}
+              dashStyle={{width: 2 * vw}}></Dash>
+            <View
+              style={{
+                paddingHorizontal: 5 * vw,
+                marginTop: 5 * vh,
+                justifyContent: 'space-between',
+              }}>
+              <OutfitSemiBoldText style={styles.recomend}>
+                Happy Hours Deals
+              </OutfitSemiBoldText>
+              <HomeCarouselConmponent />
+            </View>
+            <View style={{alignItems: 'center'}}>
+              {this.props.route?.params?.category == 'Redeemed' ? (
+                <Button
+                  title="REDEEMED"
+                  //   onPress={() => this.TwoAlert.show()}
+                  labelStyle={styles.label}
+                  btnContainer={styles.butCon}
+                  disabled
+                />
+              ) : (
+                <Button
+                  title={
+                    this.props.route?.params?.category == 'Redeem'
+                      ? 'REDEEM REWARD'
+                      : 'Expired'
+                  }
+                  // onPress={() => this.setState({visibleModal: true})}
+                  btnContainer={{marginTop: vh, width: vw * 50}}
+                />
+              )}
+            </View>
+          </ScrollView>
+        </ImageBackground>
+        <TwoAlertModal
+          visible={this.state.visibleModal}
+          setVisible={() => this.setState({visibleModal: false})}
+          icon={icons.popupQuestion}
+          title=""
+          description={'Are you sure you want to redeem this reward?'}
+          leftButtonTitle="YES"
+          onLeftButtonPress={() => {
+            this.props.navigation.navigate('HomeScreen'),
+              this.setState({visibleModal: false});
+          }}
+          rightButtonTitle="NO"
+          onRightButtonPress={() => this.setState({visibleModal: false})}
+        />
+      </View>
+    );
+  }
+}
+export default RegisterScreen;
