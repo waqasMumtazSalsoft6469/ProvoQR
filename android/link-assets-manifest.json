@@ -1,0 +1,69 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Blacksword.otf",
+      "sha1": "623e54a6c7c9d12408fb021c91ea1897bca51e8d"
+    },
+    {
+      "path": "src/assets/fonts/CircularStdBold.ttf",
+      "sha1": "c8b117288cc6bcca619007d7e29673cbac00ccf1"
+    },
+    {
+      "path": "src/assets/fonts/Gilroy-Bold.ttf",
+      "sha1": "eeda33cebb0c6cb6cdbf2af87ef0cebfcb9e9f99"
+    },
+    {
+      "path": "src/assets/fonts/Gilroy-ExtraBold.otf",
+      "sha1": "ebd136c81542a067830d5852b785d069403c4a15"
+    },
+    {
+      "path": "src/assets/fonts/Gilroy-Light.otf",
+      "sha1": "78410fd9e800f48e3ffa140497ba2d65ac169d22"
+    },
+    {
+      "path": "src/assets/fonts/Gilroy-Medium.ttf",
+      "sha1": "a05d394f3550b31324c7ef6eda6bd09a6bcfb4bd"
+    },
+    {
+      "path": "src/assets/fonts/index.js",
+      "sha1": "10f6532c251c54c97333f4bb6d6b39db0b2710f1"
+    },
+    {
+      "path": "src/assets/fonts/Jost-Regular.ttf",
+      "sha1": "d391e74c57c4b497ee03774804100c98b7a55120"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-Light.ttf",
+      "sha1": "0e14a06ba812b2ee5942d40ff0e9e5943fe15072"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-Medium.ttf",
+      "sha1": "c935c6408aea96cce77b20fb046041cff2e470b7"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-Regular.ttf",
+      "sha1": "335905736a2c79eefdcc8e20bf756ea589074d18"
+    },
+    {
+      "path": "src/assets/fonts/Outfit-SemiBold.ttf",
+      "sha1": "828d76f5963c31e34e0981a4c707b34c5b8a399b"
+    },
+    {
+      "path": "src/assets/fonts/Roboto-Regular.ttf",
+      "sha1": "096c9245b6a192d1403a82848e104a65f578a8ec"
+    },
+    {
+      "path": "src/assets/fonts/Rubik-Light.ttf",
+      "sha1": "63068365b8a2719b1a9268499bd489c1a685c6ce"
+    },
+    {
+      "path": "src/assets/fonts/Rubik-Medium.ttf",
+      "sha1": "5da5f96c57060e54a922ea0df12b4c29797593b9"
+    },
+    {
+      "path": "src/assets/fonts/Rubik-Regular.ttf",
+      "sha1": "f0711cdc35046a54d1b887fafbd12de0a5b82549"
+    }
+  ]
+}

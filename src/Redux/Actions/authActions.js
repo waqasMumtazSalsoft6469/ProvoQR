@@ -171,31 +171,6 @@ export const subscribePackage = (detail, token) => {
   };
 };
 
-export const setWelcomeQuestions = data => {
-  return async dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          dispatch({type: actionTypes.loaderOn});
-
-          const response = await post(
-            endpoints.auth.welcomeQuestions,
-            data,
-            false,
-          );
-
-          resolve(response);
-        } catch (e) {
-          showToast(getMessage(e));
-          reject(e);
-        } finally {
-          dispatch({type: actionTypes.loaderOff});
-        }
-      }, 300);
-    });
-  };
-};
-
 export const logout = () => ({
   type: 'LOGOUT',
 });
