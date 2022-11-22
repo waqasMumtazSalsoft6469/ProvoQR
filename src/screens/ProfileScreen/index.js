@@ -14,11 +14,22 @@ import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegulerText from '../../components/Text/OutfitRegularText';
+import {getProfileData} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      profile: [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.getProfile().then(res => {
+      this.setState({profile: res?.profile[0]});
+      console.log(res?.profile[0], 'PROFILE');
+    });
   }
 
   renderbadges = () => {
@@ -189,4 +200,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getProfile: () => dispatch(getProfileData()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

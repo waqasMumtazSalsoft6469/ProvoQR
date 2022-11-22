@@ -88,3 +88,23 @@ export const eventBook = id => {
     });
   };
 };
+
+export const getProfileData = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.getProfile);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};

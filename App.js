@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
+import LoaderPopup from './src/components/LoaderPopup';
 import Navigation from './src/Navigation';
 import store, {persistor} from './src/Redux/store';
 
@@ -18,6 +19,7 @@ class App extends React.Component {
               barStyle="light-content"
             />
             <Navigation />
+            <LoaderPopup />
           </PersistGate>
         </Provider>
       </View>

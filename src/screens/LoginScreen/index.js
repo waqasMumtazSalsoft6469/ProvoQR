@@ -15,8 +15,11 @@ import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import {connect} from 'react-redux';
 
 import SignupScreen from '../SignupScreen';
+import {showToast} from '../../Api/HelperFunction';
+import {login} from '../../Redux/Actions/authActions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -29,7 +32,29 @@ class RegisterScreen extends React.Component {
       formOption: 'Login',
     };
   }
-
+  handleLogin = () => {
+    const {email, password} = this.state;
+    if (!email || !email) {
+      showToast('All Fields are mandatory');
+    } else if (
+      !email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      showToast('Please insert valid email address');
+    } else {
+      let data = {email: email, password: password};
+      this.props
+        .login(data)
+        .then(res => {
+          if (res?.success) {
+            this.props.navigation.navigate('SocialLogin');
+            showToast(res?.message);
+          }
+        })
+        .catch(e => showToast(e));
+    }
+  };
   renderLogin = () => {
     return (
       <KeyboardAwareScrollView>
@@ -43,12 +68,12 @@ class RegisterScreen extends React.Component {
             placeholder="Enter Email Address"
             // style={styles.field}
             ref={r => (this.email = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
+            onSubmitEditing={() => this.pw.onFocus()}
+            onChangeText={newemail =>
+              this.setState({
+                email: newemail,
+              })
+            }
             keyboardType="email-address"
             // value={this.state.email}
             label="Email Address"
@@ -56,13 +81,13 @@ class RegisterScreen extends React.Component {
           <MainInput
             placeholder="Enter Password"
             // style={styles.field}
-            ref={r => (this.name = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
+            ref={r => (this.pw = r)}
+            onSubmitEditing={() => this.pw.onFocus()}
+            onChangeText={newemail =>
+              this.setState({
+                password: newemail,
+              })
+            }
             secureTextEntry
             // value={this.state.password}
             label="Password"
@@ -71,13 +96,13 @@ class RegisterScreen extends React.Component {
             style={styles.forgotButton}
             onPress={() => this.props.navigation.navigate('PasswordRecovery')}>
             <OutfitLightText style={styles.forgotText}>
-              Forgot Password?
+              Forgot Passsword?
             </OutfitLightText>
           </TouchableHOC>
 
           <Button
             title="LOGIN"
-            onPress={() => this.props.navigation.navigate('SocialLogin')}
+            onPress={() => this.handleLogin()}
             btnContainer={{marginTop: 2 * vh}}
           />
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -367,4 +392,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    login: data => dispatch(login(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

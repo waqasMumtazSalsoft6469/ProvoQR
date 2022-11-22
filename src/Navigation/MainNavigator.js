@@ -29,12 +29,16 @@ class MainNavigator extends React.Component {
   }
 
   renderSelection = () => {
+    const {token} = this.props;
+    console.log(token, 'TOKEN');
     return (
       <MainStack.Navigator
         // initialRouteName='HomeTabs'
         headerMode="screen"
         screenOptions={getNavigationOptions}>
-        <MainStack.Screen component={AuthNavigator} name="Authstack" />
+        {!token && (
+          <MainStack.Screen component={AuthNavigator} name="Authstack" />
+        )}
         <MainStack.Screen component={Drawer} name="Home" />
         <MainStack.Screen
           component={Location}
@@ -42,7 +46,6 @@ class MainNavigator extends React.Component {
           screenOptions={{headerShown: false}}
         />
         <MainStack.Screen component={Payment} name="Payment" />
-
         <MainStack.Screen component={Profile} name="Profile" />
         <MainStack.Screen component={ChangePassword} name="ChangePassword" />
         <MainStack.Screen component={EditProfile} name="EditProfile" />
@@ -60,7 +63,9 @@ class MainNavigator extends React.Component {
   }
 }
 const mapState = state => {
-  return {};
+  return {
+    token: state.SessionReducer.token,
+  };
 };
 const mapProps = dispatch => {
   return {};

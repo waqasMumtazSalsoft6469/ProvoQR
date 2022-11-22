@@ -11,7 +11,9 @@ export const endpoints = {
     cancelSubscription: '/user/cancel-subscription/',
     welcomeQuestions: '/user/welcome-questions',
   },
-  other: {},
+  other: {
+    getProfile: '/user/profile',
+  },
 };
 
 // for dev env
