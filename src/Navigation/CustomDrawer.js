@@ -8,6 +8,8 @@ import {vh, vw} from '../Utils/Units';
 import AnimatedDrawerItem from './AnimatedDrawerItem';
 import Animated from 'react-native-reanimated';
 import {drawericons, generalImages, tabIcons} from '../assets/images';
+import {useDispatch} from 'react-redux';
+import {logout} from '../Redux/Actions/authActions';
 
 const icons = {
   drawer1: drawericons.drawer1,
@@ -22,6 +24,7 @@ const icons = {
 };
 
 const CustomDrawer = props => {
+  const dispatch = useDispatch();
   const translateX = Animated.interpolate(props.progress, {
     inputRange: [0, 1],
     outputRange: [-100, 0],
@@ -116,7 +119,8 @@ const CustomDrawer = props => {
             source={icons.drawer1}
             label="Logout"
             onPress={() => {
-              props.navigation.navigate('ContactusScreen');
+              dispatch(logout());
+              props.navigation.navigate('Authstack', {screen: 'Login'});
             }}
             {...props}
           />

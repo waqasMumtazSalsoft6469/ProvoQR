@@ -2,9 +2,9 @@ export const endpoints = {
   auth: {
     userSignup: '/user/signup',
     login: '/user/login',
-    sendEmail: '/user/send/email',
-    setPassword: '/user/set-password',
-    verifyOTP: '/user/verify-code',
+    sendEmail: '/user/forgot/password',
+    setPassword: '/user/new/password',
+    verifyOTP: '/user/verify/code',
     packages: '/user/subscription/package',
     subscription: '/user/subscribe-package',
     mySubscription: '/user/my-subscriptions',

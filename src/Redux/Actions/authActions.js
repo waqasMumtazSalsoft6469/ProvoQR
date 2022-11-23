@@ -68,7 +68,7 @@ export const verifyOTP = data => {
   };
 };
 
-export const updatePassword = data => {
+export const setPassword = data => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -95,9 +95,8 @@ export const userSignup = data => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
-
-          const response = await post(endpoints.auth.userSignup, data, true);
-
+          const response = await post(endpoints.auth.userSignup, data, false);
+          console.log(response, 'RESPONSE');
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

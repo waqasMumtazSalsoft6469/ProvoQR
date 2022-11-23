@@ -68,19 +68,19 @@ class HomeCard extends React.Component {
           imageStyle={[styles.footerimagebg]}>
           <View style={{alignItems: 'center'}}>
             <View style={{flexDirection: 'row'}}>
-              {this.props.item?.amount !== 'Free Package' ? (
+              {this.props.item?.price !== 0 ? (
                 <>
                   <OutfitSemiBoldText style={styles.dollar}>
                     $
                   </OutfitSemiBoldText>
 
                   <OutfitSemiBoldText style={styles.amount}>
-                    {this.props.item.amount}
+                    {this.props.item.price}
                   </OutfitSemiBoldText>
                 </>
               ) : (
                 <OutfitSemiBoldText style={styles.amount1}>
-                  {this.props.item.amount}
+                  {this.props.item.price}
                 </OutfitSemiBoldText>
               )}
             </View>

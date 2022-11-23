@@ -11,14 +11,42 @@ import ThemeColors from '../../Utils/ThemeColors';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import {
+  sendEmail,
+  setPassword,
+  verifyOTP,
+} from '../../Redux/Actions/authActions';
 
 class SignupScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       step: 1,
+      email: '',
+      code: null,
+      password: '',
+      password_confirmation: '',
     };
   }
+
+  handleEmail = () => {
+    if (!this.state.email) {
+      showToast('Please enter your email address');
+      return;
+    }
+    if (
+      !!this.state.email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      showToast('Please insert valid email address');
+      return;
+    }
+    this.props.sendEmail({email: this.state.email}).then(res => {});
+  };
+  handleCode = () => {};
+  handlePassword = () => {};
+
   renderBody = () => {
     switch (this.state.step) {
       case 1:
@@ -32,6 +60,11 @@ class SignupScreen extends React.Component {
                 placeholder="Enter Email Address"
                 keyboardType="email-address"
                 label="Email Address"
+                onChangeText={newemail =>
+                  this.setState({
+                    password: newemail,
+                  })
+                }
               />
             </View>
           </>
@@ -47,34 +80,70 @@ class SignupScreen extends React.Component {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View style={styles.box}>
                   <TextInput
+                    ref={r => (this.c1 = r)}
                     style={styles.boxinput}
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
+                    onChangeText={newemail =>
+                      this.setState(prevState => {
+                        return {
+                          ...prevState,
+                          code: prevState.code + newemail,
+                        };
+                      })
+                    }
                   />
                 </View>
                 <View style={[styles.box, {marginLeft: 3 * vw}]}>
                   <TextInput
+                    ref={r => (this.c2 = r)}
                     style={styles.boxinput}
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
+                    onChangeText={newemail =>
+                      this.setState(prevState => {
+                        return {
+                          ...prevState,
+                          code: prevState.code + newemail,
+                        };
+                      })
+                    }
                   />
                 </View>
                 <View style={[styles.box, {marginLeft: 3 * vw}]}>
                   <TextInput
+                    ref={r => (this.c3 = r)}
                     style={styles.boxinput}
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
+                    onChangeText={newemail =>
+                      this.setState(prevState => {
+                        return {
+                          ...prevState,
+                          code: prevState.code + newemail,
+                        };
+                      })
+                    }
                   />
                 </View>
                 <View style={[styles.box, {marginLeft: 3 * vw}]}>
                   <TextInput
+                    ref={r => (this.c4 = r)}
                     style={styles.boxinput}
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
+                    onChangeText={newemail =>
+                      this.setState(prevState => {
+                        return {
+                          ...prevState,
+                          code: prevState.code + newemail,
+                        };
+                      })
+                    }
                   />
                 </View>
               </View>
@@ -99,11 +168,21 @@ class SignupScreen extends React.Component {
                 placeholder="Enter New Password"
                 secureTextEntry={true}
                 label="New Password"
+                onChangeText={newemail =>
+                  this.setState({
+                    password: newemail,
+                  })
+                }
               />
               <MainInput
                 placeholder="Confirm Password"
                 secureTextEntry={true}
                 label="Confirm Password"
+                onChangeText={newemail =>
+                  this.setState({
+                    password_confirmation: newemail,
+                  })
+                }
               />
             </View>
           </>
@@ -151,5 +230,16 @@ class SignupScreen extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    sendEmail: data => dispatch(sendEmail(data)),
+    confirmCode: data => dispatch(verifyOTP(data)),
+    setNewPassword: data => dispatch(setPassword(data)),
+  };
+};
 
 export default SignupScreen;

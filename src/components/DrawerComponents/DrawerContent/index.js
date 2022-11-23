@@ -8,8 +8,11 @@ import OutfitSemiBoldText from '../../Text/OutfitSemiBoldText';
 import OutfitLightText from '../../Text/OutfitLightText';
 import TwoAlertModal from '../../Popups/TwoAlert';
 import {icons} from '../../../assets/images';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../../Redux/Actions/authActions';
 
 const DrawerContent = props => {
+  const dispatch = useDispatch();
   const popupRef = useRef(null);
   const [visibleModal, setVisibleModal] = useState(false);
   const handleOnDrawerItemPress = routeName => {
@@ -59,7 +62,8 @@ const DrawerContent = props => {
         description={'Are you sure you want to logout?'}
         leftButtonTitle="YES"
         onLeftButtonPress={() => {
-          props.navigation.navigate('Login'), setVisibleModal(false);
+          props.navigation.navigate('Authstack'), dispatch(logout());
+          setVisibleModal(false);
         }}
         rightButtonTitle="NO"
         onRightButtonPress={() => setVisibleModal(false)}

@@ -83,7 +83,7 @@ class RegisterScreen extends React.Component {
     } else if (!address) {
       showToast('Please select your location address');
     } else if (!image) {
-      showToast('Please enter email addres');
+      showToast('Please select profile image');
     } else if (
       !email.match(
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -113,7 +113,8 @@ class RegisterScreen extends React.Component {
       };
       this.props.signup(data).then(res => {
         if (res?.success) {
-          this.props.navigation.navigate('Subscription', {token: res?.token});
+          // this.props.navigation.navigate('Subscription', {token: res?.token});
+          this.setState({formOption: 'Login'});
           showToast(res?.message);
         }
       });
@@ -329,6 +330,7 @@ class RegisterScreen extends React.Component {
               })
             }
             // value={this.state.email}
+            autoCapitalize="words"
             label="Full Name"
           />
 
@@ -345,11 +347,13 @@ class RegisterScreen extends React.Component {
             keyboardType="email-address"
             // value={this.state.email}
             label="Email Address"
+            autoCapitalize="none"
           />
           <MainInput
             placeholder="Enter Phone Number"
             // style={styles.field}
             ref={r => (this.phone = r)}
+            keyboardType="phone-pad"
             onSubmitEditing={() => this.sPass.onFocus()}
             onChangeText={newemail =>
               this.setState({
@@ -358,6 +362,7 @@ class RegisterScreen extends React.Component {
             }
             // value={this.state.email}
             label="Phone Number"
+            autoCapitalize="none"
           />
           <MainInput
             placeholder="Enter Password"
@@ -372,6 +377,7 @@ class RegisterScreen extends React.Component {
             secureTextEntry
             // value={this.state.password}
             label="Password"
+            autoCapitalize="none"
           />
 
           <MainInput
@@ -387,6 +393,7 @@ class RegisterScreen extends React.Component {
             secureTextEntry
             // value={this.state.password}
             label="Confirm Password"
+            autoCapitalize="none"
           />
 
           {/* <View>
