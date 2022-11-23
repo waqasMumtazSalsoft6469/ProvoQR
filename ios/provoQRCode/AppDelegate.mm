@@ -58,6 +58,27 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+ Splash *splash = [[Splash alloc] init];
+      
+      
+    [splash createSplashView:self.window];
+
+    [splash setBackgroundImage:@"splash"];
+      
+    [splash setSplashHideAnimation:SPLASHSLIDELEFT];
+      
+    [splash setSplashHideDelay:1500];
+
+
+     AddImageView *logoImage = [[AddImageView alloc] initImage:@"splashfg" width:screenWidth*0.2 height:screenHeight*0.2 positionX:[splash getCenterX:screenWidth*0.16] positionY:[splash getCenterY:screenHeight*-0.3]  visibility:true scaleType:FIT_CENTER];
+
+   
+
+    [splash performSingleAnimation:logoImage typeofanimation:SCALE duration:1500 scaleX:2.5 scaleY:2];
+  // [splash performSingleAnimation:logoImage typeofanimation:SCALE duration:1500 scaleX:2 scaleY:2];
+     [splash splashShow];
+
   return YES;
 }
 
