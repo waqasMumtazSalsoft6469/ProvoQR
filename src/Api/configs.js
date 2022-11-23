@@ -5,7 +5,7 @@ export const endpoints = {
     sendEmail: '/user/send/email',
     setPassword: '/user/set-password',
     verifyOTP: '/user/verify-code',
-    packages: '/user/packages',
+    packages: '/user/subscription/package',
     subscription: '/user/subscribe-package',
     mySubscription: '/user/my-subscriptions',
     cancelSubscription: '/user/cancel-subscription/',

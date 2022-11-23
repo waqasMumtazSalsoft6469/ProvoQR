@@ -6,67 +6,26 @@ import SubsCard from '../../components/SubsCard';
 import {vh, vw} from '../../Utils/Units';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
+import {subPackges} from '../../Redux/Actions/authActions';
+import {connect} from 'react-redux';
 
-class RegisterScreen extends React.Component {
+class Subscription extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeindex: -1,
       selectedPackage: 0,
-      subscription: [
-        {
-          amount: 'Free Package',
-          title: 'TRIAL PACKAGE',
-          validity:
-            'Use Provo free for 2 months straight.Then its only $ 5/month.',
-          offers: [
-            {
-              label: 'Unlimited Call',
-            },
-            {
-              label: 'Free Hosting',
-            },
-            {
-              label: '40MB of Storage Space',
-            },
-          ],
-        },
-        {
-          amount: '5',
-          title: 'SMALL BUSINESS SOLUTION',
-          validity: 'Month',
-          offers: [
-            {
-              label: 'Unlimited Call',
-            },
-            {
-              label: 'Free Hosting',
-            },
-            {
-              label: '40MB of Storage Space',
-            },
-          ],
-        },
-
-        {
-          amount: '24',
-          validity: 'Year',
-          title: 'MEDIUM BUSINESS SOLUTION',
-          offers: [
-            {
-              label: 'Unlimited Call',
-            },
-            {
-              label: 'Free Hosting',
-            },
-            {
-              label: '40MB of Storage Space',
-            },
-          ],
-        },
-      ],
+      subscription: [],
     };
   }
+
+  componentDidMount() {
+    const {token} = this.props.route?.params;
+    // this.props.getSubscription(token).then(res => {
+    //   this.setState({subscription: res?.package});
+    // });
+  }
+
   rendersubscriptions = index => {
     return (
       <View style={{marginTop: 5 * vh, alignItems: 'center'}}>
@@ -143,4 +102,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getSubscription: token => dispatch(subPackges(token)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subscription);

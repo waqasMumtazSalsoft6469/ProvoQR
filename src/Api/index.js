@@ -85,6 +85,24 @@ export const postForSubscription = async (
     return Promise.reject(message);
   }
 };
+
+export const customGet = async (endpoint, queryParams, token) => {
+  const url = base_url + endpoint + dataToQueryParameter(queryParams);
+  console.log('URL GET', url);
+  const configs = getConfigs('GET', null, false, token);
+
+  try {
+    const networkResult = await performNetworkRequest(url, configs);
+    const result = await handleResponse(networkResult);
+
+    // console.log('ressssss', result);
+
+    return Promise.resolve(result);
+  } catch (e) {
+    const message = getMessage(e);
+    return Promise.reject(message);
+  }
+};
 const Api = {
   performNetworkRequest: performNetworkRequest,
   post: post,

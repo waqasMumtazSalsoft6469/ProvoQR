@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     width: 12 * vh,
     height: 12 * vh,
     borderRadius: 6 * vh,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
   imgbg: {
     width: 100 * vw,

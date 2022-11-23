@@ -1,6 +1,6 @@
 import {useDispatch} from 'react-redux';
 import actionTypes from './actionTypes';
-import {post, get, postForSubscription} from '../../Api';
+import {post, get, postForSubscription, customGet} from '../../Api';
 import {endpoints} from '../../Api/configs';
 import {getMessage, showToast} from '../../Api/HelperFunction';
 
@@ -110,14 +110,14 @@ export const userSignup = data => {
   };
 };
 
-export const subPackges = () => {
+export const subPackges = token => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          const response = await get(endpoints.auth.packages);
+          const response = await customGet(endpoints.auth.packages, token);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

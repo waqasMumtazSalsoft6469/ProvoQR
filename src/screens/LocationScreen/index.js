@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, View, Image} from 'react-native';
+import {ImageBackground, View, Image, Platform, StyleSheet} from 'react-native';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
 import MainInput from '../../components/Input/MainInput';
@@ -23,53 +23,54 @@ class RegisterScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Uploadimage ref={r => (this.upload = r)} />
-        <ImageBackground
-          source={backgrounds.bgimage}
-          style={styles.imgbg}
-          resizeMode="cover"
-          imageStyle={styles.imgbg}>
-          <MapView
-            style={{flex: 1}}
-            // mapType={Platform.OS == "android" ? "none" : "standard"}
-            initialRegion={{
-              latitude: 37.8025259,
-              longitude: -122.4351431,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}></MapView>
 
-          {/* <View style={{ alignItems: 'center', }}> */}
-          <View style={styles.locationscroll}>
-            <RubikRegular style={styles.scrolltext}>
-              Scroll the screen to set your location by moving the marker
-            </RubikRegular>
+        <MapView
+          // customMapStyle={mapStyle}
+          ref={r => (this.mapRef = r)}
+          style={{flex: 1}}
+          mapType={Platform.OS == 'android' ? 'none' : 'standard'}
+          style={[
+            {...StyleSheet.absoluteFill},
+            {height: vh * 100, width: vw * 100},
+          ]}
+          initialRegion={{
+            latitude: 37.8025259,
+            longitude: -122.4351431,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}></MapView>
+
+        {/* <View style={{ alignItems: 'center', }}> */}
+        <View style={styles.locationscroll}>
+          <RubikRegular style={styles.scrolltext}>
+            Scroll the screen to set your location by moving the marker
+          </RubikRegular>
+        </View>
+        <View style={styles.bottomWrapper}>
+          <View style={styles.backOpacity} />
+
+          <View style={styles.horizontalLine} />
+
+          <View style={styles.box}>
+            <OutfitSemiBoldText style={styles.haeding}>
+              Add a New Address
+            </OutfitSemiBoldText>
+            <OutfitMediumText style={styles.label}>Address</OutfitMediumText>
+            <MainInput
+              placeholder="Enter Address"
+              style={{
+                width: 75 * vw,
+                backgroundColor: ThemeColors.backgroundGray,
+              }}
+              ref={r => (this.name = r)}
+            />
+            <Button
+              title="CONTINUE"
+              onPress={() => this.props.navigation.goBack()}
+              btnContainer={{marginTop: 2 * vh}}
+            />
           </View>
-          <View style={styles.bottomWrapper}>
-            <View style={styles.backOpacity} />
-
-            <View style={styles.horizontalLine} />
-
-            <View style={styles.box}>
-              <OutfitSemiBoldText style={styles.haeding}>
-                Add a New Address
-              </OutfitSemiBoldText>
-              <OutfitMediumText style={styles.label}>Address</OutfitMediumText>
-              <MainInput
-                placeholder="Enter Address"
-                style={{
-                  width: 75 * vw,
-                  backgroundColor: ThemeColors.backgroundGray,
-                }}
-                ref={r => (this.name = r)}
-              />
-              <Button
-                title="CONTINUE"
-                onPress={() => this.props.navigation.goBack()}
-                btnContainer={{marginTop: 2 * vh}}
-              />
-            </View>
-          </View>
-        </ImageBackground>
+        </View>
       </View>
     );
   }

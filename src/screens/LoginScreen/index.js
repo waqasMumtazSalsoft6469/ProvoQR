@@ -1,5 +1,11 @@
 import React from 'react';
-import {ImageBackground, View, Image, TouchableOpacity} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Image,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -16,10 +22,10 @@ import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {connect} from 'react-redux';
-
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import SignupScreen from '../SignupScreen';
 import {showToast} from '../../Api/HelperFunction';
-import {login} from '../../Redux/Actions/authActions';
+import {login, userSignup} from '../../Redux/Actions/authActions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -29,13 +35,19 @@ class RegisterScreen extends React.Component {
       email: '',
       password: '',
       confpw: '',
+      phone: '',
+      address: 'null',
+      image: '',
       formOption: 'Login',
+      visible: false,
     };
   }
   handleLogin = () => {
     const {email, password} = this.state;
-    if (!email || !email) {
-      showToast('All Fields are mandatory');
+    if (!email || !password) {
+      showToast('Please enter email addres');
+    } else if (!password) {
+      showToast('Please enter password');
     } else if (
       !email.match(
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -55,6 +67,86 @@ class RegisterScreen extends React.Component {
         .catch(e => showToast(e));
     }
   };
+
+  handleSignUp = () => {
+    const {name, email, password, confpw, phone, address, image} = this.state;
+    if (!name) {
+      showToast('Please enter your full name');
+    } else if (!email) {
+      showToast('Please enter your email address');
+    } else if (!password) {
+      showToast('Please enter password');
+    } else if (!confpw) {
+      showToast('Please enter confirm password');
+    } else if (!phone) {
+      showToast('Please enter your phone number');
+    } else if (!address) {
+      showToast('Please select your location address');
+    } else if (!image) {
+      showToast('Please enter email addres');
+    } else if (
+      !email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      showToast('Please insert valid email address');
+    } else if (password != confpw) {
+      showToast('Password and confirm password should be same.');
+    } else {
+      let _image = null;
+      if (image) {
+        let splittedUri = image?.split('.');
+        _image = {
+          uri: image,
+          type: `image/${splittedUri[splittedUri?.length - 1]}`,
+          name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
+        };
+      }
+      let data = {
+        full_name: name,
+        email: email,
+        address: address,
+        phone: phone,
+        password: password,
+        password_confirmation: confpw,
+        image: _image,
+      };
+      this.props.signup(data).then(res => {
+        if (res?.success) {
+          this.props.navigation.navigate('Subscription', {token: res?.token});
+          showToast(res?.message);
+        }
+      });
+    }
+  };
+  choices = [
+    {
+      name: 'Camera',
+      onClick: () => {
+        this.onSelectCamera('capture', {quality: 0.001});
+      },
+    },
+    {
+      name: 'Gallery',
+      onClick: () => {
+        this.onSelectGallary('gallery', {quality: 0.001});
+      },
+    },
+  ];
+  onSelectCamera = (options, img) => {
+    this.setState({visible: false});
+    launchCamera(options, img => this.img(img));
+  };
+  onSelectGallary = (options, img) => {
+    this.setState({visible: false});
+    launchImageLibrary(options, img => this.img(img));
+  };
+  img = data => {
+    if (data?.assets != null) {
+      this.setState({image: data.assets[0].uri, visible: false});
+    }
+  };
+
   renderLogin = () => {
     return (
       <KeyboardAwareScrollView>
@@ -196,7 +288,9 @@ class RegisterScreen extends React.Component {
             paddingHorizontal: vw * 2,
           }}>
           <ImageBackground
-            source={icons.purpleprofile}
+            source={
+              this.state.image ? {uri: this.state.image} : icons.purpleprofile
+            }
             style={[
               styles.profile,
               {alignItems: 'flex-end', justifyContent: 'flex-end'},
@@ -204,6 +298,7 @@ class RegisterScreen extends React.Component {
             imageStyle={styles.profile}>
             <TouchableOpacity
               hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+              onPress={() => this.setState({visible: !this.state.visible})}
               style={{
                 width: 7 * vw,
                 height: 7 * vw,
@@ -226,14 +321,13 @@ class RegisterScreen extends React.Component {
           <MainInput
             placeholder="Enter Full Name"
             // style={styles.field}
-            ref={r => (this.email = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
-
+            ref={r => (this.name = r)}
+            onSubmitEditing={() => this.semail.onFocus()}
+            onChangeText={newemail =>
+              this.setState({
+                name: newemail,
+              })
+            }
             // value={this.state.email}
             label="Full Name"
           />
@@ -241,13 +335,13 @@ class RegisterScreen extends React.Component {
           <MainInput
             placeholder="Enter Email Address"
             // style={styles.field}
-            ref={r => (this.email = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
+            ref={r => (this.semail = r)}
+            onSubmitEditing={() => this.phone.onFocus()}
+            onChangeText={newemail =>
+              this.setState({
+                email: newemail,
+              })
+            }
             keyboardType="email-address"
             // value={this.state.email}
             label="Email Address"
@@ -255,27 +349,26 @@ class RegisterScreen extends React.Component {
           <MainInput
             placeholder="Enter Phone Number"
             // style={styles.field}
-            ref={r => (this.email = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
-
+            ref={r => (this.phone = r)}
+            onSubmitEditing={() => this.sPass.onFocus()}
+            onChangeText={newemail =>
+              this.setState({
+                phone: newemail,
+              })
+            }
             // value={this.state.email}
             label="Phone Number"
           />
           <MainInput
             placeholder="Enter Password"
             // style={styles.field}
-            ref={r => (this.name = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
+            ref={r => (this.sPass = r)}
+            onSubmitEditing={() => this.cPass.onFocus()}
+            onChangeText={newemail =>
+              this.setState({
+                password: newemail,
+              })
+            }
             secureTextEntry
             // value={this.state.password}
             label="Password"
@@ -284,19 +377,19 @@ class RegisterScreen extends React.Component {
           <MainInput
             placeholder="Confirm Password"
             // style={styles.field}
-            ref={r => (this.name = r)}
-            // onSubmitEditing={() => this.pw.onFocus()}
-            // onChangeText={(newemail) =>
-            //   this.setState({
-            //     email: newemail,
-            //   })
-            // }
+            ref={r => (this.cPass = r)}
+            // onSubmitEditing={() => this.props.navigation.navigate('Location')}
+            onChangeText={newemail =>
+              this.setState({
+                confpw: newemail,
+              })
+            }
             secureTextEntry
             // value={this.state.password}
             label="Confirm Password"
           />
 
-          <View>
+          {/* <View>
             <View style={[styles.labelview]}>
               <OutfitMediumText style={[styles.label]}>
                 {'Location'}
@@ -310,11 +403,11 @@ class RegisterScreen extends React.Component {
               </OutfitRegularText>
               <Image source={icons.loc} style={styles.down} />
             </TouchableHOC>
-          </View>
+          </View> */}
 
           <Button
             title="CONTINUE"
-            onPress={() => this.props.navigation.navigate('Subscription')}
+            onPress={() => this.handleSignUp()}
             btnContainer={styles.signupBtn}
           />
 
@@ -388,6 +481,37 @@ class RegisterScreen extends React.Component {
             ? this.renderLogin()
             : this.renderSignup()}
         </ImageBackground>
+        <Modal
+          visible={this.state.visible}
+          animationType={'slide'}
+          transparent={true}>
+          <View
+            style={{
+              // height: vh * 20,
+              backgroundColor: 'white',
+              position: 'absolute',
+              width: vw * 100,
+              overflow: 'hidden',
+              bottom: 0,
+              paddingVertical: vh,
+              paddingHorizontal: vw * 5,
+              // zIndex: 1,
+            }}>
+            {this.choices.map(item => {
+              return (
+                <TouchableHOC style={{height: vh * 5}} onPress={item?.onClick}>
+                  <OutfitRegularText
+                    style={{
+                      color: 'black',
+                      fontSize: vh * 2.2,
+                    }}>
+                    {item?.name}
+                  </OutfitRegularText>
+                </TouchableHOC>
+              );
+            })}
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -400,6 +524,7 @@ const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
     login: data => dispatch(login(data)),
+    signup: data => dispatch(userSignup(data)),
   };
 };
 

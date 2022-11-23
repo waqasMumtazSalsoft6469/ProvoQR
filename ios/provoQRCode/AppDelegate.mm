@@ -1,3 +1,4 @@
+#import <GoogleMaps/GoogleMaps.h>
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
@@ -5,6 +6,7 @@
 #import <React/RCTRootView.h>
 
 #import <React/RCTAppSetupUtils.h>
+
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
