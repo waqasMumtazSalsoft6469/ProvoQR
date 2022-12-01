@@ -277,7 +277,7 @@ export const defaultOptions = (activeRouteName, props) => {
     ...TransitionPresets.SlideFromRightIOS,
     headerRight: () =>
       activeRouteName == 'Login' ||
-      activeRouteName == 'SocialLogin' ||
+      activeRouteName == 'CompleteProfile' ||
       activeRouteName == 'Location' ||
       activeRouteName == 'Signup' ||
       activeRouteName == 'PasswordRecovery' ||

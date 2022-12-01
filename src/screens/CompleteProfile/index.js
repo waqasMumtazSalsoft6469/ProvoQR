@@ -28,7 +28,7 @@ import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 
-class RegisterScreen extends React.Component {
+class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -188,4 +188,4 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+export default CompleteProfile;

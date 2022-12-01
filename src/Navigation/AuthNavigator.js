@@ -6,7 +6,7 @@ import PasswordRecovery from '../screens/PasswordRecovery';
 import Subscription from '../screens/Subscription';
 import SuccessScreen from '../screens/SuccessScreen';
 import Payment from '../screens/PaymentScreen';
-import SocialLogin from '../screens/SocialLoginScreen';
+import CompleteProfile from '../screens/CompleteProfile';
 import Location from '../screens/LocationScreen';
 import DrawerNavigation from './NavigationDrawer';
 import HomeTabs from './HomeTabs';
@@ -18,7 +18,7 @@ const HomeNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={getNavigationOptions}>
       <AuthStack.Screen component={Login} name="Login" />
-      <AuthStack.Screen component={SocialLogin} name="SocialLogin" />
+      <AuthStack.Screen component={CompleteProfile} name="CompleteProfile" />
       {/* <AuthStack.Screen
         component={Location}
         name="Location"

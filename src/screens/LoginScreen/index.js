@@ -60,7 +60,7 @@ class RegisterScreen extends React.Component {
         .login(data)
         .then(res => {
           if (res?.success) {
-            this.props.navigation.navigate('SocialLogin');
+            this.props.navigation.navigate('CompleteProfile');
             showToast(res?.message);
           }
         })
