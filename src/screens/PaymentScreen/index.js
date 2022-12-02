@@ -7,18 +7,22 @@ import MainInput from '../../components/Input/MainInput';
 import {vh, vw} from '../../Utils/Units';
 import Button from '../../components/Buttons/SimpleButton';
 import AlertModal from '../../components/Popups/alertModal';
+import {subscribePackage} from '../../Redux/Actions/authActions';
+import {connect} from 'react-redux';
+import {showToast} from '../../Api/HelperFunction';
 
-class RegisterScreen extends React.Component {
+class PaymentScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      email: '',
-      password: '',
-      confpw: '',
+      cardNumber: '',
+      expiry: '',
+      cvv: '',
       visibleSuccess: false,
     };
   }
+
   componentDidMount() {
     console.log(this.props.route?.params?.from);
     if (this.props.route?.params?.from == 'lootBox') {
@@ -29,6 +33,35 @@ class RegisterScreen extends React.Component {
       });
     }
   }
+
+  handlePayment = () => {
+    const {name, cardNumber, expiry, cvv} = this.state;
+    const {id, token} = this.props.route.params;
+    if (!name) {
+      showToast('Please Enter Card Holder Name');
+    } else if (!cardNumber) {
+      showToast('Please Enter Card Number');
+    } else if (!expiry) {
+      showToast('Please Enter Card Expiry Date');
+    } else if (!cvv) {
+      showToast('Please Enter CVV');
+    } else {
+      let data = {
+        card_holder_name: name,
+        card_num: cardNumber,
+        cvv_num: cvv,
+        expiry: expiry,
+        package_id: id,
+      };
+      this.props.subscribePackage(data, token).then(res => {
+        showToast(res?.message?.message);
+        if (res?.success) {
+          this.props.navigation.navigate('Login');
+        }
+      });
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -126,9 +159,10 @@ class RegisterScreen extends React.Component {
             }
             buttonTitle="OK"
             onButtonPress={() =>
-              this.props.route?.params?.from == 'lootbox'
-                ? this.props.navigation.navigate('LootBoxScreen', {success: 0})
-                : this.props.navigation.navigate('Login')
+              // this.props.route?.params?.from == 'lootbox'
+              //   ? this.props.navigation.navigate('LootBoxScreen', {success: 0})
+              //   : this.props.navigation.navigate('Login')
+              this.handlePayment()
             }
           />
         </ImageBackground>
@@ -136,4 +170,12 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    subscribePackage: (data, token) => dispatch(subscribePackage(data, token)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PaymentScreen);

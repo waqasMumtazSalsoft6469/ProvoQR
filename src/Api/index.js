@@ -89,7 +89,7 @@ export const postForSubscription = async (
 export const customGet = async (endpoint, queryParams, token) => {
   const url = base_url + endpoint + dataToQueryParameter(queryParams);
   console.log('URL GET', url);
-  const configs = getConfigs('GET', null, false, token);
+  const configs = getConfigsForSubscription('GET', null, false, token);
 
   try {
     const networkResult = await performNetworkRequest(url, configs);

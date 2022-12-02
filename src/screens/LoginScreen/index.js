@@ -43,6 +43,8 @@ class RegisterScreen extends React.Component {
     };
   }
   handleLogin = () => {
+    this.props.navigation.navigate('CompleteProfile');
+    return;
     const {email, password} = this.state;
     if (!email || !password) {
       showToast('Please enter email addres');
@@ -69,6 +71,8 @@ class RegisterScreen extends React.Component {
   };
 
   handleSignUp = () => {
+    this.props.navigation.navigate('Subscription');
+    return;
     const {name, email, password, confpw, phone, address, image} = this.state;
     if (!name) {
       showToast('Please enter your full name');
@@ -113,9 +117,9 @@ class RegisterScreen extends React.Component {
       };
       this.props.signup(data).then(res => {
         if (res?.success) {
-          // this.props.navigation.navigate('Subscription', {token: res?.token});
-          this.setState({formOption: 'Login'});
           showToast(res?.message);
+          this.props.navigation.navigate('Subscription', {token: res?.token});
+          // this.setState({formOption: 'Login'});
         }
       });
     }

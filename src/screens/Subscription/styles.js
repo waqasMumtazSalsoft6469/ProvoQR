@@ -4,11 +4,9 @@ import {vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: ThemeColors.white,
   },
   imgbg: {
     width: 100 * vw,
-    alignItems: 'center',
     flex: 1,
   },
   or: {
@@ -66,6 +64,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: vw * 3,
     top: vh * 9,
+  },
+  headingHorizontal: {
+    marginHorizontal: vw * 2,
   },
 });
 export default styles;

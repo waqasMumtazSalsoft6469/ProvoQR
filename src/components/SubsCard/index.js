@@ -25,7 +25,6 @@ class HomeCard extends React.Component {
             flexDirection: 'row',
             alignItems: 'center',
             paddingHorizontal: 8 * vw,
-            marginTop: vh,
           }}>
           <Image
             source={icons.tick}
@@ -33,17 +32,11 @@ class HomeCard extends React.Component {
             resizeMode="contain"
           />
           <OutfitMediumText style={styles.labeltext}>
-            {item.label}
+            {item.name}
           </OutfitMediumText>
         </View>
         <Dash
-          style={{
-            width: 30 * vw,
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: vh * 2,
-            marginBottom: vh * 2,
-          }}
+          style={styles.dash}
           dashColor="#E9E9E9"
           dashLength={0}
           dashGap={1 * vh}
@@ -86,18 +79,18 @@ class HomeCard extends React.Component {
             </View>
 
             <OutfitRegularText style={styles.month}>
-              {this.props.item.validity}
+              {this.props.item.duration}
             </OutfitRegularText>
           </View>
           <View style={styles.innerCard}>
             <OutfitMediumText style={styles.title}>
-              {this.props.item?.title}
+              {this.props.item?.name}
             </OutfitMediumText>
 
             <View style={{alignItems: 'center'}}>
-              {this.props.item?.offers && (
+              {this.props.item?.features && (
                 <FlatList
-                  data={this.props.item?.offers}
+                  data={this.props.item?.features}
                   style={{marginTop: 2 * vh}}
                   renderItem={this._renderitem}
                 />

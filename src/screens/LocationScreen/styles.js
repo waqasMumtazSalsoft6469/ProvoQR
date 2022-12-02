@@ -72,5 +72,10 @@ const styles = StyleSheet.create({
     borderRadius: vh * 1,
     marginBottom: vh * 2,
   },
+  markerIconStyle: {
+    height: vh * 5,
+    width: vh * 5,
+    resizeMode: 'contain',
+  },
 });
 export default styles;

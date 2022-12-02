@@ -6,7 +6,7 @@ export const endpoints = {
     setPassword: '/user/new/password',
     verifyOTP: '/user/verify/code',
     packages: '/user/subscription/package',
-    subscription: '/user/subscribe-package',
+    subscription: '/user/subscription/package',
     mySubscription: '/user/my-subscriptions',
     cancelSubscription: '/user/cancel-subscription/',
     welcomeQuestions: '/user/welcome-questions',

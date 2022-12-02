@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     width: 60 * vw,
     marginTop: 3 * vh,
     textAlign: 'center',
-    fontSize: 2 * vh,
+    fontSize: 2.4 * vh,
     alignSelf: 'center',
   },
   amount: {
@@ -124,5 +124,13 @@ const styles = StyleSheet.create({
     paddingVertical: vh * 3,
   },
   btnContainer: {width: vw * 40, alignSelf: 'center'},
+  dash: {
+    width: 30 * vw,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: vh * 2,
+    marginBottom: vh * 2,
+    paddingHorizontal: vw * 2,
+  },
 });
 export default styles;
