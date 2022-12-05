@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   field: {
     fontFamily: fonts.Outfit.regular,
     width: 68 * vw,
-
+    color: ThemeColors.fontBlack,
     padding: 0,
     paddingHorizontal: 2 * vw,
     // marginLeft: 1.5 * vw,

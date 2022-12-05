@@ -16,8 +16,10 @@ import {
   setPassword,
   verifyOTP,
 } from '../../Redux/Actions/authActions';
+import {showToast} from '../../Api/HelperFunction';
+import {connect} from 'react-redux';
 
-class SignupScreen extends React.Component {
+class PasswordRecovery extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,17 +37,59 @@ class SignupScreen extends React.Component {
       return;
     }
     if (
-      !!this.state.email.match(
+      !this.state.email.match(
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       )
     ) {
       showToast('Please insert valid email address');
       return;
     }
-    this.props.sendEmail({email: this.state.email}).then(res => {});
+    this.props.sendEmail({email: this.state.email}).then(res => {
+      this.setState({
+        step: this.state.step + 1,
+      });
+    });
   };
-  handleCode = () => {};
-  handlePassword = () => {};
+  handleCode = () => {
+    if (!this.state.code || this.state.code.length < 4) {
+      showToast('Please Enter Valid Code');
+    } else {
+      this.props
+        .confirmCode({email: this.state.email, code: this.state.code})
+        .then(res => {
+          this.setState({
+            step: this.state.step + 1,
+          });
+        });
+    }
+  };
+  handlePassword = () => {
+    if (!this.state.password || !this.state.password_confirmation) {
+      showToast('Please Enter Both Password');
+    } else if (this.state.password != this.state.password_confirmation) {
+      showToast('Password and Confirm Password should be same');
+    } else {
+      let data = {
+        password: this.state.password,
+        password_confirmation: this.state.password_confirmation,
+        email: this.state.email,
+      };
+      this.props.setNewPassword(data).then(res => {
+        this.props.navigation.navigate('Login');
+      });
+    }
+  };
+
+  handlePress = () => {
+    const {step} = this.state;
+    if (step == 1) {
+      this.handleEmail();
+    } else if (step == 2) {
+      this.handleCode();
+    } else {
+      this.handlePassword();
+    }
+  };
 
   renderBody = () => {
     switch (this.state.step) {
@@ -60,9 +104,10 @@ class SignupScreen extends React.Component {
                 placeholder="Enter Email Address"
                 keyboardType="email-address"
                 label="Email Address"
+                autoCapitalize="none"
                 onChangeText={newemail =>
                   this.setState({
-                    password: newemail,
+                    email: newemail,
                   })
                 }
               />
@@ -85,14 +130,15 @@ class SignupScreen extends React.Component {
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
-                    onChangeText={newemail =>
+                    onChangeText={newemail => {
                       this.setState(prevState => {
                         return {
                           ...prevState,
                           code: prevState.code + newemail,
                         };
-                      })
-                    }
+                      });
+                      if (value) this.c2.focus();
+                    }}
                   />
                 </View>
                 <View style={[styles.box, {marginLeft: 3 * vw}]}>
@@ -102,14 +148,15 @@ class SignupScreen extends React.Component {
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
-                    onChangeText={newemail =>
+                    onChangeText={newemail => {
                       this.setState(prevState => {
                         return {
                           ...prevState,
                           code: prevState.code + newemail,
                         };
-                      })
-                    }
+                      });
+                      if (value) this.c3.focus();
+                    }}
                   />
                 </View>
                 <View style={[styles.box, {marginLeft: 3 * vw}]}>
@@ -119,14 +166,15 @@ class SignupScreen extends React.Component {
                     maxLength={1}
                     keyboardType="number-pad"
                     selectionColor={ThemeColors.primary}
-                    onChangeText={newemail =>
+                    onChangeText={newemail => {
                       this.setState(prevState => {
                         return {
                           ...prevState,
                           code: prevState.code + newemail,
                         };
-                      })
-                    }
+                      });
+                      if (value) this.c4.focus();
+                    }}
                   />
                 </View>
                 <View style={[styles.box, {marginLeft: 3 * vw}]}>
@@ -208,13 +256,7 @@ class SignupScreen extends React.Component {
               <SolidButton
                 title={this.state.step == 3 ? 'UPDATE' : 'CONTINUE'}
                 onPress={() => {
-                  if (this.state.step == 3) {
-                    this.props.navigation.navigate('Login');
-                  } else {
-                    this.setState({
-                      step: this.state.step + 1,
-                    });
-                  }
+                  this.handlePress();
                 }}
               />
               <TouchableHOC
@@ -242,4 +284,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default SignupScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(PasswordRecovery);

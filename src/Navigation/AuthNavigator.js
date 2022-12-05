@@ -18,7 +18,7 @@ const HomeNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={getNavigationOptions}>
       <AuthStack.Screen component={Login} name="Login" />
-      <AuthStack.Screen component={CompleteProfile} name="CompleteProfile" />
+      {/* <AuthStack.Screen component={CompleteProfile} name="CompleteProfile" /> */}
       {/* <AuthStack.Screen
         component={Location}
         name="Location"

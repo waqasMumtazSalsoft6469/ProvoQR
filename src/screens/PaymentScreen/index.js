@@ -97,6 +97,7 @@ class PaymentScreen extends React.Component {
                 //     email: newemail,
                 //   })
                 // }
+
                 keyboardType="number-pad"
                 value={
                   this.props.route?.params?.option == 2 ? '***********' : ''

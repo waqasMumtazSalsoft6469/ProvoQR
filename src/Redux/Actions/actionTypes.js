@@ -12,6 +12,7 @@ const actionTypes = {
   storeBiometricData: 'SET_BIOMETRIC_DATA',
   enableBiometric: 'ENABLE_BIOMETRIC',
   setServices: 'SET_SERVICES',
+  completeProfile: 'CMPLETE_PROFILE',
 
   // using
   getProfile: 'GET_PROFILE',

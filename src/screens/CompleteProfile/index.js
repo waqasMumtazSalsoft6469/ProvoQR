@@ -27,11 +27,16 @@ import ThemeColors from '../../Utils/ThemeColors';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import {connect} from 'react-redux';
+import {completeProfile} from '../../Redux/Actions/authActions';
+import {showToast} from '../../Api/HelperFunction';
 
 class CompleteProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      address: null,
+      age: '',
       gender: [
         {
           label: 'Male',
@@ -47,7 +52,26 @@ class CompleteProfile extends React.Component {
     };
   }
 
+  handleDoneAddress = address => {
+    this.setState({address: address});
+  };
+
+  handleComplete = () => {
+    const {age, selectedGender, address} = this.state;
+    if (!age) {
+      showToast('Please Enter Your Age.');
+    } else if (!address) {
+      showToast('Please Enter Your Address.');
+    } else {
+      let data = {age: age, gender: selectedGender, address: address};
+      this.props.completeProfile(data).then(res => {
+        this.props.navigation.navigate('Home');
+      });
+    }
+  };
+
   render() {
+    const {address, age} = this.state;
     return (
       <View style={styles.container}>
         <Uploadimage
@@ -153,8 +177,10 @@ class CompleteProfile extends React.Component {
                 placeholder="Enter Age"
                 // style={styles.field}
                 ref={r => (this.email = r)}
+                keyboardType="phone-pad"
                 // onSubmitEditing={() => this.pw.onFocus()}
-
+                maxLength={2}
+                onChangeText={text => this.setState({age: text})}
                 label="Age"
               />
             </View>
@@ -164,15 +190,19 @@ class CompleteProfile extends React.Component {
             <View style={{alignItems: 'center'}}>
               <TouchableHOC
                 style={styles.fieldContainer}
-                onPress={() => this.props.navigation.navigate('Location')}>
-                <OutfitRegularText style={styles.gender}>
-                  Enter Location
+                onPress={() =>
+                  this.props.navigation.navigate('Location', {
+                    handleDoneAddress: this.handleDoneAddress,
+                  })
+                }>
+                <OutfitRegularText style={styles.gender} numberOfLines={1}>
+                  {address ?? 'Enter Location'}
                 </OutfitRegularText>
                 <Image source={icons.loc} style={styles.down} />
               </TouchableHOC>
 
               <Button
-                onPress={() => this.props.navigation.navigate('DrawerStack')}
+                onPress={this.handleComplete}
                 title="CONTINUE"
                 btnContainer={{
                   marginTop: 4 * vh,
@@ -188,4 +218,12 @@ class CompleteProfile extends React.Component {
     );
   }
 }
-export default CompleteProfile;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    completeProfile: data => dispatch(completeProfile(data)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CompleteProfile);

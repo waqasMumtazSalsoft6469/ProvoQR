@@ -15,9 +15,9 @@ import Payment from '../screens/PaymentScreen';
 import Location from '../screens/LocationScreen';
 
 import AuthNavigator from './AuthNavigator';
+import CompleteProfile from '../screens/CompleteProfile';
 
 const MainStack = createStackNavigator();
-const HomeStack = createStackNavigator();
 
 class MainNavigator extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class MainNavigator extends React.Component {
   }
 
   renderSelection = () => {
-    const {token} = this.props;
+    const {token, userData} = this.props;
     console.log(token, 'TOKEN');
     return (
       <MainStack.Navigator
@@ -38,6 +38,12 @@ class MainNavigator extends React.Component {
         screenOptions={getNavigationOptions}>
         {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
+        )}
+        {(!userData?.age || !userData?.address || !userData?.gender) && (
+          <MainStack.Screen
+            component={CompleteProfile}
+            name="CompleteProfile"
+          />
         )}
         <MainStack.Screen component={Drawer} name="Home" />
         <MainStack.Screen
@@ -65,6 +71,7 @@ class MainNavigator extends React.Component {
 const mapState = state => {
   return {
     token: state.SessionReducer.token,
+    userData: state.SessionReducer.userData,
   };
 };
 const mapProps = dispatch => {

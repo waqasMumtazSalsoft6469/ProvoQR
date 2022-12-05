@@ -23,6 +23,13 @@ const DrawerContent = props => {
     }
   };
 
+  const handlePressLogout = () => {
+    dispatch(logout());
+    props.navigation.toggleDrawer();
+    props.navigation.navigate('Authstack', {screen: 'Login'}),
+      setVisibleModal(false);
+  };
+
   const progress = useDrawerProgress();
   const opacity = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
@@ -62,8 +69,7 @@ const DrawerContent = props => {
         description={'Are you sure you want to logout?'}
         leftButtonTitle="YES"
         onLeftButtonPress={() => {
-          props.navigation.navigate('Authstack'), dispatch(logout());
-          setVisibleModal(false);
+          handlePressLogout();
         }}
         rightButtonTitle="NO"
         onRightButtonPress={() => setVisibleModal(false)}

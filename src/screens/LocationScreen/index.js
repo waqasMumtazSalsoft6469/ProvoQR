@@ -22,24 +22,29 @@ import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 import {useDispatch} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
 
-const AddressLocation = () => {
+const AddressLocation = props => {
   const dispatch = useDispatch();
-
   const [initialRegion] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
   });
   const [userLocation, setUserLocation] = useState({
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    location: {
+      latitude: 0,
+      longitude: 0,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    },
   });
   const [searchedAddress, setSearchedAddress] = useState(null);
+  const [selection, setSelection] = React.useState({start: 0, end: 0});
   const mapRef = useRef(null);
-  console.log(userLocation, 'USER Location');
+  const inputRef = useRef(null);
+
   const handleDonePress = () => {
-    props.route.params.handleRoute(searchedAddress);
+    props.route.params.handleDoneAddress(searchedAddress);
     props.navigation.goBack();
   };
 
@@ -62,19 +67,19 @@ const AddressLocation = () => {
     };
     try {
       const response = await dispatch(getAddressByLatLong(coordinate));
-      setSearchedAddress(response?.results[0]);
+      setSearchedAddress(response?.results[1].formatted_address);
       setUserLocation({
         location: {
           latitude: parseFloat(coordinate?.latitude),
           longitude: parseFloat(coordinate?.longitude),
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA,
-          address: response?.results[0]?.formatted_address,
+          address: response?.results[1]?.formatted_address,
         },
       });
       animateToRegion(coordinate);
     } catch (e) {
-      // console.log(e);
+      console.warn(e);
       // showToast(e);
     }
   };
@@ -84,7 +89,7 @@ const AddressLocation = () => {
       console.log('CURRENT LOCATION', location);
       const response = await dispatch(getAddressByLatLong(location));
       console.log('LOCATION ADDRESS', response);
-      setSearchedAddress(response?.results[0]);
+      setSearchedAddress(response?.results[1].formatted_address);
       setUserLocation({
         location: {
           latitude: parseFloat(location?.latitude),
@@ -107,6 +112,7 @@ const AddressLocation = () => {
       console.log('location** error ', error);
     }
   };
+
   useEffect(() => {
     setupMethods();
   }, []);
@@ -125,7 +131,7 @@ const AddressLocation = () => {
           ]}>
           {userLocation && (
             <Marker
-              coordinate={userLocation}
+              coordinate={userLocation?.location}
               draggable={true}
               onDragEnd={onMarkerDragEnd}>
               <Image source={icons.mapButton} style={styles.markerIconStyle} />
@@ -150,7 +156,7 @@ const AddressLocation = () => {
           }}></MapView> */}
 
       {/* <View style={{ alignItems: 'center', }}> */}
-      {/* <View style={styles.locationscroll}>
+      <View style={styles.locationscroll}>
         <RubikRegular style={styles.scrolltext}>
           Scroll the screen to set your location by moving the marker
         </RubikRegular>
@@ -166,21 +172,26 @@ const AddressLocation = () => {
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.label}>Address</OutfitMediumText>
           <MainInput
+            selection={selection}
+            onSelectionChange={({nativeEvent: {selection, text}}) =>
+              setSelection(selection)
+            }
             placeholder="Enter Address"
             style={{
               width: 75 * vw,
               backgroundColor: ThemeColors.backgroundGray,
             }}
-            ref={r => (this.name = r)}
-            value={searchedAddress}
+            ref={inputRef}
+            defaultValue={searchedAddress}
+            onChangeText={text => setSearchedAddress(text)}
           />
           <Button
             title="CONTINUE"
-            onPress={() => this.props.navigation.goBack()}
+            onPress={handleDonePress}
             btnContainer={{marginTop: 2 * vh}}
           />
         </View>
-      </View> */}
+      </View>
     </View>
   );
 };

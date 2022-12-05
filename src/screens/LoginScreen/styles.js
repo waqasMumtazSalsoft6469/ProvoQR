@@ -112,5 +112,24 @@ const styles = StyleSheet.create({
     marginTop: 2 * vh,
   },
   signupBtn: {marginTop: vh * 2, backgroundColor: ThemeColors.butonGray},
+  modal: {
+    // height: vh * 20,
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: vw * 100,
+    overflow: 'hidden',
+    bottom: 0,
+    borderTopLeftRadius: vh * 2,
+    borderTopRightRadius: vh * 2,
+    paddingVertical: vh * 2,
+    ...themeShadow,
+    // zIndex: 1,
+  },
+  line: {
+    height: vh * 0.1,
+    width: vw * 100,
+    backgroundColor: ThemeColors.lightGray,
+    marginVertical: vh * 1.5,
+  },
 });
 export default styles;

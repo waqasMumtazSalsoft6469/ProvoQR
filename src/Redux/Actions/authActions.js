@@ -170,6 +170,31 @@ export const subscribePackage = (detail, token) => {
   };
 };
 
+export const completeProfile = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+          const response = await post(
+            endpoints.auth.completeProfile,
+            data,
+            false,
+          );
+          dispatch({type: actionTypes.completeProfile, session: response});
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
 export const logout = () => ({
   type: 'LOGOUT',
 });

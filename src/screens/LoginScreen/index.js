@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Modal,
+  Platform,
 } from 'react-native';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
@@ -43,8 +44,6 @@ class RegisterScreen extends React.Component {
     };
   }
   handleLogin = () => {
-    this.props.navigation.navigate('CompleteProfile');
-    return;
     const {email, password} = this.state;
     if (!email || !password) {
       showToast('Please enter email addres');
@@ -57,13 +56,24 @@ class RegisterScreen extends React.Component {
     ) {
       showToast('Please insert valid email address');
     } else {
-      let data = {email: email, password: password};
+      let data = {
+        email: email,
+        password: password,
+        device_type: Platform.OS,
+        device_token: 'token',
+      };
       this.props
         .login(data)
         .then(res => {
+          console.log(!res?.user?.age, 'LOGIN RESPONSE');
           if (res?.success) {
-            this.props.navigation.navigate('CompleteProfile');
-            showToast(res?.message);
+            showToast('Login Successfull!');
+            if (!res?.user?.age || !res?.user?.gender || !res?.user?.address) {
+              this.props.navigation.navigate('CompleteProfile');
+            }
+            // else {
+            //   this.props.navigation.navigate('DrawerStack');
+            // }
           }
         })
         .catch(e => showToast(e));
@@ -71,8 +81,6 @@ class RegisterScreen extends React.Component {
   };
 
   handleSignUp = () => {
-    this.props.navigation.navigate('Subscription');
-    return;
     const {name, email, password, confpw, phone, address, image} = this.state;
     if (!name) {
       showToast('Please enter your full name');
@@ -185,8 +193,9 @@ class RegisterScreen extends React.Component {
                 password: newemail,
               })
             }
+            autoCapitalize="none"
             secureTextEntry
-            // value={this.state.password}
+            value={this.state.password}
             label="Password"
           />
           <TouchableHOC
@@ -379,8 +388,8 @@ class RegisterScreen extends React.Component {
               })
             }
             secureTextEntry
-            // value={this.state.password}
             label="Password"
+            value={this.state.password}
             autoCapitalize="none"
           />
 
@@ -394,6 +403,7 @@ class RegisterScreen extends React.Component {
                 confpw: newemail,
               })
             }
+            value={this.state.confpw}
             secureTextEntry
             // value={this.state.password}
             label="Confirm Password"
@@ -496,29 +506,25 @@ class RegisterScreen extends React.Component {
           visible={this.state.visible}
           animationType={'slide'}
           transparent={true}>
-          <View
-            style={{
-              // height: vh * 20,
-              backgroundColor: 'white',
-              position: 'absolute',
-              width: vw * 100,
-              overflow: 'hidden',
-              bottom: 0,
-              paddingVertical: vh,
-              paddingHorizontal: vw * 5,
-              // zIndex: 1,
-            }}>
-            {this.choices.map(item => {
+          <View style={styles.modal}>
+            {this.choices.map((item, index) => {
               return (
-                <TouchableHOC style={{height: vh * 5}} onPress={item?.onClick}>
-                  <OutfitRegularText
-                    style={{
-                      color: 'black',
-                      fontSize: vh * 2.2,
-                    }}>
-                    {item?.name}
-                  </OutfitRegularText>
-                </TouchableHOC>
+                <>
+                  <TouchableHOC
+                    onPress={item?.onClick}
+                    style={{marginLeft: vw * 2}}>
+                    <OutfitRegularText
+                      style={{
+                        color: 'black',
+                        fontSize: vh * 2.2,
+                      }}>
+                      {item?.name}
+                    </OutfitRegularText>
+                  </TouchableHOC>
+                  {index < this.choices.length - 1 && (
+                    <View style={styles.line} />
+                  )}
+                </>
               );
             })}
           </View>

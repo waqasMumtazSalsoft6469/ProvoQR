@@ -9,7 +9,7 @@ export const endpoints = {
     subscription: '/user/subscription/package',
     mySubscription: '/user/my-subscriptions',
     cancelSubscription: '/user/cancel-subscription/',
-    welcomeQuestions: '/user/welcome-questions',
+    completeProfile: '/complete/profile',
   },
   other: {
     getProfile: '/user/profile',

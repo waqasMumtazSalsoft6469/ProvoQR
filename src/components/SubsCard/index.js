@@ -68,12 +68,12 @@ class HomeCard extends React.Component {
                   </OutfitSemiBoldText>
 
                   <OutfitSemiBoldText style={styles.amount}>
-                    {this.props.item.price}
+                    {this.props.item?.price}
                   </OutfitSemiBoldText>
                 </>
               ) : (
                 <OutfitSemiBoldText style={styles.amount1}>
-                  {this.props.item.price}
+                  {this.props.item?.price}
                 </OutfitSemiBoldText>
               )}
             </View>
