@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   headingHorizontal: {
     marginHorizontal: vw * 2,
+    height: vh * 4,
   },
 });
 export default styles;

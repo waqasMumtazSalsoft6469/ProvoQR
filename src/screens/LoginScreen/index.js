@@ -374,6 +374,7 @@ class RegisterScreen extends React.Component {
               })
             }
             // value={this.state.email}
+            maxLength={16}
             label="Phone Number"
             autoCapitalize="none"
           />

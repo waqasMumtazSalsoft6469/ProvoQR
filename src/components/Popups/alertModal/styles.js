@@ -8,4 +8,9 @@ export default styles = StyleSheet.create({
   title: {fontSize: vh * 3, marginTop: vh * 2},
   description: {marginTop: vh, width: vw * 70, textAlign: 'center'},
   buttonStyle: {width: vw * 30, marginTop: vh * 5},
+  buttonContainer: {
+    flexDirection: 'row',
+    width: vw * 65,
+    justifyContent: 'space-between',
+  },
 });

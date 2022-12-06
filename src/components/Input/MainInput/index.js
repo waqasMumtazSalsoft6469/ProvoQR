@@ -4,6 +4,7 @@ import {fonts} from '../../../assets/fonts';
 import ThemeColors from '../../../Utils/ThemeColors';
 import {vw, vh} from '../../../Utils/Units';
 import RubikRegular from '../../Text/RubikRegular';
+import MaskInput from 'react-native-mask-input';
 import styles from './styles';
 import {icons} from '../../../assets/images';
 import IconButton from '../../Buttons/IconButton';
@@ -114,20 +115,36 @@ class MainInput extends React.Component {
 
         <View style={[styles.fieldContainer, this.props.style]}>
           {this.props.leftIcon && this.renderLeftIcon()}
-
-          <TextInput
-            placeholder={this.props.hide ? '' : 'Text Field'}
-            placeholderTextColor={ThemeColors.placeholderGrey}
-            {...this.props}
-            onChangeText={t => {
-              this.onChangeText(t);
-            }}
-            selectionColor={ThemeColors.primary}
-            style={[styles.field, this.props.fieldStyle]}
-            secureTextEntry={hideText}
-            ref={r => (this.input = r)}
-            multiline={this.props.multiline}
-          />
+          {this.props.mask ? (
+            <MaskInput
+              placeholder={this.props.hide ? '' : 'Text Field'}
+              placeholderTextColor={ThemeColors.placeholderGrey}
+              {...this.props}
+              onChangeText={(masked, unmasked) => {
+                this.onChangeText(masked, unmasked);
+              }}
+              selectionColor={ThemeColors.primary}
+              style={[styles.field, this.props.fieldStyle]}
+              secureTextEntry={hideText}
+              ref={r => (this.input = r)}
+              mask={this.props.mask}
+              value={this.props.value}
+            />
+          ) : (
+            <TextInput
+              placeholder={this.props.hide ? '' : 'Text Field'}
+              placeholderTextColor={ThemeColors.placeholderGrey}
+              {...this.props}
+              onChangeText={t => {
+                this.onChangeText(t);
+              }}
+              selectionColor={ThemeColors.primary}
+              style={[styles.field, this.props.fieldStyle]}
+              secureTextEntry={hideText}
+              ref={r => (this.input = r)}
+              multiline={this.props.multiline}
+            />
+          )}
           {this.props.secureTextEntry === true && this.renderEye()}
           {this.props.rightIcon && this.renderRightIcon()}
         </View>

@@ -52,11 +52,20 @@ export default class AlertModal extends Component {
           <OutfitRegularText style={styles.description}>
             {this.props.description}
           </OutfitRegularText>
-          <Button
-            title={this.props.buttonTitle}
-            onPress={() => this.onButtonPress()}
-            btnContainer={styles.buttonStyle}
-          />
+          <View style={styles.buttonContainer}>
+            <Button
+              title={this.props.buttonTitle}
+              onPress={() => this.onButtonPress()}
+              btnContainer={styles.buttonStyle}
+            />
+            {this.props.no && (
+              <Button
+                title={'No'}
+                onPress={this.props.no}
+                btnContainer={styles.buttonStyle}
+              />
+            )}
+          </View>
         </View>
       </BottomSheetWrapper>
     );

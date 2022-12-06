@@ -15,31 +15,14 @@ const Subscription = props => {
   const [subscription, setSubscription] = useState([]);
   const token = props?.route?.params?.token;
   const dispatch = useDispatch();
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     activeindex: -1,
-  //     selectedPackage: 0,
-  //     subscription: [],
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   const {token} = this.props.route?.params;
-  //   // this.props.getSubscription(token).then(res => {
-  //   //   this.setState({subscription: res?.package});
-  //   // });
-  // }
 
   useEffect(() => {
-    // const {token} = props.route?.params;
-    dispatch(subPackges('343|xFCHXuGDCacnQNEOJpFK5ubbUnsvksdyafSGTWeD')).then(
-      res => {
-        console.log(res?.package);
-        setSubscription(res?.packages);
-        // this.setState({subscription: res?.package});
-      },
-    );
+    const {token} = props.route?.params;
+    dispatch(subPackges(token)).then(res => {
+      console.log(res?.package);
+      setSubscription(res?.packages);
+      // this.setState({subscription: res?.package});
+    });
   }, []);
 
   const rendersubscriptions = index => {
@@ -48,15 +31,10 @@ const Subscription = props => {
         <SubsCard
           item={subscription[index]}
           success={(itemIndex, item) => {
-            if (activeindex == itemIndex) {
-              setActiveIndex(-1);
-              props.navigation.navigate('Payment', {
-                id: subscription[itemIndex]?.id,
-                token,
-              });
-            } else {
-              setActiveIndex(itemIndex);
-            }
+            props.navigation.navigate('Payment', {
+              id: subscription[itemIndex]?.id,
+              token,
+            });
           }}
           index={index}
           activeindex={activeindex}
@@ -76,7 +54,7 @@ const Subscription = props => {
           <OutfitMediumText style={styles.header}>
             Subscription Packages
           </OutfitMediumText>
-          <Image source={icons.alertRound} style={styles.alert} />
+          {/* <Image source={icons.alertRound} style={styles.alert} /> */}
         </View>
         <View>
           <ScrollView

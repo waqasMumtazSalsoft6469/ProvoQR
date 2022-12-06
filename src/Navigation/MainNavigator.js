@@ -39,12 +39,13 @@ class MainNavigator extends React.Component {
         {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )}
-        {(!userData?.age || !userData?.address || !userData?.gender) && (
-          <MainStack.Screen
-            component={CompleteProfile}
-            name="CompleteProfile"
-          />
-        )}
+        {token &&
+          (!userData?.age || !userData?.address || !userData?.gender) && (
+            <MainStack.Screen
+              component={CompleteProfile}
+              name="CompleteProfile"
+            />
+          )}
         <MainStack.Screen component={Drawer} name="Home" />
         <MainStack.Screen
           component={Location}

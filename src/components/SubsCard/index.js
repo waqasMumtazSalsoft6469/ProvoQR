@@ -18,6 +18,7 @@ class HomeCard extends React.Component {
   }
 
   _renderitem = ({item, index}) => {
+    const items = this.props.item;
     return (
       <>
         <View
@@ -35,12 +36,14 @@ class HomeCard extends React.Component {
             {item.name}
           </OutfitMediumText>
         </View>
-        <Dash
-          style={styles.dash}
-          dashColor="#E9E9E9"
-          dashLength={0}
-          dashGap={1 * vh}
-          dashStyle={{width: 2 * vw}}></Dash>
+        {items.length - 1 < index && (
+          <Dash
+            style={styles.dash}
+            dashColor="#E9E9E9"
+            dashLength={0}
+            dashGap={1 * vh}
+            dashStyle={{width: 2 * vw}}></Dash>
+        )}
       </>
     );
   };
@@ -66,7 +69,6 @@ class HomeCard extends React.Component {
                   <OutfitSemiBoldText style={styles.dollar}>
                     $
                   </OutfitSemiBoldText>
-
                   <OutfitSemiBoldText style={styles.amount}>
                     {this.props.item?.price}
                   </OutfitSemiBoldText>
@@ -79,7 +81,7 @@ class HomeCard extends React.Component {
             </View>
 
             <OutfitRegularText style={styles.month}>
-              {this.props.item.duration}
+              {this.props.item?.duration}
             </OutfitRegularText>
           </View>
           <View style={styles.innerCard}>
@@ -100,7 +102,7 @@ class HomeCard extends React.Component {
               title="SELECT PLAN"
               btnContainer={styles.btnContainer}
               onPress={() =>
-                this.props.success(this.props.index, this.props.item)
+                this.props.success(this.props?.index, this.props?.item)
               }
             />
           </View>

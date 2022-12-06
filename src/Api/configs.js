@@ -6,13 +6,14 @@ export const endpoints = {
     setPassword: '/user/new/password',
     verifyOTP: '/user/verify/code',
     packages: '/user/subscription/package',
-    subscription: '/user/subscription/package',
+    subscription: '/user/subscription/payment',
     mySubscription: '/user/my-subscriptions',
     cancelSubscription: '/user/cancel-subscription/',
     completeProfile: '/complete/profile',
   },
   other: {
     getProfile: '/user/profile',
+    home: '/get/home/data',
   },
 };
 
