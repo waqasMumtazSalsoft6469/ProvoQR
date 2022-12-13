@@ -44,7 +44,7 @@ class PaymentScreen extends React.Component {
       card_holder_name: name,
       card_num: cardNumber,
       cvv_num: cvv,
-      expiry: expiry,
+      expiry_date: expiry,
       package_id: id,
     };
     console.log(data);
@@ -127,7 +127,7 @@ class PaymentScreen extends React.Component {
                 label="CVV Number"
               />
               <MainInput
-                placeholder="DD/YYYY"
+                placeholder="MM/YYYY"
                 // style={styles.field}
                 ref={r => (this.expiry = r)}
                 onChangeText={(masked, unmasked) =>

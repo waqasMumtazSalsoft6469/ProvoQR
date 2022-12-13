@@ -13,10 +13,10 @@ class App extends React.Component {
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <StatusBar
-              translucent={false}
+              translucent={true}
               backgroundColor="transparent"
               animated={true}
-              barStyle="light-content"
+              barStyle="dark-content"
             />
             <Navigation />
             <LoaderPopup />

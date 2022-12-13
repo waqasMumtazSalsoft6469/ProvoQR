@@ -10,6 +10,7 @@ export const endpoints = {
     mySubscription: '/user/my-subscriptions',
     cancelSubscription: '/user/cancel-subscription/',
     completeProfile: '/complete/profile',
+    editProfile: '/user/update/profile',
   },
   other: {
     getProfile: '/user/profile',
@@ -24,3 +25,5 @@ export const endpoints = {
 // for live env
 export const base_url =
   'https://custom-dev.onlinetestingserver.com/provo/public/api';
+export const imageUrl =
+  'https://custom-dev.onlinetestingserver.com/provo/storage/';

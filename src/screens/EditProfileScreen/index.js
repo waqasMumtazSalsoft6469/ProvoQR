@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
@@ -18,21 +19,93 @@ import ThemeColors from '../../Utils/ThemeColors';
 import Button from '../../components/Buttons/SimpleButton';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import TouchableHOC from '../../components/Buttons/TouchableHOC';
+import {editProfile} from '../../Redux/Actions/authActions';
+import {imageUrl} from '../../Api/configs';
+import {connect} from 'react-redux';
 
-class RegisterScreen extends React.Component {
+class EditProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Amanda Charles',
-      age: '20',
-      phone: '123456789',
-      gender: 'Female',
-      country: 'United States',
-      city: 'New York',
-      State: 'ASDFG',
-      zipCode: '12345',
+      name: '',
+      age: '',
+      phone: '',
+      gender: '',
+      address: '',
+      image: '',
+      visible: false,
     };
   }
+
+  componentDidMount() {
+    const {name, age, phone, gender, address, image} = this.props.userData;
+    this.setState({name, age, phone, gender, address, image});
+  }
+
+  choices = [
+    {
+      name: 'Camera',
+      onClick: () => {
+        this.onSelectCamera('capture', {quality: 0.001});
+      },
+    },
+    {
+      name: 'Gallery',
+      onClick: () => {
+        this.onSelectGallary('gallery', {quality: 0.001});
+      },
+    },
+  ];
+  onSelectCamera = (options, img) => {
+    this.setState({visible: false});
+    launchCamera(options, img => this.img(img));
+  };
+  onSelectGallary = (options, img) => {
+    this.setState({visible: false});
+    launchImageLibrary(options, img => this.img(img));
+  };
+  img = data => {
+    if (data?.assets != null) {
+      this.setState({image: data.assets[0].uri, visible: false});
+    }
+  };
+
+  handleUpdate = () => {
+    const {name, phone, address, image} = this.state;
+    if (!name) {
+      showToast('Please enter your full name');
+    } else if (!phone) {
+      showToast('Please enter your phone number');
+    } else if (!address) {
+      showToast('Please select your location address');
+    } else if (!image) {
+      showToast('Please select profile image');
+    } else {
+      let _image = null;
+      if (image) {
+        let splittedUri = image?.split('.');
+        _image = {
+          uri: image,
+          type: `image/${splittedUri[splittedUri?.length - 1]}`,
+          name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
+        };
+      }
+      let data = {
+        full_name: name,
+        address: address,
+        phone: phone,
+        image: _image,
+      };
+      this.props.signup(data).then(res => {
+        if (res?.success) {
+          showToast(res?.message);
+          this.props.navigation.goBack();
+          // this.setState({formOption: 'Login'});
+        }
+      });
+    }
+  };
 
   render() {
     return (
@@ -46,7 +119,11 @@ class RegisterScreen extends React.Component {
             <View style={{marginTop: 5 * vh, paddingHorizontal: 4 * vw}}>
               <View style={{alignItems: 'center'}}>
                 <ImageBackground
-                  source={icons.purpleprofile}
+                  source={
+                    this.state.image
+                      ? {uri: imageUrl + this.state.image}
+                      : icons.purpleprofile
+                  }
                   style={[
                     styles.profile,
                     {alignItems: 'flex-end', justifyContent: 'flex-end'},
@@ -64,8 +141,10 @@ class RegisterScreen extends React.Component {
                       borderRadius: 3.5 * vh,
 
                       alignItems: 'center',
+
                       // left: I18nManager.isRTL ? 38 * vw : 0
-                    }}>
+                    }}
+                    onPress={() => this.setState({visible: true})}>
                     <Image
                       source={icons.camera}
                       resizeMode="contain"
@@ -86,20 +165,6 @@ class RegisterScreen extends React.Component {
                   value={this.state.name}
                   label="Name"
                 />
-
-                <MainInput
-                  placeholder="Enter age"
-                  // style={styles.field}
-                  ref={r => (this.email = r)}
-                  // onSubmitEditing={() => this.pw.onFocus()}
-                  onChangeText={newemail =>
-                    this.setState({
-                      age: newemail,
-                    })
-                  }
-                  value={this.state.age}
-                  label="Age"
-                />
               </View>
 
               <View
@@ -112,20 +177,7 @@ class RegisterScreen extends React.Component {
                   Email Address
                 </OutfitMediumText>
                 <OutfitRegularText style={styles.email}>
-                  Amanda@email.com
-                </OutfitRegularText>
-              </View>
-              <View
-                style={{
-                  marginTop: 3 * vh,
-                  paddingHorizontal: 8 * vw,
-                  marginBottom: vh,
-                }}>
-                <OutfitMediumText style={styles.emailtext}>
-                  User ID{' '}
-                </OutfitMediumText>
-                <OutfitRegularText style={styles.email}>
-                  03RS231{' '}
+                  {this.props.userData?.email}
                 </OutfitRegularText>
               </View>
               <View style={{alignItems: 'center'}}>
@@ -165,47 +217,8 @@ class RegisterScreen extends React.Component {
                       country: newemail,
                     })
                   }
-                  value={this.state.country}
+                  value={this.state.address}
                   label="Country"
-                />
-                <MainInput
-                  placeholder="Enter City"
-                  // style={styles.field}
-                  ref={r => (this.email = r)}
-                  // onSubmitEditing={() => this.pw.onFocus()}
-                  onChangeText={newemail =>
-                    this.setState({
-                      city: newemail,
-                    })
-                  }
-                  value={this.state.city}
-                  label="City"
-                />
-                <MainInput
-                  placeholder="Enter State"
-                  // style={styles.field}
-                  ref={r => (this.email = r)}
-                  // onSubmitEditing={() => this.pw.onFocus()}
-                  onChangeText={newemail =>
-                    this.setState({
-                      State: newemail,
-                    })
-                  }
-                  value={this.state.State}
-                  label="State"
-                />
-                <MainInput
-                  placeholder="Enter Zipcode"
-                  // style={styles.field}
-                  ref={r => (this.email = r)}
-                  // onSubmitEditing={() => this.pw.onFocus()}
-                  onChangeText={newemail =>
-                    this.setState({
-                      zipCode: newemail,
-                    })
-                  }
-                  value={this.state.zipCode}
-                  label="Zipcode"
                 />
               </View>
             </View>
@@ -219,12 +232,51 @@ class RegisterScreen extends React.Component {
                   width: 40 * vw,
                   height: 6 * vh,
                 }}
+                onPress={this.handleUpdate}
               />
             </View>
           </KeyboardAwareScrollView>
         </ImageBackground>
+        <Modal
+          visible={this.state.visible}
+          animationType={'slide'}
+          transparent={true}>
+          <View style={styles.modal}>
+            {this.choices.map((item, index) => {
+              return (
+                <>
+                  <TouchableHOC
+                    onPress={item?.onClick}
+                    style={{marginLeft: vw * 2}}>
+                    <OutfitRegularText
+                      style={{
+                        color: 'black',
+                        fontSize: vh * 2.2,
+                      }}>
+                      {item?.name}
+                    </OutfitRegularText>
+                  </TouchableHOC>
+                  {index < this.choices.length - 1 && (
+                    <View style={styles.line} />
+                  )}
+                </>
+              );
+            })}
+          </View>
+        </Modal>
       </View>
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({
+  userData: state.SessionReducer.userData,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    editProfile: () => dispatch(editProfile()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);

@@ -7,10 +7,11 @@ export default styles = StyleSheet.create({
   icon: {height: vh * 10, width: vh * 10},
   title: {fontSize: vh * 3, marginTop: vh * 2},
   description: {marginTop: vh, width: vw * 70, textAlign: 'center'},
-  buttonStyle: {width: vw * 30, marginTop: vh * 5},
+  buttonStyle: {width: vw * 30, marginTop: vh * 5, marginHorizontal: vw * 1.5},
   buttonContainer: {
     flexDirection: 'row',
     width: vw * 65,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    marginVertical: vh * 3,
   },
 });

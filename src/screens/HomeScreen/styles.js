@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     borderColor: ThemeColors.white,
     borderWidth: 0.3 * vh,
     backgroundColor: ThemeColors.white,
-    position: 'absolute',
+    // position: 'absolute',
     bottom: -3 * vh,
     ...themeShadow,
   },

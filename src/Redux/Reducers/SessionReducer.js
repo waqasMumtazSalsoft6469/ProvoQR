@@ -11,6 +11,19 @@ export default SessionReducer = (state = initialState, action) => {
         userData: null,
       };
     }
+    case actionTypes.login: {
+      return {
+        ...state,
+        token: action.session.token,
+        userData: action.session.user,
+      };
+    }
+    case actionTypes.getProfile: {
+      return {
+        ...state,
+        userData: action.session.profile[0],
+      };
+    }
     case actionTypes.completeProfile: {
       return {
         ...state,

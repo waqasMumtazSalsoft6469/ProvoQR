@@ -11,7 +11,7 @@ import OutfitSemiBoldText from '../Text/OutfitSemiBoldText';
 import OutfitRegularText from '../Text/OutfitRegularText';
 import Button from '../Buttons/SimpleButton';
 
-class HomeCard extends React.Component {
+class SubCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -89,7 +89,7 @@ class HomeCard extends React.Component {
               {this.props.item?.name}
             </OutfitMediumText>
 
-            <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center', marginBottom: vh * 3}}>
               {this.props.item?.features && (
                 <FlatList
                   data={this.props.item?.features}
@@ -111,4 +111,4 @@ class HomeCard extends React.Component {
     );
   }
 }
-export default HomeCard;
+export default SubCard;

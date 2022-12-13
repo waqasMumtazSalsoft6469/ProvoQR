@@ -97,6 +97,7 @@ export const getProfileData = () => {
           dispatch({type: actionTypes.loaderOn});
 
           const response = await get(endpoints.other.getProfile);
+          dispatch({type: actionTypes.getProfile, session: response});
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

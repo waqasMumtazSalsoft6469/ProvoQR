@@ -12,25 +12,23 @@ import {backgrounds, icons, sampleimage} from '../../assets/images';
 import styles from './styles';
 import HeaderHome from '../../components/HeaderHome';
 import JostRegular from '../../components/Text/JostRegular';
-import GilroyLight from '../../components/Text/GilroyLight';
-import GilroyExtraBold from '../../components/Text/GilroyExtraBold';
-import RubikRegular from '../../components/Text/RubikRegular';
-import GilroyBold from '../../components/Text/GilroyBold';
 import HomeCard from '../../components/ResCard';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import {vh, vw} from '../../Utils/Units';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
-import OutfitLightText from '../../components/Text/OutfitLightText';
-import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import {connect} from 'react-redux';
 import ThemeColors from '../../Utils/ThemeColors';
 import Dash from 'react-native-dash';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
+import {getHomeData} from '../../Redux/Actions/otherActions';
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      banners: [],
+      recommended: [],
       home: [
         {
           image: sampleimage.home1,
@@ -176,6 +174,12 @@ class HomeScreen extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.getHomDate().then(res => {
+      this.setState({banners: res?.banner, recommended: res?.recommended});
+    });
+  }
+
   renderitem = ({item, index}) => {
     return (
       <View style={{paddingHorizontal: 5 * vw}}>
@@ -224,99 +228,109 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ImageBackground
           source={backgrounds.grayBackground}
-          style={{width: 100 * vw}}
+          style={{width: 100 * vw, flex: 1}}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 100 * vh}}>
+          <HeaderHome>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingHorizontal: 5 * vw,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View>
+                <OutfitMediumText style={styles.headertext}>
+                  Grab Your
+                </OutfitMediumText>
+                <OutfitSemiBoldText style={styles.headertextbold}>
+                  Delicious Meal Now!
+                </OutfitSemiBoldText>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <TouchableHOC
+                  onPress={() => this.props.navigation.navigate('Location')}>
+                  <Image
+                    source={icons.whiteloc}
+                    resizeMode="contain"
+                    style={styles.profile}
+                  />
+                </TouchableHOC>
+                <TouchableHOC
+                  onPress={() =>
+                    this.props.navigation.navigate('Notification')
+                  }>
+                  <ImageBackground
+                    source={icons.notif}
+                    resizeMode="contain"
+                    style={{
+                      width: 6 * vw,
+                      height: 6 * vw,
+                      alignItems: 'flex-end',
+                    }}
+                    imageStyle={{
+                      width: 6 * vw,
+                      height: 6 * vw,
+                      tintColor: ThemeColors.iconColor,
+                    }}>
+                    <View style={styles.circle}>
+                      <JostRegular style={styles.count}>5</JostRegular>
+                    </View>
+                  </ImageBackground>
+                </TouchableHOC>
+                <TouchableHOC
+                  onPress={() => this.props.navigation.navigate('Profile')}>
+                  <Image
+                    source={sampleimage.profile}
+                    resizeMode="contain"
+                    style={styles.profile}
+                  />
+                </TouchableHOC>
+              </View>
+            </View>
+          </HeaderHome>
           <ScrollView>
-            <HeaderHome>
+            <TouchableHOC style={styles.seachbar}>
               <View
                 style={{
                   flexDirection: 'row',
-                  paddingHorizontal: 5 * vw,
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  width: 75 * vw,
                 }}>
-                <View>
-                  <OutfitMediumText style={styles.headertext}>
-                    Grab Your
-                  </OutfitMediumText>
-                  <OutfitSemiBoldText style={styles.headertextbold}>
-                    Delicious Meal Now!
-                  </OutfitSemiBoldText>
-                </View>
-
-                <View style={{flexDirection: 'row'}}>
-                  <TouchableHOC
-                    onPress={() => this.props.navigation.navigate('Location')}>
-                    <Image
-                      source={icons.whiteloc}
-                      resizeMode="contain"
-                      style={styles.profile}
-                    />
-                  </TouchableHOC>
-                  <TouchableHOC
-                    onPress={() =>
-                      this.props.navigation.navigate('Notification')
-                    }>
-                    <ImageBackground
-                      source={icons.notif}
-                      resizeMode="contain"
-                      style={{
-                        width: 6 * vw,
-                        height: 6 * vw,
-                        alignItems: 'flex-end',
-                      }}
-                      imageStyle={{
-                        width: 6 * vw,
-                        height: 6 * vw,
-                        tintColor: ThemeColors.iconColor,
-                      }}>
-                      <View style={styles.circle}>
-                        <JostRegular style={styles.count}>5</JostRegular>
-                      </View>
-                    </ImageBackground>
-                  </TouchableHOC>
-                  <TouchableHOC
-                    onPress={() => this.props.navigation.navigate('Profile')}>
-                    <Image
-                      source={sampleimage.profile}
-                      resizeMode="contain"
-                      style={styles.profile}
-                    />
-                  </TouchableHOC>
-                </View>
-              </View>
-
-              <TouchableHOC style={styles.seachbar}>
-                <View
+                <TouchableOpacity
                   style={{
-                    flexDirection: 'row',
-                    width: 75 * vw,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: 6.5 * vh,
                   }}>
-                  <TouchableOpacity
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      height: 6.5 * vh,
-                    }}>
-                    <Image
-                      source={icons.search}
-                      style={styles.search}
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-                  <TextInput
-                    placeholder="Search...."
-                    returnKeyType={'search'}
-                    placeholderTextColor="#999999"
-                    style={styles.input}
-                    ref={_ref => {
-                      this.inputRef = _ref;
-                    }}
+                  <Image
+                    source={icons.search}
+                    style={styles.search}
+                    resizeMode="contain"
                   />
-                </View>
-              </TouchableHOC>
-            </HeaderHome>
+                </TouchableOpacity>
+                <TextInput
+                  placeholder="Search...."
+                  returnKeyType={'search'}
+                  placeholderTextColor="#999999"
+                  style={styles.input}
+                  ref={_ref => {
+                    this.inputRef = _ref;
+                  }}
+                />
+              </View>
+            </TouchableHOC>
+            <View
+              style={{
+                paddingHorizontal: 5 * vw,
+                marginTop: 5 * vh,
+                justifyContent: 'space-between',
+              }}>
+              <OutfitSemiBoldText style={styles.recomend}>
+                Happy Hours Deals
+              </OutfitSemiBoldText>
+              <HomeCarouselConmponent banners={this.state.banners} />
+            </View>
             <View>
               <View
                 style={{
@@ -377,17 +391,6 @@ class HomeScreen extends React.Component {
               dashLength={0}
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
-            <View
-              style={{
-                paddingHorizontal: 5 * vw,
-                marginTop: 5 * vh,
-                justifyContent: 'space-between',
-              }}>
-              <OutfitSemiBoldText style={styles.recomend}>
-                Happy Hours Deals
-              </OutfitSemiBoldText>
-              <HomeCarouselConmponent />
-            </View>
             <View>
               <View
                 style={{
@@ -413,4 +416,16 @@ class HomeScreen extends React.Component {
     );
   }
 }
-export default HomeScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getHomDate: () => dispatch(getHomeData()),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

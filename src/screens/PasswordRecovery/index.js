@@ -137,7 +137,7 @@ class PasswordRecovery extends React.Component {
                           code: prevState.code + newemail,
                         };
                       });
-                      if (value) this.c2.focus();
+                      if (newemail) this.c2.focus();
                     }}
                   />
                 </View>
@@ -155,7 +155,7 @@ class PasswordRecovery extends React.Component {
                           code: prevState.code + newemail,
                         };
                       });
-                      if (value) this.c3.focus();
+                      if (newemail) this.c3.focus();
                     }}
                   />
                 </View>
@@ -173,7 +173,7 @@ class PasswordRecovery extends React.Component {
                           code: prevState.code + newemail,
                         };
                       });
-                      if (value) this.c4.focus();
+                      if (newemail) this.c4.focus();
                     }}
                   />
                 </View>
@@ -195,7 +195,9 @@ class PasswordRecovery extends React.Component {
                   />
                 </View>
               </View>
-              <TouchableHOC style={styles.forgotButton}>
+              <TouchableHOC
+                style={styles.forgotButton}
+                onPress={this.handleEmail}>
                 <RubikRegular style={styles.resetButton}>
                   Resend Code
                 </RubikRegular>

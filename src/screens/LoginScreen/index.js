@@ -28,21 +28,34 @@ import SignupScreen from '../SignupScreen';
 import {showToast} from '../../Api/HelperFunction';
 import {login, userSignup} from '../../Redux/Actions/authActions';
 
+const initialState = {
+  name: '',
+  email: '',
+  password: '',
+  confpw: '',
+  phone: '',
+  address: 'null',
+  image: '',
+  formOption: 'Login',
+  visible: false,
+};
+
 class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      email: '',
-      password: '',
-      confpw: '',
-      phone: '',
-      address: 'null',
-      image: '',
-      formOption: 'Login',
-      visible: false,
-    };
+    this.state = initialState;
   }
+
+  componentDidMount() {
+    this._unsubscribe = this.props.navigation.addListener('blur', () => {
+      this.setState(initialState);
+    });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+
   handleLogin = () => {
     const {email, password} = this.state;
     if (!email || !password) {
@@ -65,7 +78,7 @@ class RegisterScreen extends React.Component {
       this.props
         .login(data)
         .then(res => {
-          console.log(!res?.user?.age, 'LOGIN RESPONSE');
+          console.log(res?.user?.age, 'LOGIN RESPONSE');
           if (res?.success) {
             showToast('Login Successfull!');
             if (!res?.user?.age || !res?.user?.gender || !res?.user?.address) {
@@ -80,7 +93,18 @@ class RegisterScreen extends React.Component {
     }
   };
 
-  handleSignUp = () => {
+  parseImage = image => {
+    console.log(image, 'IMAGES');
+    return new Promise((resolve, reject) => {
+      const data = {};
+      Object.keys(image).map((key, index) => {
+        data[`image[${index}][${key}]`] = image[key];
+      });
+      resolve(data);
+    });
+  };
+
+  handleSignUp = async () => {
     const {name, email, password, confpw, phone, address, image} = this.state;
     if (!name) {
       showToast('Please enter your full name');
@@ -114,6 +138,7 @@ class RegisterScreen extends React.Component {
           name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
         };
       }
+      const images = await this.parseImage(_image);
       let data = {
         full_name: name,
         email: email,
@@ -121,7 +146,7 @@ class RegisterScreen extends React.Component {
         phone: phone,
         password: password,
         password_confirmation: confpw,
-        image: _image,
+        ...images,
       };
       this.props.signup(data).then(res => {
         if (res?.success) {
@@ -180,8 +205,9 @@ class RegisterScreen extends React.Component {
               })
             }
             keyboardType="email-address"
-            // value={this.state.email}
+            value={this.state.email}
             label="Email Address"
+            autoCapitalize="none"
           />
           <MainInput
             placeholder="Enter Password"
@@ -342,7 +368,7 @@ class RegisterScreen extends React.Component {
                 name: newemail,
               })
             }
-            // value={this.state.email}
+            value={this.state.name}
             autoCapitalize="words"
             label="Full Name"
           />
@@ -358,7 +384,7 @@ class RegisterScreen extends React.Component {
               })
             }
             keyboardType="email-address"
-            // value={this.state.email}
+            value={this.state.email}
             label="Email Address"
             autoCapitalize="none"
           />
@@ -373,7 +399,7 @@ class RegisterScreen extends React.Component {
                 phone: newemail,
               })
             }
-            // value={this.state.email}
+            value={this.state.phone}
             maxLength={16}
             label="Phone Number"
             autoCapitalize="none"

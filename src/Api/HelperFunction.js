@@ -147,6 +147,7 @@ export const getConfigs = (method, body, formData = true) => {
     headers['Content-Type'] = 'multipart/form-data';
   }
   const data = store.getState();
+  console.log('Token==>', data.SessionReducer.token);
   if (data) {
     if (data.SessionReducer) {
       if (data.SessionReducer.token != null) {

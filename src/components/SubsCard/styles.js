@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     width: 30 * vw,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: vh * 2,
+    marginTop: vh * 4,
     marginBottom: vh * 2,
     paddingHorizontal: vw * 2,
   },

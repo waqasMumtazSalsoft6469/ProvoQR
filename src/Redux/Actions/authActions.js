@@ -95,7 +95,7 @@ export const userSignup = data => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
-          const response = await post(endpoints.auth.userSignup, data, false);
+          const response = await post(endpoints.auth.userSignup, data, true);
           console.log(response, 'RESPONSE');
           resolve(response);
         } catch (e) {
@@ -182,6 +182,27 @@ export const completeProfile = data => {
             false,
           );
           dispatch({type: actionTypes.completeProfile, session: response});
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const editProfile = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+          const response = await post(endpoints.auth.editProfile, data, true);
+          // dispatch({type: actionTypes.completeProfile, session: response});
 
           resolve(response);
         } catch (e) {

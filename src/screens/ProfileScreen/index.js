@@ -16,8 +16,9 @@ import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegulerText from '../../components/Text/OutfitRegularText';
 import {getProfileData} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
+import {imageUrl} from '../../Api/configs';
 
-class RegisterScreen extends React.Component {
+class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,11 +26,24 @@ class RegisterScreen extends React.Component {
     };
   }
 
+  // componentDidMount() {
+  //   this.props.getProfile().then(res => {
+  //     this.setState({profile: res?.profile[0]});
+  //     console.log(res?.profile[0], 'PROFILE');
+  //   });
+  // }
+
   componentDidMount() {
-    this.props.getProfile().then(res => {
-      this.setState({profile: res?.profile[0]});
-      console.log(res?.profile[0], 'PROFILE');
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.props.getProfile().then(res => {
+        this.setState({profile: res?.profile[0]});
+        console.log(res?.profile[0], 'PROFILE');
+      });
     });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   renderbadges = () => {
@@ -76,6 +90,7 @@ class RegisterScreen extends React.Component {
     );
   };
   render() {
+    const {profile} = this.state;
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -90,10 +105,17 @@ class RegisterScreen extends React.Component {
                 marginTop: 5 * vh,
                 paddingHorizontal: 4 * vw,
               }}>
-              <Image source={icons.purpleprofile} style={styles.profile} />
+              <Image
+                source={
+                  profile?.image
+                    ? {uri: imageUrl + profile?.image}
+                    : icons.purpleprofile
+                }
+                style={styles.profile}
+              />
 
               <OutfitMediumText style={styles.name}>
-                Amanda Charles
+                {profile?.name}
               </OutfitMediumText>
               {this.renderbadges()}
             </View>
@@ -102,68 +124,46 @@ class RegisterScreen extends React.Component {
                 Email Address
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                Amanda@email.com
+                {profile?.email}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>Age</OutfitMediumText>
-              <OutfitRegulerText style={styles.email}>20</OutfitRegulerText>
-            </View>
-            <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
-              <OutfitMediumText style={styles.emailtext}>
-                User ID
-              </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                03RS231
+                {profile?.age}
               </OutfitRegulerText>
             </View>
-            <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
+            {/* <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>
                 Billing Details{' '}
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
                 ***************7193
               </OutfitRegulerText>
-            </View>
+            </View> */}
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>
                 Phone Number
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                012 345 6789
+                {profile?.phone}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>
                 Gender
               </OutfitMediumText>
-              <OutfitRegulerText style={styles.email}>Female</OutfitRegulerText>
+              <OutfitRegulerText style={styles.email}>
+                {profile?.gender}
+              </OutfitRegulerText>
             </View>
             <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>
-                Country
+                Address
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                United States
+                {profile?.address}
               </OutfitRegulerText>
-            </View>
-            <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
-              <OutfitMediumText style={styles.emailtext}>City</OutfitMediumText>
-              <OutfitRegulerText style={styles.email}>
-                New York
-              </OutfitRegulerText>
-            </View>
-            <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
-              <OutfitMediumText style={styles.emailtext}>
-                State
-              </OutfitMediumText>
-              <OutfitRegulerText style={styles.email}>ASDFG</OutfitRegulerText>
-            </View>
-            <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
-              <OutfitMediumText style={styles.emailtext}>
-                Zipcode
-              </OutfitMediumText>
-              <OutfitRegulerText style={styles.email}>56786</OutfitRegulerText>
             </View>
 
             <View style={{alignItems: 'center', marginBottom: 2 * vh}}>
@@ -211,4 +211,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

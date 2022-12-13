@@ -13,6 +13,7 @@ const actionTypes = {
   enableBiometric: 'ENABLE_BIOMETRIC',
   setServices: 'SET_SERVICES',
   completeProfile: 'CMPLETE_PROFILE',
+  editProfile: 'EDIT_PROFILE',
 
   // using
   getProfile: 'GET_PROFILE',

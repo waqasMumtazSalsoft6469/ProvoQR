@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import {View, Image} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {Pagination} from 'react-native-snap-carousel';
+import {imageUrl} from '../../Api/configs';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import ThemeColors from '../../Utils/ThemeColors';
 import {vw} from '../../Utils/Units';
@@ -21,13 +22,13 @@ const entries = [
     image: sampleimage.happyHour,
   },
 ];
-const HomeCarouselConmponent = () => {
+const HomeCarouselConmponent = ({banners}) => {
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
   const carouselRef = useRef();
   const _renderItem = ({item, index}) => {
     return (
       <View style={styles.slide}>
-        <Image source={item.image} style={styles.image} />
+        <Image source={{uri: imageUrl + item.image}} style={styles.image} />
       </View>
     );
   };
@@ -35,7 +36,7 @@ const HomeCarouselConmponent = () => {
     <View style={styles.carouselContainer}>
       <Carousel
         ref={carouselRef}
-        data={entries}
+        data={banners}
         autoplay
         renderItem={_renderItem}
         loop={true}
@@ -48,7 +49,7 @@ const HomeCarouselConmponent = () => {
         lockScrollWhileSnapping={true}
       />
       <Pagination
-        dotsLength={entries.length}
+        dotsLength={banners.length}
         activeDotIndex={activeCarouselIndex}
         activeOpacity={1}
         containerStyle={styles.paginationContainer}

@@ -33,7 +33,7 @@ export const getNavigationOptions = props => {
 export const setStatusBar = (activeRouteName, settings) => {
   // StatusBar.setBackgroundColor('rgba(255,255,255,0.13)', true);
   // StatusBar.setTranslucent(true);
-  StatusBar.setBarStyle('light-content', true);
+  StatusBar.setBarStyle('dark-content', true);
 };
 export const shouldHeaderBeShown = activeRouteName => {
   setStatusBar(activeRouteName);
