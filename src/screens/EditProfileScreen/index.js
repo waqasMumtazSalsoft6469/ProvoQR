@@ -23,6 +23,8 @@ import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import {editProfile} from '../../Redux/Actions/authActions';
 import {imageUrl} from '../../Api/configs';
 import {connect} from 'react-redux';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {showToast} from '../../Api/HelperFunction';
 
 class EditProfileScreen extends React.Component {
   constructor(props) {
@@ -34,12 +36,14 @@ class EditProfileScreen extends React.Component {
       gender: '',
       address: '',
       image: '',
+      selectedImage: '',
       visible: false,
     };
   }
 
   componentDidMount() {
     const {name, age, phone, gender, address, image} = this.props.userData;
+    console.log(this.props.userData);
     this.setState({name, age, phone, gender, address, image});
   }
 
@@ -67,12 +71,27 @@ class EditProfileScreen extends React.Component {
   };
   img = data => {
     if (data?.assets != null) {
-      this.setState({image: data.assets[0].uri, visible: false});
+      this.setState({
+        selectedImage: data.assets[0].uri,
+        image: data.assets[0].uri,
+        visible: false,
+      });
     }
   };
 
-  handleUpdate = () => {
-    const {name, phone, address, image} = this.state;
+  // parseImage = image => {
+  //   return new Promise((resolve, reject) => {
+  //     const data = {};
+  //     Object.keys(image).map((key, index) => {
+  //       data[`image[0][${key}]`] = image[key];
+  //     });
+  //     resolve(data);
+  //   });
+  // };
+
+  handleUpdate = async () => {
+    const {name, phone, address, image, age, gender, selectedImage} =
+      this.state;
     if (!name) {
       showToast('Please enter your full name');
     } else if (!phone) {
@@ -83,21 +102,38 @@ class EditProfileScreen extends React.Component {
       showToast('Please select profile image');
     } else {
       let _image = null;
-      if (image) {
-        let splittedUri = image?.split('.');
+      data = {};
+      let profileImg = {};
+      if (selectedImage) {
+        let splittedUri = selectedImage?.split('.');
         _image = {
-          uri: image,
+          uri: selectedImage,
           type: `image/${splittedUri[splittedUri?.length - 1]}`,
           name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
         };
       }
-      let data = {
-        full_name: name,
-        address: address,
-        phone: phone,
-        image: _image,
-      };
-      this.props.signup(data).then(res => {
+      profileImg[`image`] = _image;
+      if (selectedImage) {
+        data = {
+          name: name,
+          address: address,
+          phone: phone,
+          ...profileImg,
+          age: age,
+          gender: gender,
+        };
+      } else {
+        data = {
+          name: name,
+          address: address,
+          phone: phone,
+          image: image,
+          age: age,
+          gender: gender,
+        };
+      }
+
+      this.props.editProfile(data).then(res => {
         if (res?.success) {
           showToast(res?.message);
           this.props.navigation.goBack();
@@ -105,6 +141,10 @@ class EditProfileScreen extends React.Component {
         }
       });
     }
+  };
+
+  handleDoneAddress = address => {
+    this.setState({address: address});
   };
 
   render() {
@@ -120,10 +160,17 @@ class EditProfileScreen extends React.Component {
               <View style={{alignItems: 'center'}}>
                 <ImageBackground
                   source={
-                    this.state.image
-                      ? {uri: imageUrl + this.state.image}
+                    this.state.selectedImage
+                      ? {uri: this.state.selectedImage}
+                      : this.state.image
+                      ? {
+                          uri:
+                            'https://custom-dev.onlinetestingserver.com/provo/public/storage/' +
+                            this.state.image,
+                        }
                       : icons.purpleprofile
                   }
+                  resizeMode="cover"
                   style={[
                     styles.profile,
                     {alignItems: 'flex-end', justifyContent: 'flex-end'},
@@ -194,7 +241,30 @@ class EditProfileScreen extends React.Component {
                   value={this.state.phone}
                   label="Phone Number"
                 />
-                <MainInput
+                <View style={[styles.labelview]}>
+                  <OutfitMediumText style={[styles.label]}>
+                    Address
+                  </OutfitMediumText>
+                </View>
+
+                <TouchableHOC
+                  style={styles.fieldContainer}
+                  onPress={() =>
+                    this.props.navigation.navigate('Location', {
+                      handleDoneAddress: this.handleDoneAddress,
+                    })
+                  }>
+                  <OutfitRegularText
+                    style={[
+                      styles.gender,
+                      this.state.address && {color: ThemeColors.fontBlack},
+                    ]}
+                    numberOfLines={1}>
+                    {this.state.address ?? 'Enter Location'}
+                  </OutfitRegularText>
+                  <Image source={icons.loc} style={styles.down} />
+                </TouchableHOC>
+                {/* <MainInput
                   placeholder="Enter Gender"
                   // style={styles.field}
                   ref={r => (this.email = r)}
@@ -206,20 +276,20 @@ class EditProfileScreen extends React.Component {
                   }
                   value={this.state.gender}
                   label="Gender"
-                />
-                <MainInput
-                  placeholder="Enter Country"
+                /> */}
+                {/* <MainInput
+                  placeholder="Enter Address"
                   // style={styles.field}
                   ref={r => (this.email = r)}
                   // onSubmitEditing={() => this.pw.onFocus()}
                   onChangeText={newemail =>
                     this.setState({
-                      country: newemail,
+                      address: newemail,
                     })
                   }
                   value={this.state.address}
-                  label="Country"
-                />
+                  label="Address"
+                /> */}
               </View>
             </View>
 
@@ -275,7 +345,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    editProfile: () => dispatch(editProfile()),
+    editProfile: data => dispatch(editProfile(data)),
   };
 };
 

@@ -17,12 +17,34 @@ import {vh, vw} from '../../Utils/Units';
 import ThemeColors from '../../Utils/ThemeColors';
 import Button from '../../components/Buttons/SimpleButton';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import {connect} from 'react-redux';
+import {changePassword} from '../../Redux/Actions/authActions';
+import {showToast} from '../../Api/HelperFunction';
 
-class RegisterScreen extends React.Component {
+class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      old_password: '',
+      password: '',
+      password_confirmation: '',
+    };
   }
+
+  handlePassword = () => {
+    const {old_password, password, password_confirmation} = this.state;
+    if ((!old_password, !password, !password_confirmation)) {
+      showToast('All Fields are required.');
+    } else if (password != password_confirmation) {
+      showToast('New Password and Confirm Password Should be same');
+    } else {
+      let data = {old_password, password, password_confirmation};
+      this.props.changePassword(data).then(res => {
+        showToast(res?.success);
+        this.props.navigation.goBack();
+      });
+    }
+  };
 
   render() {
     return (
@@ -47,16 +69,24 @@ class RegisterScreen extends React.Component {
                 placeholder="Enter Current Password"
                 secureTextEntry={true}
                 label="Current Password"
+                onChangeText={text => this.setState({old_password: text})}
+                defaultValue={this.state.old_password}
               />
               <MainInput
                 placeholder="Enter New Password"
                 secureTextEntry={true}
                 label="New Password"
+                onChangeText={text => this.setState({password: text})}
+                defaultValue={this.state.password}
               />
               <MainInput
                 placeholder="Confirm Password"
                 secureTextEntry={true}
                 label="Confirm Password"
+                onChangeText={text =>
+                  this.setState({password_confirmation: text})
+                }
+                defaultValue={this.state.password_confirmation}
               />
             </View>
 
@@ -69,6 +99,7 @@ class RegisterScreen extends React.Component {
                   width: 40 * vw,
                   height: 6 * vh,
                 }}
+                onPress={this.handlePassword}
               />
             </View>
           </KeyboardAwareScrollView>
@@ -77,4 +108,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    changePassword: data => dispatch(changePassword(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

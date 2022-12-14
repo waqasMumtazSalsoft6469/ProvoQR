@@ -8,11 +8,12 @@ import OutfitSemiBoldText from '../../Text/OutfitSemiBoldText';
 import OutfitLightText from '../../Text/OutfitLightText';
 import TwoAlertModal from '../../Popups/TwoAlert';
 import {icons} from '../../../assets/images';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../../Redux/Actions/authActions';
 
 const DrawerContent = props => {
   const dispatch = useDispatch();
+  const userData = useSelector(state => state.SessionReducer.userData);
   const popupRef = useRef(null);
   const [visibleModal, setVisibleModal] = useState(false);
   const handleOnDrawerItemPress = routeName => {
@@ -41,7 +42,7 @@ const DrawerContent = props => {
         <View style={styles.header}>
           <OutfitLightText style={styles.nameText}>Hello There</OutfitLightText>
           <OutfitSemiBoldText style={styles.profilename}>
-            John Carter
+            {userData?.name}
           </OutfitSemiBoldText>
         </View>
       </Animated.View>

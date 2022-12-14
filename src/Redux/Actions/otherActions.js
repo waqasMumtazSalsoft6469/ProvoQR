@@ -24,47 +24,7 @@ export const getHomeData = () => {
   };
 };
 
-export const eventList = () => {
-  return async dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          dispatch({type: actionTypes.loaderOn});
-
-          const response = await get(endpoints.other.eventList);
-          resolve(response);
-        } catch (e) {
-          showToast(getMessage(e));
-          reject(e);
-        } finally {
-          dispatch({type: actionTypes.loaderOff});
-        }
-      }, 300);
-    });
-  };
-};
-
-export const bookedEvent = () => {
-  return async dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          dispatch({type: actionTypes.loaderOn});
-
-          const response = await get(endpoints.other.bookedEvents);
-          resolve(response);
-        } catch (e) {
-          showToast(getMessage(e));
-          reject(e);
-        } finally {
-          dispatch({type: actionTypes.loaderOff});
-        }
-      }, 300);
-    });
-  };
-};
-
-export const eventBook = id => {
+export const restaurantDetails = data => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -72,9 +32,9 @@ export const eventBook = id => {
           dispatch({type: actionTypes.loaderOn});
 
           const response = await post(
-            endpoints.other.eventBook + id,
-            null,
-            false,
+            endpoints.other.restaurantDetail,
+            data,
+            true,
           );
 
           resolve(response);

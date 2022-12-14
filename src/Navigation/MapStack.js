@@ -7,6 +7,7 @@ import CampaignDetail from '../screens/CampaignDetails';
 
 import MapScreen from '../screens/MapScreen';
 import {getNavigationOptions} from './NavigationOptions';
+import RestaurantDirection from '../screens/RestaurantDirectionScreen';
 
 const MapNavigator = createStackNavigator();
 
@@ -23,6 +24,10 @@ const MenuStack = () => {
         component={ResturentCampaignDetails}
         name="ResturentCampaignDetails"
       />
+      {/* <MapNavigator.Screen
+        component={RestaurantDirection}
+        name="RestaurantDirection"
+      /> */}
       <MapNavigator.Screen component={CampaignDetail} name="CampaignDetail" />
     </MapNavigator.Navigator>
   );

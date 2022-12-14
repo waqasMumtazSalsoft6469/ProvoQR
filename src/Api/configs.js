@@ -11,10 +11,12 @@ export const endpoints = {
     cancelSubscription: '/user/cancel-subscription/',
     completeProfile: '/complete/profile',
     editProfile: '/user/update/profile',
+    changePassword: '/user/change/password',
   },
   other: {
     getProfile: '/user/profile',
     home: '/get/home/data',
+    restaurantDetail: '/get/restaurant/details',
   },
 };
 
@@ -25,5 +27,4 @@ export const endpoints = {
 // for live env
 export const base_url =
   'https://custom-dev.onlinetestingserver.com/provo/public/api';
-export const imageUrl =
-  'https://custom-dev.onlinetestingserver.com/provo/storage/';
+export const imageUrl = 'https://custom-dev.onlinetestingserver.com/';

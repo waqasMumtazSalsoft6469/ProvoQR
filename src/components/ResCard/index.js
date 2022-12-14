@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, View, ImageBackground, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
-import {vw, vh} from '../../Utils/Units';
+import {vw, vh, calculateDistance} from '../../Utils/Units';
 import {icons, sampleimage} from '../../assets/images';
 import GilroyBold from '../../components/Text/GilroyBold';
 import RateCard from '../RatingCard';
@@ -10,6 +10,7 @@ import RubikRegular from '../../components/Text/RubikRegular';
 import RubikLight from '../../components/Text/RubikLight';
 import OutfitSemiBoldText from '../Text/OutfitSemiBoldText';
 import OutfitRegularText from '../Text/OutfitRegularText';
+import {imageUrl} from '../../Api/configs';
 
 class ProductItem extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ class ProductItem extends React.Component {
           marginTop: 1 * vh,
           width: 75 * vw,
         }}>
-        {this.props?.item?.ratings.map((item, index) => {
+        {this.props?.item?.ratings?.map((item, index) => {
           return (
             <View>
               <RateCard item={item} index={index} />
@@ -84,17 +85,15 @@ class ProductItem extends React.Component {
     return (
       <View
         style={{flexDirection: 'row', alignItems: 'center', marginTop: 1 * vh}}>
-        {this.props?.item?.cusines.map((item, index) => {
-          return (
-            <OutfitRegularText style={styles.cus}>
-              {item?.name},
-            </OutfitRegularText>
-          );
-        })}
+        <OutfitRegularText style={styles.cus}>
+          {this.props?.item?.organ_profiles?.cuisines?.name}
+        </OutfitRegularText>
       </View>
     );
   };
   render() {
+    const location = this.props.location;
+
     return (
       <View>
         <TouchableHOC
@@ -104,7 +103,7 @@ class ProductItem extends React.Component {
             }
           }}>
           <Image
-            source={this.props.item?.image}
+            source={{uri: imageUrl + this.props.item?.image}}
             style={[
               styles.imgcard,
               {width: this.props.history ? 90 * vw : 80 * vw},
@@ -150,7 +149,13 @@ class ProductItem extends React.Component {
           }}>
           <Image source={icons.whiteloc} style={styles.imgicon} />
           <OutfitSemiBoldText style={styles.dis}>
-            {this.props.item?.distance}
+            {calculateDistance(
+              location?.latitude,
+              location?.longitude,
+              this.props.item.lat,
+              this.props.item.lng,
+            )?.toFixed(0)}{' '}
+            km
           </OutfitSemiBoldText>
         </View>
 

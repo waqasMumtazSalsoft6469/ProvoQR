@@ -26,19 +26,17 @@ class ProfileScreen extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.props.getProfile().then(res => {
-  //     this.setState({profile: res?.profile[0]});
-  //     console.log(res?.profile[0], 'PROFILE');
-  //   });
-  // }
+  getData = () => {
+    this.props.getProfile().then(res => {
+      this.setState({profile: res?.profile[0]});
+      console.log(res?.profile[0], 'PROFILE');
+    });
+  };
 
   componentDidMount() {
+    this.getData();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-      this.props.getProfile().then(res => {
-        this.setState({profile: res?.profile[0]});
-        console.log(res?.profile[0], 'PROFILE');
-      });
+      this.getData();
     });
   }
 
@@ -108,7 +106,11 @@ class ProfileScreen extends React.Component {
               <Image
                 source={
                   profile?.image
-                    ? {uri: imageUrl + profile?.image}
+                    ? {
+                        uri:
+                          'https://custom-dev.onlinetestingserver.com/provo/public/storage/' +
+                          profile?.image,
+                      }
                     : icons.purpleprofile
                 }
                 style={styles.profile}
@@ -117,7 +119,7 @@ class ProfileScreen extends React.Component {
               <OutfitMediumText style={styles.name}>
                 {profile?.name}
               </OutfitMediumText>
-              {this.renderbadges()}
+              {/* {this.renderbadges()} */}
             </View>
             <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>
@@ -182,17 +184,17 @@ class ProfileScreen extends React.Component {
                   this.props.navigation.navigate('ChangePassword')
                 }>
                 <OutfitRegulerText style={styles.editpw}>
-                  Edit Password
+                  Change Password
                 </OutfitRegulerText>
               </TouchableHOC>
-              <TouchableHOC
+              {/* <TouchableHOC
                 onPress={() =>
                   this.props.navigation.navigate('EditBillingDetails')
                 }>
                 <OutfitRegulerText style={styles.editpw}>
                   Edit Billing Details
                 </OutfitRegulerText>
-              </TouchableHOC>
+              </TouchableHOC> */}
             </View>
           </ScrollView>
         </ImageBackground>

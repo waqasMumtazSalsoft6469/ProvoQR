@@ -46,7 +46,7 @@ class MainNavigator extends React.Component {
               name="CompleteProfile"
             />
           )}
-        <MainStack.Screen component={Drawer} name="Home" />
+        <MainStack.Screen component={Drawer} name="Drawer" />
         <MainStack.Screen
           component={Location}
           name="Location"

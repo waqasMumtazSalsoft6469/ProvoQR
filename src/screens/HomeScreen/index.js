@@ -29,154 +29,34 @@ class HomeScreen extends React.Component {
     this.state = {
       banners: [],
       recommended: [],
-      home: [
-        {
-          image: sampleimage.home1,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          happyHours: true,
-          ratings: [
-            {
-              rate: 'Gold',
-            },
-            {
-              rate: 'Silver',
-            },
-            {
-              rate: 'Bronze',
-            },
-          ],
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-        {
-          image: sampleimage.home2,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          happyHours: false,
-          ratings: [
-            {
-              rate: 'Gold',
-            },
-            {
-              rate: 'Silver',
-            },
-            {
-              rate: 'Bronze',
-            },
-          ],
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-      ],
-      places: [
-        {
-          image: sampleimage.places,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          happyHours: true,
-          ratings: [
-            {
-              rate: 'Gold',
-            },
-            {
-              rate: 'Silver',
-            },
-            {
-              rate: 'Bronze',
-            },
-          ],
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-        {
-          image: sampleimage.places,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          happyHours: true,
-          ratings: [
-            {
-              rate: 'Gold',
-            },
-            {
-              rate: 'Silver',
-            },
-            {
-              rate: 'Bronze',
-            },
-          ],
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-      ],
-      categories: [
-        {
-          name: 'Burger',
-          icon: icons.burger,
-        },
-        {
-          name: 'Pizza',
-          icon: icons.pizza,
-        },
-        {
-          name: 'Salad',
-          icon: icons.salad,
-        },
-        {
-          name: 'Burger',
-          icon: icons.burger,
-        },
-        {
-          name: 'Pizza',
-          icon: icons.pizza,
-        },
-        {
-          name: 'Salad',
-          icon: icons.salad,
-        },
-      ],
+      allRestaurant: [],
+      categories: [],
+      userLocation: {latitude: '', longitude: ''},
     };
   }
 
+  getCurrentLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      this.setState({
+        userLocation: {
+          latitude: location?.latitude,
+          longitude: parseFloat(location?.longitude),
+        },
+      });
+    } catch (error) {
+      showToast(error);
+    }
+  };
+
   componentDidMount() {
     this.props.getHomDate().then(res => {
-      this.setState({banners: res?.banner, recommended: res?.recommended});
+      this.setState({
+        banners: res?.banner,
+        recommended: res?.recommended,
+        allRestaurant: res?.allRestaurant,
+        categories: res?.category,
+      });
     });
   }
 
@@ -185,12 +65,16 @@ class HomeScreen extends React.Component {
       <View style={{paddingHorizontal: 5 * vw}}>
         <HomeCard
           item={item}
-          onClick={() => this.props.navigation.navigate('ResturentDetail')}
+          onClick={() =>
+            this.props.navigation.navigate('ResturentDetail', {id: item?.id})
+          }
           viewmap={() =>
-            this.props.navigation.navigate('MapStack', {
-              screen: 'ShowonMapScreen',
+            this.props.navigation.navigate('RestaurantDirection', {
+              latitude: item?.lat,
+              longitude: item?.lng,
             })
           }
+          location={this.state.userLocation}
         />
       </View>
     );
@@ -205,7 +89,7 @@ class HomeScreen extends React.Component {
           paddingHorizontal: vw * 2,
         }}>
         <View style={styles.viewcon}>
-          <Image source={item.icon} style={styles.burgerIcon} />
+          {/* <Image source={item.icon} style={styles.burgerIcon} /> */}
           <OutfitSemiBoldText style={styles.catname}>
             {item.name}
           </OutfitSemiBoldText>
@@ -214,15 +98,15 @@ class HomeScreen extends React.Component {
     );
   };
 
-  header = () => {
-    return (
-      <View style={{flexDirection: 'row'}}>
-        <OutfitSemiBoldText style={styles.recomend}>
-          Recommended For You
-        </OutfitSemiBoldText>
-      </View>
-    );
-  };
+  // header = () => {
+  //   return (
+  //     <View style={{flexDirection: 'row'}}>
+  //       <OutfitSemiBoldText style={styles.recomend}>
+  //         Recommended For You
+  //       </OutfitSemiBoldText>
+  //     </View>
+  //   );
+  // };
   render() {
     return (
       <View style={styles.container}>
@@ -291,7 +175,7 @@ class HomeScreen extends React.Component {
             </View>
           </HeaderHome>
           <ScrollView>
-            <TouchableHOC style={styles.seachbar}>
+            {/* <TouchableHOC style={styles.seachbar}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -319,7 +203,7 @@ class HomeScreen extends React.Component {
                   }}
                 />
               </View>
-            </TouchableHOC>
+            </TouchableHOC> */}
             <View
               style={{
                 paddingHorizontal: 5 * vw,
@@ -329,7 +213,9 @@ class HomeScreen extends React.Component {
               <OutfitSemiBoldText style={styles.recomend}>
                 Happy Hours Deals
               </OutfitSemiBoldText>
-              <HomeCarouselConmponent banners={this.state.banners} />
+              <HomeCarouselConmponent
+                banners={this.state.banners?.slice(0, 4)}
+              />
             </View>
             <View>
               <View
@@ -342,10 +228,10 @@ class HomeScreen extends React.Component {
                 <OutfitSemiBoldText style={styles.recomend}>
                   Recommended For You
                 </OutfitSemiBoldText>
-                <Image source={icons.filter} style={styles.filter} />
+                {/* <Image source={icons.filter} style={styles.filter} /> */}
               </View>
               <FlatList
-                data={this.state.home}
+                data={this.state.recommended}
                 showsHorizontalScrollIndicator={false}
                 style={{marginTop: vh}}
                 renderItem={this.renderitem}
@@ -403,7 +289,7 @@ class HomeScreen extends React.Component {
                 </OutfitSemiBoldText>
               </View>
               <FlatList
-                data={this.state.places}
+                data={this.state.allRestaurant}
                 showsHorizontalScrollIndicator={false}
                 style={{marginTop: vh, marginBottom: 15 * vh}}
                 renderItem={this.renderitem}

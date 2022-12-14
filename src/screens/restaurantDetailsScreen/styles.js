@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 3 * vw,
     paddingVertical: 1.5 * vh,
-    width: 25 * vw,
+    // width: 25 * vw,
     marginTop: 2 * vh,
     alignItems: 'center',
     borderRadius: 2 * vh,
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     width: 90 * vw,
     height: 50 * vw,
 
-    borderRadius: 0.5 * vh,
-    resizeMode: 'contain',
+    borderRadius: 4 * vh,
+    resizeMode: 'cover',
   },
   menuContainer: {
     flexDirection: 'row',

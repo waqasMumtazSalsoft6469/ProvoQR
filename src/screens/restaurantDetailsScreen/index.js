@@ -21,11 +21,15 @@ import Button from '../../components/Buttons/SimpleButton';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
 import Dash from 'react-native-dash';
 import Counter from '../../components/Counter';
+import {restaurantDetails} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
+import {imageUrl} from '../../Api/configs';
 
 class ResturentDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      details: {},
       cusines: [
         {
           name: 'Cuisine 01',
@@ -50,6 +54,15 @@ class ResturentDetailScreen extends React.Component {
       ],
     };
   }
+
+  componentDidMount() {
+    const id = this.props.route.params.id;
+    this.props.restaurantDetails({organisation_id: id}).then(res => {
+      console.log(res?.details);
+      this.setState({details: res?.details});
+    });
+  }
+
   rendercuisines = () => {
     return (
       <View
@@ -58,13 +71,16 @@ class ResturentDetailScreen extends React.Component {
           alignItems: 'center',
           marginTop: 1.5 * vh,
         }}>
-        {this.state.cusines.map((item, index) => {
+        {/* {this.state.cusines.map((item, index) => {
           return (
             <OutfitRegularText style={styles.cus}>
               {item?.name},
             </OutfitRegularText>
           );
-        })}
+        })} */}
+        <OutfitRegularText style={styles.cus}>
+          {this.state.details?.organ_profiles?.cuisines?.name}
+        </OutfitRegularText>
       </View>
     );
   };
@@ -101,7 +117,10 @@ class ResturentDetailScreen extends React.Component {
             style={{flex: 1}}
             contentContainerStyle={{height: vh * 130}}>
             <View style={{alignItems: 'center', marginTop: 3 * vh}}>
-              <Image source={sampleimage.places} style={styles.cardimg} />
+              <Image
+                source={{uri: imageUrl + this.state.details?.image}}
+                style={styles.cardimg}
+              />
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
               <View
@@ -124,8 +143,9 @@ class ResturentDetailScreen extends React.Component {
                   </TouchableHOC>
                   <TouchableHOC
                     onPress={() =>
-                      this.props.navigation.navigate('MapStack', {
-                        screen: 'ShowonMapScreen',
+                      this.props.navigation.navigate('RestaurantDirection', {
+                        latitude: this.state.details?.lat,
+                        longitude: this.state.details?.lng,
                       })
                     }>
                     <OutfitRegularText style={styles.buttonText}>
@@ -136,9 +156,7 @@ class ResturentDetailScreen extends React.Component {
               </View>
 
               <OutfitLightText style={styles.rewtext}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since.
+                {this.state.details?.organ_profiles?.about}
               </OutfitLightText>
               <View
                 style={{
@@ -147,12 +165,12 @@ class ResturentDetailScreen extends React.Component {
                   alignItems: 'center',
                 }}>
                 <View style={styles.catbox}>
-                  <Image source={icons.burger} style={styles.catIcon} />
+                  {/* <Image source={icons.burger} style={styles.catIcon} /> */}
                   <OutfitRegularText style={styles.catText}>
-                    Burger
+                    {this.state.details?.organ_profiles?.categories?.name}
                   </OutfitRegularText>
                 </View>
-                <Counter />
+                {/* <Counter /> */}
               </View>
               {this.rendercuisines()}
               {this.renderratings()}
@@ -169,7 +187,7 @@ class ResturentDetailScreen extends React.Component {
               dashLength={0}
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
-            <View
+            {/* <View
               style={{
                 paddingHorizontal: 5 * vw,
                 marginTop: 5 * vh,
@@ -179,15 +197,15 @@ class ResturentDetailScreen extends React.Component {
                 Happy Hours Deals
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
-            </View>
+            </View> */}
             <View style={{alignItems: 'center'}}>
               <Button
                 title="LOOT BOX"
-                onPress={() =>
-                  this.props.navigation.navigate('LootBoxPaymentMethod', {
-                    success: 0,
-                  })
-                }
+                // onPress={() =>
+                //   this.props.navigation.navigate('LootBoxPaymentMethod', {
+                //     success: 0,
+                //   })
+                // }
                 btnContainer={{marginTop: 5 * vh}}
               />
             </View>
@@ -197,4 +215,18 @@ class ResturentDetailScreen extends React.Component {
     );
   }
 }
-export default ResturentDetailScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    restaurantDetails: data => dispatch(restaurantDetails(data)),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ResturentDetailScreen);

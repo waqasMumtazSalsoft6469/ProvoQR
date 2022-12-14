@@ -134,7 +134,7 @@ class PasswordRecovery extends React.Component {
                       this.setState(prevState => {
                         return {
                           ...prevState,
-                          code: prevState.code + newemail,
+                          code: newemail,
                         };
                       });
                       if (newemail) this.c2.focus();
@@ -223,6 +223,8 @@ class PasswordRecovery extends React.Component {
                     password: newemail,
                   })
                 }
+                autoCapitalize="none"
+                defaultValue={this.state.password}
               />
               <MainInput
                 placeholder="Confirm Password"
@@ -233,6 +235,8 @@ class PasswordRecovery extends React.Component {
                     password_confirmation: newemail,
                   })
                 }
+                defaultValue={this.state.password_confirmation}
+                autoCapitalize="none"
               />
             </View>
           </>

@@ -49,7 +49,7 @@ const HomeCarouselConmponent = ({banners}) => {
         lockScrollWhileSnapping={true}
       />
       <Pagination
-        dotsLength={banners.length}
+        dotsLength={banners?.length}
         activeDotIndex={activeCarouselIndex}
         activeOpacity={1}
         containerStyle={styles.paginationContainer}

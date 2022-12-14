@@ -102,7 +102,7 @@ class CompleteProfile extends React.Component {
                   </OutfitMediumText>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                {/* <View style={{flexDirection: 'row'}}>
                   <TouchableHOC>
                     <Image
                       source={icons.whiteloc}
@@ -134,7 +134,7 @@ class CompleteProfile extends React.Component {
                     resizeMode="contain"
                     style={styles.profile}
                   />
-                </View>
+                </View> */}
               </View>
             </HeaderHome>
 

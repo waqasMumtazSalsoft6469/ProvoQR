@@ -21,7 +21,7 @@ export const login = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -33,7 +33,7 @@ export const sendEmail = data => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          const response = await post(endpoints.auth.sendEmail, data, false);
+          const response = await post(endpoints.auth.sendEmail, data, true);
 
           resolve(response);
         } catch (e) {
@@ -42,7 +42,7 @@ export const sendEmail = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -54,7 +54,7 @@ export const verifyOTP = data => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          const response = await post(endpoints.auth.verifyOTP, data, false);
+          const response = await post(endpoints.auth.verifyOTP, data, true);
 
           resolve(response);
         } catch (e) {
@@ -63,7 +63,7 @@ export const verifyOTP = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -75,7 +75,7 @@ export const setPassword = data => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          const response = await post(endpoints.auth.setPassword, data, false);
+          const response = await post(endpoints.auth.setPassword, data, true);
 
           resolve(response);
         } catch (e) {
@@ -84,7 +84,7 @@ export const setPassword = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -95,7 +95,7 @@ export const userSignup = data => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
-          const response = await post(endpoints.auth.userSignup, data, true);
+          const response = await post(endpoints.auth.userSignup, data, false);
           console.log(response, 'RESPONSE');
           resolve(response);
         } catch (e) {
@@ -104,7 +104,7 @@ export const userSignup = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -124,7 +124,7 @@ export const subPackges = token => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -165,7 +165,7 @@ export const subscribePackage = (detail, token) => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -190,7 +190,7 @@ export const completeProfile = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
     });
   };
 };
@@ -211,7 +211,32 @@ export const editProfile = data => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 300);
+      }, 1000);
+    });
+  };
+};
+
+export const changePassword = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+          const response = await post(
+            endpoints.auth.changePassword,
+            data,
+            false,
+          );
+          // dispatch({type: actionTypes.completeProfile, session: response});
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 1000);
     });
   };
 };

@@ -130,6 +130,7 @@ class RegisterScreen extends React.Component {
       showToast('Password and confirm password should be same.');
     } else {
       let _image = null;
+      let profileImg = {};
       if (image) {
         let splittedUri = image?.split('.');
         _image = {
@@ -138,7 +139,8 @@ class RegisterScreen extends React.Component {
           name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
         };
       }
-      const images = await this.parseImage(_image);
+      profileImg[`image`] = _image;
+
       let data = {
         full_name: name,
         email: email,
@@ -146,7 +148,7 @@ class RegisterScreen extends React.Component {
         phone: phone,
         password: password,
         password_confirmation: confpw,
-        ...images,
+        ...profileImg,
       };
       this.props.signup(data).then(res => {
         if (res?.success) {
@@ -205,7 +207,7 @@ class RegisterScreen extends React.Component {
               })
             }
             keyboardType="email-address"
-            value={this.state.email}
+            defaultValue={this.state.email}
             label="Email Address"
             autoCapitalize="none"
           />
@@ -221,7 +223,7 @@ class RegisterScreen extends React.Component {
             }
             autoCapitalize="none"
             secureTextEntry
-            value={this.state.password}
+            defaultValue={this.state.password}
             label="Password"
           />
           <TouchableHOC
@@ -368,7 +370,7 @@ class RegisterScreen extends React.Component {
                 name: newemail,
               })
             }
-            value={this.state.name}
+            defaultValue={this.state.name}
             autoCapitalize="words"
             label="Full Name"
           />
@@ -384,7 +386,7 @@ class RegisterScreen extends React.Component {
               })
             }
             keyboardType="email-address"
-            value={this.state.email}
+            defaultValue={this.state.email}
             label="Email Address"
             autoCapitalize="none"
           />
@@ -399,7 +401,7 @@ class RegisterScreen extends React.Component {
                 phone: newemail,
               })
             }
-            value={this.state.phone}
+            defaultValue={this.state.phone}
             maxLength={16}
             label="Phone Number"
             autoCapitalize="none"
@@ -416,7 +418,7 @@ class RegisterScreen extends React.Component {
             }
             secureTextEntry
             label="Password"
-            value={this.state.password}
+            defaultValue={this.state.password}
             autoCapitalize="none"
           />
 
@@ -430,9 +432,9 @@ class RegisterScreen extends React.Component {
                 confpw: newemail,
               })
             }
-            value={this.state.confpw}
+            defaultValue={this.state.confpw}
             secureTextEntry
-            // value={this.state.password}
+            // defaultValue={this.state.password}
             label="Confirm Password"
             autoCapitalize="none"
           />

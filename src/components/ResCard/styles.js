@@ -44,10 +44,10 @@ export default StyleSheet.create({
   },
 
   imgcard: {
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     width: 80 * vw,
-
-    borderRadius: 0.5 * vh,
+    backgroundColor: ThemeColors.redfboxtext,
+    borderRadius: 3 * vh,
     height: 50 * vw,
   },
   row: {flexDirection: 'row', alignItems: 'center'},

@@ -72,6 +72,7 @@ export const shouldHeaderBeShown = activeRouteName => {
     case 'ProvoScreen':
     case 'ProvoPaymentMethod':
     case 'LootBoxPaymentMethod':
+    case 'RestaurantDirection':
       return true;
 
     default:
@@ -154,6 +155,8 @@ export const getTitle = activeRouteName => {
       return 'Menu';
     case 'ProvoScreen':
       return 'Provo';
+    case 'RestaurantDirection':
+      return 'Map';
     default:
       return '';
   }
@@ -267,6 +270,7 @@ export const showHeaderLeft = (activeRouteName, props) => {
     case 'ProvoPaymentMethod':
     case 'LootBoxPaymentMethod':
     case 'Payment':
+    case 'RestaurantDirection':
       return renderBackButton(activeRouteName, props);
     default:
       return null;
@@ -284,7 +288,8 @@ export const defaultOptions = (activeRouteName, props) => {
       activeRouteName == 'Subscription' ||
       activeRouteName == 'Payment' ||
       activeRouteName == 'SuccessScreen' ||
-      activeRouteName == 'DrawerStack'
+      activeRouteName == 'DrawerStack' ||
+      activeRouteName == 'RestaurantDirection'
         ? null
         : showHeaderRight(activeRouteName, props),
     headerLeft: () => showHeaderLeft(activeRouteName, props),
