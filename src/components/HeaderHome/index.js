@@ -12,7 +12,7 @@ const headerBackground = props => {
         width: 100 * vw,
         // height: 18 * vh,
         justifyContent: 'center',
-        marginTop: StatusBar.currentHeight,
+        marginTop: StatusBar.currentHeight * 5,
       }}>
       {props.children}
     </View>
