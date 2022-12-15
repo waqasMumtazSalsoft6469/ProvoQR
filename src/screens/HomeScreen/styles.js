@@ -1,10 +1,11 @@
-const {StyleSheet} = require('react-native');
+const {StyleSheet, Platform} = require('react-native');
 import ThemeColors from '../../Utils/ThemeColors';
 import {themeShadow, vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: ThemeColors.white,
+    paddingTop: Platform.OS == 'ios' ? vh * 5 : 0,
   },
   imgbg: {
     width: 100 * vw,
