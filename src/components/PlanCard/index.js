@@ -11,6 +11,7 @@ import ThemeColors from '../../Utils/ThemeColors';
 import OutfitSemiBoldText from '../Text/OutfitSemiBoldText';
 import OutfitRegularText from '../Text/OutfitRegularText';
 import OutfitMediumText from '../Text/OutfitMediumText';
+import moment from 'moment';
 
 class PlanCard extends React.Component {
   constructor(props) {
@@ -21,21 +22,24 @@ class PlanCard extends React.Component {
   }
 
   render() {
+    const {item} = this.props;
     return (
       <View style={styles.containerclick}>
         <OutfitSemiBoldText style={styles.title}>
-          {this.props.item?.title}
+          {item?.packages?.name}
         </OutfitSemiBoldText>
         <OutfitRegularText style={styles.current}>
-          ({this.props.item?.month})
+          ({moment(item?.created_at).format('MMMM')})
         </OutfitRegularText>
         <View style={{alignItems: 'center'}}>
           <OutfitMediumText style={styles.month}>
-            {this.props.item?.validity} PLAN
+            {item?.packages?.duration} PLAN
           </OutfitMediumText>
           <View style={{flexDirection: 'row'}}>
             <OutfitSemiBoldText style={styles.symbol}>$</OutfitSemiBoldText>
-            <OutfitSemiBoldText style={styles.amount}>5</OutfitSemiBoldText>
+            <OutfitSemiBoldText style={styles.amount}>
+              {item?.packages?.price}
+            </OutfitSemiBoldText>
           </View>
         </View>
       </View>

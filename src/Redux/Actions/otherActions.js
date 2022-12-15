@@ -69,3 +69,43 @@ export const getProfileData = () => {
     });
   };
 };
+
+export const getMySubscription = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.getMySubscription);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getSubscriptionLogs = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.subscriptionLogs);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};

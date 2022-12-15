@@ -27,6 +27,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import SignupScreen from '../SignupScreen';
 import {showToast} from '../../Api/HelperFunction';
 import {login, userSignup} from '../../Redux/Actions/authActions';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const initialState = {
   name: '',
@@ -189,257 +190,254 @@ class RegisterScreen extends React.Component {
 
   renderLogin = () => {
     return (
-      <KeyboardAwareScrollView>
-        <View
-          style={{
-            alignItems: 'center',
-            marginTop: 5 * vh,
-            paddingHorizontal: vw * 2,
-          }}>
-          <MainInput
-            placeholder="Enter Email Address"
-            // style={styles.field}
-            ref={r => (this.email = r)}
-            onSubmitEditing={() => this.pw.onFocus()}
-            onChangeText={newemail =>
-              this.setState({
-                email: newemail,
-              })
-            }
-            keyboardType="email-address"
-            defaultValue={this.state.email}
-            label="Email Address"
-            autoCapitalize="none"
-          />
-          <MainInput
-            placeholder="Enter Password"
-            // style={styles.field}
-            ref={r => (this.pw = r)}
-            onSubmitEditing={() => this.pw.onFocus()}
-            onChangeText={newemail =>
-              this.setState({
-                password: newemail,
-              })
-            }
-            autoCapitalize="none"
-            secureTextEntry
-            defaultValue={this.state.password}
-            label="Password"
-          />
-          <TouchableHOC
-            style={styles.forgotButton}
-            onPress={() => this.props.navigation.navigate('PasswordRecovery')}>
-            <OutfitLightText style={styles.forgotText}>
-              Forgot Passsword?
-            </OutfitLightText>
-          </TouchableHOC>
+      <View
+        style={{
+          alignItems: 'center',
+          marginTop: 5 * vh,
+          paddingHorizontal: vw * 2,
+        }}>
+        <MainInput
+          placeholder="Enter Email Address"
+          // style={styles.field}
+          ref={r => (this.email = r)}
+          onSubmitEditing={() => this.pw.onFocus()}
+          onChangeText={newemail =>
+            this.setState({
+              email: newemail,
+            })
+          }
+          keyboardType="email-address"
+          defaultValue={this.state.email}
+          label="Email Address"
+          autoCapitalize="none"
+        />
+        <MainInput
+          placeholder="Enter Password"
+          // style={styles.field}
+          ref={r => (this.pw = r)}
+          onSubmitEditing={() => this.pw.onFocus()}
+          onChangeText={newemail =>
+            this.setState({
+              password: newemail,
+            })
+          }
+          autoCapitalize="none"
+          secureTextEntry
+          defaultValue={this.state.password}
+          label="Password"
+        />
+        <TouchableHOC
+          style={styles.forgotButton}
+          onPress={() => this.props.navigation.navigate('PasswordRecovery')}>
+          <OutfitLightText style={styles.forgotText}>
+            Forgot Passsword?
+          </OutfitLightText>
+        </TouchableHOC>
 
-          <Button
-            title="LOGIN"
-            onPress={() => this.handleLogin()}
-            btnContainer={{marginTop: 2 * vh}}
-          />
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <View
-              style={{
-                // marginLeft: 7 * vw,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                // height: 8 * vh,
-                marginTop: 4 * vh,
-              }}>
-              <Dash
-                style={{
-                  width: 30 * vw,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-                dashColor="#2A2A2A"
-                dashLength={2}
-                dashGap={0.5 * vh}
-                dashStyle={{width: 0.5 * vw}}></Dash>
-
-              <OutfitSemiBoldText style={styles.or}>OR</OutfitSemiBoldText>
-              <Dash
-                style={{
-                  width: 30 * vw,
-                  marginLeft: 4 * vw,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-                dashColor="#2A2A2A"
-                dashLength={2}
-                dashGap={0.5 * vh}
-                dashStyle={{width: 0.5 * vw}}></Dash>
-            </View>
-          </View>
-          <View style={{marginTop: 4 * vh}}>
-            <ImageButton
-              title={'Continue With Google'}
-              stylecon={styles.googlebox}
-              labelstyle={styles.label}
-              image={icons.google}
-            />
-
-            <ImageButton
-              title={'Continue With Facebook'}
-              stylecon={[
-                styles.googlebox,
-                {
-                  backgroundColor: '#375FB4',
-                  borderColor: '#375FB4',
-                  marginTop: 2 * vh,
-                },
-              ]}
-              labelstyle={[
-                styles.label,
-                {color: ThemeColors.white, marginLeft: 2 * vw},
-              ]}
-              image={icons.fb}
-            />
-          </View>
-
+        <Button
+          title="LOGIN"
+          onPress={() => this.handleLogin()}
+          btnContainer={{marginTop: 2 * vh}}
+        />
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <View
             style={{
+              // marginLeft: 7 * vw,
               flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 8 * vh,
               justifyContent: 'center',
+              alignItems: 'center',
+              // height: 8 * vh,
+              marginTop: 4 * vh,
             }}>
-            <OutfitRegularText style={styles.account}>
-              Don't have an account?
-            </OutfitRegularText>
-            <TouchableHOC onPress={() => this.setState({formOption: 'Signup'})}>
-              <OutfitRegularText style={styles.createaccount}>
-                Sign Up Here
-              </OutfitRegularText>
-            </TouchableHOC>
+            <Dash
+              style={{
+                width: 30 * vw,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              dashColor="#2A2A2A"
+              dashLength={2}
+              dashGap={0.5 * vh}
+              dashStyle={{width: 0.5 * vw}}></Dash>
+
+            <OutfitSemiBoldText style={styles.or}>OR</OutfitSemiBoldText>
+            <Dash
+              style={{
+                width: 30 * vw,
+                marginLeft: 4 * vw,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              dashColor="#2A2A2A"
+              dashLength={2}
+              dashGap={0.5 * vh}
+              dashStyle={{width: 0.5 * vw}}></Dash>
           </View>
         </View>
-      </KeyboardAwareScrollView>
+        <View style={{marginTop: 4 * vh}}>
+          <ImageButton
+            title={'Continue With Google'}
+            stylecon={styles.googlebox}
+            labelstyle={styles.label}
+            image={icons.google}
+          />
+
+          <ImageButton
+            title={'Continue With Facebook'}
+            stylecon={[
+              styles.googlebox,
+              {
+                backgroundColor: '#375FB4',
+                borderColor: '#375FB4',
+                marginTop: 2 * vh,
+              },
+            ]}
+            labelstyle={[
+              styles.label,
+              {color: ThemeColors.white, marginLeft: 2 * vw},
+            ]}
+            image={icons.fb}
+          />
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 8 * vh,
+            justifyContent: 'center',
+          }}>
+          <OutfitRegularText style={styles.account}>
+            Don't have an account?
+          </OutfitRegularText>
+          <TouchableHOC onPress={() => this.setState({formOption: 'Signup'})}>
+            <OutfitRegularText style={styles.createaccount}>
+              Sign Up Here
+            </OutfitRegularText>
+          </TouchableHOC>
+        </View>
+      </View>
     );
   };
   renderSignup = () => {
     return (
-      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            alignItems: 'center',
-            marginTop: 5 * vh,
-            paddingHorizontal: vw * 2,
-          }}>
-          <ImageBackground
-            source={
-              this.state.image ? {uri: this.state.image} : icons.purpleprofile
-            }
-            style={[
-              styles.profile,
-              {alignItems: 'flex-end', justifyContent: 'flex-end'},
-            ]}
-            imageStyle={styles.profile}>
-            <TouchableOpacity
-              hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
-              onPress={() => this.setState({visible: !this.state.visible})}
-              style={{
-                width: 7 * vw,
-                height: 7 * vw,
-                backgroundColor: ThemeColors.primary,
+      <View
+        style={{
+          alignItems: 'center',
+          marginTop: 5 * vh,
+          paddingHorizontal: vw * 2,
+        }}>
+        <ImageBackground
+          source={
+            this.state.image ? {uri: this.state.image} : icons.purpleprofile
+          }
+          style={[
+            styles.profile,
+            {alignItems: 'flex-end', justifyContent: 'flex-end'},
+          ]}
+          imageStyle={styles.profile}>
+          <TouchableOpacity
+            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
+            onPress={() => this.setState({visible: !this.state.visible})}
+            style={{
+              width: 7 * vw,
+              height: 7 * vw,
+              backgroundColor: ThemeColors.primary,
 
-                justifyContent: 'center',
+              justifyContent: 'center',
 
-                borderRadius: 3.5 * vh,
+              borderRadius: 3.5 * vh,
 
-                alignItems: 'center',
-                // left: I18nManager.isRTL ? 38 * vw : 0
-              }}>
-              <Image
-                source={icons.camera}
-                resizeMode="contain"
-                style={{width: 3 * vw, height: 3 * vw}}
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-          <MainInput
-            placeholder="Enter Full Name"
-            // style={styles.field}
-            ref={r => (this.name = r)}
-            onSubmitEditing={() => this.semail.onFocus()}
-            onChangeText={newemail =>
-              this.setState({
-                name: newemail,
-              })
-            }
-            defaultValue={this.state.name}
-            autoCapitalize="words"
-            label="Full Name"
-          />
+              alignItems: 'center',
+              // left: I18nManager.isRTL ? 38 * vw : 0
+            }}>
+            <Image
+              source={icons.camera}
+              resizeMode="contain"
+              style={{width: 3 * vw, height: 3 * vw}}
+            />
+          </TouchableOpacity>
+        </ImageBackground>
+        <MainInput
+          placeholder="Enter Full Name"
+          // style={styles.field}
+          ref={r => (this.name = r)}
+          onSubmitEditing={() => this.semail.onFocus()}
+          onChangeText={newemail =>
+            this.setState({
+              name: newemail,
+            })
+          }
+          defaultValue={this.state.name}
+          autoCapitalize="words"
+          label="Full Name"
+        />
 
-          <MainInput
-            placeholder="Enter Email Address"
-            // style={styles.field}
-            ref={r => (this.semail = r)}
-            onSubmitEditing={() => this.phone.onFocus()}
-            onChangeText={newemail =>
-              this.setState({
-                email: newemail,
-              })
-            }
-            keyboardType="email-address"
-            defaultValue={this.state.email}
-            label="Email Address"
-            autoCapitalize="none"
-          />
-          <MainInput
-            placeholder="Enter Phone Number"
-            // style={styles.field}
-            ref={r => (this.phone = r)}
-            keyboardType="phone-pad"
-            onSubmitEditing={() => this.sPass.onFocus()}
-            onChangeText={newemail =>
-              this.setState({
-                phone: newemail,
-              })
-            }
-            defaultValue={this.state.phone}
-            maxLength={16}
-            label="Phone Number"
-            autoCapitalize="none"
-          />
-          <MainInput
-            placeholder="Enter Password"
-            // style={styles.field}
-            ref={r => (this.sPass = r)}
-            onSubmitEditing={() => this.cPass.onFocus()}
-            onChangeText={newemail =>
-              this.setState({
-                password: newemail,
-              })
-            }
-            secureTextEntry
-            label="Password"
-            defaultValue={this.state.password}
-            autoCapitalize="none"
-          />
+        <MainInput
+          placeholder="Enter Email Address"
+          // style={styles.field}
+          ref={r => (this.semail = r)}
+          onSubmitEditing={() => this.phone.onFocus()}
+          onChangeText={newemail =>
+            this.setState({
+              email: newemail,
+            })
+          }
+          keyboardType="email-address"
+          defaultValue={this.state.email}
+          label="Email Address"
+          autoCapitalize="none"
+        />
+        <MainInput
+          placeholder="Enter Phone Number"
+          // style={styles.field}
+          ref={r => (this.phone = r)}
+          keyboardType="phone-pad"
+          onSubmitEditing={() => this.sPass.onFocus()}
+          onChangeText={newemail =>
+            this.setState({
+              phone: newemail,
+            })
+          }
+          defaultValue={this.state.phone}
+          maxLength={16}
+          label="Phone Number"
+          autoCapitalize="none"
+        />
+        <MainInput
+          placeholder="Enter Password"
+          // style={styles.field}
+          ref={r => (this.sPass = r)}
+          onSubmitEditing={() => this.cPass.onFocus()}
+          onChangeText={newemail =>
+            this.setState({
+              password: newemail,
+            })
+          }
+          secureTextEntry
+          label="Password"
+          defaultValue={this.state.password}
+          autoCapitalize="none"
+        />
 
-          <MainInput
-            placeholder="Confirm Password"
-            // style={styles.field}
-            ref={r => (this.cPass = r)}
-            // onSubmitEditing={() => this.props.navigation.navigate('Location')}
-            onChangeText={newemail =>
-              this.setState({
-                confpw: newemail,
-              })
-            }
-            defaultValue={this.state.confpw}
-            secureTextEntry
-            // defaultValue={this.state.password}
-            label="Confirm Password"
-            autoCapitalize="none"
-          />
+        <MainInput
+          placeholder="Confirm Password"
+          // style={styles.field}
+          ref={r => (this.cPass = r)}
+          // onSubmitEditing={() => this.props.navigation.navigate('Location')}
+          onChangeText={newemail =>
+            this.setState({
+              confpw: newemail,
+            })
+          }
+          defaultValue={this.state.confpw}
+          secureTextEntry
+          // defaultValue={this.state.password}
+          label="Confirm Password"
+          autoCapitalize="none"
+        />
 
-          {/* <View>
+        {/* <View>
             <View style={[styles.labelview]}>
               <OutfitMediumText style={[styles.label]}>
                 {'Location'}
@@ -455,31 +453,30 @@ class RegisterScreen extends React.Component {
             </TouchableHOC>
           </View> */}
 
-          <Button
-            title="CONTINUE"
-            onPress={() => this.handleSignUp()}
-            btnContainer={styles.signupBtn}
-          />
+        <Button
+          title="CONTINUE"
+          onPress={() => this.handleSignUp()}
+          btnContainer={styles.signupBtn}
+        />
 
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 4 * vh,
-              marginBottom: 4 * vh,
-              justifyContent: 'center',
-            }}>
-            <OutfitRegularText style={styles.account}>
-              Don't have an account?
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 4 * vh,
+            marginBottom: 4 * vh,
+            justifyContent: 'center',
+          }}>
+          <OutfitRegularText style={styles.account}>
+            Don't have an account?
+          </OutfitRegularText>
+          <TouchableHOC onPress={() => this.setState({formOption: 'Login'})}>
+            <OutfitRegularText style={styles.createaccount}>
+              Log In Here
             </OutfitRegularText>
-            <TouchableHOC onPress={() => this.setState({formOption: 'Login'})}>
-              <OutfitRegularText style={styles.createaccount}>
-                Log In Here
-              </OutfitRegularText>
-            </TouchableHOC>
-          </View>
+          </TouchableHOC>
         </View>
-      </KeyboardAwareScrollView>
+      </View>
     );
   };
 
@@ -488,48 +485,52 @@ class RegisterScreen extends React.Component {
       <View style={styles.container}>
         <ImageBackground
           source={backgrounds.bgimage}
-          style={styles.imgbg}
           resizeMode="cover"
+          style={[styles.imgbg, {flex: 1}]}
           imageStyle={styles.imgbg}>
-          <View style={styles.options}>
-            <TouchableHOC
-              style={
-                this.state.formOption === 'Login'
-                  ? styles.darkButton
-                  : styles.lightButton
-              }
-              onPress={() => this.setState({formOption: 'Login'})}>
-              <OutfitMediumText
-                style={{
-                  color:
-                    this.state.formOption === 'Login'
-                      ? ThemeColors.white
-                      : ThemeColors.fontBlack,
-                }}>
-                LOGIN
-              </OutfitMediumText>
-            </TouchableHOC>
-            <TouchableHOC
-              style={
-                this.state.formOption === 'Signup'
-                  ? styles.darkButton
-                  : styles.lightButton
-              }
-              onPress={() => this.setState({formOption: 'Signup'})}>
-              <OutfitMediumText
-                style={{
-                  color:
-                    this.state.formOption === 'Signup'
-                      ? ThemeColors.white
-                      : ThemeColors.fontBlack,
-                }}>
-                SIGN UP
-              </OutfitMediumText>
-            </TouchableHOC>
-          </View>
-          {this.state.formOption === 'Login'
-            ? this.renderLogin()
-            : this.renderSignup()}
+          <KeyboardAwareScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.imgbg}>
+            <View style={styles.options}>
+              <TouchableHOC
+                style={
+                  this.state.formOption === 'Login'
+                    ? styles.darkButton
+                    : styles.lightButton
+                }
+                onPress={() => this.setState({formOption: 'Login'})}>
+                <OutfitMediumText
+                  style={{
+                    color:
+                      this.state.formOption === 'Login'
+                        ? ThemeColors.white
+                        : ThemeColors.fontBlack,
+                  }}>
+                  LOGIN
+                </OutfitMediumText>
+              </TouchableHOC>
+              <TouchableHOC
+                style={
+                  this.state.formOption === 'Signup'
+                    ? styles.darkButton
+                    : styles.lightButton
+                }
+                onPress={() => this.setState({formOption: 'Signup'})}>
+                <OutfitMediumText
+                  style={{
+                    color:
+                      this.state.formOption === 'Signup'
+                        ? ThemeColors.white
+                        : ThemeColors.fontBlack,
+                  }}>
+                  SIGN UP
+                </OutfitMediumText>
+              </TouchableHOC>
+            </View>
+            {this.state.formOption === 'Login'
+              ? this.renderLogin()
+              : this.renderSignup()}
+          </KeyboardAwareScrollView>
         </ImageBackground>
         <Modal
           visible={this.state.visible}

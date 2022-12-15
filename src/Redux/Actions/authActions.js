@@ -115,8 +115,12 @@ export const subPackges = token => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
-          const response = await customGet(endpoints.auth.packages, {}, token);
-          console.log(response, 'SUBSCRIPTION');
+          let response;
+          if (token) {
+            response = await customGet(endpoints.auth.packages, {}, token);
+          } else {
+            response = await get(endpoints.auth.packages);
+          }
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

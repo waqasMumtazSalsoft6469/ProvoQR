@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   },
   imgbg: {
     width: 100 * vw,
-    flex: 1,
     alignItems: 'center',
   },
   or: {

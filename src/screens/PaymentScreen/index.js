@@ -47,11 +47,9 @@ class PaymentScreen extends React.Component {
       expiry_date: expiry,
       package_id: id,
     };
-    console.log(data);
     this.props.subscribePackage(data, token).then(res => {
       showToast(res?.message?.message);
       if (res?.success) {
-        // this.props.navigation.navigate('Login');
         this.setState({visibleSuccess: true});
       }
     });
@@ -59,7 +57,6 @@ class PaymentScreen extends React.Component {
 
   handlePayment = () => {
     const {name, cardNumber, expiry, cvv} = this.state;
-    const {id, token} = this.props.route.params;
     if (!name) {
       showToast('Please Enter Card Holder Name');
     } else if (!cardNumber) {

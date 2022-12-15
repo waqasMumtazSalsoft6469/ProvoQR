@@ -10,36 +10,33 @@ import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import Dash from 'react-native-dash';
+import {connect} from 'react-redux';
+import {
+  getMySubscription,
+  getSubscriptionLogs,
+} from '../../Redux/Actions/otherActions';
+import moment from 'moment';
 
-class RegisterScreen extends React.Component {
+class SubscriptionLogs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      subscription: {},
       activeindex: -1,
-      plan: [
-        {
-          amount: '05.00',
-          month: 'June',
-          title: 'My Plan',
-          validity: '01 Month',
-        },
-        {
-          amount: '05.00',
-          validity: '01 Year',
-          month: 'May',
-          title: 'My Plan',
-        },
-        {
-          amount: '05.00',
-          validity: '01 Year',
-          month: 'April',
-          title: 'My Plan',
-        },
-      ],
+      logs: [],
     };
   }
+
+  componentDidMount() {
+    this.props.getMySubscription().then(res => {
+      this.setState({subscription: res?.subscriptionPlans[0]});
+    });
+    this.props.getSubscriptionLogs().then(res => {
+      this.setState({logs: res?.subscriptionLogs});
+    });
+  }
   rendersubscriptions = () => {
-    return this.state?.plan.map((item, index) => {
+    return this.state?.logs.map((item, index) => {
       return (
         <View style={{marginTop: 5 * vh, alignItems: 'center'}}>
           <PlanCard item={item} index={index} />
@@ -51,12 +48,20 @@ class RegisterScreen extends React.Component {
   rendermyPlan = () => {
     return (
       <View style={styles.containerclick}>
-        <OutfitSemiBoldText style={styles.title}>MY PLAN</OutfitSemiBoldText>
-        <OutfitRegularText style={styles.current}>(Current)</OutfitRegularText>
-        <OutfitMediumText style={styles.month}>1 Month Plan</OutfitMediumText>
+        <OutfitSemiBoldText style={styles.title}>
+          {this.state.subscription?.packages?.name?.toUpperCase()}
+        </OutfitSemiBoldText>
+        <OutfitRegularText style={styles.current}>
+          (Current Plan)
+        </OutfitRegularText>
+        <OutfitMediumText style={styles.month}>
+          {this.state.subscription?.packages?.duration?.toUpperCase()} PLAN
+        </OutfitMediumText>
         <View style={{flexDirection: 'row'}}>
           <OutfitSemiBoldText style={styles.symbol}>$</OutfitSemiBoldText>
-          <OutfitSemiBoldText style={styles.amount}>5</OutfitSemiBoldText>
+          <OutfitSemiBoldText style={styles.amount}>
+            {this.state.subscription?.packages?.price}
+          </OutfitSemiBoldText>
         </View>
       </View>
     );
@@ -76,7 +81,21 @@ class RegisterScreen extends React.Component {
 
               <View style={styles.locationscroll}>
                 <OutfitRegularText style={styles.scrolltext}>
-                  (Expire in 20 days){' '}
+                  (Package Expires in {''}
+                  {this.state.subscription?.end_date
+                    ? moment
+                        .duration(
+                          moment(new Date()).diff(
+                            moment(
+                              this.state.subscription?.end_date,
+                              'YYYY-MM-DD',
+                            ),
+                          ),
+                        )
+                        .asDays()
+                        ?.toFixed(0)
+                    : 0}{' '}
+                  Days){' '}
                 </OutfitRegularText>
               </View>
             </View>
@@ -99,4 +118,14 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getMySubscription: () => dispatch(getMySubscription()),
+    getSubscriptionLogs: () => dispatch(getSubscriptionLogs()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionLogs);

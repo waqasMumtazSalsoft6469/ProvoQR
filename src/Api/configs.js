@@ -17,6 +17,8 @@ export const endpoints = {
     getProfile: '/user/profile',
     home: '/get/home/data',
     restaurantDetail: '/get/restaurant/details',
+    getMySubscription: '/user/subscription/plan',
+    subscriptionLogs: '/user/subscription/logs',
   },
 };
 

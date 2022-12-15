@@ -28,7 +28,6 @@ export const calculateDistance = (
   let lat1 = lattitude1;
   let lon1 = longittude1;
 
-  console.log(lat1, lon1 + '===' + lat2, lon2);
   let R = 6371; // km
   let x1 = lat2 - lat1;
   let dLat = toRadian(x1);
