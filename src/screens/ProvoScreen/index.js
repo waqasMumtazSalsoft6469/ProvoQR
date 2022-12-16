@@ -19,6 +19,13 @@ import ImageButton from '../../components/Buttons/ImageButton';
 import ThemeColors from '../../Utils/ThemeColors';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
+import {connect} from 'react-redux';
+import {
+  getProvoPackages,
+  getProvoWallet,
+} from '../../Redux/Actions/otherActions';
+import {imageUrl} from '../../Api/configs';
+import {showToast} from '../../Api/HelperFunction';
 
 class ProvoScreen extends React.Component {
   constructor(props) {
@@ -29,49 +36,38 @@ class ProvoScreen extends React.Component {
       password: '',
       confpw: '',
       formOption: 'Provo',
-      coins: [
-        {
-          label: '50 Provo Coins',
-          price: '5.00',
-          icon: provoCash.singleCoin,
-        },
-        {
-          label: '150 Provo Coins',
-          price: '10.00',
-          icon: provoCash.coins,
-        },
-        {
-          label: '350 Provo Coins',
-          price: '20.00',
-          icon: provoCash.redBag,
-        },
-        {
-          label: '500 Provo Coins',
-          price: '50.00',
-          icon: provoCash.greenBag,
-        },
-        {
-          label: '800 Provo Coins',
-          price: '100.00',
-          icon: provoCash.brownBag,
-        },
-        {
-          label: '1000 Provo Coins',
-          price: '500.00',
-          icon: provoCash.smallBox,
-        },
-      ],
+      coins: [],
+      walletAmount: 0,
+      selectedPackage: null,
     };
   }
 
-  renderOptions = ({item}) => {
+  componentDidMount() {
+    this.props.getProvoPackages().then(res => {
+      this.setState({coins: res?.provo_package});
+    });
+    this.props.getProvoWallet().then(res => {
+      this.setState({walletAmount: res?.provo_wallet});
+    });
+  }
+
+  renderOptions = ({item, index}) => {
     return (
       <View style={styles.coinContainer}>
-        <TouchableHOC style={styles.coinTouch}>
-          <Image source={item.icon} style={styles.coinIcon} />
+        <TouchableHOC
+          style={
+            item?.id == this.state.selectedPackage
+              ? styles.selectedCoin
+              : styles.coinTouch
+          }
+          onPress={() => this.setState({selectedPackage: item?.id})}>
+          <Image
+            source={{uri: imageUrl + item?.icon}}
+            style={styles.coinIcon}
+          />
         </TouchableHOC>
         <OutfitMediumText style={styles.coinLabel}>
-          {item.label}
+          {item?.coin_qty} Provo Coins
         </OutfitMediumText>
         <OutfitMediumText style={styles.coinPrice}>
           ${item.price}
@@ -90,7 +86,19 @@ class ProvoScreen extends React.Component {
         }}></View>
     );
   };
-  renderSignup = () => {
+
+  handlePurchase = () => {
+    if (!this.state.selectedPackage) {
+      showToast('Please Select Any Package');
+    } else {
+      this.props.navigation.navigate('ProvoPaymentMethod', {
+        packageId: this.state.selectedPackage,
+        from: 'provo',
+      });
+    }
+  };
+
+  renderProvoCash = () => {
     return (
       <View
         style={{
@@ -101,7 +109,9 @@ class ProvoScreen extends React.Component {
         }}>
         <View style={styles.amount}>
           <Image source={provoCash.coins} style={styles.headCoins} />
-          <OutfitSemiBoldText style={styles.value}>60</OutfitSemiBoldText>
+          <OutfitSemiBoldText style={styles.value}>
+            {this.state.walletAmount}
+          </OutfitSemiBoldText>
         </View>
         <OutfitSemiBoldText style={styles.label}>
           Your Current ProvoCash Balance
@@ -115,7 +125,7 @@ class ProvoScreen extends React.Component {
         />
         <Button
           title="PURCHASE"
-          onPress={() => this.props.navigation.navigate('ProvoPaymentMethod')}
+          onPress={this.handlePurchase}
           btnContainer={styles.signupBtn}
         />
       </View>
@@ -133,7 +143,7 @@ class ProvoScreen extends React.Component {
           <KeyboardAwareScrollView
             contentContainerStyle={{alignItems: 'center'}}
             showsVerticalScrollIndicator={false}>
-            <View style={styles.options}>
+            {/* <View style={styles.options}>
               <TouchableHOC
                 style={
                   this.state.formOption === 'Lootbox'
@@ -168,14 +178,31 @@ class ProvoScreen extends React.Component {
                   PROVOCASH
                 </OutfitMediumText>
               </TouchableHOC>
-            </View>
-            {this.state.formOption === 'Lootbox'
+            </View> */}
+            {/* {this.state.formOption === 'Lootbox'
               ? this.renderLogin()
-              : this.renderSignup()}
+              : this.renderProvoCash()} */}
+            {this.renderProvoCash()}
           </KeyboardAwareScrollView>
         </ImageBackground>
       </View>
     );
   }
 }
-export default ProvoScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+  token: state.SessionReducer.token,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getProvoPackages: () => dispatch(getProvoPackages()),
+    getProvoWallet: () => dispatch(getProvoWallet()),
+
+    // subPackges: () => dispatch(subPackges()),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProvoScreen);

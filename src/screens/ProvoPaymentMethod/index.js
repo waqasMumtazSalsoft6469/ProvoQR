@@ -8,12 +8,15 @@ import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import {vh, vw} from '../../Utils/Units';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import {getBillingDetails} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
+import {showToast} from '../../Api/HelperFunction';
 
 class ProvoPaymentMethod extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gender: [
+      methods: [
         {
           id: 1,
           label: 'By New Card',
@@ -26,6 +29,27 @@ class ProvoPaymentMethod extends React.Component {
       selectedOption: 1,
     };
   }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      if (!this.props.billingDetails) {
+        this.props.getBillingDetails();
+      }
+    });
+    console.log(this.props.billingDetails);
+  }
+
+  handleContinue = () => {
+    if (this.state.selectedOption == 2 && !this.props.billingDetails) {
+      showToast('You have not saved any billing details.');
+    } else {
+      this.props.navigation.navigate('Payment', {
+        option: this.state.selectedOption,
+        packageId: this.props.route.params.packageId,
+        from: this.props.route?.params?.from,
+      });
+    }
+  };
 
   render() {
     return (
@@ -42,7 +66,7 @@ class ProvoPaymentMethod extends React.Component {
               </OutfitSemiBoldText>
               <Image source={provoCash.vector3} style={styles.image} />
               <View style={styles.radioContainer}>
-                {this.state.gender.map((val, index) => {
+                {this.state.methods.map((val, index) => {
                   return (
                     <TouchableHOC
                       style={styles.row}
@@ -69,16 +93,10 @@ class ProvoPaymentMethod extends React.Component {
                   );
                 })}
               </View>
-              {console.log(this.props.route?.params?.from)}
               <Button
                 title="CONTINUE"
                 btnContainer={{marginTop: 5 * vh}}
-                onPress={() =>
-                  this.props.navigation.navigate('Payment', {
-                    option: this.state.selectedOption,
-                    from: this.props.route?.params?.from,
-                  })
-                }
+                onPress={this.handleContinue}
               />
             </View>
           </ImageBackground>
@@ -87,4 +105,17 @@ class ProvoPaymentMethod extends React.Component {
     );
   }
 }
-export default ProvoPaymentMethod;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+  billingDetails: state.GeneralReducer.billingDetails,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getBillingDetails: () => dispatch(getBillingDetails()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProvoPaymentMethod);

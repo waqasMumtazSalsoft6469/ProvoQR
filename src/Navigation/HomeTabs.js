@@ -36,6 +36,7 @@ const HomeTabs = props => {
       style={{}}
       tabBar={tabProps => <MyTabBar {...tabProps} {...props} />}
       lazy={true}
+      screenOptions={{swipeEnabled: false}}
       tabBarPosition="bottom">
       <TabNavigator.Screen name="HomeStack" component={HomeStack} />
       <TabNavigator.Screen name="MapStack" component={MapStack} />

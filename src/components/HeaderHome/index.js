@@ -1,5 +1,12 @@
 import React from 'react';
-import {Text, View, Image, ImageBackground, StatusBar} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  StatusBar,
+  Platform,
+} from 'react-native';
 import {vh, vw} from '../../Utils/Units';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
@@ -10,9 +17,10 @@ const headerBackground = props => {
     <View
       style={{
         width: 100 * vw,
-        // height: 18 * vh,
+        // height: 8 * vh,
         justifyContent: 'center',
-        marginTop: StatusBar.currentHeight * 5,
+        marginTop: StatusBar.currentHeight,
+        paddingBottom: vh * 2,
       }}>
       {props.children}
     </View>

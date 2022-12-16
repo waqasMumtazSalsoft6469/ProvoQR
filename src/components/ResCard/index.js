@@ -106,7 +106,7 @@ class ProductItem extends React.Component {
             source={{uri: imageUrl + this.props.item?.image}}
             style={[
               styles.imgcard,
-              {width: this.props.history ? 90 * vw : 80 * vw},
+              {width: this.props.history ? 90 * vw : 90 * vw},
             ]}
             // style={styles.cardimage}
           />
@@ -124,42 +124,43 @@ class ProductItem extends React.Component {
             />
           )}
         </TouchableHOC>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: vh,
-          }}>
-          <OutfitSemiBoldText style={styles.name}>
-            {this.props.item?.name}
-          </OutfitSemiBoldText>
-          <TouchableHOC onPress={this.props.viewmap} style={{}}>
-            <OutfitRegularText style={styles.viewmap}>
-              View On Map
-            </OutfitRegularText>
-          </TouchableHOC>
-        </View>
+        <View style={{paddingHorizontal: vw * 1.1}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: vh,
+            }}>
+            <OutfitSemiBoldText style={styles.name}>
+              {this.props.item?.name}
+            </OutfitSemiBoldText>
+            <TouchableHOC onPress={this.props.viewmap} style={{}}>
+              <OutfitRegularText style={styles.viewmap}>
+                View On Map
+              </OutfitRegularText>
+            </TouchableHOC>
+          </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 1 * vh,
-          }}>
-          <Image source={icons.whiteloc} style={styles.imgicon} />
-          <OutfitSemiBoldText style={styles.dis}>
-            {calculateDistance(
-              location?.latitude,
-              location?.longitude,
-              this.props.item.lat,
-              this.props.item.lng,
-            )?.toFixed(0)}{' '}
-            km
-          </OutfitSemiBoldText>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 1 * vh,
+            }}>
+            <Image source={icons.whiteloc} style={styles.imgicon} />
+            <OutfitSemiBoldText style={styles.dis}>
+              {calculateDistance(
+                location?.latitude,
+                location?.longitude,
+                this.props.item.lat,
+                this.props.item.lng,
+              )?.toFixed(0)}{' '}
+              km
+            </OutfitSemiBoldText>
+          </View>
+          {this.rendercuisines()}
         </View>
-
-        {this.rendercuisines()}
 
         {this.props.history ? this.renderHistoryRating() : this.renderratings()}
       </View>

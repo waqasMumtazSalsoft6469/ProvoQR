@@ -26,8 +26,6 @@ class PaymentScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.route.params, 'PARAMS');
-    console.log(this.props.route?.params?.from);
     if (this.props.route?.params?.from == 'lootBox') {
       this.props.navigation.setOptions({title: 'Payment'});
     } else {
@@ -35,7 +33,21 @@ class PaymentScreen extends React.Component {
         title: 'Subscription Payment',
       });
     }
+    // this.checkBilling();
   }
+
+  checkBilling = () => {
+    const {billingDetails} = this.props;
+    const {option} = this.props.route.params;
+    if (option == 2) {
+      this.setState({
+        name: billingDetails?.card_holder_name,
+        cardNumber: billingDetails?.card_num,
+        expiry: billingDetails?.expiry_date,
+        cvv: billingDetails?.cvv_num,
+      });
+    }
+  };
 
   confirmPayment = () => {
     const {name, cardNumber, expiry, cvv} = this.state;
@@ -71,6 +83,9 @@ class PaymentScreen extends React.Component {
   };
 
   render() {
+    const {billingDetails} = this.props;
+    const {option} = this.props.route.params;
+    console.log(billingDetails?.cvv_num, 'asda');
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -90,6 +105,11 @@ class PaymentScreen extends React.Component {
                     name: newemail,
                   })
                 }
+                defaultValue={
+                  option == 2
+                    ? billingDetails?.card_holder_name
+                    : this.state.name
+                }
                 label="Card Holder Name"
               />
 
@@ -105,7 +125,14 @@ class PaymentScreen extends React.Component {
                 }
                 mask={Masks.CREDIT_CARD}
                 keyboardType="number-pad"
-                value={this.state.cardNumber}
+                value={
+                  option == 2
+                    ? billingDetails?.card_num
+                        ?.toString()
+                        ?.match(/.{1,4}/g)
+                        ?.join(' ')
+                    : this.state.cardNumber
+                }
                 label="Card Number"
               />
               <MainInput
@@ -120,7 +147,11 @@ class PaymentScreen extends React.Component {
                 }
                 maxLength={3}
                 keyboardType="number-pad"
-                // value={this.props.route?.params?.option == 2 ? '321' : ''}
+                defaultValue={
+                  option == 2
+                    ? billingDetails?.cvv_num?.toString()
+                    : this.state.cvv
+                }
                 label="CVV Number"
               />
               <MainInput
@@ -133,6 +164,7 @@ class PaymentScreen extends React.Component {
                   })
                 }
                 mask={[/\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                // Update here after API fixes
                 value={this.state.expiry}
                 keyboardType="number-pad"
                 label="Expiration Date"
@@ -190,11 +222,16 @@ class PaymentScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  // count: state.count,
+  billingDetails: state.GeneralReducer.billingDetails,
+});
+
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    subscribePackage: (data, token) => dispatch(subscribePackage(data, token)),
+    // subscribePackage: (data, token) => dispatch(subscribePackage(data, token)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(PaymentScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentScreen);

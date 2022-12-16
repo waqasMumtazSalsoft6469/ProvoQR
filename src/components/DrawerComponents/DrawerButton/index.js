@@ -6,6 +6,7 @@ import {vh, vw} from '../../../Utils/Units';
 
 import styles from './styles';
 import OutfitRegularText from '../../Text/OutfitRegularText';
+import TouchableHOC from '../../Buttons/TouchableHOC';
 
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
@@ -24,7 +25,11 @@ const DrawerButton = props => {
       onPress={() => props.onPress(props.routeName)}
       style={[styles.container, animatedStyles]}>
       <Image style={styles.icon} source={props.icon} />
-      <OutfitRegularText style={styles.label}>{props.label}</OutfitRegularText>
+      <TouchableHOC onPress={() => props.onPress(props.routeName)}>
+        <OutfitRegularText style={styles.label}>
+          {props.label}
+        </OutfitRegularText>
+      </TouchableHOC>
     </AnimatedTouchable>
   );
 };

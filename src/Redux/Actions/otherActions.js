@@ -75,7 +75,7 @@ export const getMySubscription = () => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          dispatch({type: actionTypes.loaderOn});
+          // dispatch({type: actionTypes.loaderOn});
 
           const response = await get(endpoints.other.getMySubscription);
           resolve(response);
@@ -98,6 +98,71 @@ export const getSubscriptionLogs = () => {
           dispatch({type: actionTypes.loaderOn});
 
           const response = await get(endpoints.other.subscriptionLogs);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getProvoPackages = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.provoPackages);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getProvoWallet = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.provoWallet);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+getBillingDetails;
+export const getBillingDetails = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.getBilling);
+          dispatch({
+            type: actionTypes.billingDetails,
+            payload: response?.billingdetails,
+          });
+
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

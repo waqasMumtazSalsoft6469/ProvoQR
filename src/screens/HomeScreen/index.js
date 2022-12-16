@@ -207,7 +207,7 @@ class HomeScreen extends React.Component {
             <View
               style={{
                 paddingHorizontal: 5 * vw,
-                marginTop: 5 * vh,
+                marginTop: 2 * vh,
                 justifyContent: 'space-between',
               }}>
               <OutfitSemiBoldText style={styles.recomend}>
@@ -236,6 +236,7 @@ class HomeScreen extends React.Component {
                 style={{marginTop: vh}}
                 renderItem={this.renderitem}
                 horizontal={true}
+                pagingEnabled
               />
             </View>
 
@@ -294,6 +295,7 @@ class HomeScreen extends React.Component {
                 style={{marginTop: vh, marginBottom: 15 * vh}}
                 renderItem={this.renderitem}
                 horizontal={true}
+                pagingEnabled
               />
             </View>
           </ScrollView>

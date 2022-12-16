@@ -14,6 +14,7 @@ const actionTypes = {
   setServices: 'SET_SERVICES',
   completeProfile: 'CMPLETE_PROFILE',
   editProfile: 'EDIT_PROFILE',
+  billingDetails: 'BILLING_DETAILS',
 
   // using
   getProfile: 'GET_PROFILE',

@@ -19,7 +19,7 @@ class MySuscription extends React.Component {
     super(props);
     this.state = {
       activeindex: -1,
-      subscription: {},
+      subscription: null,
       packages: [],
       token: this.props.token,
     };
@@ -114,23 +114,34 @@ class MySuscription extends React.Component {
               </TouchableHOC>
             </View>
 
-            <View style={{alignItems: 'center', marginTop: 2 * vh}}>
-              {this.rendermyPlan()}
-              <View style={styles.locationscroll}>
-                <OutfitRegularText style={styles.scrolltext}>
-                  (Package Expires in {''}
-                  {moment
-                    .duration(
-                      moment(new Date()).diff(
-                        moment(this.state.subscription?.end_date, 'YYYY-MM-DD'),
-                      ),
-                    )
-                    .asDays()
-                    ?.toFixed(0)}{' '}
-                  Days)
-                </OutfitRegularText>
+            {this.state.subscription ? (
+              <View style={{alignItems: 'center', marginTop: 2 * vh}}>
+                {this.rendermyPlan()}
+                <View style={styles.locationscroll}>
+                  <OutfitRegularText style={styles.scrolltext}>
+                    (Package Expires in {''}
+                    {moment
+                      .duration(
+                        moment(new Date()).diff(
+                          moment(
+                            this.state.subscription?.end_date,
+                            'YYYY-MM-DD',
+                          ),
+                        ),
+                      )
+                      .asDays()
+                      ?.toFixed(0)}{' '}
+                    Days)
+                  </OutfitRegularText>
+                </View>
               </View>
-            </View>
+            ) : (
+              <View style={{alignItems: 'center', marginTop: 2 * vh}}>
+                <OutfitSemiBoldText>
+                  You don't have any subscribe package
+                </OutfitSemiBoldText>
+              </View>
+            )}
 
             {this.rendersubscriptions()}
           </ScrollView>

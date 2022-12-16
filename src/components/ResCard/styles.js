@@ -20,6 +20,7 @@ export default StyleSheet.create({
     tintColor: '#000000',
     height: 5 * vw,
     resizeMode: 'contain',
+    marginLeft: vw * -1.1,
   },
   viewmap: {
     color: '#365EB1',

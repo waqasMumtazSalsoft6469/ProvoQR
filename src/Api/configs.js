@@ -19,6 +19,9 @@ export const endpoints = {
     restaurantDetail: '/get/restaurant/details',
     getMySubscription: '/user/subscription/plan',
     subscriptionLogs: '/user/subscription/logs',
+    provoPackages: '/provo/packages',
+    provoWallet: '/provo_wallet',
+    getBilling: '/get/billing',
   },
 };
 

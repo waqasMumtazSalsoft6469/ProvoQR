@@ -7,7 +7,7 @@ const GeneralReducer = {
   loading: false,
   softLoading: false,
   mySubscription: [],
-  services: [],
+  billingDetails: null,
 };
 
 const initialStates = {

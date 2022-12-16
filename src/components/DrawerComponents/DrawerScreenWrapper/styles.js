@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {vh} from '../../../Utils/Units';
+import {themeShadow, vh} from '../../../Utils/Units';
 
 const styles = StyleSheet.create({
   stack: {
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     // },
     // shadowOpacity: 0.25,
     // shadowRadius: 3.84,
+    ...themeShadow,
   },
 });
 export default styles;

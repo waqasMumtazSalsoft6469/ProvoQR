@@ -84,6 +84,12 @@ export default GeneralReducer = (state = initialState, action) => {
         services: action.payload,
       };
     }
+    case actionTypes.billingDetails: {
+      return {
+        ...state,
+        billingDetails: action.payload,
+      };
+    }
 
     default: {
       return state;
