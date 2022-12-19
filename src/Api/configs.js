@@ -22,6 +22,8 @@ export const endpoints = {
     provoPackages: '/provo/packages',
     provoWallet: '/provo_wallet',
     getBilling: '/get/billing',
+    addRestaurantRequest: '/user/restaurant/request',
+    getRestaurantRequest: '/user/restaurant/request/logs',
   },
 };
 

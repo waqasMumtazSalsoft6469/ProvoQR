@@ -10,7 +10,12 @@ import {vh, vw} from '../../Utils/Units';
 class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    };
   }
 
   render() {

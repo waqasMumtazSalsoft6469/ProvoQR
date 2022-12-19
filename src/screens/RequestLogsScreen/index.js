@@ -5,45 +5,23 @@ import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import RewardCard from '../../components/RewardCard';
 import styles from './styles';
 import {vh} from '../../Utils/Units';
+import {getRestaurantRequest} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
 
-class RegisterScreen extends React.Component {
+class RestaurantLogs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectreward: true,
-      reward: [
-        {
-          name: 'Finest Dining Restaurant',
-          category: 'Address',
-          image: sampleimage.reward1,
-        },
-        {
-          name: 'Finest Dining Restaurant',
-          category: 'Address',
-          image: sampleimage.reward2,
-        },
-        {
-          name: 'Finest Dining Restaurant',
-          category: 'Address',
-          image: sampleimage.reward3,
-        },
-        {
-          name: 'Finest Dining Restaurant',
-          category: 'Address',
-          image: sampleimage.reward1,
-        },
-        {
-          name: 'Finest Dining Restaurant',
-          category: 'Address',
-          image: sampleimage.reward2,
-        },
-        {
-          name: 'Finest Dining Restaurant',
-          category: 'Address',
-          image: sampleimage.reward3,
-        },
-      ],
+      logs: [],
     };
+  }
+
+  componentDidMount() {
+    this.props.getRestaurantLogs().then(res => {
+      console.log(res);
+      // this.setState({logs: res?.restaurantRequestLogs});
+    });
   }
 
   renderitem = ({item, index}) => {
@@ -56,6 +34,16 @@ class RegisterScreen extends React.Component {
           })
         }
       />
+    );
+  };
+
+  emptyList = () => {
+    return (
+      <View style={styles.emptyList}>
+        <OutfitSemiBoldText style={styles.emptyText}>
+          No Logs Available
+        </OutfitSemiBoldText>
+      </View>
     );
   };
   render() {
@@ -71,9 +59,11 @@ class RegisterScreen extends React.Component {
               Restaurant Request Logs
             </OutfitSemiBoldText>
             <FlatList
-              data={this.state.reward}
-              style={{marginTop: 2 * vh}}
+              data={this.state.logs}
+              style={{marginVertical: 2 * vh}}
               renderItem={this.renderitem}
+              ListEmptyComponent={this.emptyList}
+              showsVerticalScrollIndicator={false}
             />
           </View>
         </ImageBackground>
@@ -81,4 +71,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getRestaurantLogs: () => dispatch(getRestaurantRequest()),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantLogs);

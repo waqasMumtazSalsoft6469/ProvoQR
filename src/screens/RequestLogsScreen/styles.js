@@ -83,5 +83,13 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: ThemeColors.white,
   },
+  emptyList: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: vh * 80,
+  },
+  emptyText: {
+    fontSize: vh * 2.4,
+  },
 });
 export default styles;

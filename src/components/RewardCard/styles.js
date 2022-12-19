@@ -33,11 +33,13 @@ export default StyleSheet.create({
     borderWidth: 0.5 * vw,
     backgroundColor: ThemeColors.white,
     borderRadius: 5 * vh,
+    marginBottom: vh * 2,
   },
   cus: {
     color: '#7E7E7E',
     marginTop: vh,
     fontSize: 1.7 * vh,
+    paddingRight: vw * 2,
   },
 
   imgcard: {

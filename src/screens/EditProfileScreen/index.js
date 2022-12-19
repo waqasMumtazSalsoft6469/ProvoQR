@@ -143,7 +143,7 @@ class EditProfileScreen extends React.Component {
     }
   };
 
-  handleDoneAddress = address => {
+  handleDoneAddress = (address, latitude, longitude) => {
     this.setState({address: address});
   };
 
@@ -182,14 +182,9 @@ class EditProfileScreen extends React.Component {
                       width: 7 * vw,
                       height: 7 * vw,
                       backgroundColor: ThemeColors.primary,
-
                       justifyContent: 'center',
-
                       borderRadius: 3.5 * vh,
-
                       alignItems: 'center',
-
-                      // left: I18nManager.isRTL ? 38 * vw : 0
                     }}
                     onPress={() => this.setState({visible: true})}>
                     <Image

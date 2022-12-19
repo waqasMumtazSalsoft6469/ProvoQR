@@ -82,5 +82,10 @@ const styles = StyleSheet.create({
     marginLeft: 9 * vw,
     color: '#2A2A2A',
   },
+  description: {
+    height: vh * 15,
+    alignItems: 'flex-start',
+    paddingTop: vh * 2,
+  },
 });
 export default styles;

@@ -149,7 +149,6 @@ export const getProvoWallet = () => {
     });
   };
 };
-getBillingDetails;
 export const getBillingDetails = () => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
@@ -162,6 +161,52 @@ export const getBillingDetails = () => {
             type: actionTypes.billingDetails,
             payload: response?.billingdetails,
           });
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const addRestaurantRequest = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await post(
+            endpoints.other.addRestaurantRequest,
+            data,
+            true,
+          );
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getRestaurantRequest = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.getRestaurantRequest);
 
           resolve(response);
         } catch (e) {

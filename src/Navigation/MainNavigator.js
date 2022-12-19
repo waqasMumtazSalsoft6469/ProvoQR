@@ -30,7 +30,6 @@ class MainNavigator extends React.Component {
 
   renderSelection = () => {
     const {token, userData} = this.props;
-    console.log(userData, 'TOKEN', token);
     return (
       <MainStack.Navigator
         // initialRouteName='HomeTabs'

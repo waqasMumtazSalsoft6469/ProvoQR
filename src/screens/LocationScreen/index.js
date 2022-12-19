@@ -44,7 +44,11 @@ const AddressLocation = props => {
   const inputRef = useRef(null);
 
   const handleDonePress = () => {
-    props.route.params.handleDoneAddress(searchedAddress);
+    props.route.params.handleDoneAddress(
+      searchedAddress,
+      userLocation?.location?.latitude,
+      userLocation?.location?.longitude,
+    );
     props.navigation.goBack();
   };
 

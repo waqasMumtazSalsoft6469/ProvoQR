@@ -12,6 +12,6 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     width: vw * 65,
     justifyContent: 'center',
-    marginVertical: vh * 3,
+    // marginVertical: vh * 3,
   },
 });

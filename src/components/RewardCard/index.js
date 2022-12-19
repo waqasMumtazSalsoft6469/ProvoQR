@@ -22,15 +22,18 @@ class RewardCard extends React.Component {
       <View style={styles.card}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableHOC onPress={this.props.onClick}>
-            <Image source={this.props.item.image} style={styles.cardimage} />
+            <Image source={icons.rewardCup} style={styles.cardimage} />
           </TouchableHOC>
 
-          <View style={{marginLeft: 2.5 * vw}}>
+          <View style={{marginLeft: 2.5 * vw, width: 50 * vw}}>
             <OutfitMediumText style={styles.name}>
               {this.props.item.name}
             </OutfitMediumText>
-            <RubikLight style={styles.cus}>
-              {this.props.item.category}
+            <RubikLight style={styles.cus} numberOfLines={2}>
+              {this.props.item.description}
+            </RubikLight>
+            <RubikLight style={styles.cus} numberOfLines={1}>
+              {this.props.item.address}
             </RubikLight>
             <TouchableHOC onPress={this.props.viewmap}>
               <RubikLight style={styles.viewmap}>View On Map</RubikLight>

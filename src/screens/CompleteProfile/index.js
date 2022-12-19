@@ -52,7 +52,7 @@ class CompleteProfile extends React.Component {
     };
   }
 
-  handleDoneAddress = address => {
+  handleDoneAddress = (address, latitude, longitude) => {
     this.setState({address: address});
   };
 
@@ -195,7 +195,12 @@ class CompleteProfile extends React.Component {
                     handleDoneAddress: this.handleDoneAddress,
                   })
                 }>
-                <OutfitRegularText style={styles.gender} numberOfLines={1}>
+                <OutfitRegularText
+                  style={[
+                    styles.gender,
+                    this.state.address && {color: ThemeColors.fontBlack},
+                  ]}
+                  numberOfLines={1}>
                   {address ?? 'Enter Location'}
                 </OutfitRegularText>
                 <Image source={icons.loc} style={styles.down} />
