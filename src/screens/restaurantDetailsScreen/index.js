@@ -135,7 +135,9 @@ class ResturentDetailScreen extends React.Component {
                 <View style={styles.menuContainer}>
                   <TouchableHOC
                     onPress={() =>
-                      this.props.navigation.navigate('ResturentMenu')
+                      this.props.navigation.navigate('ResturentMenu', {
+                        id: this.state.details?.id,
+                      })
                     }>
                     <OutfitRegularText style={styles.buttonText}>
                       Menu

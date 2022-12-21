@@ -6,7 +6,7 @@ export default StyleSheet.create({
   cardimage: {
     resizeMode: 'cover',
     width: 30 * vw,
-
+    backgroundColor: ThemeColors.lightGray,
     borderRadius: 2 * vh,
     height: 22 * vw,
   },
@@ -14,6 +14,7 @@ export default StyleSheet.create({
     color: ThemeColors.darkpurple,
     fontSize: 2 * vh,
     fontWeight: '700',
+    width: vw * 40,
   },
   imgicon: {
     width: 5 * vw,

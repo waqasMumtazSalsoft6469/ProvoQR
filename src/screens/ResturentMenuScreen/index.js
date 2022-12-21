@@ -7,25 +7,23 @@ import MenuCard from '../../components/MenuCard';
 import {vh, vw} from '../../Utils/Units';
 import {ScrollView} from 'react-native-gesture-handler';
 import Dash from 'react-native-dash';
+import {getMenu} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
 
 class ResturentMenuScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectreward: true,
-      reward: [
-        {
-          name: 'Pumpkin Soup',
-          category: 'Bread, servilate, cheese, tomato, lettuce',
-          image: sampleimage.reward1,
-        },
-        {
-          name: 'Sandwich',
-          category: 'Salmon, asparagus,hard cheese,guanciale...',
-          image: sampleimage.reward2,
-        },
-      ],
+      menu: [],
     };
+  }
+
+  componentDidMount() {
+    const {id} = this.props.route.params;
+    let data = {restaurant_id: id};
+    this.props.getMenu(data).then(res => {
+      this.setState({menu: res?.menu});
+    });
   }
 
   renderitem = ({item, index}) => {
@@ -47,6 +45,31 @@ class ResturentMenuScreen extends React.Component {
         dashStyle={{width: 2 * vw}}></Dash>
     );
   };
+
+  renderMenuList = ({item, index}) => {
+    return (
+      <>
+        <OutfitSemiBoldText>{item?.name}</OutfitSemiBoldText>
+        <FlatList
+          data={item?.business_menus}
+          style={{marginTop: 2 * vh}}
+          renderItem={this.renderitem}
+        />
+        {index < this.state.menu?.length - 1 && this.renderDash()}
+      </>
+    );
+  };
+
+  emptyList = () => {
+    return (
+      <View style={styles.emptyList}>
+        <OutfitSemiBoldText style={{fontSize: vh * 2.4}}>
+          No menu avaible for this restaurant
+        </OutfitSemiBoldText>
+      </View>
+    );
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -57,27 +80,14 @@ class ResturentMenuScreen extends React.Component {
           imageStyle={styles.imgbg}>
           <ScrollView
             style={{marginBottom: vh * 8, marginHorizontal: vw * 5}}
-            showsVerticalScrollIndicator={false}>
-            <OutfitSemiBoldText>Breakfast</OutfitSemiBoldText>
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled>
             <FlatList
-              data={this.state.reward}
+              data={this.state.menu}
               style={{marginTop: 2 * vh}}
-              renderItem={this.renderitem}
-            />
-            {this.renderDash()}
-            <OutfitSemiBoldText>Lunch</OutfitSemiBoldText>
-            <FlatList
-              data={this.state.reward}
-              style={{marginTop: 2 * vh}}
-              renderItem={this.renderitem}
-            />
-            {this.renderDash()}
-
-            <OutfitSemiBoldText>Dinner</OutfitSemiBoldText>
-            <FlatList
-              data={this.state.reward}
-              style={{marginTop: 2 * vh}}
-              renderItem={this.renderitem}
+              renderItem={this.renderMenuList}
+              ListEmptyComponent={this.emptyList}
+              nestedScrollEnabled
             />
           </ScrollView>
         </ImageBackground>
@@ -85,4 +95,18 @@ class ResturentMenuScreen extends React.Component {
     );
   }
 }
-export default ResturentMenuScreen;
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getMenu: data => dispatch(getMenu(data)),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ResturentMenuScreen);

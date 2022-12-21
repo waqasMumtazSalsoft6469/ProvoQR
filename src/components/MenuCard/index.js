@@ -11,6 +11,7 @@ import RubikLight from '../../components/Text/RubikLight';
 import OutfitMediumText from '../Text/OutfitMediumText';
 import OutfitSemiBoldText from '../Text/OutfitSemiBoldText';
 import OutfitRegularText from '../Text/OutfitRegularText';
+import {imageUrl} from '../../Api/configs';
 
 class MenuCard extends React.Component {
   constructor(props) {
@@ -25,22 +26,25 @@ class MenuCard extends React.Component {
         style={styles.card}
         onPress={this.props?.onPressCard && this.props?.onPressCard}>
         <View style={{flexDirection: 'row'}}>
-          <TouchableHOC>
-            <Image source={this.props.item.image} style={styles.cardimage} />
-          </TouchableHOC>
+          <View>
+            <Image
+              source={{uri: imageUrl + this.props.item?.image}}
+              style={styles.cardimage}
+            />
+          </View>
 
           <View style={{marginLeft: 2.5 * vw, marginTop: vh * 1}}>
             <View style={styles.row}>
-              <OutfitSemiBoldText style={styles.name}>
-                {this.props.item.name}
+              <OutfitSemiBoldText style={styles.name} numberOfLines={1}>
+                {this.props.item?.name}
               </OutfitSemiBoldText>
               <OutfitSemiBoldText style={styles.priceText}>
-                $5.99
+                ${this.props.item?.price}
               </OutfitSemiBoldText>
             </View>
 
-            <OutfitRegularText style={styles.cus}>
-              {this.props.item.category}
+            <OutfitRegularText style={styles.cus} numberOfLines={3}>
+              {this.props.item?.detail}
             </OutfitRegularText>
           </View>
         </View>
