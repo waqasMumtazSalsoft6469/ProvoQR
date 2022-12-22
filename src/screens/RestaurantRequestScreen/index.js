@@ -22,8 +22,8 @@ const RestaurantRequest = props => {
   const [restaurant_name, setRestaurantName] = useState();
   const [restaurant_address, setRestaurantAddress] = useState();
   const [description, setDescription] = useState();
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
+  const [lat, setLatitude] = useState();
+  const [lng, setLongitude] = useState();
   const [modal, setModal] = useState(false);
 
   handleDoneAddress = (address, latitude, longitude) => {
@@ -40,7 +40,7 @@ const RestaurantRequest = props => {
     } else if (!description) {
       showToast('Please Enter Description');
     } else {
-      let data = {restaurant_name, restaurant_address, description};
+      let data = {restaurant_name, restaurant_address, description, lat, lng};
       dispatch(addRestaurantRequest(data)).then(res => {
         // showToast(res?.message);
         setModal(true);

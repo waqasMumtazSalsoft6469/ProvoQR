@@ -20,7 +20,7 @@ class RestaurantLogs extends React.Component {
   componentDidMount() {
     this.props.getRestaurantLogs().then(res => {
       console.log(res);
-      // this.setState({logs: res?.restaurantRequestLogs});
+      this.setState({logs: res?.restaurantRequestLogs});
     });
   }
 
@@ -29,8 +29,9 @@ class RestaurantLogs extends React.Component {
       <RewardCard
         item={item}
         viewmap={() =>
-          this.props.navigation.navigate('MapStack', {
-            screen: 'ShowonMapScreen',
+          this.props.navigation.navigate('RestaurantDirection', {
+            latitude: item?.lat,
+            longitude: item?.lng,
           })
         }
       />

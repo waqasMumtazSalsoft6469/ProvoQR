@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, View, Image, Text} from 'react-native';
+import {ImageBackground, View, Image, Text, Dimensions} from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import MapView, {
   Polyline,
@@ -8,18 +8,27 @@ import MapView, {
   CalloutSubview,
 } from 'react-native-maps';
 import styles from './styles';
-import RateCard from '../../components/RatingCard';
-import GilroyBold from '../../components/Text/GilroyBold';
-import RubikRegular from '../../components/Text/RubikRegular';
-import RubikLight from '../../components/Text/RubikLight';
-import TouchableHOC from '../../components/Buttons/TouchableHOC';
-import {vh, vw} from '../../Utils/Units';
-import {LATITUDE_DELTA, LONGITUDE_DELTA} from '../../Utils/mapHelperFunction';
-
+import MapViewDirections from 'react-native-maps-directions';
+import {
+  checkLocationPermissions,
+  getCurrentLocation,
+  LATITUDE_DELTA,
+  LONGITUDE_DELTA,
+} from '../../Utils/mapHelperFunction';
+import ThemeColors from '../../Utils/ThemeColors';
+import {showToast} from '../../Api/HelperFunction';
 class RestaurantDirection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+      userLocation: {
+        latitude: 39.847311175738646,
+        longitude: -99.58578285202184,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
       restaurant: {
         image: sampleimage.places,
         name: 'Finest Dining Restaurant',
@@ -50,119 +59,64 @@ class RestaurantDirection extends React.Component {
     };
     this.mapRef = React.createRef();
   }
-  getMarkersArray = () => {
-    let markers = [];
 
-    for (var i = 0; i < 20; i++) {
-      markers.push({
-        latitude:
-          Math.random() * (37.8025259 - (37.8025259 - 0.1)) +
-          37.8025259 -
-          0.002,
-        longitude:
-          Math.random() * (-122.4351431 - (-122.4351431 - 0.1)) +
-          -122.4351431 -
-          0.002,
-      });
-    }
-
-    return markers;
-  };
-  rendercuisines = () => {
-    return (
-      <View
-        style={{flexDirection: 'row', alignItems: 'center', marginTop: 1 * vh}}>
-        {this.state.restaurant.cusines.map((item, index) => {
-          return <RubikLight style={styles.cus}>{item?.name},</RubikLight>;
-        })}
-      </View>
-    );
-  };
-
-  renderratings = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginTop: 1 * vh,
-          width: 65 * vw,
-        }}>
-        {this.state.restaurant.ratings.map((item, index) => {
-          return (
-            <View>
-              <RateCard item={item} index={index} />
-            </View>
-          );
-        })}
-      </View>
-    );
-  };
-
-  renderMarkers = () => {
-    let markers = this.getMarkersArray();
-
-    if (markers.length == 0) {
-      return null;
-    }
-
-    return React.Children.toArray(
-      markers?.map(location => {
-        return (
-          <Marker
-            draggable={false}
-            coordinate={{
-              latitude: location?.latitude,
-              longitude: location?.longitude,
-            }}
-            image={icons.marker}>
-            <Callout
-              style={{borderRadius: vh}}
-              onPress={() =>
-                this.props.navigation.navigate('RestaurantDetails')
-              }>
-              <View style={styles.boxview}>
-                <View style={{height: 10 * vh}}>
-                  <Text
-                    style={{position: 'relative', bottom: 75, height: 20 * vh}}>
-                    <Image
-                      source={this.state.restaurant.image}
-                      style={styles.imgcard}
-                      // style={styles.cardimage}
-                    />
-                  </Text>
-                </View>
-                <View style={{marginTop: vh}}>
-                  <GilroyBold style={styles.name}>
-                    {this.state.restaurant.name}
-                  </GilroyBold>
-                </View>
-              </View>
-            </Callout>
-          </Marker>
-        );
-      }),
-    );
-  };
-
-  animateToRegions = (latitude, longitude) => {
+  animateToRegion = (latitude, longitude) => {
     setTimeout(() => {
       this.mapRef?.animateToRegion(
         {
           latitude: Number(latitude),
           longitude: Number(longitude),
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
+          latitudeDelta: this.state.latitudeDelta,
+          longitudeDelta: this.state.longitudeDelta,
         },
         2000,
       );
     }, 500);
   };
 
-  componentDidMount() {
+  getUserLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      this.calculate(location?.latitude, location?.longitude);
+      this.setState({
+        userLocation: {
+          latitude: parseFloat(location?.latitude),
+          longitude: parseFloat(location?.longitude),
+          latitudeDelta: this.state.latitudeDelta,
+          longitudeDelta: this.state.longitudeDelta,
+        },
+      });
+      const {latitude, longitude} = this.props.route.params;
+
+      this.animateToRegion(latitude, latitude);
+    } catch (error) {
+      showToast(error);
+    }
+  };
+  calculate = (userLat, userLong) => {
     const {latitude, longitude} = this.props.route.params;
-    this.animateToRegions(latitude, longitude);
+    const deltaLat = Math.abs(latitude - userLat);
+
+    const deltaLng = Math.round(
+      Math.log((360 / Math.abs(longitude - userLong)) * 0.07) / Math.LN2,
+    );
+    console.log(deltaLat, deltaLng);
+    this.setState({latitudeDelta: deltaLat, longitudeDelta: deltaLng});
+  };
+
+  setupMethods = async () => {
+    try {
+      await checkLocationPermissions();
+      this.getUserLocation();
+    } catch (error) {
+      console.log('location** error ', error);
+    }
+  };
+  componentDidMount() {
+    // const {latitude, longitude} = this.props.route.params;
+    // this.animateToRegions(latitude, longitude);
+    // this.getUserLocation();
+    this.setupMethods();
   }
 
   render() {
@@ -182,20 +136,43 @@ class RestaurantDirection extends React.Component {
             initialRegion={{
               latitude: 37.8025259,
               longitude: -122.4351431,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
+              latitudeDelta: this.state.latitudeDelta,
+              longitudeDelta: this.state.longitudeDelta,
             }}>
-            {/* {this.renderMarkers()} */}
-            {
-              <Marker
-                draggable={false}
-                coordinate={{
-                  latitude: Number(latitude),
-                  longitude: Number(longitude),
-                }}>
-                <Image source={icons.marker} style={styles.markerIconStyle} />
-              </Marker>
-            }
+            <Marker
+              draggable={false}
+              coordinate={{
+                latitude: Number(this.state.userLocation.latitude),
+                longitude: Number(this.state.userLocation.longitude),
+              }}>
+              <Image source={icons.mapButton} style={styles.markerIconStyle} />
+            </Marker>
+            <Marker
+              draggable={false}
+              coordinate={{
+                latitude: Number(latitude),
+                longitude: Number(longitude),
+              }}>
+              <Image source={icons.marker} style={styles.markerIconStyle} />
+            </Marker>
+
+            <MapViewDirections
+              origin={{
+                latitude: Number(this.state.userLocation.latitude),
+                longitude: Number(this.state.userLocation.longitude),
+                latitudeDelta: this.state.latitudeDelta,
+                longitudeDelta: this.state.longitudeDelta,
+              }}
+              destination={{
+                latitude: Number(latitude),
+                longitude: Number(longitude),
+                latitudeDelta: this.state.latitudeDelta,
+                longitudeDelta: this.state.longitudeDelta,
+              }}
+              apikey={'AIzaSyB2hxNhJCBwaHoQ2eggJmLR4pfDYAN93cY'}
+              strokeWidth={3}
+              strokeColor={ThemeColors.primary}
+            />
           </MapView>
         </ImageBackground>
       </View>

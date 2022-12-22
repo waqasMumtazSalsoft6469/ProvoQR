@@ -6,8 +6,9 @@ import Button from '../../components/Buttons/SimpleButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MainInput from '../../components/Input/MainInput';
 import {vh, vw} from '../../Utils/Units';
+import { contactUs } from '../../Redux/Actions/otherActions';
 
-class RegisterScreen extends React.Component {
+class ContactUs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +17,10 @@ class RegisterScreen extends React.Component {
       subject: '',
       message: '',
     };
+  }
+
+  handleSend=()=>{
+    
   }
 
   render() {
@@ -33,14 +38,13 @@ class RegisterScreen extends React.Component {
               <MainInput
                 placeholder="Enter Name"
                 // style={styles.field}
-                ref={r => (this.email = r)}
-                // onSubmitEditing={() => this.pw.onFocus()}
-                // onChangeText={(newemail) =>
-                //   this.setState({
-                //     email: newemail,
-                //   })
-                // }
-
+                ref={r => (this.name = r)}
+                onSubmitEditing={() => this.email.onFocus()}
+                onChangeText={newemail =>
+                  this.setState({
+                    name: newemail,
+                  })
+                }
                 // value={this.state.email}
                 label="Name"
               />
@@ -49,12 +53,12 @@ class RegisterScreen extends React.Component {
                 placeholder="Enter Email Address"
                 // style={styles.field}
                 ref={r => (this.email = r)}
-                // onSubmitEditing={() => this.pw.onFocus()}
-                // onChangeText={(newemail) =>
-                //   this.setState({
-                //     email: newemail,
-                //   })
-                // }
+                onSubmitEditing={() => this.subject.onFocus()}
+                onChangeText={newemail =>
+                  this.setState({
+                    email: newemail,
+                  })
+                }
                 keyboardType="email-address"
                 // value={this.state.email}
                 label="Email Address"
@@ -62,27 +66,26 @@ class RegisterScreen extends React.Component {
               <MainInput
                 placeholder="Enter Subject"
                 // style={styles.field}
-                ref={r => (this.email = r)}
-                // onSubmitEditing={() => this.pw.onFocus()}
-                // onChangeText={(newemail) =>
-                //   this.setState({
-                //     email: newemail,
-                //   })
-                // }
-
+                ref={r => (this.subject = r)}
+                onSubmitEditing={() => this.message.onFocus()}
+                onChangeText={newemail =>
+                  this.setState({
+                    subject: newemail,
+                  })
+                }
                 // value={this.state.email}
                 label="Subject"
               />
               <MainInput
                 placeholder="Enter Message"
                 // style={styles.field}
-                ref={r => (this.name = r)}
+                ref={r => (this.message = r)}
                 // onSubmitEditing={() => this.pw.onFocus()}
-                // onChangeText={(newemail) =>
-                //   this.setState({
-                //     email: newemail,
-                //   })
-                // }
+                onChangeText={newemail =>
+                  this.setState({
+                    message: newemail,
+                  })
+                }
                 style={styles.txtArea}
                 multiline={true}
                 // value={this.state.password}
@@ -96,4 +99,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    contactUs: () => dispatch(contactUs()),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactUs);

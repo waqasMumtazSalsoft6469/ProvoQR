@@ -5,7 +5,7 @@ import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-export const LATITUDE_DELTA = 0.006339428281933124;
+export const LATITUDE_DELTA = 0.02;
 export const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export const checkLocationPermissions = async () => {
@@ -62,7 +62,7 @@ export const getCurrentLocation = () => {
           timeout: 20000,
           maximumAge: 0,
         },
-        android: {},
+        android: {enableHighAccuracy: false, timeout: 20000, maximumAge: 0},
       }),
     );
   });
