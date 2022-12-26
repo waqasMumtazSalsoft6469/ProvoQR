@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: ThemeColors.white,
   },
   imgbg: {
-    width: 100 * vw,
-
-    height: 100 * vh,
+flex:1
   },
   about: {
     fontSize: 2 * vh,
@@ -17,6 +15,7 @@ const styles = StyleSheet.create({
     // lineHeight: 4 * vh,
     marginTop: vh * 2,
   },
-  image: {width: vw * 90, height: vh * 30, borderRadius: vh * 3},
+  image: {width: vw * 90, height: vh * 30, borderRadius: vh * 3,backgroundColor:ThemeColors.backgroundGray},
+
 });
 export default styles;

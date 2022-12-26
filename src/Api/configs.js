@@ -26,6 +26,7 @@ export const endpoints = {
     getRestaurantRequest: '/user/restaurant/request/logs',
     getMenu: '/get/restaurant/menu',
     contactUs: '/user/feedback',
+    aboutUs:'/about'
   },
 };
 

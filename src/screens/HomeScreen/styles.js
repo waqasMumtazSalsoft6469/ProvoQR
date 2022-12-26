@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: ThemeColors.white,
-    // paddingTop: vh * 5,
+    paddingTop:Platform.OS=='ios'?vh * 5:0,
   },
   imgbg: {
     width: 100 * vw,

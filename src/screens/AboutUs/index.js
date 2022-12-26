@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {ImageBackground, View, Image, ScrollView} from 'react-native';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
@@ -7,14 +7,24 @@ import MainInput from '../../components/Input/MainInput';
 import {vh, vw} from '../../Utils/Units';
 import OutfitLightText from '../../components/Text/OutfitLightText';
 import {sampleimage} from '../../assets/images/index';
+import { useDispatch } from 'react-redux';
+import { getAboutUs } from '../../Redux/Actions/otherActions';
+import { imageUrl } from '../../Api/configs';
 
-class RegisterScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+const AboutUs=()=> {
+  const [data,setData]=useState()
+  const dispatch=useDispatch()
+
+  const getData=()=>{
+    dispatch(getAboutUs()).then(res=>{
+      setData(res?.about)
+    })
   }
 
-  render() {
+  useEffect(()=>{
+    getData()
+  },[])
+
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -22,25 +32,16 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 100 * vh}}>
-          <ScrollView>
+          <ScrollView style={styles.scroll}>
             <View
               style={{
                 alignItems: 'center',
                 marginTop: 5 * vh,
                 paddingHorizontal: 4 * vw,
               }}>
-              <Image source={sampleimage.home2} style={styles.image} />
+              <Image source={{uri:imageUrl+data?.image}} style={styles.image} />
               <OutfitLightText style={styles.about}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the with the release of Letraset sheets
-                containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of
-                Lorem Ipsum.
+               {data?.description}
               </OutfitLightText>
             </View>
           </ScrollView>
@@ -48,5 +49,4 @@ class RegisterScreen extends React.Component {
       </View>
     );
   }
-}
-export default RegisterScreen;
+export default AboutUs;

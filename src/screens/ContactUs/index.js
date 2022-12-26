@@ -7,6 +7,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import MainInput from '../../components/Input/MainInput';
 import {vh, vw} from '../../Utils/Units';
 import { contactUs } from '../../Redux/Actions/otherActions';
+import { connect } from 'react-redux';
+import { showToast } from '../../Api/HelperFunction';
+import { CommonActions } from '@react-navigation/native';
 
 class ContactUs extends React.Component {
   constructor(props) {
@@ -20,10 +23,29 @@ class ContactUs extends React.Component {
   }
 
   handleSend=()=>{
-    
+    const {name,email,subject,message}=this.state
+  if(!subject){
+      showToast('Subject is Required')
+    }
+    else if(!message){
+      showToast('Please Write Your Message')
+    }
+    else {
+      let data={subject,message}
+      this.props.contactUs(data).then(res=>{
+        showToast(res?.messgae)
+        this.props.navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'Home'}],
+          }),
+        );
+      })
+    }
   }
 
   render() {
+    const {userDetails}=this.props
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView>
@@ -45,7 +67,7 @@ class ContactUs extends React.Component {
                     name: newemail,
                   })
                 }
-                // value={this.state.email}
+                defaultValue={userDetails?.name}
                 label="Name"
               />
 
@@ -60,7 +82,7 @@ class ContactUs extends React.Component {
                   })
                 }
                 keyboardType="email-address"
-                // value={this.state.email}
+                defaultValue={userDetails?.email}
                 label="Email Address"
               />
               <MainInput
@@ -88,10 +110,10 @@ class ContactUs extends React.Component {
                 }
                 style={styles.txtArea}
                 multiline={true}
-                // value={this.state.password}
+                // value={userDetails?.email}
                 label="Message"
               />
-              <Button title="SEND" btnContainer={{marginTop: 2 * vh}} />
+              <Button title="SEND" btnContainer={{marginTop: 2 * vh}} onPress={this.handleSend}/>
             </View>
           </ImageBackground>
         </KeyboardAwareScrollView>
@@ -101,11 +123,12 @@ class ContactUs extends React.Component {
 }
 const mapStateToProps = state => ({
   // count: state.count,
+  userDetails:state.SessionReducer.userData
 });
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    contactUs: () => dispatch(contactUs()),
+    contactUs: (data) => dispatch(contactUs(data)),
     // signup: data => dispatch(userSignup(data)),
   };
 };
