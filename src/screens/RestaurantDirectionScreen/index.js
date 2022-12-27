@@ -88,7 +88,7 @@ class RestaurantDirection extends React.Component {
       });
       const {latitude, longitude} = this.props.route.params;
 
-      this.animateToRegion(latitude, latitude);
+      this.animateToRegion(latitude, longitude);
     } catch (error) {
       showToast(error);
     }
@@ -133,6 +133,8 @@ class RestaurantDirection extends React.Component {
             ref={r => (this.mapRef = r)}
             style={{flex: 1}}
             // mapType={Platform.OS == "android" ? "none" : "standard"}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
             initialRegion={{
               latitude: 37.8025259,
               longitude: -122.4351431,

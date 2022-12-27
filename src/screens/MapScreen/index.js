@@ -1,5 +1,12 @@
 import React from 'react';
-import {ImageBackground, View, Image, Text, FlatList} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Image,
+  Text,
+  FlatList,
+  Keyboard,
+} from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import MapView, {
   Polyline,
@@ -21,6 +28,18 @@ import BottomSheetWrapper from '../../components/BottomSheetWrapper';
 import Dash from 'react-native-dash';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
 import {ScrollView} from 'react-native-gesture-handler';
+import {mapStyle} from '../../Utils/customeMap';
+import {getNearestRestaurants} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
+import {
+  checkLocationPermissions,
+  getCurrentLocation,
+  LATITUDE_DELTA,
+  LONGITUDE_DELTA,
+} from '../../Utils/mapHelperFunction';
+import {showToast} from '../../Api/HelperFunction';
+
+var tempTime = 0;
 
 class MapScreen extends React.Component {
   constructor(props) {
@@ -28,75 +47,108 @@ class MapScreen extends React.Component {
     this.state = {
       resturentModal: false,
       campaignModal: false,
-      campains: [
-        {
-          name: 'Loot Box A',
-        },
-        {
-          name: 'Loot Box B',
-        },
-        {
-          name: 'Loot Box C',
-        },
-        {
-          name: 'Loot Box D',
-        },
-        {
-          name: 'Loot Box E',
-        },
-        {
-          name: 'Loot Box F',
-        },
-      ],
-      cusines: [
-        {
-          name: 'Cuisine 01',
-        },
-        {
-          name: 'Cuisine 02',
-        },
-        {
-          name: 'Cuisine 03',
-        },
-      ],
-      ratings: [
-        {
-          rate: 'Total Spending : $230',
-        },
-        {
-          rate: 'No of Lootbox : 23',
-        },
-        {
-          rate: 'No of Rewards : 140',
-        },
-      ],
-      categories: [
-        {
-          name: 'Burger',
-          icon: icons.burger,
-        },
-        {
-          name: 'Pizza',
-          icon: icons.pizza,
-        },
-        {
-          name: 'Salad',
-          icon: icons.salad,
-        },
-        {
-          name: 'Burger',
-          icon: icons.burger,
-        },
-        {
-          name: 'Pizza',
-          icon: icons.pizza,
-        },
-        {
-          name: 'Salad',
-          icon: icons.salad,
-        },
-      ],
+      userLocation: {latitude: 0, longitude: 0},
+      restaurants: [],
+      search: '',
+      details: {},
     };
+  }
+  animateToRegion = (latitude, longitude) => {
+    setTimeout(() => {
+      this.mapRef?.animateToRegion(
+        {
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: 0.0002,
+        },
+        2000,
+      );
+    }, 500);
+  };
+  getUserLocation = async () => {
+    console.log(LONGITUDE_DELTA);
+    try {
+      const location = await getCurrentLocation();
+      this.setState({
+        userLocation: {
+          latitude: parseFloat(location?.latitude),
+          longitude: parseFloat(location?.longitude),
+        },
+      });
+
+      this.props
+        .getNearestRestaurant({
+          lat: parseFloat(location?.latitude),
+          lng: parseFloat(location?.longitude),
+        })
+        .then(res => {
+          this.setState({restaurants: res?.nearestRestaurant});
+          this.animateToRegion(
+            parseFloat(res?.nearestRestaurant[0]?.lat),
+            parseFloat(res?.nearestRestaurant[0]?.lng),
+          );
+        });
+    } catch (error) {
+      showToast(error);
+    }
+  };
+
+  onChangeSearch = text => {
+    this.setState({search: text});
+    const {search, userLocation} = this.state;
+    setTimeout(() => {
+      tempTime = tempTime + 1;
+      if (tempTime == 2) {
+        this.props
+          .getNearestRestaurant({
+            lat: parseFloat(userLocation?.latitude),
+            lng: parseFloat(userLocation?.longitude),
+            search: search,
+          })
+          .then(res => {
+            tempTime = 0;
+            Keyboard.dismiss();
+            if (res?.nearestRestaurant?.length > 0) {
+              this.setState({restaurants: res?.nearestRestaurant});
+              this.animateToRegion(
+                parseFloat(res?.nearestRestaurant[0]?.lat),
+                parseFloat(res?.nearestRestaurant[0]?.lng),
+              );
+            } else {
+              showToast('No Restarant Found');
+            }
+          });
+      }
+    }, 2000);
+  };
+
+  setupMethods = async () => {
+    try {
+      await checkLocationPermissions();
+      this.getUserLocation();
+    } catch (error) {
+      console.log('location** error ', error);
+    }
+  };
+
+  getRestaurantDetails = id => {
+    this.props.restaurantDetails({organisation_id: id}).then(res => {
+      this.setState({details: res?.details});
+      setTimeout(() => {
+        this.setState({resturentModal: true});
+      }, 500);
+    });
+  };
+  componentDidMount() {
+    this.setupMethods();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.setupMethods();
+    });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   rendercuisines = () => {
@@ -107,108 +159,84 @@ class MapScreen extends React.Component {
           alignItems: 'center',
           marginTop: 1.5 * vh,
         }}>
-        {this.state.cusines.map((item, index) => {
-          return (
-            <OutfitRegularText style={styles.cus}>
-              {item?.name},
-            </OutfitRegularText>
-          );
-        })}
+        <OutfitRegularText style={styles.cus}>
+          {this.state.details?.organ_profiles?.cuisines?.name}
+        </OutfitRegularText>
       </View>
     );
   };
 
-  renderratings = () => {
-    return (
-      <View style={styles.lowerContainer}>
-        <View
-          style={{
-            justifyContent: 'space-between',
-            width: 42 * vw,
-            height: vh * 10,
-          }}>
-          <OutfitSemiBoldText>Last Scan</OutfitSemiBoldText>
-          <View style={styles.row}>
-            <Image source={icons.calender} style={styles.icon} />
-            <OutfitRegularText>02.02.2022</OutfitRegularText>
-          </View>
-          <View style={styles.row}>
-            <Image source={icons.clock} style={styles.icon} />
-            <OutfitRegularText>09:00 pm</OutfitRegularText>
-          </View>
-        </View>
-        <View
-          style={{
-            //   flexDirection: 'row',
-            //   alignItems: 'center',
-            justifyContent: 'space-between',
-            width: 55 * vw,
-            height: vh * 13,
-          }}>
-          {this.state.ratings.map((item, index) => {
-            return (
-              <View>
-                <DetailList item={item} index={index} />
-              </View>
-            );
-          })}
-        </View>
-      </View>
-    );
-  };
+  //   return (
+  //     <View style={styles.lowerContainer}>
+  //       <View
+  //         style={{
+  //           justifyContent: 'space-between',
+  //           width: 42 * vw,
+  //           height: vh * 10,
+  //         }}>
+  //         <OutfitSemiBoldText>Last Scan</OutfitSemiBoldText>
+  //         <View style={styles.row}>
+  //           <Image source={icons.calender} style={styles.icon} />
+  //           <OutfitRegularText>02.02.2022</OutfitRegularText>
+  //         </View>
+  //         <View style={styles.row}>
+  //           <Image source={icons.clock} style={styles.icon} />
+  //           <OutfitRegularText>09:00 pm</OutfitRegularText>
+  //         </View>
+  //       </View>
+  //       <View
+  //         style={{
+  //           //   flexDirection: 'row',
+  //           //   alignItems: 'center',
+  //           justifyContent: 'space-between',
+  //           width: 55 * vw,
+  //           height: vh * 13,
+  //         }}>
+  //         {this.state.ratings.map((item, index) => {
+  //           return (
+  //             <View>
+  //               <DetailList item={item} index={index} />
+  //             </View>
+  //           );
+  //         })}
+  //       </View>
+  //     </View>
+  //   );
+  // };
 
-  getMarkersArray = () => {
-    let markers = [];
-
-    for (var i = 0; i < 20; i++) {
-      markers.push({
-        latitude:
-          Math.random() * (37.8025259 - (37.8025259 - 0.1)) +
-          37.8025259 -
-          0.002,
-        longitude:
-          Math.random() * (-122.4351431 - (-122.4351431 - 0.1)) +
-          -122.4351431 -
-          0.002,
-      });
-    }
-
-    return markers;
-  };
-
-  rendercategoryitem = ({item, index}) => {
-    return (
-      <View style={{marginBottom: vh, marginRight: 4 * vw}}>
-        <View style={styles.viewcon}>
-          <Image source={item.icon} style={styles.burgerIcon} />
-          <OutfitSemiBoldText style={styles.catname}>
-            {item.name}
-          </OutfitSemiBoldText>
-        </View>
-      </View>
-    );
-  };
+  // rendercategoryitem = ({item, index}) => {
+  //   return (
+  //     <View style={{marginBottom: vh, marginRight: 4 * vw}}>
+  //       <View style={styles.viewcon}>
+  //         <Image source={item.icon} style={styles.burgerIcon} />
+  //         <OutfitSemiBoldText style={styles.catname}>
+  //           {item.name}
+  //         </OutfitSemiBoldText>
+  //       </View>
+  //     </View>
+  //   );
+  // };
 
   renderMarkers = () => {
-    let markers = this.getMarkersArray();
-
-    if (markers.length == 0) {
-      return null;
-    }
-
-    return React.Children.toArray(
-      markers?.map(location => {
-        return (
-          <Marker
-            draggable={false}
-            coordinate={{
-              latitude: location?.latitude,
-              longitude: location?.longitude,
-            }}
-            image={icons.marker}></Marker>
-        );
-      }),
-    );
+    return this.state.restaurants?.map(location => {
+      return (
+        <Marker
+          draggable={false}
+          coordinate={{
+            latitude: Number(location?.lat),
+            longitude: Number(location?.lng),
+          }}>
+          <TouchableHOC
+            style={styles.markerTouch}
+            onPress={() => this.getRestaurantDetails(location?.id)}>
+            <Image source={icons.marker} style={styles.markerIconStyle} />
+            <OutfitLightText style={styles.resName}>
+              {location?.name}
+            </OutfitLightText>
+          </TouchableHOC>
+        </Marker>
+      );
+    });
   };
 
   render() {
@@ -221,7 +249,9 @@ class MapScreen extends React.Component {
           imageStyle={styles.imgbg}>
           <MapView
             style={{flex: 1}}
+            ref={r => (this.mapRef = r)}
             // mapType={Platform.OS == "android" ? "none" : "standard"}
+            customMapStyle={mapStyle}
             initialRegion={{
               latitude: 37.8025259,
               longitude: -122.4351431,
@@ -248,6 +278,7 @@ class MapScreen extends React.Component {
                 // onSubmitEditing={() => this.pw.onFocus()}
                 leftIcon={icons.search}
                 style={{width: vw * 70}}
+                onChangeText={text => this.onChangeSearch(text)}
               />
               <View style={styles.filterBg}>
                 <Image source={icons.filter} style={styles.filter} />
@@ -255,11 +286,11 @@ class MapScreen extends React.Component {
             </View>
           </View>
 
-          <View style={styles.mapButtonContainer}>
+          {/* <View style={styles.mapButtonContainer}>
             <TouchableHOC onPress={() => this.setState({resturentModal: true})}>
               <Image source={icons.mapButton} style={styles.buttonIcon} />
             </TouchableHOC>
-          </View>
+          </View> */}
 
           {/* </View> */}
           <BottomSheetWrapper
@@ -283,8 +314,9 @@ class MapScreen extends React.Component {
                   <View style={styles.menuContainer}>
                     <TouchableHOC
                       onPress={() =>
-                        this.props.navigation.navigate('MapStack', {
-                          screen: 'ShowonMapScreen',
+                        this.props.navigation.navigate('RestaurantDirection', {
+                          latitude: this.state.details?.lat,
+                          longitude: this.state.details?.lng,
                         })
                       }>
                       <OutfitRegularText style={styles.buttonText}>
@@ -295,19 +327,17 @@ class MapScreen extends React.Component {
                 </View>
 
                 <OutfitLightText style={styles.rewtext}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since.
+                  {this.state.details?.organ_profiles?.about}
                 </OutfitLightText>
                 <View style={styles.catbox}>
                   <Image source={icons.burger} style={styles.catIcon} />
                   <OutfitRegularText style={styles.catText}>
-                    Burger
+                    {this.state.details?.organ_profiles?.categories?.name}
                   </OutfitRegularText>
                 </View>
 
                 {this.rendercuisines()}
-                {this.renderratings()}
+                {/* {this.renderratings()} */}
               </View>
               <Dash
                 style={{
@@ -321,7 +351,7 @@ class MapScreen extends React.Component {
                 dashLength={0}
                 dashGap={1 * vh}
                 dashStyle={{width: 2 * vw}}></Dash>
-              <View
+              {/* <View
                 style={{
                   paddingHorizontal: 5 * vw,
                   marginTop: 5 * vh,
@@ -331,7 +361,7 @@ class MapScreen extends React.Component {
                   Happy Hours Deals
                 </OutfitSemiBoldText>
                 <HomeCarouselConmponent />
-              </View>
+              </View> */}
               <View style={{alignItems: 'center'}}>
                 <Button
                   title="Loot Box"
@@ -343,7 +373,7 @@ class MapScreen extends React.Component {
               </View>
             </ScrollView>
           </BottomSheetWrapper>
-          <BottomSheetWrapper
+          {/* <BottomSheetWrapper
             noBackDrop
             visible={this.state.campaignModal}
             setVisible={() => this.setState({campaignModal: false})}>
@@ -400,10 +430,21 @@ class MapScreen extends React.Component {
                 })}
               </View>
             </View>
-          </BottomSheetWrapper>
+          </BottomSheetWrapper> */}
         </ImageBackground>
       </View>
     );
   }
 }
-export default MapScreen;
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getNearestRestaurant: data => dispatch(getNearestRestaurants(data)),
+    // signup: data => dispatch(userSignup(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

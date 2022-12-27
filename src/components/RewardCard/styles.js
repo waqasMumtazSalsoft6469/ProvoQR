@@ -1,14 +1,14 @@
 import {StyleSheet} from 'react-native';
 import ThemeColors from '../../Utils/ThemeColors';
-import {vw, vh} from '../../Utils/Units';
+import {vw, vh, themeShadow} from '../../Utils/Units';
 
 export default StyleSheet.create({
   cardimage: {
     resizeMode: 'contain',
     width: 30 * vw,
-
-    borderRadius: 5 * vh,
+    borderRadius: 3 * vh,
     height: 30 * vw,
+    ...themeShadow,
   },
   name: {
     color: ThemeColors.darkpurple,

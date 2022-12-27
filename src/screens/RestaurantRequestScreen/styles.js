@@ -87,5 +87,31 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingTop: vh * 2,
   },
+  profile: {
+    width: 12 * vh,
+    height: 12 * vh,
+    borderRadius: 6 * vh,
+    resizeMode: 'cover',
+  },
+
+  modal: {
+    // height: vh * 20,
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: vw * 100,
+    overflow: 'hidden',
+    bottom: 0,
+    borderTopLeftRadius: vh * 2,
+    borderTopRightRadius: vh * 2,
+    paddingVertical: vh * 2,
+    ...themeShadow,
+    // zIndex: 1,
+  },
+  line: {
+    height: vh * 0.1,
+    width: vw * 100,
+    backgroundColor: ThemeColors.lightGray,
+    marginVertical: vh * 1.5,
+  },
 });
 export default styles;

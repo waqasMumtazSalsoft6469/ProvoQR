@@ -270,5 +270,16 @@ const styles = StyleSheet.create({
     ...themeShadow,
   },
   filter: {height: vh * 4, width: vh * 4, tintColor: '#999999'},
+  markerIconStyle: {
+    height: vh * 5,
+    width: vh * 5,
+    resizeMode: 'contain',
+  },
+  markerTouch: {
+    alignItems: 'center',
+  },
+  resName: {
+    fontSize: vh * 1.6,
+  },
 });
 export default styles;

@@ -10,6 +10,7 @@ import RubikRegular from '../../components/Text/RubikRegular';
 import RubikLight from '../../components/Text/RubikLight';
 import OutfitRegularText from '../Text/OutfitRegularText';
 import OutfitMediumText from '../Text/OutfitMediumText';
+import {imageUrl} from '../../Api/configs';
 class RewardCard extends React.Component {
   constructor(props) {
     super(props);
@@ -22,14 +23,17 @@ class RewardCard extends React.Component {
       <View style={styles.card}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableHOC onPress={this.props.onClick}>
-            <Image source={icons.rewardCup} style={styles.cardimage} />
+            <Image
+              source={{uri: imageUrl + this.props?.item?.image}}
+              style={styles.cardimage}
+            />
           </TouchableHOC>
 
           <View style={{marginLeft: 2.5 * vw, width: 50 * vw}}>
             <OutfitMediumText style={styles.name}>
               {this.props.item.name}
             </OutfitMediumText>
-            <RubikLight style={styles.cus} numberOfLines={2}>
+            <RubikLight style={styles.cus} numberOfLines={1}>
               {this.props.item.description}
             </RubikLight>
             <RubikLight style={styles.cus} numberOfLines={1}>
