@@ -29,7 +29,10 @@ import Dash from 'react-native-dash';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import {mapStyle} from '../../Utils/customeMap';
-import {getNearestRestaurants} from '../../Redux/Actions/otherActions';
+import {
+  getNearestRestaurants,
+  restaurantDetails,
+} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
 import {
   checkLocationPermissions,
@@ -67,7 +70,6 @@ class MapScreen extends React.Component {
     }, 500);
   };
   getUserLocation = async () => {
-    console.log(LONGITUDE_DELTA);
     try {
       const location = await getCurrentLocation();
       this.setState({
@@ -225,10 +227,9 @@ class MapScreen extends React.Component {
           coordinate={{
             latitude: Number(location?.lat),
             longitude: Number(location?.lng),
-          }}>
-          <TouchableHOC
-            style={styles.markerTouch}
-            onPress={() => this.getRestaurantDetails(location?.id)}>
+          }}
+          onPress={() => this.getRestaurantDetails(location?.id)}>
+          <TouchableHOC style={styles.markerTouch}>
             <Image source={icons.marker} style={styles.markerIconStyle} />
             <OutfitLightText style={styles.resName}>
               {location?.name}
@@ -313,12 +314,20 @@ class MapScreen extends React.Component {
                   </OutfitSemiBoldText>
                   <View style={styles.menuContainer}>
                     <TouchableHOC
-                      onPress={() =>
+                      onPress={() => {
+                        this.setState({resturentModal: false});
                         this.props.navigation.navigate('RestaurantDirection', {
                           latitude: this.state.details?.lat,
                           longitude: this.state.details?.lng,
-                        })
-                      }>
+                        });
+                      }}
+                      onSelect={() => {
+                        this.setState({resturentModal: false});
+                        this.props.navigation.navigate('RestaurantDirection', {
+                          latitude: this.state.details?.lat,
+                          longitude: this.state.details?.lng,
+                        });
+                      }}>
                       <OutfitRegularText style={styles.buttonText}>
                         View on Map
                       </OutfitRegularText>
@@ -330,7 +339,6 @@ class MapScreen extends React.Component {
                   {this.state.details?.organ_profiles?.about}
                 </OutfitLightText>
                 <View style={styles.catbox}>
-                  <Image source={icons.burger} style={styles.catIcon} />
                   <OutfitRegularText style={styles.catText}>
                     {this.state.details?.organ_profiles?.categories?.name}
                   </OutfitRegularText>
@@ -366,7 +374,7 @@ class MapScreen extends React.Component {
                 <Button
                   title="Loot Box"
                   onPress={() => {
-                    this.setState({resturentModal: false, campaignModal: true});
+                    this.setState({resturentModal: false});
                   }}
                   btnContainer={{marginTop: 5 * vh}}
                 />
@@ -443,6 +451,7 @@ const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
     getNearestRestaurant: data => dispatch(getNearestRestaurants(data)),
+    restaurantDetails: data => dispatch(restaurantDetails(data)),
     // signup: data => dispatch(userSignup(data)),
   };
 };

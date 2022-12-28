@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   resName: {
-    fontSize: vh * 1.6,
+    fontSize: vh * 1.4,
   },
 });
 export default styles;
