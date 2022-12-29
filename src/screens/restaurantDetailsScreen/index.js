@@ -30,6 +30,8 @@ class ResturentDetailScreen extends React.Component {
     super(props);
     this.state = {
       details: {},
+      lootbox_amount: 0,
+      provo_cash_price: 0,
       cusines: [
         {
           name: 'Cuisine 01',
@@ -58,8 +60,11 @@ class ResturentDetailScreen extends React.Component {
   componentDidMount() {
     const id = this.props.route.params.id;
     this.props.restaurantDetails({organisation_id: id}).then(res => {
-      console.log(res?.details);
-      this.setState({details: res?.details});
+      this.setState({
+        details: res?.details,
+        lootbox_amount: res?.lootbox_amount,
+        provo_cash_price: res?.provo_cash_price,
+      });
     });
   }
 
@@ -200,14 +205,30 @@ class ResturentDetailScreen extends React.Component {
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
             </View> */}
+            <View>
+              <View>
+                <OutfitSemiBoldText>By Card:</OutfitSemiBoldText>
+                <OutfitRegularText>
+                  ${this.state.lootbox_amount}
+                </OutfitRegularText>
+              </View>
+              <View>
+                <OutfitSemiBoldText>By ProvoCash:</OutfitSemiBoldText>
+                <OutfitRegularText>
+                  ${this.state.provo_cash_price}
+                </OutfitRegularText>
+              </View>
+            </View>
             <View style={{alignItems: 'center'}}>
               <Button
                 title="LOOT BOX"
-                // onPress={() =>
-                //   this.props.navigation.navigate('LootBoxPaymentMethod', {
-                //     success: 0,
-                //   })
-                // }
+                onPress={() =>
+                  this.props.navigation.navigate('LootBoxPaymentMethod', {
+                    id: this.state.details?.id,
+                    provoCash: this.state.provo_cash_price,
+                    lootBoxAmount: this.state.lootbox_amount,
+                  })
+                }
                 btnContainer={{marginTop: 5 * vh}}
               />
             </View>

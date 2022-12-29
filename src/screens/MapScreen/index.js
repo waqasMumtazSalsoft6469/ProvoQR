@@ -375,6 +375,9 @@ class MapScreen extends React.Component {
                   title="Loot Box"
                   onPress={() => {
                     this.setState({resturentModal: false});
+                    this.props.navigation.navigate('LootBoxPaymentMethod', {
+                      id: this.state.details?.id,
+                    });
                   }}
                   btnContainer={{marginTop: 5 * vh}}
                 />
