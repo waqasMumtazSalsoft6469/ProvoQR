@@ -44,7 +44,7 @@ class MySuscription extends React.Component {
               this.props.navigation.navigate('Payment', {
                 id: item?.id,
                 token: this.state.token,
-                from: 'subscription',
+                from: this?.props?.route?.name,
               });
             }}
             index={index}

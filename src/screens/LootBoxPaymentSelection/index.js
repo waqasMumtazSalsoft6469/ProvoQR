@@ -10,6 +10,8 @@ import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import ThemeColors from '../../Utils/ThemeColors';
 import AlertModal from '../../components/Popups/alertModal';
+import {connect} from 'react-redux';
+import {lootBoxPurchaseByCoin} from '../../Redux/Actions/otherActions';
 
 class LootBoxPaymentMethod extends React.Component {
   constructor(props) {
@@ -29,6 +31,24 @@ class LootBoxPaymentMethod extends React.Component {
       selectedOption: 1,
     };
   }
+
+  handleProvocashPress = () => {
+    console.log('LootBoxPaymentMethod');
+    return
+    const {id} = this.props.route.params;
+    const data = {
+      restaurant_id: id,
+    };
+    this.props.lootBoxPurchaseByCoin(data).then(res => {
+      console.log('res from lootBoxPurchaseByCoin:', res);
+      // showToast(res?.message?.message);
+      // if (res?.success) {
+      //   this.setState({visibleSuccess: true});
+      // }
+    });
+    // this.setState({visibleSuccess: false});
+    // this.props.navigation.navigate('LootBoxScreen', {success: 0});
+  };
 
   render() {
     return (
@@ -70,13 +90,19 @@ class LootBoxPaymentMethod extends React.Component {
           icon={icons.popupAlert}
           description={'Please confirm purchase of lootbox for 100 ProvoCash'}
           buttonTitle={'CONFIRM'}
-          onButtonPress={() => {
-            this.setState({visibleSuccess: false});
-            this.props.navigation.navigate('LootBoxScreen', {success: 0});
-          }}
+          onButtonPress={this.handleProvocashPress}
         />
       </View>
     );
   }
 }
-export default LootBoxPaymentMethod;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    lootBoxPurchaseByCoin: data => dispatch(lootBoxPurchaseByCoin(data)),
+  };
+};
+
+export default connect(mapDispatchToProps)(LootBoxPaymentMethod);
+// export default LootBoxPaymentMethod;

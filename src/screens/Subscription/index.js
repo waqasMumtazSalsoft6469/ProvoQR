@@ -34,6 +34,7 @@ const Subscription = props => {
             props.navigation.navigate('Payment', {
               id: subscription[itemIndex]?.id,
               token,
+              from: props?.route?.name,
             });
           }}
           index={index}

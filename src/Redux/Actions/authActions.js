@@ -151,7 +151,7 @@ export const subscribePackage = (detail, token) => {
             );
           } else {
             response = await post(
-              endpoints.auth.subscription,
+              endpoints.other.provoPayment,
               detail,
               true,
               {},

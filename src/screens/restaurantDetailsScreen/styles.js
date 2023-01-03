@@ -132,5 +132,19 @@ const styles = StyleSheet.create({
     height: vh * 3,
     width: vh * 3,
   },
+  outerContainer: {
+    marginTop: vh*1,
+    paddingHorizontal: vw * 5,
+  },
+  priceContainer: {
+    marginVertical: vh * 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  priceHeadingText: {
+    color: ThemeColors.iconColor,
+    fontSize: vh*1.8
+  },
 });
 export default styles;

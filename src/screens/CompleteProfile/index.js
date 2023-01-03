@@ -65,7 +65,7 @@ class CompleteProfile extends React.Component {
     } else {
       let data = {age: age, gender: selectedGender, address: address};
       this.props.completeProfile(data).then(res => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Drawer');
       });
     }
   };

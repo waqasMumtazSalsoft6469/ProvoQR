@@ -205,16 +205,16 @@ class ResturentDetailScreen extends React.Component {
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
             </View> */}
-            <View>
-              <View>
-                <OutfitSemiBoldText>By Card:</OutfitSemiBoldText>
-                <OutfitRegularText>
+            <View style={styles.outerContainer}>
+              <View style={styles.priceContainer}>
+                <OutfitSemiBoldText style={styles.priceHeadingText}>By Card:</OutfitSemiBoldText>
+                <OutfitRegularText style={styles.priceHeadingText}>
                   ${this.state.lootbox_amount}
                 </OutfitRegularText>
               </View>
-              <View>
-                <OutfitSemiBoldText>By ProvoCash:</OutfitSemiBoldText>
-                <OutfitRegularText>
+              <View style={styles.priceContainer}>
+                <OutfitSemiBoldText style={styles.priceHeadingText}>By ProvoCash:</OutfitSemiBoldText>
+                <OutfitRegularText style={styles.priceHeadingText}>
                   ${this.state.provo_cash_price}
                 </OutfitRegularText>
               </View>

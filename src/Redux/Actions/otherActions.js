@@ -149,6 +149,33 @@ export const getProvoWallet = () => {
     });
   };
 };
+
+export const provoCashPayment = (detail) => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        let response = null;
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          response = await post(
+            endpoints.other.provoPayment,
+            detail,
+            true,
+          );
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 1000);
+    });
+  };
+};
+
 export const getBillingDetails = () => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
@@ -321,6 +348,32 @@ export const getNearestRestaurants = data => {
           dispatch({type: actionTypes.loaderOff});
         }
       }, 300);
+    });
+  };
+};
+
+export const lootBoxPurchaseByCoin = (detail) => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        let response = null;
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          response = await post(
+            endpoints.other.lootBoxPurchaseByCoin,
+            detail,
+            true,
+          );
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 1000);
     });
   };
 };

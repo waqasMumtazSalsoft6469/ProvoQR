@@ -21,6 +21,7 @@ export const endpoints = {
     subscriptionLogs: '/user/subscription/logs',
     provoPackages: '/provo/packages',
     provoWallet: '/provo_wallet',
+    provoPayment: '/purchase/provo/cash',
     getBilling: '/get/billing',
     addRestaurantRequest: '/user/restaurant/request',
     getRestaurantRequest: '/user/restaurant/request/logs',
@@ -29,6 +30,7 @@ export const endpoints = {
     aboutUs: '/about',
     referal: '/get/referralcode',
     nearRes: '/get/restaurant/list/bymap',
+    lootBoxPurchaseByCoin: '/lootbox/purchase/bycoin',
   },
 };
 

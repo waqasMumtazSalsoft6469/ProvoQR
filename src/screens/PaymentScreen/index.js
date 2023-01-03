@@ -11,6 +11,7 @@ import {subscribePackage} from '../../Redux/Actions/authActions';
 import {Masks} from 'react-native-mask-input';
 import {connect} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
+import {provoCashPayment} from '../../Redux/Actions/otherActions';
 
 class PaymentScreen extends React.Component {
   constructor(props) {
@@ -49,9 +50,27 @@ class PaymentScreen extends React.Component {
     }
   };
 
+  handleSuccessPress = () => {
+    const {from} = this.props.route.params;
+    // this.props.route?.params?.from == 'lootbox'
+    //   ? this.props.navigation.navigate('LootBoxScreen', {
+    //       success: 0,
+    //     })
+    //   : this.props.navigation.navigate('Login');
+    if (from === 'Subscription') {
+      this.props.navigation.navigate('Login');
+    } else if (from == 'lootbox') {
+      this.props.navigation.navigate('LootBoxScreen', {
+        success: 0,
+      });
+    } else {
+      this.props.navigation.navigate('MySubscription');
+    }
+  };
+
   confirmPayment = () => {
     const {name, cardNumber, expiry, cvv} = this.state;
-    const {id, token} = this.props.route.params;
+    const {id, token, from} = this.props.route.params;
     let data = {
       card_holder_name: name,
       card_num: cardNumber,
@@ -59,12 +78,22 @@ class PaymentScreen extends React.Component {
       expiry_date: expiry,
       package_id: id,
     };
-    this.props.subscribePackage(data, token).then(res => {
-      showToast(res?.message?.message);
-      if (res?.success) {
-        this.setState({visibleSuccess: true});
-      }
-    });
+
+    if (from === 'provo') {
+      this.props.provoCashPayment(data).then(res => {
+        showToast(res?.message?.message);
+        if (res?.success) {
+          this.setState({visibleSuccess: true});
+        }
+      });
+    } else {
+      this.props.subscribePackage(data, token).then(res => {
+        showToast(res?.message?.message);
+        if (res?.success) {
+          this.setState({visibleSuccess: true});
+        }
+      });
+    }
   };
 
   handlePayment = () => {
@@ -206,15 +235,7 @@ class PaymentScreen extends React.Component {
                 : 'Payment has been made successfully'
             }
             buttonTitle="OK"
-            onButtonPress={
-              () =>
-                this.props.route?.params?.from == 'lootbox'
-                  ? this.props.navigation.navigate('LootBoxScreen', {
-                      success: 0,
-                    })
-                  : this.props.navigation.navigate('Login')
-              // this.handlePayment()
-            }
+            onButtonPress={this.handleSuccessPress}
           />
         </ImageBackground>
       </View>
@@ -230,7 +251,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    // subscribePackage: (data, token) => dispatch(subscribePackage(data, token)),
+    subscribePackage: (data, token) => dispatch(subscribePackage(data, token)),
+    provoCashPayment: data => dispatch(provoCashPayment(data)),
   };
 };
 
