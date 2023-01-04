@@ -22,6 +22,8 @@ import ThemeColors from '../../Utils/ThemeColors';
 import Dash from 'react-native-dash';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
 import {getHomeData} from '../../Redux/Actions/otherActions';
+import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import SearchInput from '../../components/Input/SearchInput';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -58,6 +60,10 @@ class HomeScreen extends React.Component {
         categories: res?.category,
       });
     });
+  }
+
+  handleViewAllRestaurantPress = () => {
+    this.props.navigation.navigate('RestaurantListScreen')
   }
 
   renderitem = ({item, index}) => {
@@ -204,6 +210,7 @@ class HomeScreen extends React.Component {
                 />
               </View>
             </TouchableHOC> */}
+            <SearchInput placeholder="Search...."/>
             <View
               style={{
                 paddingHorizontal: 5 * vw,
@@ -228,6 +235,11 @@ class HomeScreen extends React.Component {
                 <OutfitSemiBoldText style={styles.recomend}>
                   Recommended For You
                 </OutfitSemiBoldText>
+                <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
+                  <OutfitRegularText style={styles.btnText}>
+                    View All
+                  </OutfitRegularText>
+                </TouchableHOC>
                 {/* <Image source={icons.filter} style={styles.filter} /> */}
               </View>
               <FlatList
@@ -253,10 +265,21 @@ class HomeScreen extends React.Component {
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
             <View style={styles.categorybox}>
-              <View style={{flexDirection: 'row', paddingLeft: 5 * vw}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingHorizontal: 5 * vw,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
                 <OutfitSemiBoldText style={styles.recomend}>
                   Categories
                 </OutfitSemiBoldText>
+                <TouchableHOC>
+                  <OutfitRegularText style={styles.btnText}>
+                    View All
+                  </OutfitRegularText>
+                </TouchableHOC>
               </View>
 
               <FlatList
@@ -282,12 +305,19 @@ class HomeScreen extends React.Component {
               <View
                 style={{
                   flexDirection: 'row',
-                  paddingLeft: 5 * vw,
+                  paddingHorizontal: 5 * vw,
                   marginTop: 2 * vh,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}>
                 <OutfitSemiBoldText style={styles.recomend}>
                   All Places
                 </OutfitSemiBoldText>
+                <TouchableHOC>
+                  <OutfitRegularText style={styles.btnText}>
+                    View All
+                  </OutfitRegularText>
+                </TouchableHOC>
               </View>
               <FlatList
                 data={this.state.allRestaurant}

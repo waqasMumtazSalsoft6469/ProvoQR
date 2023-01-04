@@ -24,8 +24,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.3 * vh,
     backgroundColor: ThemeColors.white,
     // position: 'absolute',
-    bottom: -3 * vh,
+    // bottom: -3 * vh,
     ...themeShadow,
+  },
+  input:{
+    marginLeft: vw*3
   },
   filter: {height: vh * 4, width: vh * 4, resizeMode: 'contain'},
   search: {width: vw * 4, height: vh * 5, marginRight: 0 * vw},
@@ -96,5 +99,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF6969',
     borderRadius: 2 * vh,
   },
+  btnText:{
+    color: ThemeColors.iconColor,
+    fontSize: vh*1.9
+  }
 });
 export default styles;

@@ -10,6 +10,7 @@ import LootBoxPaymentMethod from '../screens/LootBoxPaymentSelection';
 import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
 import {getNavigationOptions} from './NavigationOptions';
 import RestaurantDirection from '../screens/RestaurantDirectionScreen';
+import RestaurantListScreen from '../screens/RestaurantListScreen';
 
 const HomeNavigator = createStackNavigator();
 
@@ -24,6 +25,11 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={ResturentDetail}
         name="ResturentDetail"
+        options={{headerShown: true}}
+      />
+      <HomeNavigator.Screen
+        component={RestaurantListScreen}
+        name="RestaurantListScreen"
         options={{headerShown: true}}
       />
       <HomeNavigator.Screen

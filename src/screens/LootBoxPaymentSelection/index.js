@@ -32,22 +32,27 @@ class LootBoxPaymentMethod extends React.Component {
     };
   }
 
+  handleCardBtnPress = () => {
+    const {id} = this.props.route.params;
+    this.props.navigation.navigate('ProvoPaymentMethod', {
+      packageId: id,
+      from: 'lootbox',
+    });
+  };
+
   handleProvocashPress = () => {
-    console.log('LootBoxPaymentMethod');
-    return
     const {id} = this.props.route.params;
     const data = {
       restaurant_id: id,
     };
     this.props.lootBoxPurchaseByCoin(data).then(res => {
       console.log('res from lootBoxPurchaseByCoin:', res);
-      // showToast(res?.message?.message);
-      // if (res?.success) {
-      //   this.setState({visibleSuccess: true});
-      // }
+      showToast(res?.message);
+      if (res) {
+        this.setState({visibleSuccess: false});
+        this.props.navigation.navigate('LootBoxScreen', {success: 0});
+      }
     });
-    // this.setState({visibleSuccess: false});
-    // this.props.navigation.navigate('LootBoxScreen', {success: 0});
   };
 
   render() {
@@ -68,11 +73,7 @@ class LootBoxPaymentMethod extends React.Component {
               <Button
                 title="BY CARD"
                 btnContainer={styles.upperBtn}
-                onPress={() =>
-                  this.props.navigation.navigate('ProvoPaymentMethod', {
-                    from: 'lootbox',
-                  })
-                }
+                onPress={this.handleCardBtnPress}
                 labelStyle={{color: ThemeColors.white}}
               />
               <Button
@@ -103,6 +104,4 @@ const mapDispatchToProps = dispatch => {
     lootBoxPurchaseByCoin: data => dispatch(lootBoxPurchaseByCoin(data)),
   };
 };
-
 export default connect(mapDispatchToProps)(LootBoxPaymentMethod);
-// export default LootBoxPaymentMethod;

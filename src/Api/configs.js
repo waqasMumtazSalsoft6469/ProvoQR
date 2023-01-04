@@ -31,6 +31,8 @@ export const endpoints = {
     referal: '/get/referralcode',
     nearRes: '/get/restaurant/list/bymap',
     lootBoxPurchaseByCoin: '/lootbox/purchase/bycoin',
+    lootBoxPurchaseByCard: '/purchase/lootbox',
+    restaurantList: '/get/restaurant/list'
   },
 };
 

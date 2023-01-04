@@ -73,6 +73,7 @@ export const shouldHeaderBeShown = activeRouteName => {
     case 'ProvoPaymentMethod':
     case 'LootBoxPaymentMethod':
     case 'RestaurantDirection':
+    case 'RestaurantListScreen':
       return true;
 
     default:
@@ -271,6 +272,7 @@ export const showHeaderLeft = (activeRouteName, props) => {
     case 'LootBoxPaymentMethod':
     case 'Payment':
     case 'RestaurantDirection':
+    case 'RestaurantListScreen':
       return renderBackButton(activeRouteName, props);
     default:
       return null;

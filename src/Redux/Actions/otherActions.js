@@ -150,7 +150,7 @@ export const getProvoWallet = () => {
   };
 };
 
-export const provoCashPayment = (detail) => {
+export const provoCashPayment = detail => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -158,11 +158,7 @@ export const provoCashPayment = (detail) => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          response = await post(
-            endpoints.other.provoPayment,
-            detail,
-            true,
-          );
+          response = await post(endpoints.other.provoPayment, detail, true);
 
           resolve(response);
         } catch (e) {
@@ -352,19 +348,14 @@ export const getNearestRestaurants = data => {
   };
 };
 
-export const lootBoxPurchaseByCoin = (detail) => {
+export const lootBoxPurchaseByCoin = data => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
-        let response = null;
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          response = await post(
-            endpoints.other.lootBoxPurchaseByCoin,
-            detail,
-            true,
-          );
+          const response = await post(endpoints.other.lootBoxPurchaseByCoin, data, true);
 
           resolve(response);
         } catch (e) {
@@ -373,7 +364,49 @@ export const lootBoxPurchaseByCoin = (detail) => {
         } finally {
           dispatch({type: actionTypes.loaderOff});
         }
-      }, 1000);
+      }, 300);
+    });
+  };
+};
+
+export const lootBoxPurchaseByCard = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await post(endpoints.other.lootBoxPurchaseByCard, data, true);
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getAllRestaurant = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await get(endpoints.other.restaurantList);
+
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
     });
   };
 };
