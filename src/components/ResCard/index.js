@@ -93,7 +93,6 @@ class ProductItem extends React.Component {
   };
   render() {
     const location = this.props.location;
-
     return (
       <View>
         <TouchableHOC

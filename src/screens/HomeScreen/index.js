@@ -24,6 +24,10 @@ import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
 import {getHomeData} from '../../Redux/Actions/otherActions';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import SearchInput from '../../components/Input/SearchInput';
+import {
+  checkLocationPermissions,
+  getCurrentLocation,
+} from '../../Utils/mapHelperFunction';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -37,21 +41,32 @@ class HomeScreen extends React.Component {
     };
   }
 
-  getCurrentLocation = async () => {
+  getUserLocation = async () => {
     try {
       const location = await getCurrentLocation();
+      // console.log('CURRENT LOCATION', location);
       this.setState({
         userLocation: {
-          latitude: location?.latitude,
+          latitude: parseFloat(location?.latitude),
           longitude: parseFloat(location?.longitude),
         },
       });
     } catch (error) {
-      showToast(error);
+      console.log('user location error ', error);
+    }
+  };
+
+  setupMethods = async () => {
+    try {
+      await checkLocationPermissions();
+      this.getUserLocation();
+    } catch (error) {
+      console.log('location** error ', error);
     }
   };
 
   componentDidMount() {
+    this.setupMethods();
     this.props.getHomDate().then(res => {
       this.setState({
         banners: res?.banner,
@@ -63,8 +78,8 @@ class HomeScreen extends React.Component {
   }
 
   handleViewAllRestaurantPress = () => {
-    this.props.navigation.navigate('RestaurantListScreen')
-  }
+    this.props.navigation.navigate('RestaurantListScreen');
+  };
 
   renderitem = ({item, index}) => {
     return (
@@ -210,7 +225,7 @@ class HomeScreen extends React.Component {
                 />
               </View>
             </TouchableHOC> */}
-            <SearchInput placeholder="Search...."/>
+            <SearchInput placeholder="Search...." />
             <View
               style={{
                 paddingHorizontal: 5 * vw,

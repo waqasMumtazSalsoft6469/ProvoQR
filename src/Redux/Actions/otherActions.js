@@ -390,21 +390,21 @@ export const lootBoxPurchaseByCard = data => {
   };
 };
 
-export const getAllRestaurant = () => {
+export const getAllRestaurant = (data) => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          dispatch({type: actionTypes.loaderOn});
+          dispatch({type: actionTypes.softLoaderOn});
 
-          const response = await get(endpoints.other.restaurantList);
+          const response = await get(endpoints.other.restaurantList, data);
 
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
           reject(e);
         } finally {
-          dispatch({type: actionTypes.loaderOff});
+          dispatch({type: actionTypes.softLoaderOff});
         }
       }, 300);
     });

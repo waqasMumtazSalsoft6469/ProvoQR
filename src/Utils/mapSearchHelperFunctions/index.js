@@ -4,7 +4,7 @@ const geoBase = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const geoBaseLatLng =
   'https://maps.googleapis.com/maps/api/geocode/json?place_id=';
 const geo_Base = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-const googleApiKey = 'AIzaSyB2hxNhJCBwaHoQ2eggJmLR4pfDYAN93cY';
+const googleApiKey = 'AIzaSyCL2XFs2hqb_aQFKtcUVf9xyhdxLBSFdp0';
 const geocodeUrl =
   'http://dev61.onlinetestingserver.com/forward-geo-code?address=';
 
