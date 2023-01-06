@@ -23,7 +23,9 @@ import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {ScrollView} from 'react-native-gesture-handler';
 import MasonryList from 'react-native-masonry-list';
 import {connect} from 'react-redux';
-import {getRewardList, getMySubscription} from '../../Redux/Actions/otherActions';
+import {
+  getRewardList
+} from '../../Redux/Actions/otherActions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -50,7 +52,10 @@ class RegisterScreen extends React.Component {
   componentDidMount() {
     this.props.getRewardList().then(res => {
       console.log("res", res);
-    })
+      this.setState({
+        reward: res?.rewardList,
+      });
+    });
   }
   renderbuttons = () => {
     return (
@@ -113,15 +118,16 @@ class RegisterScreen extends React.Component {
           resizeMode="cover"
           imageStyle={styles.imgbg}>
           <MasonryList
-            images={this.state.reward}
+            data={this.state.reward}
             numColumns={2}
             contentContainerStyle={styles.contentContainerStyle}
-            onPressImage={item =>
-              this.props.navigation.navigate('RewardDetail', {
-                category: item.category,
-              })
-            }
+            // onPressImage={item =>
+            //   this.props.navigation.navigate('RewardDetail', {
+            //     category: item.category,
+            //   })
+            // }
             renderItem={({item}) => {
+              console.log("item", item);
               <TouchableHighlight
                 // underlayColor={'#000e'}
                 onPress={() =>
@@ -153,10 +159,15 @@ class RegisterScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    getRewardList: () => dispatch(getRewardList())
+    getRewardList: () => dispatch(getRewardList()),
   };
 };
-export default connect(mapDispatchToProps)(RegisterScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

@@ -61,6 +61,8 @@ class PaymentScreen extends React.Component {
       this.props.navigation.navigate('LootBoxScreen', {
         success: 0,
       });
+    } else if (from === 'provo') {
+      this.props.navigation.navigate('HomeScreen');
     } else {
       this.props.navigation.navigate('MySubscription');
     }
