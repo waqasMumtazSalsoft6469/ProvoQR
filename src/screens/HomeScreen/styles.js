@@ -36,28 +36,12 @@ const styles = StyleSheet.create({
     color: ThemeColors.iconColor,
     fontSize: 2 * vh,
   },
-
-  catname: {
-    color: ThemeColors.darkpurple,
-    fontSize: 2 * vh,
-  },
   you: {
     color: ThemeColors.primary,
     fontSize: 2.5 * vh,
   },
   menu: {width: vw * 5, height: vh * 4, marginLeft: 3 * vw},
-  viewcon: {
-    flexDirection: 'row',
-    // padding: 4 * vw,
-    borderRadius: 2.5 * vh,
-    backgroundColor: '#F2D3D1',
-    alignItems: 'center',
-    height: vh * 7,
-    width: vw * 28,
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#EBC3C0',
-  },
+ 
   burgerIcon: {
     height: vh * 3,
     width: vh * 3,

@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   contentContainerStyle:{
     paddingBottom: vh*8
   },
+  categoryContainer:{
+    margin: vw*1
+  },
   headerContainer:{
     marginBottom: vh*2
   },

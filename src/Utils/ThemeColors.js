@@ -1,5 +1,6 @@
 const ThemeColors = {
   white: '#FFF',
+  black: '#000000',
   button: '#FF2E17',
   darkpurple: '#0F0F3A',
   redfboxtext: '#E11405',

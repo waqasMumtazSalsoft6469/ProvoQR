@@ -22,77 +22,15 @@ import {vh, vw} from '../../Utils/Units';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {ScrollView} from 'react-native-gesture-handler';
 import MasonryList from 'react-native-masonry-list';
+import {connect} from 'react-redux';
+import {getRewardList, getMySubscription} from '../../Redux/Actions/otherActions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectreward: true,
-      reward: [
-        {
-          source: reward1,
-          name: 'Finest Dining Restaurant',
-          category: 'Redeem',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 2040},
-        },
-        {
-          source: reward2,
-          name: 'Finest Dining Restaurant',
-          category: 'Redeemed',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 1020},
-        },
-        {
-          source: reward3,
-          name: 'Finest Dining Restaurant',
-          category: 'Expired',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 1020},
-        },
-        {
-          source: reward1,
-          name: 'Finest Dining Restaurant',
-          category: 'Redeem',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 2040},
-        },
-        {
-          source: reward2,
-          name: 'Finest Dining Restaurant',
-          category: 'Redeemed',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 1020},
-        },
-        {
-          source: reward3,
-          name: 'Finest Dining Restaurant',
-          category: 'Expired',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 1020},
-        },
-        {
-          source: reward1,
-          name: 'Finest Dining Restaurant',
-          category: 'Redeem',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 2040},
-        },
-        {
-          source: reward2,
-          name: 'Finest Dining Restaurant',
-          category: 'Redeemed',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 1020},
-        },
-        {
-          source: reward3,
-          name: 'Finest Dining Restaurant',
-          category: 'Expired',
-          height: vh * 20,
-          dimensions: {width: 1080, height: 1020},
-        },
-      ],
+      reward: [],
       urls: [
         reward1,
         reward2,
@@ -108,6 +46,11 @@ class RegisterScreen extends React.Component {
         // reward3,
       ],
     };
+  }
+  componentDidMount() {
+    this.props.getRewardList().then(res => {
+      console.log("res", res);
+    })
   }
   renderbuttons = () => {
     return (
@@ -210,4 +153,10 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getRewardList: () => dispatch(getRewardList())
+  };
+};
+export default connect(mapDispatchToProps)(RegisterScreen);

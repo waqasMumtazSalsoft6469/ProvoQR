@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import styles from './styles';
 import IconButton from '../components/Buttons/IconButton';
@@ -15,6 +16,8 @@ import JostRegular from '../components/Text/JostRegular';
 import TouchableHOC from '../components/Buttons/TouchableHOC';
 import {vh, vw} from '../Utils/Units';
 import ThemeColors from '../Utils/ThemeColors';
+import OutfitMediumText from '../components/Text/OutfitMediumText';
+import OutfitSemiBoldText from '../components/Text/OutfitSemiBoldText';
 
 export const getNavigationOptions = props => {
   var activeRouteName = props.route.state
@@ -38,7 +41,7 @@ export const setStatusBar = (activeRouteName, settings) => {
 export const shouldHeaderBeShown = activeRouteName => {
   setStatusBar(activeRouteName);
   switch (activeRouteName) {
-    // case 'HomeScreen':
+    case 'HomeScreen':
     // case 'Login':
     // case 'Signup':
     // case 'PasswordRecovery':
@@ -74,6 +77,7 @@ export const shouldHeaderBeShown = activeRouteName => {
     case 'LootBoxPaymentMethod':
     case 'RestaurantDirection':
     case 'RestaurantListScreen':
+    case 'CategoryListScreen':
       return true;
 
     default:
@@ -273,11 +277,26 @@ export const showHeaderLeft = (activeRouteName, props) => {
     case 'Payment':
     case 'RestaurantDirection':
     case 'RestaurantListScreen':
+    case 'CategoryListScreen':
       return renderBackButton(activeRouteName, props);
+    case 'HomeScreen':
+      return renderHomeScreenHeaderLeft();
     default:
       return null;
   }
 };
+
+const renderHomeScreenHeaderLeft = () => {
+  return (
+    <View style={styles.homeLeftHeaderContainer}>
+      <OutfitMediumText style={styles.homeHeaderText}>Grab Your</OutfitMediumText>
+      <OutfitSemiBoldText style={styles.headerTextBold}>
+        Delicious Meal Now!
+      </OutfitSemiBoldText>
+    </View>
+  );
+};
+
 export const defaultOptions = (activeRouteName, props) => {
   return {
     ...TransitionPresets.SlideFromRightIOS,

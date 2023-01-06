@@ -268,5 +268,16 @@ const styles = StyleSheet.create({
     width: 10 * vw,
     alignItems: 'center',
   },
+  homeHeaderText: {
+    color: ThemeColors.iconColor,
+    fontSize: 2 * vh,
+  },
+  headerTextBold: {
+    color: ThemeColors.primary,
+    fontSize: 3 * vh,
+  },
+  homeLeftHeaderContainer:{
+    width: vw*60
+  }
 });
 export default styles;

@@ -9,7 +9,11 @@ import {
   getCurrentLocation,
 } from '../../Utils/mapHelperFunction';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+
 const RestaurantListScreen = props => {
+  const name = props?.route?.params?.name;
+  const id = props?.route?.params?.id;
+
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.GeneralReducer.softLoading);
 
@@ -31,6 +35,14 @@ const RestaurantListScreen = props => {
     });
   };
 
+  const renderHeadingText = () => {
+    if (name) {
+      return name;
+    } else {
+      return 'All Restaurants';
+    }
+  };
+
   const handleRestaurantPress = item => {
     props.navigation.navigate('ResturentDetail', {id: item?.id});
   };
@@ -44,9 +56,10 @@ const RestaurantListScreen = props => {
   };
 
   const getData = async () => {
-    if (currentPage) {
+    if (!isLoading && currentPage) {
       try {
         const data = {
+          category_id: id,
           page: currentPage,
           per_page: 10,
         };
@@ -105,7 +118,7 @@ const RestaurantListScreen = props => {
   const renderHeader = restaurant.length ? (
     <View style={styles.headerContainer}>
       <OutfitSemiBoldText style={styles.headingTextStyle}>
-        All Restaurants
+        {renderHeadingText()}
       </OutfitSemiBoldText>
     </View>
   ) : null;
@@ -125,6 +138,7 @@ const RestaurantListScreen = props => {
       <FlatList
         data={restaurant}
         renderItem={renderItem}
+        contentContainerStyle={styles.contentContainerStyle}
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}
         refreshing={isLoading}

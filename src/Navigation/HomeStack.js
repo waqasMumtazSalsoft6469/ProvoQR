@@ -11,6 +11,7 @@ import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
 import {getNavigationOptions} from './NavigationOptions';
 import RestaurantDirection from '../screens/RestaurantDirectionScreen';
 import RestaurantListScreen from '../screens/RestaurantListScreen';
+import CategoryListScreen from '../screens/CategoryListScreen';
 
 const HomeNavigator = createStackNavigator();
 
@@ -20,7 +21,7 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={HomeScreen}
         name="HomeScreen"
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
       <HomeNavigator.Screen
         component={ResturentDetail}
@@ -30,6 +31,11 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={RestaurantListScreen}
         name="RestaurantListScreen"
+        options={{headerShown: true}}
+      />
+      <HomeNavigator.Screen
+        component={CategoryListScreen}
+        name="CategoryListScreen"
         options={{headerShown: true}}
       />
       <HomeNavigator.Screen

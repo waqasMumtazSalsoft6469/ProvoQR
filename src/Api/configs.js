@@ -32,7 +32,9 @@ export const endpoints = {
     nearRes: '/get/restaurant/list/bymap',
     lootBoxPurchaseByCoin: '/lootbox/purchase/bycoin',
     lootBoxPurchaseByCard: '/purchase/lootbox',
-    restaurantList: '/get/restaurant/list'
+    restaurantList: '/get/restaurant/list',
+    categoryList: '/category/list',
+    rewardList: '/get/reward',
   },
 };
 

@@ -28,6 +28,7 @@ import {
   checkLocationPermissions,
   getCurrentLocation,
 } from '../../Utils/mapHelperFunction';
+import HomeCategoryCard from '../../components/HomeCategoryCard';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -77,8 +78,19 @@ class HomeScreen extends React.Component {
     });
   }
 
+  handleViewAllCategoryPress = () => {
+    this.props.navigation.navigate('CategoryListScreen');
+  };
+
   handleViewAllRestaurantPress = () => {
     this.props.navigation.navigate('RestaurantListScreen');
+  };
+
+  handleCategoryPress = item => {
+    this.props.navigation.navigate('RestaurantListScreen', {
+      id: item?.id,
+      name: item?.name,
+    });
   };
 
   renderitem = ({item, index}) => {
@@ -101,21 +113,12 @@ class HomeScreen extends React.Component {
     );
   };
 
-  rendercategoryitem = ({item, index}) => {
+  rendercategoryitem = ({item}) => {
     return (
-      <View
-        style={{
-          marginBottom: vh,
-          // marginRight: 4 * vw,
-          paddingHorizontal: vw * 2,
-        }}>
-        <View style={styles.viewcon}>
-          {/* <Image source={item.icon} style={styles.burgerIcon} /> */}
-          <OutfitSemiBoldText style={styles.catname}>
-            {item.name}
-          </OutfitSemiBoldText>
-        </View>
-      </View>
+      <HomeCategoryCard
+        item={item}
+        onPress={() => this.handleCategoryPress(item)}
+      />
     );
   };
 
@@ -136,7 +139,7 @@ class HomeScreen extends React.Component {
           style={{width: 100 * vw, flex: 1}}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 100 * vh}}>
-          <HeaderHome>
+          {/* <HeaderHome>
             <View
               style={{
                 flexDirection: 'row',
@@ -194,7 +197,7 @@ class HomeScreen extends React.Component {
                 </TouchableHOC>
               </View>
             </View>
-          </HeaderHome>
+          </HeaderHome> */}
           <ScrollView>
             {/* <TouchableHOC style={styles.seachbar}>
               <View
@@ -290,7 +293,7 @@ class HomeScreen extends React.Component {
                 <OutfitSemiBoldText style={styles.recomend}>
                   Categories
                 </OutfitSemiBoldText>
-                <TouchableHOC>
+                <TouchableHOC onPress={this.handleViewAllCategoryPress}>
                   <OutfitRegularText style={styles.btnText}>
                     View All
                   </OutfitRegularText>
@@ -328,7 +331,7 @@ class HomeScreen extends React.Component {
                 <OutfitSemiBoldText style={styles.recomend}>
                   All Places
                 </OutfitSemiBoldText>
-                <TouchableHOC>
+                <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
                   <OutfitRegularText style={styles.btnText}>
                     View All
                   </OutfitRegularText>
