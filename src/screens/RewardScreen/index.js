@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
   ImageBackground,
   View,
@@ -23,9 +23,7 @@ import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {ScrollView} from 'react-native-gesture-handler';
 import MasonryList from 'react-native-masonry-list';
 import {connect} from 'react-redux';
-import {
-  getRewardList
-} from '../../Redux/Actions/otherActions';
+import {getRewardList} from '../../Redux/Actions/otherActions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -49,13 +47,19 @@ class RegisterScreen extends React.Component {
       ],
     };
   }
-  componentDidMount() {
-    this.props.getRewardList().then(res => {
-      console.log("res", res);
-      this.setState({
-        reward: res?.rewardList,
+  getData = () => {
+    if (!this.props.loading) {
+      this.props.getRewardList().then(res => {
+        console.log('res', res?.rewardList);
+        this.setState({
+          reward: res?.rewardList,
+        });
       });
-    });
+    }
+  };
+
+  componentDidMount() {
+    this.getData();
   }
   renderbuttons = () => {
     return (
@@ -109,6 +113,48 @@ class RegisterScreen extends React.Component {
       </View>
     );
   };
+
+  renderItem = ({item}) => {
+    return (
+      <TouchableHighlight
+        // underlayColor={'#000e'}
+        onPress={() =>
+          this.props.navigation.navigate('RewardDetail', {
+            category: 'Redeem',
+            reward_id: item?.id,
+            status: item?.status,
+          })
+        }
+        style={[
+          styles.imageContainer,
+          // item.height && {
+          //   height: item.height,
+          //   width: item.width
+          // },
+        ]}>
+        <Image source={sampleimage?.reward1} style={[styles.image]} />
+      </TouchableHighlight>
+    );
+  };
+
+  handleOnRefresh = () => {
+    this.getData();
+  };
+
+  renderEmptyComponent = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <OutfitRegularText style={styles.emptyText}>
+          No Rewards
+        </OutfitRegularText>
+      </View>
+    );
+  };
+
+  renderFooter = () => {
+    return <View></View>;
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -117,34 +163,54 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imgbg}>
-          <MasonryList
+          <FlatList
             data={this.state.reward}
+            keyExtractor={(_, index) => index}
             numColumns={2}
             contentContainerStyle={styles.contentContainerStyle}
-            // onPressImage={item =>
-            //   this.props.navigation.navigate('RewardDetail', {
-            //     category: item.category,
-            //   })
-            // }
-            renderItem={({item}) => {
-              console.log("item", item);
-              <TouchableHighlight
-                // underlayColor={'#000e'}
-                onPress={() =>
-                  this.props.navigation.navigate('RewardDetail', {
-                    category: 'Redeem',
-                  })
-                }
-                style={[
-                  styles.imageContainer,
-                  item.height && {
-                    height: item.height,
-                  },
-                ]}>
-                <Image source={item.image} style={[styles.image]} />
-              </TouchableHighlight>;
-            }}
+            renderItem={this.renderItem}
+            refreshing={this.props.loading}
+            onRefresh={this.handleOnRefresh}
+            ListEmptyComponent={
+              !this.props.loading && this.renderEmptyComponent
+            }
+            ListFooterComponent={this.props.loading && this.renderFooter}
           />
+          {/* <MasonryList
+            data={this.state.reward}
+            keyExtractor={(_, index) => index}
+            numColumns={2}
+            contentContainerStyle={styles.contentContainerStyle}
+            onPressImage={item =>
+              this.props.navigation.navigate('RewardDetail', {
+                category: item.category,
+              })
+            }
+            // renderItem={this.renderItem}
+            // renderItem={({item}) => {
+            //   console.log("itemmmmm", item);
+            // }}
+            renderItem={({item}) => {
+              console.log('item', item?.source);
+              return (
+                <TouchableHighlight
+                  // underlayColor={'#000e'}
+                  onPress={() =>
+                    this.props.navigation.navigate('RewardDetail', {
+                      category: 'Redeem',
+                    })
+                  }
+                  style={[
+                    styles.imageContainer,
+                    item.height && {
+                      height: item.height,
+                    },
+                  ]}>
+                  <Image source={sampleimage?.reward1} style={[styles.image]} />
+                </TouchableHighlight>
+              );
+            }}
+          /> */}
           {/* <PhotoGrid
               source={this.state.urls}
               ratio={0.5}
@@ -162,6 +228,7 @@ class RegisterScreen extends React.Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
+  loading: state.GeneralReducer.softLoading,
 });
 
 const mapDispatchToProps = dispatch => {

@@ -35,6 +35,8 @@ export const endpoints = {
     restaurantList: '/get/restaurant/list',
     categoryList: '/category/list',
     rewardList: '/get/reward',
+    rewardDetail: '/get/reward/detail',
+    redeem: '/reward/redeem',
   },
 };
 

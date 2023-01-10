@@ -18,11 +18,16 @@ import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import Dash from 'react-native-dash';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
+import {connect} from 'react-redux';
+import {getRewardDetail, redeemReward} from '../../Redux/Actions/otherActions';
+import {showToast} from '../../Api/HelperFunction';
+import {StackActions} from '@react-navigation/native';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      details: {},
       visibleModal: false,
       cusines: [
         {
@@ -47,6 +52,34 @@ class RegisterScreen extends React.Component {
         },
       ],
     };
+  }
+
+  handlePopupPress = () => {
+    const id = this.props.route.params.reward_id;
+    const data = {
+      reward_id: id,
+    };
+    this.props.redeemReward(data).then(res => {
+      if (res?.success) {
+        this.setState({visibleModal: false});
+        showToast(res?.message);
+        dispatch(StackActions.popToTop());
+        this.props.navigation.navigate('HomeScreen');
+      }
+    });
+  };
+
+  componentDidMount() {
+    const id = this.props.route.params.reward_id;
+    const data = {
+      reward_id: id,
+    };
+    this.props.getRewardDetail(data).then(res => {
+      console.log('res', res?.rewardDetail);
+      this.setState({
+        details: res?.rewardDetail,
+      });
+    });
   }
 
   render() {
@@ -94,7 +127,7 @@ class RegisterScreen extends React.Component {
               dashLength={0}
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
-            <View
+            {/* <View
               style={{
                 paddingHorizontal: 5 * vw,
                 marginTop: 5 * vh,
@@ -104,9 +137,9 @@ class RegisterScreen extends React.Component {
                 Happy Hours Deals
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
-            </View>
+            </View> */}
             <View style={{alignItems: 'center'}}>
-              {this.props.route?.params?.category == 'Redeemed' ? (
+              {this.props.route?.params?.status == 'Redeemed' ? (
                 <Button
                   title="REDEEMED"
                   //   onPress={() => this.TwoAlert.show()}
@@ -117,11 +150,11 @@ class RegisterScreen extends React.Component {
               ) : (
                 <Button
                   title={
-                    this.props.route?.params?.category == 'Redeem'
+                    this.props.route?.params?.status == 'AwardReward'
                       ? 'REDEEM REWARD'
                       : 'Expired'
                   }
-                  // onPress={() => this.setState({visibleModal: true})}
+                  onPress={() => this.setState({visibleModal: true})}
                   btnContainer={{marginTop: vh, width: vw * 50}}
                 />
               )}
@@ -135,10 +168,7 @@ class RegisterScreen extends React.Component {
           title=""
           description={'Are you sure you want to redeem this reward?'}
           leftButtonTitle="YES"
-          onLeftButtonPress={() => {
-            this.props.navigation.navigate('HomeScreen'),
-              this.setState({visibleModal: false});
-          }}
+          onLeftButtonPress={this.handlePopupPress}
           rightButtonTitle="NO"
           onRightButtonPress={() => this.setState({visibleModal: false})}
         />
@@ -146,4 +176,16 @@ class RegisterScreen extends React.Component {
     );
   }
 }
-export default RegisterScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getRewardDetail: data => dispatch(getRewardDetail(data)),
+    redeemReward: data => dispatch(redeemReward(data)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

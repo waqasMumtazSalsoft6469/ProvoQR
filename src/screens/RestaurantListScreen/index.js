@@ -44,7 +44,7 @@ const RestaurantListScreen = props => {
   };
 
   const handleRestaurantPress = item => {
-    props.navigation.navigate('ResturentDetail', {id: item?.id});
+    props.navigation.navigate('ResturentDetail', {id: item?.id, name: item?.name});
   };
 
   const handleOnEndReached = () => {

@@ -98,10 +98,14 @@ class LootBoxPaymentMethod extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
     lootBoxPurchaseByCoin: data => dispatch(lootBoxPurchaseByCoin(data)),
   };
 };
-export default connect(mapDispatchToProps)(LootBoxPaymentMethod);
+export default connect(mapStateToProps, mapDispatchToProps)(LootBoxPaymentMethod);

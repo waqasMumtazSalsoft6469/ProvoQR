@@ -59,6 +59,10 @@ class ResturentDetailScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.route.params.id;
+    const name = this.props.route.params.name;
+    this.props.navigation.setOptions({
+      title: name,
+    });
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       this.setState({
         details: res?.details,

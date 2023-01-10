@@ -80,15 +80,29 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     margin: vh * 0.2,
+    width: vw*42,
+    height: vh*20,
+    backgroundColor: 'red',
+    margin: vw*2
   },
   image: {
     resizeMode: 'cover',
-    width: '100%',
-    height: '100%',
+    // width: '100%',
+    // height: '100%',
+    width: vw*42,
+    height: vh*20,
   },
   contentContainerStyle: {
-    paddingHorizontal: vh * 1,
+    paddingHorizontal: vw * 4,
+    // alignItems: 'center',
   },
-  contentContainerStyle: {backgroundColor: 'transparent'},
+  emptyContainer:{
+    alignItems: 'center',
+  },
+  emptyText:{
+    color: ThemeColors.iconColor,
+    fontSize: vh*1.8
+  }
+  // contentContainerStyle: {backgroundColor: 'transparent'},
 });
 export default styles;

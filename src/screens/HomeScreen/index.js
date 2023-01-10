@@ -99,7 +99,10 @@ class HomeScreen extends React.Component {
         <HomeCard
           item={item}
           onClick={() =>
-            this.props.navigation.navigate('ResturentDetail', {id: item?.id})
+            this.props.navigation.navigate('ResturentDetail', {
+              id: item?.id,
+              name: item?.name,
+            })
           }
           viewmap={() =>
             this.props.navigation.navigate('RestaurantDirection', {
