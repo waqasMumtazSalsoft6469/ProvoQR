@@ -17,6 +17,7 @@ import {
 } from '../../Utils/mapHelperFunction';
 import ThemeColors from '../../Utils/ThemeColors';
 import {showToast} from '../../Api/HelperFunction';
+import { googleApiKey } from '../../Utils/mapSearchHelperFunctions';
 class RestaurantDirection extends React.Component {
   constructor(props) {
     super(props);
@@ -171,7 +172,8 @@ class RestaurantDirection extends React.Component {
                 latitudeDelta: this.state.latitudeDelta,
                 longitudeDelta: this.state.longitudeDelta,
               }}
-              apikey={'AIzaSyB2hxNhJCBwaHoQ2eggJmLR4pfDYAN93cY'}
+              // apikey={'AIzaSyB2hxNhJCBwaHoQ2eggJmLR4pfDYAN93cY'}
+              apikey={googleApiKey}
               strokeWidth={3}
               strokeColor={ThemeColors.primary}
             />

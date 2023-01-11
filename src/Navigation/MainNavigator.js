@@ -16,6 +16,7 @@ import Location from '../screens/LocationScreen';
 
 import AuthNavigator from './AuthNavigator';
 import CompleteProfile from '../screens/CompleteProfile';
+import { getAllCategories } from '../Redux/Actions/otherActions';
 
 const MainStack = createStackNavigator();
 
@@ -75,6 +76,8 @@ const mapState = state => {
   };
 };
 const mapProps = dispatch => {
-  return {};
+  return {
+    getAllCategories: () => dispatch(getAllCategories()),
+  };                                                                                                                                                                                                                                                                                                                                                                                      
 };
 export default connect(mapState, mapProps)(MainNavigator);

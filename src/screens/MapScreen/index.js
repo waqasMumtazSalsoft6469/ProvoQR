@@ -41,6 +41,7 @@ import {
   LONGITUDE_DELTA,
 } from '../../Utils/mapHelperFunction';
 import {showToast} from '../../Api/HelperFunction';
+import CategoryModal from '../../components/Popups/CategoryModal';
 
 var tempTime = 0;
 
@@ -50,6 +51,7 @@ class MapScreen extends React.Component {
     this.state = {
       resturentModal: false,
       campaignModal: false,
+      categoryModal: false,
       userLocation: {latitude: 0, longitude: 0},
       restaurants: [],
       search: '',
@@ -281,9 +283,11 @@ class MapScreen extends React.Component {
                 style={{width: vw * 70}}
                 onChangeText={text => this.onChangeSearch(text)}
               />
-              <View style={styles.filterBg}>
+              <TouchableHOC
+                style={styles.filterBg}
+                onPress={() => this.setState({categoryModal: true})}>
                 <Image source={icons.filter} style={styles.filter} />
-              </View>
+              </TouchableHOC>
             </View>
           </View>
 
@@ -442,6 +446,10 @@ class MapScreen extends React.Component {
               </View>
             </View>
           </BottomSheetWrapper> */}
+          <CategoryModal
+            visible={this.state.categoryModal}
+            setVisible={() => this.setState({categoryModal: false})}
+          />
         </ImageBackground>
       </View>
     );
