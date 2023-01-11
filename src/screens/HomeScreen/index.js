@@ -231,7 +231,7 @@ class HomeScreen extends React.Component {
                 />
               </View>
             </TouchableHOC> */}
-            <SearchInput placeholder="Search...." />
+            <SearchInput placeholder="Search...." style={{marginTop: vh * 2}} />
             <View
               style={{
                 paddingHorizontal: 5 * vw,

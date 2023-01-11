@@ -4,9 +4,9 @@ import {icons} from '../../../assets/images';
 import ThemeColors from '../../../Utils/ThemeColors';
 import styles from './styles';
 
-const SearchInput = (props) => {
+const SearchInput = props => {
   return (
-    <View style={styles.searchbar}>
+    <View style={[styles.searchbar, props?.style]}>
       <Image source={icons.search} style={styles.search} resizeMode="contain" />
       <TextInput
         placeholder={props.placeholder}
