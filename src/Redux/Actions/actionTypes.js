@@ -15,7 +15,7 @@ const actionTypes = {
   completeProfile: 'CMPLETE_PROFILE',
   editProfile: 'EDIT_PROFILE',
   billingDetails: 'BILLING_DETAILS',
-
+  allCategories: 'All_Categories',
   // using
   getProfile: 'GET_PROFILE',
   updateProfile: 'UPDATE_PROFILE',

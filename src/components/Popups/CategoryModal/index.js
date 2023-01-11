@@ -5,6 +5,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import styles from './styles';
 import {
@@ -30,9 +31,9 @@ import {getAllCategories} from '../../../Redux/Actions/otherActions';
 class CategoryModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      categories: [],
-    };
+    // this.state = {
+    //   categories: [],
+    // };
   }
 
   onButtonPress = () => {
@@ -50,13 +51,53 @@ class CategoryModal extends Component {
   //     });
   //   }
 
+  renderEmpty = () => {
+    return (
+      <View>
+        <OutfitRegularText>No Categories</OutfitRegularText>
+      </View>
+    );
+  };
+
+  renderHeader = () => {
+    return (
+      <View>
+        <OutfitSemiBoldText>Filter by Category</OutfitSemiBoldText>
+      </View>
+    );
+  };
+
+  handleCategoryPress = item => {
+    this.props.setVisible();
+    this.props.setCategory(item);
+  };
+
+  renderItem = ({item, index}) => {
+    return (
+      <TouchableHOC
+        style={styles.contentContainer}
+        onPress={() => this.handleCategoryPress(item)}>
+        <OutfitRegularText style={styles.nameTextStyle}>
+          {item.name}
+        </OutfitRegularText>
+      </TouchableHOC>
+    );
+  };
+
   render() {
+    // console.log('categories', this.props.categories);
     return (
       <BottomSheetWrapper
         noBackDrop
         visible={this.props.visible}
         setVisible={this.props.setVisible}>
         <View style={styles.container}>
+          <FlatList
+            data={this.props.categories}
+            renderItem={this.renderItem}
+            ListHeaderComponent={this.renderHeader}
+            ListEmptyComponent={this.renderEmpty}
+          />
           {/* <Image source={this.props.icon} style={styles.icon} />
           <OutfitSemiBoldText style={styles.title}>
             {this.props.title}
@@ -86,6 +127,7 @@ class CategoryModal extends Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
+  categories: state.GeneralReducer.categories,
 });
 const mapDispatchToProps = dispatch => {
   return {

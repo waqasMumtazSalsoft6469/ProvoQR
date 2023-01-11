@@ -56,6 +56,7 @@ class MapScreen extends React.Component {
       restaurants: [],
       search: '',
       details: {},
+      category: '',
     };
   }
   animateToRegion = (latitude, longitude) => {
@@ -98,6 +99,28 @@ class MapScreen extends React.Component {
     }
   };
 
+  handleCategory = categoryId => {
+    // console.log('categoryId', categoryId);
+    const {userLocation} = this.state;
+    this.props
+      .getNearestRestaurant({
+        lat: parseFloat(userLocation?.latitude),
+        lng: parseFloat(userLocation?.longitude),
+        category_id: categoryId?.id,
+      })
+      .then(res => {
+        if (res?.nearestRestaurant?.length > 0) {
+          this.setState({restaurants: res?.nearestRestaurant});
+          this.animateToRegion(
+            parseFloat(res?.nearestRestaurant[0]?.lat),
+            parseFloat(res?.nearestRestaurant[0]?.lng),
+          );
+        } else {
+          showToast('No Restarant Found');
+        }
+      });
+  };
+
   onChangeSearch = text => {
     this.setState({search: text});
     const {search, userLocation} = this.state;
@@ -108,7 +131,7 @@ class MapScreen extends React.Component {
           .getNearestRestaurant({
             lat: parseFloat(userLocation?.latitude),
             lng: parseFloat(userLocation?.longitude),
-            search: search,
+            search_text: text,
           })
           .then(res => {
             tempTime = 0;
@@ -124,7 +147,7 @@ class MapScreen extends React.Component {
             }
           });
       }
-    }, 2000);
+    }, 5000);
   };
 
   setupMethods = async () => {
@@ -449,6 +472,7 @@ class MapScreen extends React.Component {
           <CategoryModal
             visible={this.state.categoryModal}
             setVisible={() => this.setState({categoryModal: false})}
+            setCategory={value => this.handleCategory(value)}
           />
         </ImageBackground>
       </View>

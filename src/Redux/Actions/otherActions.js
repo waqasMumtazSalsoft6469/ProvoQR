@@ -355,7 +355,11 @@ export const lootBoxPurchaseByCoin = data => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          const response = await post(endpoints.other.lootBoxPurchaseByCoin, data, true);
+          const response = await post(
+            endpoints.other.lootBoxPurchaseByCoin,
+            data,
+            true,
+          );
 
           resolve(response);
         } catch (e) {
@@ -376,7 +380,11 @@ export const lootBoxPurchaseByCard = data => {
         try {
           dispatch({type: actionTypes.loaderOn});
 
-          const response = await post(endpoints.other.lootBoxPurchaseByCard, data, true);
+          const response = await post(
+            endpoints.other.lootBoxPurchaseByCard,
+            data,
+            true,
+          );
 
           resolve(response);
         } catch (e) {
@@ -390,7 +398,7 @@ export const lootBoxPurchaseByCard = data => {
   };
 };
 
-export const getAllRestaurant = (data) => {
+export const getAllRestaurant = data => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -411,7 +419,7 @@ export const getAllRestaurant = (data) => {
   };
 };
 
-export const getAllCategories = (data) => {
+export const getAllCategories = data => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -419,6 +427,11 @@ export const getAllCategories = (data) => {
           dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.categoryList, data);
+
+          dispatch({
+            type: actionTypes.allCategories,
+            payload: response?.categoryList?.data,
+          });
 
           resolve(response);
         } catch (e) {
@@ -433,7 +446,7 @@ export const getAllCategories = (data) => {
 };
 
 export const getRewardList = () => {
-  console.log("before response")
+  console.log('before response');
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -441,7 +454,7 @@ export const getRewardList = () => {
           dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.rewardList);
-          console.log("response", response);
+          console.log('response', response);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

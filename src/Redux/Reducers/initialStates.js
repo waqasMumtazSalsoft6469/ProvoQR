@@ -8,6 +8,7 @@ const GeneralReducer = {
   softLoading: false,
   mySubscription: [],
   billingDetails: null,
+  categories: [],
 };
 
 const initialStates = {
