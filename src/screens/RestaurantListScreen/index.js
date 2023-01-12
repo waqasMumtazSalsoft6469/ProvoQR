@@ -44,7 +44,10 @@ const RestaurantListScreen = props => {
   };
 
   const handleRestaurantPress = item => {
-    props.navigation.navigate('ResturentDetail', {id: item?.id, name: item?.name});
+    props.navigation.navigate('ResturentDetail', {
+      id: item?.id,
+      name: item?.name,
+    });
   };
 
   const handleOnEndReached = () => {
@@ -59,10 +62,12 @@ const RestaurantListScreen = props => {
     if (!isLoading && currentPage) {
       try {
         const data = {
-          category_id: id,
           page: currentPage,
-          per_page: 10,
+          per_page: 6,
         };
+        if (id) {
+          data.category_id = id;
+        }
         const response = await dispatch(getAllRestaurant(data));
         if (response?.restaurantList?.current_page === 1) {
           setRestaurant(response?.restaurantList?.data);

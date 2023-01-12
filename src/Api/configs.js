@@ -37,6 +37,7 @@ export const endpoints = {
     rewardList: '/get/reward',
     rewardDetail: '/get/reward/detail',
     redeem: '/reward/redeem',
+    history: '/get/history/list',
   },
 };
 

@@ -406,7 +406,7 @@ export const getAllRestaurant = data => {
           dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.restaurantList, data);
-
+          console.log("action response", response);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -446,7 +446,6 @@ export const getAllCategories = data => {
 };
 
 export const getRewardList = () => {
-  console.log('before response');
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -454,7 +453,6 @@ export const getRewardList = () => {
           dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.rewardList);
-          console.log('response', response);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -503,6 +501,26 @@ export const redeemReward = data => {
           reject(e);
         } finally {
           dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getRewardHistory = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.softLoaderOn});
+
+          const response = await get(endpoints.other.history);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.softLoaderOff});
         }
       }, 300);
     });

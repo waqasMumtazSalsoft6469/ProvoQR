@@ -24,6 +24,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import MasonryList from 'react-native-masonry-list';
 import {connect} from 'react-redux';
 import {getRewardList} from '../../Redux/Actions/otherActions';
+import {imageUrl} from '../../Api/configs';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -117,7 +118,6 @@ class RegisterScreen extends React.Component {
   renderItem = ({item}) => {
     return (
       <TouchableHighlight
-        // underlayColor={'#000e'}
         onPress={() =>
           this.props.navigation.navigate('RewardDetail', {
             category: 'Redeem',
@@ -125,14 +125,11 @@ class RegisterScreen extends React.Component {
             status: item?.status,
           })
         }
-        style={[
-          styles.imageContainer,
-          // item.height && {
-          //   height: item.height,
-          //   width: item.width
-          // },
-        ]}>
-        <Image source={sampleimage?.reward1} style={[styles.image]} />
+        style={styles.imageContainer}>
+        <Image
+          source={{uri: imageUrl + item?.reward_image}}
+          style={[styles.image]}
+        />
       </TouchableHighlight>
     );
   };

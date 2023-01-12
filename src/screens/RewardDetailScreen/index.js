@@ -22,6 +22,7 @@ import {connect} from 'react-redux';
 import {getRewardDetail, redeemReward} from '../../Redux/Actions/otherActions';
 import {showToast} from '../../Api/HelperFunction';
 import {StackActions} from '@react-navigation/native';
+import {imageUrl} from '../../Api/configs';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -91,8 +92,16 @@ class RegisterScreen extends React.Component {
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 90 * vh}}>
           <ScrollView contentContainerStyle={{height: vh * 135}}>
-            <View style={{alignItems: 'center', marginTop: 3 * vh}}>
-              <Image source={sampleimage.places} style={styles.cardimg} />
+            <View
+              style={{
+                alignItems: 'center',
+                marginTop: 3 * vh,
+                borderRadius: vh * 2,
+              }}>
+              <Image
+                source={{uri: imageUrl + this.state.details?.reward_image}}
+                style={styles.cardimg}
+              />
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
               <View style={{flexDirection: 'row', marginTop: 2 * vh}}>
@@ -102,9 +111,7 @@ class RegisterScreen extends React.Component {
               </View>
 
               <OutfitLightText style={styles.rewtext}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since.
+                {this.state.details?.reward_description}
               </OutfitLightText>
               <OutfitLightText style={styles.redeem}>
                 (Make sure you are in the restaurant at time of redemption.)
@@ -115,7 +122,7 @@ class RegisterScreen extends React.Component {
                 You are a gold member of this restaurant now!
               </OutfitRegularText>
             </View>
-            <Dash
+            {/* <Dash
               style={{
                 width: 100 * vw,
                 flexDirection: 'row',
@@ -126,7 +133,7 @@ class RegisterScreen extends React.Component {
               dashColor="#E9E9E9"
               dashLength={0}
               dashGap={1 * vh}
-              dashStyle={{width: 2 * vw}}></Dash>
+              dashStyle={{width: 2 * vw}}></Dash> */}
             {/* <View
               style={{
                 paddingHorizontal: 5 * vw,
@@ -139,7 +146,7 @@ class RegisterScreen extends React.Component {
               <HomeCarouselConmponent />
             </View> */}
             <View style={{alignItems: 'center'}}>
-              {this.props.route?.params?.status == 'Redeemed' ? (
+              {this.props.route?.params?.status === 'Redeemed' ? (
                 <Button
                   title="REDEEMED"
                   //   onPress={() => this.TwoAlert.show()}
@@ -150,7 +157,7 @@ class RegisterScreen extends React.Component {
               ) : (
                 <Button
                   title={
-                    this.props.route?.params?.status == 'AwardReward'
+                    this.props.route?.params?.status === 'Available'
                       ? 'REDEEM REWARD'
                       : 'Expired'
                   }

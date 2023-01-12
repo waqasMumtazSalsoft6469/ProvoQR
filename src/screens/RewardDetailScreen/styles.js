@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
     width: 90 * vw,
     height: 50 * vw,
 
-    borderRadius: 0.5 * vh,
-    resizeMode: 'contain',
+    borderRadius: 2 * vh,
+    resizeMode: 'cover',
   },
   rewardIcon: {
     height: vh * 15,

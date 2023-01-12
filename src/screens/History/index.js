@@ -14,11 +14,15 @@ import HomeCard from '../../components/ResCard';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import {vh, vw} from '../../Utils/Units';
 import Dash from 'react-native-dash';
+import {getRewardHistory} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
 
 class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      response: [],
+      userLocation: {latitude: '', longitude: ''},
       home: [
         {
           image: sampleimage.home1,
@@ -96,15 +100,29 @@ class History extends React.Component {
     };
   }
 
+  getData = () => {
+    if (!this.props.loading) {
+      this.props.getRewardHistory().then(res => {
+        this.setState({
+          response: res?.history,
+        });
+      });
+    }
+  };
+
+  componentDidMount() {
+    this.getData();
+  }
+
   renderitem = ({item, index}) => {
     return (
       <View style={{marginVertical: 2 * vh}}>
         <HomeCard
-          item={item}
+          item={item?.organisations}
           history
           onClick={() => this.props.navigation.navigate('HistoryDetails')}
         />
-        {index + 1 < this.state.home.length && (
+        {index + 1 < this.state.home.response && (
           <Dash
             style={{
               width: 60 * vw,
@@ -123,6 +141,7 @@ class History extends React.Component {
   };
 
   render() {
+    console.log('response', this.state.response);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -132,7 +151,7 @@ class History extends React.Component {
           imageStyle={{width: 100 * vw}}>
           <View style={{alignItems: 'center'}}>
             <FlatList
-              data={this.state.home}
+              data={this.state.response}
               showsVerticalScrollIndicator={false}
               style={{marginTop: vh, marginBottom: 4 * vh}}
               renderItem={this.renderitem}
@@ -143,4 +162,16 @@ class History extends React.Component {
     );
   }
 }
-export default History;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+  loading: state.GeneralReducer.softLoading,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getRewardHistory: () => dispatch(getRewardHistory()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(History);
