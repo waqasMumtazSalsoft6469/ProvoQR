@@ -5,87 +5,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: ThemeColors.white,
-    // paddingTop: Platform.OS == 'ios' ? vh * 2 : 0,
   },
-  imgbg: {
-    width: 100 * vw,
-    height: 100 * vh,
-    // flex: 1
+  imageContainer: {width: 100 * vw, flex: 1, resizeMode: 'cover'},
+  imageStyle: {width: 100 * vw, height: 100 * vh},
+  headerContainer: {
+    marginTop: vh * 2,
   },
-  seachbar: {
-    flexDirection: 'row',
-    width: vw * 85,
-    paddingHorizontal: vw * 4,
-    height: vh * 6.5,
-    alignItems: 'center',
-    borderRadius: 2 * vh,
-    alignSelf: 'center',
-    borderColor: ThemeColors.white,
-    borderWidth: 0.3 * vh,
-    backgroundColor: ThemeColors.white,
-    // position: 'absolute',
-    // bottom: -3 * vh,
-    ...themeShadow,
+  bannerContainer: {
+    paddingHorizontal: 5 * vw,
+    marginTop: 2 * vh,
+    justifyContent: 'space-between',
   },
-  input: {
-    marginLeft: vw * 3,
-  },
-  filter: {height: vh * 4, width: vh * 4, resizeMode: 'contain'},
-  search: {width: vw * 4, height: vh * 5, marginRight: 0 * vw},
-  headertext: {
-    color: ThemeColors.iconColor,
-    fontSize: 2 * vh,
-  },
-  you: {
-    color: ThemeColors.primary,
-    fontSize: 2.5 * vh,
-  },
-  menu: {width: vw * 5, height: vh * 4, marginLeft: 3 * vw},
-
-  burgerIcon: {
-    height: vh * 3,
-    width: vh * 3,
-    marginRight: vw * 3,
-  },
-  recomend: {
+  subHeadingText: {
     color: ThemeColors.darkpurple,
     fontSize: 2.5 * vh,
   },
-  headertextbold: {
-    color: ThemeColors.primary,
-    fontSize: 3 * vh,
+  viewAllBtnContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 5 * vw,
+    marginTop: 3 * vh,
+    justifyContent: 'space-between',
   },
-  count: {
-    color: ThemeColors.white,
-    fontSize: 1.5 * vh,
+  bottomViewAllBtn:{
+    marginBottom: vh*1
   },
-  categorybox: {
+  dashBorderStyle: {
     width: 100 * vw,
-    justifyContent: 'center',
-
-    // paddingVertical: 4 * vh,
-    // backgroundColor: '#FAF7FE',
-    // height: 20 * vh
-  },
-  profile: {
-    width: 6 * vw,
-    borderRadius: 3 * vw,
-    marginLeft: vw,
-    height: 6 * vw,
-    tintColor: ThemeColors.iconColor,
-  },
-  circle: {
-    width: 4 * vw,
-    height: 4 * vw,
-    marginTop: -0.5 * vh,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF6969',
-    borderRadius: 2 * vh,
   },
   btnText: {
     color: ThemeColors.iconColor,
     fontSize: vh * 1.9,
   },
+  categoryStyle: {marginTop: vh, marginBottom: vh * 3, paddingLeft: vw * 3},
+  bottomFlatListStyle: {
+    marginTop: vh,
+    marginBottom: 10 * vh,
+  },
+  recommendedStyle: {marginTop: vh},
+  homeCardContainer: {paddingHorizontal: 5 * vw},
+  emptyContainer:{
+    alignItems: 'center'
+  },
+  emptyText:{
+    color: ThemeColors.iconColor,
+    fontSize: vh*1.9
+  }
 });
 export default styles;

@@ -93,7 +93,7 @@ class ProductItem extends React.Component {
   };
   render() {
     const location = this.props.location;
-    console.log('image', this.props.item?.image);
+    // console.log('image', this.props.item?.image);
     return (
       <View>
         <TouchableHOC

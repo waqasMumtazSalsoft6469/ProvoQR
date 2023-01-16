@@ -78,6 +78,7 @@ export const shouldHeaderBeShown = activeRouteName => {
     case 'RestaurantDirection':
     case 'RestaurantListScreen':
     case 'CategoryListScreen':
+    case 'RecommendedRestaurantList':
       return true;
 
     default:
@@ -278,6 +279,7 @@ export const showHeaderLeft = (activeRouteName, props) => {
     case 'RestaurantDirection':
     case 'RestaurantListScreen':
     case 'CategoryListScreen':
+    case 'RecommendedRestaurantList':
       return renderBackButton(activeRouteName, props);
     case 'HomeScreen':
       return renderHomeScreenHeaderLeft();
@@ -289,7 +291,9 @@ export const showHeaderLeft = (activeRouteName, props) => {
 const renderHomeScreenHeaderLeft = () => {
   return (
     <View style={styles.homeLeftHeaderContainer}>
-      <OutfitMediumText style={styles.homeHeaderText}>Grab Your</OutfitMediumText>
+      <OutfitMediumText style={styles.homeHeaderText}>
+        Grab Your
+      </OutfitMediumText>
       <OutfitSemiBoldText style={styles.headerTextBold}>
         Delicious Meal Now!
       </OutfitSemiBoldText>

@@ -12,6 +12,7 @@ import {getNavigationOptions} from './NavigationOptions';
 import RestaurantDirection from '../screens/RestaurantDirectionScreen';
 import RestaurantListScreen from '../screens/RestaurantListScreen';
 import CategoryListScreen from '../screens/CategoryListScreen';
+import RecommendedRestaurantList from '../screens/RecommendedRestaurantList';
 
 const HomeNavigator = createStackNavigator();
 
@@ -31,6 +32,11 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={RestaurantListScreen}
         name="RestaurantListScreen"
+        options={{headerShown: true}}
+      />
+      <HomeNavigator.Screen
+        component={RecommendedRestaurantList}
+        name="RecommendedRestaurantList"
         options={{headerShown: true}}
       />
       <HomeNavigator.Screen

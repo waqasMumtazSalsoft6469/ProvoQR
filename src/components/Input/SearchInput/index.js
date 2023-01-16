@@ -14,6 +14,8 @@ const SearchInput = props => {
         placeholderTextColor="#999999"
         selectionColor={ThemeColors.primary}
         style={styles.input}
+        value={props?.value}
+        onChangeText={props?.onChangeText}
       />
     </View>
   );

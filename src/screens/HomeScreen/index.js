@@ -1,22 +1,11 @@
 import React from 'react';
-import {
-  ImageBackground,
-  View,
-  Image,
-  FlatList,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import {backgrounds, icons, sampleimage} from '../../assets/images';
+import {ImageBackground, View, FlatList, ScrollView} from 'react-native';
+import {backgrounds} from '../../assets/images';
 import styles from './styles';
-import HeaderHome from '../../components/HeaderHome';
-import JostRegular from '../../components/Text/JostRegular';
 import HomeCard from '../../components/ResCard';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import {vh, vw} from '../../Utils/Units';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
-import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import {connect} from 'react-redux';
 import ThemeColors from '../../Utils/ThemeColors';
 import Dash from 'react-native-dash';
@@ -39,8 +28,73 @@ class HomeScreen extends React.Component {
       allRestaurant: [],
       categories: [],
       userLocation: {latitude: '', longitude: ''},
+      searchString: '',
+      refreshing: false,
     };
   }
+
+  search = () => {
+    if (this.timeout != null) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+    this.getData();
+  };
+
+  onChangeText = text => {
+    this.setState({
+      searchString: text,
+    });
+
+    if (text?.trim()?.length > 2) {
+      if (this.timeout != null) {
+        clearTimeout(this.timeout);
+        this.timeout = null;
+      }
+      this.timeout = setTimeout(this.search, 500);
+    }
+  };
+
+  renderEmpty = () => {
+    if (this.state.refreshing) {
+      return null;
+    }
+    return (
+      <View style={styles.emptyContainer}>
+        <OutfitRegularText style={styles.emptyText}>
+          No Restaurant
+        </OutfitRegularText>
+      </View>
+    );
+  };
+
+  handleOnRefresh = () => {
+    this.getData();
+  };
+
+  getData = async () => {
+    this.setState({
+      refreshing: true,
+    });
+    try {
+      let params = {
+        search_text: this.state.searchString,
+      };
+
+      const res = await this.props.getHomData(params);
+      this.setState({
+        banners: res?.banner,
+        recommended: res?.recommended,
+        allRestaurant: res?.allRestaurant,
+        categories: res?.category,
+        refreshing: false,
+      });
+    } catch (error) {
+      this.setState({
+        refreshing: false,
+      });
+    }
+  };
 
   getUserLocation = async () => {
     try {
@@ -68,18 +122,15 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.setupMethods();
-    this.props.getHomDate().then(res => {
-      this.setState({
-        banners: res?.banner,
-        recommended: res?.recommended,
-        allRestaurant: res?.allRestaurant,
-        categories: res?.category,
-      });
-    });
+    this.getData();
   }
 
   handleViewAllCategoryPress = () => {
     this.props.navigation.navigate('CategoryListScreen');
+  };
+
+  handleViewAllRecommendedRestaurantPress = () => {
+    this.props.navigation.navigate('RecommendedRestaurantList');
   };
 
   handleViewAllRestaurantPress = () => {
@@ -92,31 +143,7 @@ class HomeScreen extends React.Component {
       name: item?.name,
     });
   };
-
-  renderitem = ({item, index}) => {
-    return (
-      <View style={{paddingHorizontal: 5 * vw}}>
-        <HomeCard
-          item={item}
-          onClick={() =>
-            this.props.navigation.navigate('ResturentDetail', {
-              id: item?.id,
-              name: item?.name,
-            })
-          }
-          viewmap={() =>
-            this.props.navigation.navigate('RestaurantDirection', {
-              latitude: item?.lat,
-              longitude: item?.lng,
-            })
-          }
-          location={this.state.userLocation}
-        />
-      </View>
-    );
-  };
-
-  rendercategoryitem = ({item}) => {
+  renderCategoryItem = ({item}) => {
     return (
       <HomeCategoryCard
         item={item}
@@ -124,232 +151,239 @@ class HomeScreen extends React.Component {
       />
     );
   };
+  handleMapBtnPress = item => {
+    this.props.navigation.navigate('RestaurantDirection', {
+      latitude: item?.lat,
+      longitude: item?.lng,
+    });
+  };
+  handleRestaurantPress = item => {
+    this.props.navigation.navigate('ResturentDetail', {
+      id: item?.id,
+      name: item?.name,
+    });
+  };
+  renderAllRestaurantItem = ({item}) => {
+    return (
+      <View style={styles.homeCardContainer}>
+        <HomeCard
+          item={item}
+          onClick={() => this.handleRestaurantPress(item)}
+          viewmap={() => this.handleMapBtnPress(item)}
+          location={this.state.userLocation}
+        />
+      </View>
+    );
+  };
+  renderCategories = () => {
+    if (this.state.refreshing || this.state.searchString?.length > 0) {
+      return null;
+    }
+    return (
+      <View>
+        <View style={styles.viewAllBtnContainer}>
+          <OutfitSemiBoldText style={styles.subHeadingText}>
+            Categories
+          </OutfitSemiBoldText>
+          <TouchableHOC onPress={this.handleViewAllCategoryPress}>
+            <OutfitRegularText style={styles.btnText}>
+              View All
+            </OutfitRegularText>
+          </TouchableHOC>
+        </View>
 
-  // header = () => {
-  //   return (
-  //     <View style={{flexDirection: 'row'}}>
-  //       <OutfitSemiBoldText style={styles.recomend}>
-  //         Recommended For You
-  //       </OutfitSemiBoldText>
-  //     </View>
-  //   );
-  // };
+        <FlatList
+          data={this.state.categories}
+          showsHorizontalScrollIndicator={false}
+          style={styles.categoryStyle}
+          renderItem={this.renderCategoryItem}
+          horizontal={true}
+        />
+        <Dash
+          style={styles.dashBorderStyle}
+          dashColor={ThemeColors.dashBorderColor}
+          dashLength={0}
+          dashGap={1 * vh}
+          dashStyle={{width: 2 * vw}}
+        />
+      </View>
+    );
+  };
+  renderRecommendedRestaurant = () => {
+    if (this.state.refreshing || this.state.searchString?.length > 0) {
+      return null;
+    }
+    return (
+      <View>
+        <View style={styles.viewAllBtnContainer}>
+          <OutfitSemiBoldText style={styles.subHeadingText}>
+            Recommended For You
+          </OutfitSemiBoldText>
+          <TouchableHOC onPress={this.handleViewAllRecommendedRestaurantPress}>
+            <OutfitRegularText style={styles.btnText}>
+              View All
+            </OutfitRegularText>
+          </TouchableHOC>
+        </View>
+        <FlatList
+          data={this.state.recommended}
+          showsHorizontalScrollIndicator={false}
+          style={styles.recommendedStyle}
+          renderItem={this.renderAllRestaurantItem}
+          horizontal={true}
+          pagingEnabled
+        />
+        <Dash
+          style={styles.dashBorderStyle}
+          dashColor={ThemeColors.dashBorderColor}
+          dashLength={0}
+          dashGap={1 * vh}
+          dashStyle={{width: 2 * vw}}
+        />
+      </View>
+    );
+  };
+  renderBanner = () => {
+    if (this.state.refreshing || this.state.searchString?.length > 0) {
+      return null;
+    }
+    return (
+      <View style={styles.bannerContainer}>
+        <OutfitSemiBoldText style={styles.subHeadingText}>
+          Happy Hours Deals
+        </OutfitSemiBoldText>
+        <HomeCarouselConmponent banners={this.state.banners?.slice(0, 4)} />
+      </View>
+    );
+  };
+  renderHeader = () => {
+    return (
+      <View style={styles.headerContainer}>
+        <SearchInput
+          placeholder="Search...."
+          value={this.state.searchString}
+          onChangeText={this.onChangeText}
+        />
+        {this.renderBanner()}
+        {this.renderRecommendedRestaurant()}
+        {this.renderCategories()}
+
+        <View style={[styles.viewAllBtnContainer, styles.bottomViewAllBtn]}>
+          <OutfitSemiBoldText style={styles.subHeadingText}>
+            All Places
+          </OutfitSemiBoldText>
+          <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
+            <OutfitRegularText style={styles.btnText}>
+              View All
+            </OutfitRegularText>
+          </TouchableHOC>
+        </View>
+      </View>
+    );
+  };
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground
           source={backgrounds.grayBackground}
-          style={{width: 100 * vw, flex: 1}}
-          resizeMode="cover"
-          imageStyle={{width: 100 * vw, height: 100 * vh}}>
-          {/* <HeaderHome>
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingHorizontal: 5 * vw,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View>
-                <OutfitMediumText style={styles.headertext}>
-                  Grab Your
-                </OutfitMediumText>
-                <OutfitSemiBoldText style={styles.headertextbold}>
-                  Delicious Meal Now!
-                </OutfitSemiBoldText>
-              </View>
-
-              <View style={{flexDirection: 'row'}}>
-                <TouchableHOC
-                  onPress={() => this.props.navigation.navigate('Location')}>
-                  <Image
-                    source={icons.whiteloc}
-                    resizeMode="contain"
-                    style={styles.profile}
-                  />
-                </TouchableHOC>
-                <TouchableHOC
-                  onPress={() =>
-                    this.props.navigation.navigate('Notification')
-                  }>
-                  <ImageBackground
-                    source={icons.notif}
-                    resizeMode="contain"
-                    style={{
-                      width: 6 * vw,
-                      height: 6 * vw,
-                      alignItems: 'flex-end',
-                    }}
-                    imageStyle={{
-                      width: 6 * vw,
-                      height: 6 * vw,
-                      tintColor: ThemeColors.iconColor,
-                    }}>
-                    <View style={styles.circle}>
-                      <JostRegular style={styles.count}>5</JostRegular>
-                    </View>
-                  </ImageBackground>
-                </TouchableHOC>
-                <TouchableHOC
-                  onPress={() => this.props.navigation.navigate('Profile')}>
-                  <Image
-                    source={sampleimage.profile}
-                    resizeMode="contain"
-                    style={styles.profile}
-                  />
-                </TouchableHOC>
-              </View>
-            </View>
-          </HeaderHome> */}
-          <ScrollView>
-            {/* <TouchableHOC style={styles.seachbar}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: 75 * vw,
-                }}>
-                <TouchableOpacity
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: 6.5 * vh,
-                  }}>
-                  <Image
-                    source={icons.search}
-                    style={styles.search}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <TextInput
-                  placeholder="Search...."
-                  returnKeyType={'search'}
-                  placeholderTextColor="#999999"
-                  style={styles.input}
-                  ref={_ref => {
-                    this.inputRef = _ref;
-                  }}
-                />
-              </View>
-            </TouchableHOC> */}
-            <SearchInput placeholder="Search...." style={{marginTop: vh * 2}} />
-            <View
-              style={{
-                paddingHorizontal: 5 * vw,
-                marginTop: 2 * vh,
-                justifyContent: 'space-between',
-              }}>
-              <OutfitSemiBoldText style={styles.recomend}>
+          style={styles.imageContainer}
+          imageStyle={styles.imageStyle}>
+          <FlatList
+            data={this.state.allRestaurant}
+            showsVerticalScrollIndicator={false}
+            style={styles.bottomFlatListStyle}
+            contentContainerStyle={styles.contentContainerStyle}
+            ListHeaderComponent={this.renderHeader}
+            renderItem={this.renderAllRestaurantItem}
+            refreshing={this.state.refreshing}
+            onRefresh={this.handleOnRefresh}
+            ListEmptyComponent={this.renderEmpty}
+          />
+          {/* <ScrollView>
+            <SearchInput
+              placeholder="Search...."
+              style={styles.searchContainer}
+              value={this.state.searchString}
+              onChangeText={this.onChangeText}
+            />
+            <View style={styles.bannerContainer}>
+              <OutfitSemiBoldText style={styles.subHeadingText}>
                 Happy Hours Deals
               </OutfitSemiBoldText>
               <HomeCarouselConmponent
                 banners={this.state.banners?.slice(0, 4)}
               />
             </View>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingHorizontal: 5 * vw,
-                  marginTop: 5 * vh,
-                  justifyContent: 'space-between',
-                }}>
-                <OutfitSemiBoldText style={styles.recomend}>
-                  Recommended For You
-                </OutfitSemiBoldText>
-                <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
-                  <OutfitRegularText style={styles.btnText}>
-                    View All
-                  </OutfitRegularText>
-                </TouchableHOC>
-                {/* <Image source={icons.filter} style={styles.filter} /> */}
-              </View>
-              <FlatList
-                data={this.state.recommended}
-                showsHorizontalScrollIndicator={false}
-                style={{marginTop: vh}}
-                renderItem={this.renderitem}
-                horizontal={true}
-                pagingEnabled
-              />
+            <View style={styles.viewAllBtnContainer}>
+              <OutfitSemiBoldText style={styles.subHeadingText}>
+                Recommended For You
+              </OutfitSemiBoldText>
+              <TouchableHOC
+                onPress={this.handleViewAllRecommendedRestaurantPress}>
+                <OutfitRegularText style={styles.btnText}>
+                  View All
+                </OutfitRegularText>
+              </TouchableHOC>
             </View>
-
+            <FlatList
+              data={this.state.recommended}
+              showsHorizontalScrollIndicator={false}
+              style={styles.recommendedStyle}
+              renderItem={this.renderAllRestaurantItem}
+              horizontal={true}
+              pagingEnabled
+            />
             <Dash
-              style={{
-                width: 100 * vw,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: vh * 3,
-                marginBottom: vh * 3,
-              }}
-              dashColor="#E9E9E9"
+              style={styles.dashBorderStyle}
+              dashColor={ThemeColors.dashBorderColor}
               dashLength={0}
               dashGap={1 * vh}
-              dashStyle={{width: 2 * vw}}></Dash>
-            <View style={styles.categorybox}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingHorizontal: 5 * vw,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                <OutfitSemiBoldText style={styles.recomend}>
-                  Categories
-                </OutfitSemiBoldText>
-                <TouchableHOC onPress={this.handleViewAllCategoryPress}>
-                  <OutfitRegularText style={styles.btnText}>
-                    View All
-                  </OutfitRegularText>
-                </TouchableHOC>
-              </View>
-
-              <FlatList
-                data={this.state.categories}
-                showsHorizontalScrollIndicator={false}
-                style={{marginTop: vh}}
-                renderItem={this.rendercategoryitem}
-                horizontal={true}
-              />
+              dashStyle={{width: 2 * vw}}
+            />
+            <View style={styles.viewAllBtnContainer}>
+              <OutfitSemiBoldText style={styles.subHeadingText}>
+                Categories
+              </OutfitSemiBoldText>
+              <TouchableHOC onPress={this.handleViewAllCategoryPress}>
+                <OutfitRegularText style={styles.btnText}>
+                  View All
+                </OutfitRegularText>
+              </TouchableHOC>
             </View>
+
+            <FlatList
+              data={this.state.categories}
+              showsHorizontalScrollIndicator={false}
+              style={styles.categoryStyle}
+              renderItem={this.renderCategoryItem}
+              horizontal={true}
+            />
             <Dash
-              style={{
-                width: 100 * vw,
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: vh * 3,
-              }}
-              dashColor="#E9E9E9"
+              style={styles.dashBorderStyle}
+              dashColor={ThemeColors.dashBorderColor}
               dashLength={0}
               dashGap={1 * vh}
-              dashStyle={{width: 2 * vw}}></Dash>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingHorizontal: 5 * vw,
-                  marginTop: 2 * vh,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                <OutfitSemiBoldText style={styles.recomend}>
-                  All Places
-                </OutfitSemiBoldText>
-                <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
-                  <OutfitRegularText style={styles.btnText}>
-                    View All
-                  </OutfitRegularText>
-                </TouchableHOC>
-              </View>
-              <FlatList
-                data={this.state.allRestaurant}
-                showsHorizontalScrollIndicator={false}
-                style={{marginTop: vh, marginBottom: 15 * vh}}
-                renderItem={this.renderitem}
-                horizontal={true}
-                pagingEnabled
-              />
+              dashStyle={{width: 2 * vw}}
+            />
+            <View style={styles.viewAllBtnContainer}>
+              <OutfitSemiBoldText style={styles.subHeadingText}>
+                All Places
+              </OutfitSemiBoldText>
+              <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
+                <OutfitRegularText style={styles.btnText}>
+                  View All
+                </OutfitRegularText>
+              </TouchableHOC>
             </View>
-          </ScrollView>
+            <FlatList
+              data={this.state.allRestaurant}
+              showsHorizontalScrollIndicator={false}
+              style={styles.bottomFlatListStyle}
+              renderItem={this.renderAllRestaurantItem}
+              horizontal={true}
+              pagingEnabled
+            />
+          </ScrollView> */}
         </ImageBackground>
       </View>
     );
@@ -362,7 +396,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    getHomDate: () => dispatch(getHomeData()),
+    getHomData: params => dispatch(getHomeData(params)),
     // signup: data => dispatch(userSignup(data)),
   };
 };

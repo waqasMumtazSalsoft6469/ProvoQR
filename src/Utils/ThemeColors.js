@@ -24,5 +24,6 @@ const ThemeColors = {
   butonGray: '#FCFCFC',
   happyHourGreen: '#068a2b',
   secondaryColor: '#2C3149',
+  dashBorderColor: '#E9E9E9',
 };
 export default ThemeColors;

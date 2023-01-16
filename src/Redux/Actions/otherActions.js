@@ -4,20 +4,20 @@ import {endpoints} from '../../Api/configs';
 import {post, get, postForSubscription} from '../../Api';
 import {showToast, getMessage} from '../../Api/HelperFunction';
 
-export const getHomeData = () => {
+export const getHomeData = data => {
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          dispatch({type: actionTypes.loaderOn});
+          // dispatch({type: actionTypes.loaderOn});
 
-          const response = await get(endpoints.other.home);
+          const response = await get(endpoints.other.home, data);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
           reject(e);
         } finally {
-          dispatch({type: actionTypes.loaderOff});
+          // dispatch({type: actionTypes.loaderOff});
         }
       }, 300);
     });
@@ -406,7 +406,28 @@ export const getAllRestaurant = data => {
           dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.restaurantList, data);
-          console.log("action response", response);
+          // console.log('action response', response);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.softLoaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+export const getRecommendedRestaurant = () => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.softLoaderOn});
+
+          const response = await get(endpoints.other.recommendedRestaurantList);
+          // console.log('action response', response);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
