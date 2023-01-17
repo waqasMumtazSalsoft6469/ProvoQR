@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, View, FlatList, ScrollView} from 'react-native';
+import {ImageBackground, View, FlatList, Platform} from 'react-native';
 import {backgrounds} from '../../assets/images';
 import styles from './styles';
 import HomeCard from '../../components/ResCard';
@@ -18,6 +18,8 @@ import {
   getCurrentLocation,
 } from '../../Utils/mapHelperFunction';
 import HomeCategoryCard from '../../components/HomeCategoryCard';
+import KeyboardAdjust from 'react-native-android-keyboard-adjust';
+import EmptyComponent from '../../components/EmptyComponent';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -55,17 +57,17 @@ class HomeScreen extends React.Component {
     }
   };
 
+  renderCategoryEmptyComponent = () => {
+    if (this.state.refreshing) {
+      return null;
+    }
+    return <EmptyComponent text="No categories to show" />;
+  };
   renderEmpty = () => {
     if (this.state.refreshing) {
       return null;
     }
-    return (
-      <View style={styles.emptyContainer}>
-        <OutfitRegularText style={styles.emptyText}>
-          No Restaurant
-        </OutfitRegularText>
-      </View>
-    );
+    return <EmptyComponent text="No restaurants to show" />;
   };
 
   handleOnRefresh = () => {
@@ -121,6 +123,9 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
+    if (Platform.OS === 'android') {
+      KeyboardAdjust.setAdjustPan();
+    }
     this.setupMethods();
     this.getData();
   }
@@ -194,10 +199,13 @@ class HomeScreen extends React.Component {
 
         <FlatList
           data={this.state.categories}
+          keyExtractor={item => String(item?.id)}
           showsHorizontalScrollIndicator={false}
           style={styles.categoryStyle}
           renderItem={this.renderCategoryItem}
           horizontal={true}
+          ListEmptyComponent={this.renderCategoryEmptyComponent}
+          contentContainerStyle={styles.recommendedContentContainerStyle}
         />
         <Dash
           style={styles.dashBorderStyle}
@@ -207,6 +215,17 @@ class HomeScreen extends React.Component {
           dashStyle={{width: 2 * vw}}
         />
       </View>
+    );
+  };
+  renderRecommendedEmptyRestaurant = () => {
+    if (this.state.refreshing) {
+      return null;
+    }
+    return (
+      <EmptyComponent
+        text="No restaurants to show"
+        style={styles.emptyContainer}
+      />
     );
   };
   renderRecommendedRestaurant = () => {
@@ -227,11 +246,14 @@ class HomeScreen extends React.Component {
         </View>
         <FlatList
           data={this.state.recommended}
+          keyExtractor={item => String(item?.id)}
           showsHorizontalScrollIndicator={false}
           style={styles.recommendedStyle}
+          contentContainerStyle={styles.recommendedContentContainerStyle}
           renderItem={this.renderAllRestaurantItem}
           horizontal={true}
           pagingEnabled
+          ListEmptyComponent={this.renderRecommendedEmptyRestaurant}
         />
         <Dash
           style={styles.dashBorderStyle}
@@ -289,7 +311,8 @@ class HomeScreen extends React.Component {
           style={styles.imageContainer}
           imageStyle={styles.imageStyle}>
           <FlatList
-            data={this.state.allRestaurant}
+            data={this.state?.allRestaurant}
+            keyExtractor={item => String(item?.id)}
             showsVerticalScrollIndicator={false}
             style={styles.bottomFlatListStyle}
             contentContainerStyle={styles.contentContainerStyle}
@@ -299,91 +322,6 @@ class HomeScreen extends React.Component {
             onRefresh={this.handleOnRefresh}
             ListEmptyComponent={this.renderEmpty}
           />
-          {/* <ScrollView>
-            <SearchInput
-              placeholder="Search...."
-              style={styles.searchContainer}
-              value={this.state.searchString}
-              onChangeText={this.onChangeText}
-            />
-            <View style={styles.bannerContainer}>
-              <OutfitSemiBoldText style={styles.subHeadingText}>
-                Happy Hours Deals
-              </OutfitSemiBoldText>
-              <HomeCarouselConmponent
-                banners={this.state.banners?.slice(0, 4)}
-              />
-            </View>
-            <View style={styles.viewAllBtnContainer}>
-              <OutfitSemiBoldText style={styles.subHeadingText}>
-                Recommended For You
-              </OutfitSemiBoldText>
-              <TouchableHOC
-                onPress={this.handleViewAllRecommendedRestaurantPress}>
-                <OutfitRegularText style={styles.btnText}>
-                  View All
-                </OutfitRegularText>
-              </TouchableHOC>
-            </View>
-            <FlatList
-              data={this.state.recommended}
-              showsHorizontalScrollIndicator={false}
-              style={styles.recommendedStyle}
-              renderItem={this.renderAllRestaurantItem}
-              horizontal={true}
-              pagingEnabled
-            />
-            <Dash
-              style={styles.dashBorderStyle}
-              dashColor={ThemeColors.dashBorderColor}
-              dashLength={0}
-              dashGap={1 * vh}
-              dashStyle={{width: 2 * vw}}
-            />
-            <View style={styles.viewAllBtnContainer}>
-              <OutfitSemiBoldText style={styles.subHeadingText}>
-                Categories
-              </OutfitSemiBoldText>
-              <TouchableHOC onPress={this.handleViewAllCategoryPress}>
-                <OutfitRegularText style={styles.btnText}>
-                  View All
-                </OutfitRegularText>
-              </TouchableHOC>
-            </View>
-
-            <FlatList
-              data={this.state.categories}
-              showsHorizontalScrollIndicator={false}
-              style={styles.categoryStyle}
-              renderItem={this.renderCategoryItem}
-              horizontal={true}
-            />
-            <Dash
-              style={styles.dashBorderStyle}
-              dashColor={ThemeColors.dashBorderColor}
-              dashLength={0}
-              dashGap={1 * vh}
-              dashStyle={{width: 2 * vw}}
-            />
-            <View style={styles.viewAllBtnContainer}>
-              <OutfitSemiBoldText style={styles.subHeadingText}>
-                All Places
-              </OutfitSemiBoldText>
-              <TouchableHOC onPress={this.handleViewAllRestaurantPress}>
-                <OutfitRegularText style={styles.btnText}>
-                  View All
-                </OutfitRegularText>
-              </TouchableHOC>
-            </View>
-            <FlatList
-              data={this.state.allRestaurant}
-              showsHorizontalScrollIndicator={false}
-              style={styles.bottomFlatListStyle}
-              renderItem={this.renderAllRestaurantItem}
-              horizontal={true}
-              pagingEnabled
-            />
-          </ScrollView> */}
         </ImageBackground>
       </View>
     );
@@ -397,7 +335,6 @@ const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
     getHomData: params => dispatch(getHomeData(params)),
-    // signup: data => dispatch(userSignup(data)),
   };
 };
 

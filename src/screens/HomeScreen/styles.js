@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     marginTop: 3 * vh,
     justifyContent: 'space-between',
   },
-  bottomViewAllBtn:{
-    marginBottom: vh*1
+  bottomViewAllBtn: {
+    marginBottom: vh * 1,
   },
   dashBorderStyle: {
     width: 100 * vw,
@@ -38,19 +38,20 @@ const styles = StyleSheet.create({
     color: ThemeColors.iconColor,
     fontSize: vh * 1.9,
   },
-  categoryStyle: {marginTop: vh, marginBottom: vh * 3, paddingLeft: vw * 3},
+  categoryStyle: {width: '100%', marginTop: vh, marginBottom: vh * 3, paddingLeft: vw * 3},
   bottomFlatListStyle: {
     marginTop: vh,
     marginBottom: 10 * vh,
   },
   recommendedStyle: {marginTop: vh},
   homeCardContainer: {paddingHorizontal: 5 * vw},
-  emptyContainer:{
-    alignItems: 'center'
+  emptyContainer: {
+    marginBottom: vh*3
   },
-  emptyText:{
-    color: ThemeColors.iconColor,
-    fontSize: vh*1.9
-  }
+  recommendedContentContainerStyle: {
+    // alignItems: 'center',
+    // width: '100%',
+    // justifyContent: 'center',
+  },
 });
 export default styles;

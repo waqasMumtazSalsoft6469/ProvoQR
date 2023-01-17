@@ -1,6 +1,7 @@
 import Toast from 'react-native-toast';
 import store from '../Redux/store';
 import {EventRegister} from 'react-native-event-listeners';
+import moment from 'moment/moment';
 
 export const showToast = msg => {
   setTimeout(() => {
@@ -250,4 +251,8 @@ export const checkIfImageExists = (url, callback) => {
       callback(false);
     };
   }
+};
+
+export const formatDate = date => {
+  return moment(date, "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'").utc().format('LL');
 };

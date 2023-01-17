@@ -403,7 +403,7 @@ export const getAllRestaurant = data => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          dispatch({type: actionTypes.softLoaderOn});
+          // dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.restaurantList, data);
           // console.log('action response', response);
@@ -412,7 +412,7 @@ export const getAllRestaurant = data => {
           showToast(getMessage(e));
           reject(e);
         } finally {
-          dispatch({type: actionTypes.softLoaderOff});
+          // dispatch({type: actionTypes.softLoaderOff});
         }
       }, 300);
     });
@@ -445,7 +445,7 @@ export const getAllCategories = data => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
-          dispatch({type: actionTypes.softLoaderOn});
+          // dispatch({type: actionTypes.softLoaderOn});
 
           const response = await get(endpoints.other.categoryList, data);
 
@@ -459,7 +459,7 @@ export const getAllCategories = data => {
           showToast(getMessage(e));
           reject(e);
         } finally {
-          dispatch({type: actionTypes.softLoaderOff});
+          // dispatch({type: actionTypes.softLoaderOff});
         }
       }, 300);
     });
@@ -545,5 +545,17 @@ export const getRewardHistory = () => {
         }
       }, 300);
     });
+  };
+};
+
+export const getAllNotifications = () => {
+  return async dispatch => {
+    try {
+      const response = await get(endpoints.other.notifications);
+      // console.log('response', response);
+      return Promise.resolve(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 };

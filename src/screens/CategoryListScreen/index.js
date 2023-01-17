@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import styles from './styles';
 import {getAllCategories} from '../../Redux/Actions/otherActions';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import CategoryCard from '../../components/CategoryCard';
+import EmptyComponent from '../../components/EmptyComponent';
 
 const CategoryListScreen = props => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.GeneralReducer.softLoading);
 
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [refreshing, setRefreshing] = useState(true);
 
   const handleCategoryPress = item => {
     props.navigation.navigate('RestaurantListScreen', {
@@ -26,50 +27,52 @@ const CategoryListScreen = props => {
 
   const handleOnRefresh = () => {
     setCurrentPage(1);
+    getData();
   };
 
   const getData = async () => {
-    if (!isLoading && currentPage) {
-      try {
-        const data = {
-          page: currentPage,
-          per_page: 10,
-        };
-        const response = await dispatch(getAllCategories(data));
-        if (response?.categoryList?.current_page === 1) {
-          setCategories(response?.categoryList?.data);
-        } else {
-          setCategories(prev => prev.concat(response?.categoryList?.data));
-        }
-        if (
-          response?.categoryList?.data?.length <
-          response?.categoryList?.total
-        ) {
-          setCurrentPage(response?.categoryList?.current_page + 1);
-        } else {
-          setCurrentPage(null);
-        }
-      } catch (error) {}
+    setRefreshing(true);
+    try {
+      const data = {
+        page: currentPage,
+        per_page: 10,
+      };
+      const response = await dispatch(getAllCategories(data));
+      if (response?.categoryList?.current_page === 1) {
+        setCategories(response?.categoryList?.data);
+      } else {
+        setCategories(prev => prev.concat(response?.categoryList?.data));
+      }
+      if (
+        response?.categoryList?.current_page < response?.categoryList?.last_page
+      ) {
+        setCurrentPage(response?.categoryList?.current_page + 1);
+      }
+    } catch (error) {
+      setRefreshing(false);
+    } finally {
+      setRefreshing(false);
     }
   };
-
-  useEffect(() => {
-    if (currentPage === 1) {
-      getData();
-    }
-  }, [currentPage]);
 
   useEffect(() => {
     getData();
   }, []);
 
-  const renderHeader = categories.length ? (
+  const renderEmptyComponent = () => {
+    if (refreshing) {
+      return null;
+    }
+    return <EmptyComponent text="No Categories to show." />;
+  };
+
+  const renderHeader = (
     <View style={styles.headerContainer}>
       <OutfitSemiBoldText style={styles.headingTextStyle}>
         Categories
       </OutfitSemiBoldText>
     </View>
-  ) : null;
+  );
 
   const renderItem = ({item}) => {
     return (
@@ -80,19 +83,21 @@ const CategoryListScreen = props => {
       />
     );
   };
-  console.log('category screen', categories);
+  // console.log('category screen', categories);
   return (
     <View style={styles.container}>
       <FlatList
         data={categories}
+        keyExtractor={item => String(item?.id)}
         numColumns={2}
         renderItem={renderItem}
         contentContainerStyle={styles.contentContainerStyle}
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}
-        refreshing={isLoading}
+        refreshing={refreshing}
         onRefresh={handleOnRefresh}
         onEndReached={handleOnEndReached}
+        ListEmptyComponent={renderEmptyComponent}
       />
     </View>
   );

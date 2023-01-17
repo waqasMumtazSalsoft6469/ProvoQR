@@ -8,14 +8,16 @@ const styles = StyleSheet.create({
     width: vw * 100,
     alignItems: 'center',
   },
-  contentContainerStyle:{
-    paddingBottom: vh*8
+  contentContainerStyle: {
+    width: vw * 100,
+    paddingHorizontal: vw * 5,
+    paddingBottom: vh * 8,
   },
-  categoryContainer:{
-    margin: vw*1
+  categoryContainer: {
+    margin: vw * 1,
   },
-  headerContainer:{
-    marginBottom: vh*2
+  headerContainer: {
+    marginBottom: vh * 2,
   },
   headingTextStyle: {
     color: ThemeColors.iconColor,

@@ -25,5 +25,7 @@ const ThemeColors = {
   happyHourGreen: '#068a2b',
   secondaryColor: '#2C3149',
   dashBorderColor: '#E9E9E9',
+  notificationBorder: '#F3F3F3',
+  notificationCard: '#F2D3D1',
 };
 export default ThemeColors;

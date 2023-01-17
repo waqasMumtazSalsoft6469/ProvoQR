@@ -4,17 +4,20 @@ import {vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  backgroundColor:ThemeColors.white
+    alignItems: 'center',
+    backgroundColor: ThemeColors.white,
   },
-  imgbg:{
-    width:100*vw,
-   
-flex:1
-},
-about: {
-  fontSize:2*vh,color:'#818080',
-  lineHeight:4*vh
+  imgbg: {
+    width: 100 * vw,
+    flex: 1,
+    // alignItems: 'center',
   },
-
+  imageStyle: {width: 100 * vw},
+  about: {
+    fontSize: 2 * vh,
+    color: '#818080',
+    lineHeight: 4 * vh,
+  },
+  contentContainerStyle: {alignItems: 'center'},
 });
 export default styles;

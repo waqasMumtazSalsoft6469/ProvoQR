@@ -9,6 +9,7 @@ import {
   getCurrentLocation,
 } from '../../Utils/mapHelperFunction';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import EmptyComponent from '../../components/EmptyComponent';
 
 const RestaurantListScreen = props => {
   const name = props?.route?.params?.name;
@@ -18,6 +19,7 @@ const RestaurantListScreen = props => {
   const isLoading = useSelector(state => state.GeneralReducer.softLoading);
 
   const [restaurant, setRestaurant] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [userLocation, setUserLocation] = useState({
     location: {
@@ -59,7 +61,8 @@ const RestaurantListScreen = props => {
   };
 
   const getData = async () => {
-    if (!isLoading && currentPage) {
+    if (!refreshing && currentPage) {
+      setRefreshing(true);
       try {
         const data = {
           page: currentPage,
@@ -82,7 +85,11 @@ const RestaurantListScreen = props => {
         } else {
           setCurrentPage(null);
         }
-      } catch (error) {}
+      } catch (error) {
+        setRefreshing(false);
+      } finally {
+        setRefreshing(false);
+      }
     }
   };
 
@@ -120,13 +127,22 @@ const RestaurantListScreen = props => {
     getData();
   }, []);
 
-  const renderHeader = restaurant.length ? (
+  const renderHeader = (
     <View style={styles.headerContainer}>
       <OutfitSemiBoldText style={styles.headingTextStyle}>
         {renderHeadingText()}
       </OutfitSemiBoldText>
     </View>
-  ) : null;
+  );
+
+  const renderEmpty = () => {
+    if(refreshing){
+      return null
+    }
+    return(
+      <EmptyComponent text="No restaurants to show" />
+    )
+  }
 
   const renderItem = ({item}) => {
     return (
@@ -146,9 +162,10 @@ const RestaurantListScreen = props => {
         contentContainerStyle={styles.contentContainerStyle}
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}
-        refreshing={isLoading}
+        refreshing={refreshing}
         onRefresh={handleOnRefresh}
         onEndReached={handleOnEndReached}
+        ListEmptyComponent={renderEmpty}
       />
     </View>
   );

@@ -39,6 +39,7 @@ export const endpoints = {
     redeem: '/reward/redeem',
     history: '/get/history/list',
     recommendedRestaurantList: '/get/recommended/restaurant/list',
+    notifications: '/user/notify',
   },
 };
 
