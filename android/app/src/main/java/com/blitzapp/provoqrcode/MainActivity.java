@@ -1,7 +1,10 @@
-package com.provoqrcode;
+package com.blitzapp.provoqrcode;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 
+import com.blitzapp.module.push.RNEasyPushNotificationsModule;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -22,6 +25,13 @@ import static com.blitzapp.animatedsplash.animation.Splash.setSplashHideAnimatio
 import static com.blitzapp.animatedsplash.animation.Splash.setSplashHideDelay;
 import static com.blitzapp.animatedsplash.animation.Splash.splashShow;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Set;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -32,7 +42,63 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     initiateSplash();
+         if(RNEasyPushNotificationsModule.activityToOpen == null){
+             RNEasyPushNotificationsModule.activityToOpen = this;
+         }
+
+         Intent i = getIntent();
+         Bundle extras = i.getExtras();
+         if (extras != null) {
+             for (String key : extras.keySet()) {
+                 Object value = extras.get(key);
+                 Log.d("MainActivity", "Extras received at onCreate:  Key: " + key + " Value: " + value);
+             }
+
+             String title = extras.getString("title");
+             String message = extras.getString("body");
+             if (message != null && message.length() > 0) {
+                 RNEasyPushNotificationsModule.setExtras(extras);
+             }
+         }
   }
+
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            for (String key : extras.keySet()) {
+                Object value = extras.get(key);
+                Log.d("MainActivity", "Extras received at onNewIntent:  Key: " + key + " Value: " + value);
+            }
+
+            String title = extras.getString("title");
+            String message = extras.getString("body");
+            if (message != null && message.length() > 0) {
+                RNEasyPushNotificationsModule.setExtras(extras);
+            }
+            JSONObject json = new JSONObject();
+            Set<String> keys = extras.keySet();
+            for (String key : keys) {
+                try {
+                    json.put(key, JSONObject.wrap(extras.get(key)));
+                } catch(JSONException e) {
+                    //Handle exception here
+                }
+            }
+            String data = "";
+            try {
+                data = json.getString("data");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                data = json.toString();
+            }
+            Intent i = new Intent("onNotificationTap");
+
+            i.putExtra("data", data);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        }
+    }
   @Override
   protected String getMainComponentName() {
     return "provoQRCode";

@@ -6089,6 +6089,11 @@ react-native-device-info@^8.0.8:
   resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.7.1.tgz"
   integrity sha512-cVMZztFa2Qn6qpQa601W61CtUwZQ1KXfqCOeltejAWEXmgIWivC692WGSdtGudj4upSi1UgMSaGcvKjfcpdGjg==
 
+react-native-easy-push-notifications@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-easy-push-notifications/-/react-native-easy-push-notifications-3.0.2.tgz#5dc100f0645f3e04e0a88db4f8ec023d41e56525"
+  integrity sha512-jh64H33YJW4wXNQ7+of68MjLQSeXWS42gL+Z+gaYbYiDAagw9vmHKwOvbHAFA8jcFnkLyT2pSd1r17thmbkVaQ==
+
 react-native-event-listeners@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/react-native-event-listeners/-/react-native-event-listeners-1.0.7.tgz#486d856dfebf295a7aeda97bc36d1cf81cee0623"

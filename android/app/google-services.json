@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "320384259025",
+    "project_id": "provoqrcode",
+    "storage_bucket": "provoqrcode.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320384259025:android:ff38bf3bd1c2cdc57406f0",
+        "android_client_info": {
+          "package_name": "com.blitzapp.provoqrcode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320384259025-mptdb4ei1ku8kqvm29fnajuo0n9vcp84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiYVBd4VPoPch4sVukwTYpMg28oj3vKwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320384259025-mptdb4ei1ku8kqvm29fnajuo0n9vcp84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
