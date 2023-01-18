@@ -12,7 +12,6 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:usesCleartextTraffic="true"
-        android:launchMode="singleTask"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"

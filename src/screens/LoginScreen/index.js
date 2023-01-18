@@ -28,7 +28,7 @@ import SignupScreen from '../SignupScreen';
 import {showToast} from '../../Api/HelperFunction';
 import {login, userSignup} from '../../Redux/Actions/authActions';
 import {ScrollView} from 'react-native-gesture-handler';
-
+import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
 const initialState = {
   name: '',
   email: '',
@@ -48,6 +48,10 @@ class RegisterScreen extends React.Component {
   }
 
   componentDidMount() {
+    reactNativeEasyPushNotifications.getDeviceId(deviceId => {
+      console.log('My device id ', deviceId);
+      // This method gives the device id which is returned by the firebase
+    });
     this._unsubscribe = this.props.navigation.addListener('blur', () => {
       this.setState(initialState);
     });
