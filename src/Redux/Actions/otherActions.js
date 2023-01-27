@@ -528,23 +528,15 @@ export const redeemReward = data => {
   };
 };
 
-export const getRewardHistory = () => {
+export const getRewardHistory = data => {
   return async dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          dispatch({type: actionTypes.softLoaderOn});
-
-          const response = await get(endpoints.other.history);
-          resolve(response);
-        } catch (e) {
-          showToast(getMessage(e));
-          reject(e);
-        } finally {
-          dispatch({type: actionTypes.softLoaderOff});
-        }
-      }, 300);
-    });
+    try {
+      const response = await get(endpoints.other.history, data);
+      // console.log('response', response);
+      return Promise.resolve(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 };
 

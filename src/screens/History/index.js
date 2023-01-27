@@ -16,11 +16,17 @@ import {vh, vw} from '../../Utils/Units';
 import Dash from 'react-native-dash';
 import {getRewardHistory} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
+import {
+  checkLocationPermissions,
+  getCurrentLocation,
+} from '../../Utils/mapHelperFunction';
 
 class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      page: 1,
+      refreshing: false,
       response: [],
       userLocation: {latitude: '', longitude: ''},
       home: [
@@ -100,27 +106,106 @@ class History extends React.Component {
     };
   }
 
-  getData = () => {
-    if (!this.props.loading) {
-      this.props.getRewardHistory().then(res => {
-        this.setState({
-          response: res?.history,
-        });
+  // getData = () => {
+  //   if (!this.props.loading) {
+  //     this.props.getRewardHistory().then(res => {
+  //       this.setState({
+  //         response: res?.history,
+  //       });
+  //     });
+  //   }
+  // };
+
+  getData = async () => {
+    this.setState({
+      refreshing: true,
+    });
+
+    try {
+      const filters = {
+        page: this.state.page,
+        per_page: 10,
+      };
+
+      const response = await this.props.getRewardHistory(filters);
+      //   console.log('response', response);
+      this.setState({
+        response: response?.history?.data,
+      });
+
+      // let data = {
+      //   refreshing: false,
+      //   notifications: response?.notifications?.docs,
+      //   totalPages: response?.notifications?.totalPages,
+      // };
+
+      // if (filters.page > 1) {
+      //   data = {
+      //     ...data,
+      //     notifications: [
+      //       ...this.state.notifications,
+      //       ...response?.notifications?.docs,
+      //     ],
+      //   };
+      // }
+
+      // this.setState({
+      //   ...data,
+      // });
+    } catch (error) {
+      this.setState({
+        refreshing: false,
+      });
+      //   showToast(error);
+    } finally {
+      this.setState({
+        refreshing: false,
       });
     }
   };
+  getUserLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      // console.log('CURRENT LOCATION', location);
+      this.setState({
+        userLocation: {
+          latitude: parseFloat(location?.latitude),
+          longitude: parseFloat(location?.longitude),
+        },
+      });
+    } catch (error) {
+      console.log('user location error ', error);
+    }
+  };
 
+  setupMethods = async () => {
+    try {
+      await checkLocationPermissions();
+      this.getUserLocation();
+    } catch (error) {
+      console.log('location** error ', error);
+    }
+  };
   componentDidMount() {
     this.getData();
   }
+
+  handleMapBtnPress = item => {
+    this.props.navigation.navigate('RestaurantDirection', {
+      latitude: item?.lat,
+      longitude: item?.lng,
+    });
+  };
 
   renderitem = ({item, index}) => {
     return (
       <View style={{marginVertical: 2 * vh}}>
         <HomeCard
           item={item?.organisations}
-          history
+          history={item}
           onClick={() => this.props.navigation.navigate('HistoryDetails')}
+          viewmap={() => this.handleMapBtnPress(item?.organisations)}
+          location={this.state.userLocation}
         />
         {index + 1 < this.state.home.response && (
           <Dash
@@ -141,7 +226,7 @@ class History extends React.Component {
   };
 
   render() {
-    console.log('response', this.state.response);
+    // console.log('response', this.state.response);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -171,7 +256,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    getRewardHistory: () => dispatch(getRewardHistory()),
+    getRewardHistory: (data) => dispatch(getRewardHistory(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(History);

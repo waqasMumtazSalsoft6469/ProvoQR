@@ -311,7 +311,7 @@ class HomeScreen extends React.Component {
           style={styles.imageContainer}
           imageStyle={styles.imageStyle}>
           <FlatList
-            data={this.state?.allRestaurant}
+            data={this.state?.allRestaurant?.data}
             keyExtractor={item => String(item?.id)}
             showsVerticalScrollIndicator={false}
             style={styles.bottomFlatListStyle}

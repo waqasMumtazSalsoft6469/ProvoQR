@@ -41,13 +41,13 @@ class ProductItem extends React.Component {
         <View style={styles.row}>
           <Image source={icons.moneyBag} style={styles.moneyBagIcon} />
           <OutfitRegularText style={{color: '#A56A43', fontSize: vh * 1.8}}>
-            Total Spending : $230
+            Total Spending : ${this.props.history?.totalspending}
           </OutfitRegularText>
         </View>
         <View style={styles.row}>
           <Image source={icons.box} style={styles.boxIcon} />
           <OutfitRegularText style={{color: '#FFB829', fontSize: vh * 1.8}}>
-            No of Lootbox : 23
+            No of Lootbox : {this.props.history?.no_of_lootbox}
           </OutfitRegularText>
         </View>
       </View>
