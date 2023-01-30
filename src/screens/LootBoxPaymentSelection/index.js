@@ -12,6 +12,7 @@ import ThemeColors from '../../Utils/ThemeColors';
 import AlertModal from '../../components/Popups/alertModal';
 import {connect} from 'react-redux';
 import {lootBoxPurchaseByCoin} from '../../Redux/Actions/otherActions';
+import { showToast } from '../../Api/HelperFunction';
 
 class LootBoxPaymentMethod extends React.Component {
   constructor(props) {

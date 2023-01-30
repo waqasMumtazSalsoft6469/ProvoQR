@@ -7,6 +7,7 @@ import styles from './styles';
 import {vh} from '../../Utils/Units';
 import {getRestaurantRequest} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
+import EmptyComponent from '../../components/EmptyComponent';
 
 class RestaurantLogs extends React.Component {
   constructor(props) {
@@ -14,17 +15,78 @@ class RestaurantLogs extends React.Component {
     this.state = {
       selectreward: true,
       logs: [],
+      refreshing: false,
+      page: 1,
+      totalPages: 1,
     };
   }
 
-  componentDidMount() {
-    this.props.getRestaurantLogs().then(res => {
-      console.log(res);
-      this.setState({logs: res?.restaurantRequestLogs});
+  onEndReached = () => {
+    if (this.state.page < this.state.totalPages) {
+      this.setState(
+        {
+          page: this.state.page + 1,
+        },
+        this.getData,
+      );
+    }
+  };
+
+  onRefresh = () => {
+    this.setState(
+      {
+        page: 1,
+        totalPages: 1,
+      },
+      this.getData,
+    );
+  };
+
+  getData = async () => {
+    this.setState({
+      refreshing: true,
     });
+
+    try {
+      const filters = {
+        page: this.state.page,
+        per_page: 10,
+      };
+
+      const response = await this.props.getRestaurantLogs(filters);
+      //   console.log('response', response);
+      this.setState({
+        logs: response?.restaurantRequestLogs?.data,
+      });
+
+      let data = {
+        refreshing: false,
+        logs: response?.restaurantRequestLogs?.data,
+        totalPages: response?.restaurantRequestLogs?.last_page,
+      };
+
+      if (filters.page > 1) {
+        data = {
+          ...data,
+          logs: [...this.state.logs, ...response?.restaurantRequestLogs?.data],
+        };
+      }
+
+      this.setState({
+        ...data,
+      });
+    } catch (error) {
+      this.setState({
+        refreshing: false,
+      });
+    }
+  };
+
+  componentDidMount() {
+    this.getData();
   }
 
-  renderitem = ({item, index}) => {
+  renderItem = ({item, index}) => {
     return (
       <RewardCard
         item={item}
@@ -38,15 +100,18 @@ class RestaurantLogs extends React.Component {
     );
   };
 
-  emptyList = () => {
+  renderEmpty = () => {
+    if (this.state.refreshing) {
+      return null;
+    }
     return (
-      <View style={styles.emptyList}>
-        <OutfitSemiBoldText style={styles.emptyText}>
-          No Logs Available
-        </OutfitSemiBoldText>
-      </View>
+      <EmptyComponent
+        text="No restaurant logs to show"
+        style={styles.emptyList}
+      />
     );
   };
+
   render() {
     return (
       <View style={styles.container}>
@@ -62,8 +127,11 @@ class RestaurantLogs extends React.Component {
             <FlatList
               data={this.state.logs}
               style={{marginVertical: 2 * vh}}
-              renderItem={this.renderitem}
-              ListEmptyComponent={this.emptyList}
+              renderItem={this.renderItem}
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+              onEndReached={this.onEndReached}
+              ListEmptyComponent={this.renderEmpty}
               showsVerticalScrollIndicator={false}
             />
           </View>
@@ -78,7 +146,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    getRestaurantLogs: () => dispatch(getRestaurantRequest()),
+    getRestaurantLogs: data => dispatch(getRestaurantRequest(data)),
     // signup: data => dispatch(userSignup(data)),
   };
 };

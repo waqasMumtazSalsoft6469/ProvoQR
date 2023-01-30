@@ -42,6 +42,8 @@ import {
 } from '../../Utils/mapHelperFunction';
 import {showToast} from '../../Api/HelperFunction';
 import CategoryModal from '../../components/Popups/CategoryModal';
+import {imageUrl} from '../../Api/configs';
+import RateCard from '../../components/RatingCard';
 
 var tempTime = 0;
 
@@ -57,6 +59,9 @@ class MapScreen extends React.Component {
       search: '',
       details: {},
       category: '',
+      ratings: [],
+      lootbox_amount: '',
+      provo_cash_price: '',
     };
   }
   animateToRegion = (latitude, longitude) => {
@@ -88,10 +93,19 @@ class MapScreen extends React.Component {
           lng: parseFloat(location?.longitude),
         })
         .then(res => {
-          this.setState({restaurants: res?.nearestRestaurant});
+          console.log('getNearestRestaurant', res?.nearestRestaurant?.data[0]);
+          this.setState({restaurants: res?.nearestRestaurant?.data});
           this.animateToRegion(
-            parseFloat(res?.nearestRestaurant[0]?.lat),
-            parseFloat(res?.nearestRestaurant[0]?.lng),
+            parseFloat(
+              res?.nearestRestaurant?.data[0]?.lat
+                ? res?.nearestRestaurant?.data[0]?.lat
+                : 0,
+            ),
+            parseFloat(
+              res?.nearestRestaurant?.data[0]?.lng
+                ? res?.nearestRestaurant?.data[0]?.lng
+                : 0,
+            ),
           );
         });
     } catch (error) {
@@ -109,11 +123,19 @@ class MapScreen extends React.Component {
         category_id: categoryId?.id,
       })
       .then(res => {
-        if (res?.nearestRestaurant?.length > 0) {
-          this.setState({restaurants: res?.nearestRestaurant});
+        if (res?.nearestRestaurant?.data?.length > 0) {
+          this.setState({restaurants: res?.nearestRestaurant?.data});
           this.animateToRegion(
-            parseFloat(res?.nearestRestaurant[0]?.lat),
-            parseFloat(res?.nearestRestaurant[0]?.lng),
+            parseFloat(
+              res?.nearestRestaurant?.data[0]?.lat
+                ? res?.nearestRestaurant?.data[0]?.lat
+                : 0,
+            ),
+            parseFloat(
+              res?.nearestRestaurant?.data[0]?.lng
+                ? res?.nearestRestaurant?.data[0]?.lng
+                : 0,
+            ),
           );
         } else {
           showToast('No Restarant Found');
@@ -136,11 +158,11 @@ class MapScreen extends React.Component {
           .then(res => {
             tempTime = 0;
             Keyboard.dismiss();
-            if (res?.nearestRestaurant?.length > 0) {
-              this.setState({restaurants: res?.nearestRestaurant});
+            if (res?.nearestRestaurant?.data?.length > 0) {
+              this.setState({restaurants: res?.nearestRestaurant?.data});
               this.animateToRegion(
-                parseFloat(res?.nearestRestaurant[0]?.lat),
-                parseFloat(res?.nearestRestaurant[0]?.lng),
+                parseFloat(res?.nearestRestaurant?.data[0]?.lat),
+                parseFloat(res?.nearestRestaurant?.data[0]?.lng),
               );
             } else {
               showToast('No Restarant Found');
@@ -161,7 +183,12 @@ class MapScreen extends React.Component {
 
   getRestaurantDetails = id => {
     this.props.restaurantDetails({organisation_id: id}).then(res => {
-      this.setState({details: res?.details});
+      this.setState({
+        details: res?.details,
+        ratings: res?.rewards,
+        lootbox_amount: res?.lootbox_amount,
+        provo_cash_price: res?.provo_cash_price,
+      });
       setTimeout(() => {
         this.setState({resturentModal: true});
       }, 500);
@@ -177,6 +204,25 @@ class MapScreen extends React.Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
+
+  renderRatings = () => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          // justifyContent: 'space-between',
+          marginTop: 2 * vh,
+          width: 100 * vw,
+        }}>
+        {this.state.ratings.map((item, index) => {
+          return (
+            <RateCard item={item} index={index} style={{marginLeft: vw * 5}} />
+          );
+        })}
+      </View>
+    );
+  };
 
   rendercuisines = () => {
     return (
@@ -365,27 +411,62 @@ class MapScreen extends React.Component {
                 <OutfitLightText style={styles.rewtext}>
                   {this.state.details?.organ_profiles?.about}
                 </OutfitLightText>
-                <View style={styles.catbox}>
-                  <OutfitRegularText style={styles.catText}>
-                    {this.state.details?.organ_profiles?.categories?.name}
-                  </OutfitRegularText>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <View style={styles.catbox}>
+                    <Image
+                      source={{
+                        uri:
+                          imageUrl +
+                          this.state.details?.organ_profiles?.categories?.image,
+                      }}
+                      style={styles.catIcon}
+                    />
+                    <OutfitRegularText style={styles.catText}>
+                      {'  '}
+                      {this.state.details?.organ_profiles?.categories?.name}
+                    </OutfitRegularText>
+                  </View>
                 </View>
-
-                {this.rendercuisines()}
-                {/* {this.renderratings()} */}
+                {/* {this.rendercuisines()} */}
               </View>
+              {this.renderRatings()}
+
               <Dash
                 style={{
                   width: 100 * vw,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginTop: vh * 2,
+                  marginVertical: vh * 2,
                   // marginBottom: vh * 2,
                 }}
                 dashColor="#E9E9E9"
                 dashLength={0}
                 dashGap={1 * vh}
                 dashStyle={{width: 2 * vw}}></Dash>
+
+              <View style={styles.outerContainer}>
+                <View style={styles.priceContainer}>
+                  <OutfitSemiBoldText style={styles.priceHeadingText}>
+                    By Card:
+                  </OutfitSemiBoldText>
+                  <OutfitRegularText style={styles.priceHeadingText}>
+                    ${this.state.lootbox_amount}
+                  </OutfitRegularText>
+                </View>
+                <View style={styles.priceContainer}>
+                  <OutfitSemiBoldText style={styles.priceHeadingText}>
+                    By ProvoCash:
+                  </OutfitSemiBoldText>
+                  <OutfitRegularText style={styles.priceHeadingText}>
+                    ${this.state.provo_cash_price}
+                  </OutfitRegularText>
+                </View>
+              </View>
               {/* <View
                 style={{
                   paddingHorizontal: 5 * vw,
@@ -404,9 +485,11 @@ class MapScreen extends React.Component {
                     this.setState({resturentModal: false});
                     this.props.navigation.navigate('LootBoxPaymentMethod', {
                       id: this.state.details?.id,
+                      provoCash: this.state.provo_cash_price,
+                      lootBoxAmount: this.state.lootbox_amount,
                     });
                   }}
-                  btnContainer={{marginTop: 5 * vh}}
+                  btnContainer={{marginTop: 3 * vh}}
                 />
               </View>
             </ScrollView>

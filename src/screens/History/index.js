@@ -11,6 +11,7 @@ import {
   checkLocationPermissions,
   getCurrentLocation,
 } from '../../Utils/mapHelperFunction';
+import EmptyComponent from '../../components/EmptyComponent';
 
 class History extends React.Component {
   constructor(props) {
@@ -23,6 +24,15 @@ class History extends React.Component {
       userLocation: {latitude: '', longitude: ''},
     };
   }
+
+  renderEmpty = () => {
+    if (this.state.refreshing) {
+      return null;
+    }
+    return (
+      <EmptyComponent text="No history to show." style={styles.emptyList} />
+    );
+  };
 
   onEndReached = () => {
     if (this.state.page < this.state.totalPages) {
@@ -171,6 +181,7 @@ class History extends React.Component {
               refreshing={this.state.refreshing}
               onRefresh={this.onRefresh}
               onEndReached={this.onEndReached}
+              ListEmptyComponent={this.renderEmpty}
             />
           </View>
         </ImageBackground>

@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: ThemeColors.white,
   },
   emptyList: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: vh * 80,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    height: vh * 50,
   },
   emptyText: {
     fontSize: vh * 2.4,

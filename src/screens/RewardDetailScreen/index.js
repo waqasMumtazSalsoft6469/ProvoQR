@@ -23,6 +23,7 @@ import {getRewardDetail, redeemReward} from '../../Redux/Actions/otherActions';
 import {showToast} from '../../Api/HelperFunction';
 import {StackActions} from '@react-navigation/native';
 import {imageUrl} from '../../Api/configs';
+import AlertModal from '../../components/Popups/alertModal';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -30,30 +31,41 @@ class RegisterScreen extends React.Component {
     this.state = {
       details: {},
       visibleModal: false,
-      cusines: [
-        {
-          name: 'Cuisine 01',
-        },
-        {
-          name: 'Cuisine 02',
-        },
-        {
-          name: 'Cuisine 03',
-        },
-      ],
-      ratings: [
-        {
-          rate: '102',
-        },
-        {
-          rate: '150',
-        },
-        {
-          rate: '200',
-        },
-      ],
+      successModal: false,
+      redeemResponse: {},
+      // cusines: [
+      //   {
+      //     name: 'Cuisine 01',
+      //   },
+      //   {
+      //     name: 'Cuisine 02',
+      //   },
+      //   {
+      //     name: 'Cuisine 03',
+      //   },
+      // ],
+      // ratings: [
+      //   {
+      //     rate: '102',
+      //   },
+      //   {
+      //     rate: '150',
+      //   },
+      //   {
+      //     rate: '200',
+      //   },
+      // ],
     };
   }
+
+  handleSuccessPress = () => {
+    this.setState({
+      successModal: false,
+    });
+    showToast(res?.message);
+    dispatch(StackActions.popToTop());
+    this.props.navigation.navigate('HomeScreen');
+  };
 
   handlePopupPress = () => {
     const id = this.props.route.params.reward_id;
@@ -62,10 +74,14 @@ class RegisterScreen extends React.Component {
     };
     this.props.redeemReward(data).then(res => {
       if (res?.success) {
-        this.setState({visibleModal: false});
-        showToast(res?.message);
-        dispatch(StackActions.popToTop());
-        this.props.navigation.navigate('HomeScreen');
+        this.setState({
+          visibleModal: false,
+          redeemReward: res,
+          successModal: true,
+        });
+        // showToast(res?.message);
+        // dispatch(StackActions.popToTop());
+        // this.props.navigation.navigate('HomeScreen');
       }
     });
   };
@@ -178,6 +194,19 @@ class RegisterScreen extends React.Component {
           onLeftButtonPress={this.handlePopupPress}
           rightButtonTitle="NO"
           onRightButtonPress={() => this.setState({visibleModal: false})}
+        />
+        <AlertModal
+          visible={this.state.successModal}
+          setVisible={() => this.setState({successModal: false})}
+          icon={icons.popupTick}
+          title="Congratulations!"
+          description={
+            this.state.redeemResponse?.message +
+            'Your code is ' +
+            this.state.redeemResponse?.code
+          }
+          buttonTitle="OK"
+          onButtonPress={this.handleSuccessPress}
         />
       </View>
     );

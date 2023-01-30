@@ -97,5 +97,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF6969',
     borderRadius: 2 * vh,
   },
+  emptyList: {
+    height: vh * 50,
+  },
 });
 export default styles;

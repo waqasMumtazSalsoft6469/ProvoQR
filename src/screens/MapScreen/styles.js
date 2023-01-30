@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 3 * vw,
     paddingVertical: 1.5 * vh,
-    width: 25 * vw,
+    // width: 25 * vw,
     marginTop: 2 * vh,
     alignItems: 'center',
     borderRadius: 2 * vh,
@@ -280,6 +280,20 @@ const styles = StyleSheet.create({
   },
   resName: {
     fontSize: vh * 1.4,
+  },
+  outerContainer: {
+    // marginTop: vh * 3,
+    paddingHorizontal: vw * 5,
+  },
+  priceContainer: {
+    marginVertical: vh * 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  priceHeadingText: {
+    color: ThemeColors.iconColor,
+    fontSize: vh * 1.8,
   },
 });
 export default styles;

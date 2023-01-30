@@ -25,6 +25,7 @@ import MasonryList from 'react-native-masonry-list';
 import {connect} from 'react-redux';
 import {getRewardList} from '../../Redux/Actions/otherActions';
 import {imageUrl} from '../../Api/configs';
+import EmptyComponent from '../../components/EmptyComponent';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -32,6 +33,9 @@ class RegisterScreen extends React.Component {
     this.state = {
       selectreward: true,
       reward: [],
+      page: 1,
+      totalPages: 1,
+      refreshing: false,
       urls: [
         reward1,
         reward2,
@@ -48,13 +52,64 @@ class RegisterScreen extends React.Component {
       ],
     };
   }
-  getData = () => {
-    if (!this.props.loading) {
-      this.props.getRewardList().then(res => {
-        console.log('res', res?.rewardList);
-        this.setState({
-          reward: res?.rewardList,
-        });
+
+  onEndReached = () => {
+    if (this.state.page < this.state.totalPages) {
+      this.setState(
+        {
+          page: this.state.page + 1,
+        },
+        this.getData,
+      );
+    }
+  };
+
+  onRefresh = () => {
+    this.setState(
+      {
+        page: 1,
+        totalPages: 1,
+      },
+      this.getData,
+    );
+  };
+
+  getData = async () => {
+    this.setState({
+      refreshing: true,
+    });
+
+    try {
+      const filters = {
+        page: this.state.page,
+        per_page: 10,
+      };
+
+      const response = await this.props.getRewardList(filters);
+      //   console.log('response', response);
+      this.setState({
+        reward: response?.rewardList?.data,
+      });
+
+      let data = {
+        refreshing: false,
+        reward: response?.rewardList?.data,
+        totalPages: response?.rewardList?.last_page,
+      };
+
+      if (filters.page > 1) {
+        data = {
+          ...data,
+          reward: [...this.state.reward, ...response?.rewardList?.data],
+        };
+      }
+
+      this.setState({
+        ...data,
+      });
+    } catch (error) {
+      this.setState({
+        refreshing: false,
       });
     }
   };
@@ -134,18 +189,8 @@ class RegisterScreen extends React.Component {
     );
   };
 
-  handleOnRefresh = () => {
-    this.getData();
-  };
-
   renderEmptyComponent = () => {
-    return (
-      <View style={styles.emptyContainer}>
-        <OutfitRegularText style={styles.emptyText}>
-          No Rewards
-        </OutfitRegularText>
-      </View>
-    );
+    return <EmptyComponent text="No Rewards to show." />;
   };
 
   renderFooter = () => {
@@ -159,19 +204,20 @@ class RegisterScreen extends React.Component {
           source={backgrounds.grayBackground}
           style={styles.imgbg}
           resizeMode="cover"
-          imageStyle={styles.imgbg}>
+          imageStyle={styles.imageStyle}>
           <FlatList
             data={this.state.reward}
             keyExtractor={(_, index) => index}
             numColumns={2}
             contentContainerStyle={styles.contentContainerStyle}
             renderItem={this.renderItem}
-            refreshing={this.props.loading}
-            onRefresh={this.handleOnRefresh}
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
             ListEmptyComponent={
-              !this.props.loading && this.renderEmptyComponent
+              !this.state.refreshing && this.renderEmptyComponent
             }
-            ListFooterComponent={this.props.loading && this.renderFooter}
+            ListFooterComponent={this.state.refreshing && this.renderFooter}
+            onEndReached={this.onEndReached}
           />
           {/* <MasonryList
             data={this.state.reward}

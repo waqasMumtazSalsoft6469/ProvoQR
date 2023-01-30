@@ -8,9 +8,13 @@ const styles = StyleSheet.create({
   },
   imgbg: {
     width: 100 * vw,
-    height: vh * 90,
-    paddingBottom: vh * 7,
+    // height: vh * 90,
+    // paddingBottom: vh * 7,
     flex: 1,
+  },
+  imageStyle: {
+    width: 100 * vw,
+    height: vh * 100,
   },
   catname: {
     color: ThemeColors.darkpurple,
@@ -80,29 +84,29 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     margin: vh * 0.2,
-    width: vw*42,
-    height: vh*20,
+    width: vw * 42,
+    height: vh * 20,
     backgroundColor: 'red',
-    margin: vw*2
+    margin: vw * 2,
   },
   image: {
     resizeMode: 'cover',
     // width: '100%',
     // height: '100%',
-    width: vw*42,
-    height: vh*20,
+    width: vw * 42,
+    height: vh * 20,
   },
   contentContainerStyle: {
     paddingHorizontal: vw * 4,
     // alignItems: 'center',
   },
-  emptyContainer:{
+  emptyContainer: {
     alignItems: 'center',
   },
-  emptyText:{
+  emptyText: {
     color: ThemeColors.iconColor,
-    fontSize: vh*1.8
-  }
+    fontSize: vh * 1.8,
+  },
   // contentContainerStyle: {backgroundColor: 'transparent'},
 });
 export default styles;

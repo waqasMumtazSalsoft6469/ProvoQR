@@ -44,7 +44,7 @@ class ProvoScreen extends React.Component {
 
   componentDidMount() {
     this.props.getProvoPackages().then(res => {
-      this.setState({coins: res?.provo_package});
+      this.setState({coins: res?.provo_package?.data});
     });
     this.props.getProvoWallet().then(res => {
       console.log("provo_wallet", res?.provo_wallet);
