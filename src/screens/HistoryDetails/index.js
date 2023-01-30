@@ -1,55 +1,76 @@
 import React from 'react';
-import {
-  ImageBackground,
-  View,
-  Image,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {backgrounds, icons, sampleimage, tabicons} from '../../assets/images';
+import {ImageBackground, View, Image, ScrollView} from 'react-native';
+import {backgrounds, icons, sampleimage} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
-import RateCard from '../../components/RatingCard';
 import styles from './styles';
 import {vh, vw} from '../../Utils/Units';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import OutfitLightText from '../../components/Text/OutfitLightText';
-import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import Button from '../../components/Buttons/SimpleButton';
 import DetailList from '../../components/DetailList';
 import Dash from 'react-native-dash';
 import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
 import Counter from '../../components/Counter';
+import {getHistoryDetail} from '../../Redux/Actions/otherActions';
+import {connect} from 'react-redux';
+import {imageUrl} from '../../Api/configs';
 
 class HistoryDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cusines: [
-        {
-          name: 'Cuisine 01',
-        },
-        {
-          name: 'Cuisine 02',
-        },
-        {
-          name: 'Cuisine 03',
-        },
-      ],
-      ratings: [
-        {
-          rate: 'Total Spending : $230',
-        },
-        {
-          rate: 'No of Lootbox : 23',
-        },
-        {
-          rate: 'No of Rewards : 140',
-        },
-      ],
+      response: {},
+      // cusines: [
+      //   {
+      //     name: 'Cuisine 01',
+      //   },
+      //   {
+      //     name: 'Cuisine 02',
+      //   },
+      //   {
+      //     name: 'Cuisine 03',
+      //   },
+      // ],
     };
   }
+  getData = async () => {
+    const id = this.props?.route?.params?.id;
+    try {
+      let data = {
+        restaurant_id: id,
+      };
+
+      const response = await this.props.getHistoryDetail(data);
+
+      //   console.log('response', response);
+
+      this.setState({
+        response: response?.history[0],
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  handleLootBoxPress = () => {
+    this.props.navigation.navigate('LootBoxPaymentMethod', {
+      id: this.state.response?.organisations?.id,
+      provoCash: this.state.response?.organisations?.provo_cash_price,
+      lootBoxAmount: this.state.response?.organisations?.lootbox_amount,
+    });
+  };
+  handleMapPress = () => {
+    this.props.navigation.navigate('RestaurantDirection', {
+      latitude: this.state.response?.organisations?.lat,
+      longitude: this.state.response?.organisations?.lng,
+    });
+  };
+
   rendercuisines = () => {
     return (
       <View
@@ -69,10 +90,33 @@ class HistoryDetail extends React.Component {
     );
   };
 
-  renderratings = () => {
+  renderRatings = () => {
+    let ratings = [
+      {
+        rate: `Total Spending: $${
+          this.state.response?.totalspending
+            ? this.state.response?.totalspending
+            : 0
+        }`,
+      },
+      {
+        rate: `No of Lootbox : $${
+          this.state.response?.no_of_lootbox
+            ? this.state.response?.no_of_lootbox
+            : 0
+        }`,
+      },
+      {
+        rate: `No of Rewards : $${
+          this.state.response?.no_of_rewards
+            ? this.state.response?.no_of_rewards
+            : 0
+        }`,
+      },
+    ];
     return (
       <View style={styles.lowerContainer}>
-        <View
+        {/* <View
           style={{
             justifyContent: 'space-between',
             width: 42 * vw,
@@ -87,23 +131,17 @@ class HistoryDetail extends React.Component {
             <Image source={icons.clock} style={styles.icon} />
             <OutfitRegularText>09:00 pm</OutfitRegularText>
           </View>
-        </View>
-        <View
-          style={{
-            //   flexDirection: 'row',
-            //   alignItems: 'center',
-            justifyContent: 'space-between',
-            width: 55 * vw,
-            height: vh * 13,
-          }}>
-          {this.state.ratings.map((item, index) => {
-            return (
-              <View>
-                <DetailList item={item} index={index} />
-              </View>
-            );
-          })}
-        </View>
+        </View> */}
+
+        {ratings.map((item, index) => {
+          return (
+            <DetailList
+              item={item}
+              index={index}
+              style={{marginVertical: vh * 1}}
+            />
+          );
+        })}
       </View>
     );
   };
@@ -115,9 +153,21 @@ class HistoryDetail extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 100 * vh}}>
-          <ScrollView contentContainerStyle={{height: vh * 135}}>
+          <ScrollView
+            contentContainerStyle={{paddingBottom: vh * 5}}
+            showsVerticalScrollIndicator={false}>
             <View style={{alignItems: 'center', marginTop: 3 * vh}}>
-              <Image source={sampleimage.places} style={styles.cardimg} />
+              <Image
+                source={
+                  this.state.response?.organisations?.image
+                    ? {
+                        uri:
+                          imageUrl + this.state.response?.organisations?.image,
+                      }
+                    : sampleimage.placeholder
+                }
+                style={styles.cardimg}
+              />
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
               <View
@@ -130,12 +180,7 @@ class HistoryDetail extends React.Component {
                   About Restaurant
                 </OutfitRegularText>
                 <View style={styles.menuContainer}>
-                  <TouchableHOC
-                    onPress={() =>
-                      this.props.navigation.navigate('MapStack', {
-                        screen: 'ShowonMapScreen',
-                      })
-                    }>
+                  <TouchableHOC onPress={this.handleMapPress}>
                     <OutfitRegularText style={styles.buttonText}>
                       View on Map
                     </OutfitRegularText>
@@ -144,9 +189,7 @@ class HistoryDetail extends React.Component {
               </View>
 
               <OutfitLightText style={styles.rewtext}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since.
+                {this.state.response?.organisations?.organ_profiles?.about}
               </OutfitLightText>
               <View
                 style={{
@@ -155,17 +198,29 @@ class HistoryDetail extends React.Component {
                   alignItems: 'center',
                 }}>
                 <View style={styles.catbox}>
-                  <Image source={icons.burger} style={styles.catIcon} />
+                  <Image
+                    source={{
+                      uri:
+                        imageUrl +
+                        this.state.response?.organisations?.organ_profiles
+                          ?.categories?.image,
+                    }}
+                    style={styles.catIcon}
+                  />
                   <OutfitRegularText style={styles.catText}>
-                    Burger
+                    {'  '}
+                    {
+                      this.state.response?.organisations?.organ_profiles
+                        ?.categories?.name
+                    }
                   </OutfitRegularText>
                 </View>
-                <Counter />
+                {/* <Counter /> */}
               </View>
-              {this.rendercuisines()}
-              {this.renderratings()}
+              {/* {this.rendercuisines()} */}
+              {this.renderRatings()}
             </View>
-            <Dash
+            {/* <Dash
               style={{
                 width: 100 * vw,
                 flexDirection: 'row',
@@ -176,8 +231,8 @@ class HistoryDetail extends React.Component {
               dashColor="#E9E9E9"
               dashLength={0}
               dashGap={1 * vh}
-              dashStyle={{width: 2 * vw}}></Dash>
-            <View
+              dashStyle={{width: 2 * vw}}></Dash> */}
+            {/* <View
               style={{
                 paddingHorizontal: 5 * vw,
                 marginTop: 5 * vh,
@@ -187,15 +242,11 @@ class HistoryDetail extends React.Component {
                 Happy Hours Deals
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
-            </View>
+            </View> */}
             <View style={{alignItems: 'center'}}>
               <Button
                 title="LOOT BOX"
-                onPress={() =>
-                  this.props.navigation.navigate('LootBoxPaymentMethod', {
-                    success: 0,
-                  })
-                }
+                // onPress={this.handleLootBoxPress}
                 btnContainer={{marginTop: 5 * vh}}
               />
             </View>
@@ -205,4 +256,14 @@ class HistoryDetail extends React.Component {
     );
   }
 }
-export default HistoryDetail;
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    getHistoryDetail: data => dispatch(getHistoryDetail(data)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryDetail);

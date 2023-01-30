@@ -46,7 +46,7 @@ class DetailList extends React.Component {
 
   render() {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={[{flexDirection: 'row', alignItems: 'center'}, this.props?.style]}>
         <Image
           source={this.getIcons(this.props.index)}
           style={this.getStyle(this.props.index)}

@@ -7,9 +7,10 @@ const styles = StyleSheet.create({
     backgroundColor: ThemeColors.white,
   },
   imgbg: {
+    flex: 1,
     width: 100 * vw,
 
-    height: 100 * vh,
+    // height: 100 * vh,
   },
   label: {
     color: '#C6C5C5',
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 3 * vw,
     paddingVertical: 1.5 * vh,
-    width: 25 * vw,
+    // width: 25 * vw,
     marginTop: 2 * vh,
     alignItems: 'center',
     borderRadius: 2 * vh,
@@ -115,8 +116,8 @@ const styles = StyleSheet.create({
     width: 90 * vw,
     height: 50 * vw,
 
-    borderRadius: 0.5 * vh,
-    resizeMode: 'contain',
+    borderRadius: 3 * vh,
+    resizeMode: 'cover',
   },
   menuContainer: {
     flexDirection: 'row',
@@ -133,8 +134,6 @@ const styles = StyleSheet.create({
     width: vh * 3,
   },
   lowerContainer: {
-    width: vw * 100,
-    flexDirection: 'row',
     marginTop: vh * 2,
   },
   row: {flexDirection: 'row', alignItems: 'center'},

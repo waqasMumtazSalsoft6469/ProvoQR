@@ -159,7 +159,7 @@ class ProductItem extends React.Component {
               km
             </OutfitSemiBoldText>
           </View>
-          {this.rendercuisines()}
+          {/* {this.rendercuisines()} */}
         </View>
 
         {this.props.history ? this.renderHistoryRating() : this.renderratings()}

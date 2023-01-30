@@ -540,6 +540,18 @@ export const getRewardHistory = data => {
   };
 };
 
+export const getHistoryDetail = data => {
+  return async dispatch => {
+    try {
+      const response = await get(endpoints.other.historyDetail, data);
+      // console.log('response', response);
+      return Promise.resolve(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+};
+
 export const getAllNotifications = () => {
   return async dispatch => {
     try {

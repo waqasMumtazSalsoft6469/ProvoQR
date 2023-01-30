@@ -1,17 +1,8 @@
 import React from 'react';
-import {
-  ImageBackground,
-  View,
-  Image,
-  FlatList,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import {backgrounds, icons, sampleimage} from '../../assets/images';
+import {ImageBackground, View, FlatList} from 'react-native';
+import {backgrounds} from '../../assets/images';
 import styles from './styles';
 import HomeCard from '../../components/ResCard';
-import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import {vh, vw} from '../../Utils/Units';
 import Dash from 'react-native-dash';
 import {getRewardHistory} from '../../Redux/Actions/otherActions';
@@ -26,95 +17,33 @@ class History extends React.Component {
     super(props);
     this.state = {
       page: 1,
+      totalPages: 1,
       refreshing: false,
       response: [],
       userLocation: {latitude: '', longitude: ''},
-      home: [
-        {
-          image: sampleimage.home1,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          totalscan: '23',
-          enum: 1,
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-        {
-          image: sampleimage.home2,
-          name: 'Finest Dining Restaurants',
-          distance: '113 meter',
-          totalscan: '23',
-          enum: 2,
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-        {
-          image: sampleimage.home2,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          totalscan: '23',
-          enum: 3,
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-        {
-          image: sampleimage.home2,
-          name: 'Finest Dining Restaurant',
-          distance: '113 meter',
-          totalscan: '23',
-          enum: 1,
-          cusines: [
-            {
-              name: 'Cuisine 01',
-            },
-            {
-              name: 'Cuisine 02',
-            },
-            {
-              name: 'Cuisine 03',
-            },
-          ],
-        },
-      ],
     };
   }
 
-  // getData = () => {
-  //   if (!this.props.loading) {
-  //     this.props.getRewardHistory().then(res => {
-  //       this.setState({
-  //         response: res?.history,
-  //       });
-  //     });
-  //   }
-  // };
+  onEndReached = () => {
+    if (this.state.page < this.state.totalPages) {
+      this.setState(
+        {
+          page: this.state.page + 1,
+        },
+        this.getData,
+      );
+    }
+  };
+
+  onRefresh = () => {
+    this.setState(
+      {
+        page: 1,
+        totalPages: 1,
+      },
+      this.getData,
+    );
+  };
 
   getData = async () => {
     this.setState({
@@ -133,31 +62,23 @@ class History extends React.Component {
         response: response?.history?.data,
       });
 
-      // let data = {
-      //   refreshing: false,
-      //   notifications: response?.notifications?.docs,
-      //   totalPages: response?.notifications?.totalPages,
-      // };
-
-      // if (filters.page > 1) {
-      //   data = {
-      //     ...data,
-      //     notifications: [
-      //       ...this.state.notifications,
-      //       ...response?.notifications?.docs,
-      //     ],
-      //   };
-      // }
-
-      // this.setState({
-      //   ...data,
-      // });
-    } catch (error) {
-      this.setState({
+      let data = {
         refreshing: false,
+        response: response?.history?.data,
+        totalPages: response?.history?.last_page,
+      };
+
+      if (filters.page > 1) {
+        data = {
+          ...data,
+          response: [...this.state.response, ...response?.history?.data],
+        };
+      }
+
+      this.setState({
+        ...data,
       });
-      //   showToast(error);
-    } finally {
+    } catch (error) {
       this.setState({
         refreshing: false,
       });
@@ -190,6 +111,10 @@ class History extends React.Component {
     this.getData();
   }
 
+  handleRestaurantPress = item => {
+    this.props.navigation.navigate('HistoryDetails', {id: item?.id});
+  };
+
   handleMapBtnPress = item => {
     this.props.navigation.navigate('RestaurantDirection', {
       latitude: item?.lat,
@@ -197,17 +122,17 @@ class History extends React.Component {
     });
   };
 
-  renderitem = ({item, index}) => {
+  renderItem = ({item, index}) => {
     return (
       <View style={{marginVertical: 2 * vh}}>
         <HomeCard
           item={item?.organisations}
           history={item}
-          onClick={() => this.props.navigation.navigate('HistoryDetails')}
+          onClick={() => this.handleRestaurantPress(item?.organisations)}
           viewmap={() => this.handleMapBtnPress(item?.organisations)}
           location={this.state.userLocation}
         />
-        {index + 1 < this.state.home.response && (
+        {index + 1 < this.state.response && (
           <Dash
             style={{
               width: 60 * vw,
@@ -239,7 +164,10 @@ class History extends React.Component {
               data={this.state.response}
               showsVerticalScrollIndicator={false}
               style={{marginTop: vh, marginBottom: 4 * vh}}
-              renderItem={this.renderitem}
+              renderItem={this.renderItem}
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+              onEndReached={this.onEndReached}
             />
           </View>
         </ImageBackground>
@@ -250,13 +178,12 @@ class History extends React.Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
-  loading: state.GeneralReducer.softLoading,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    getRewardHistory: (data) => dispatch(getRewardHistory(data)),
+    getRewardHistory: data => dispatch(getRewardHistory(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(History);
