@@ -1,17 +1,13 @@
 import React from 'react';
 import {ImageBackground, View, Image, ScrollView} from 'react-native';
-import {backgrounds, icons, sampleimage} from '../../assets/images';
+import {backgrounds, sampleimage} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import styles from './styles';
 import {vh, vw} from '../../Utils/Units';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import OutfitLightText from '../../components/Text/OutfitLightText';
-import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import Button from '../../components/Buttons/SimpleButton';
 import DetailList from '../../components/DetailList';
-import Dash from 'react-native-dash';
-import HomeCarouselConmponent from '../../components/HomeCarouselComponent';
-import Counter from '../../components/Counter';
 import {getHistoryDetail} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
 import {imageUrl} from '../../Api/configs';
@@ -54,6 +50,10 @@ class HistoryDetail extends React.Component {
   };
 
   componentDidMount() {
+    const name = this.props?.route?.params?.name;
+    this.props?.navigation?.setOptions({
+      title: name,
+    });
     this.getData();
   }
 
@@ -71,24 +71,24 @@ class HistoryDetail extends React.Component {
     });
   };
 
-  rendercuisines = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: 1.5 * vh,
-        }}>
-        {this.state.cusines.map((item, index) => {
-          return (
-            <OutfitRegularText style={styles.cus}>
-              {item?.name},
-            </OutfitRegularText>
-          );
-        })}
-      </View>
-    );
-  };
+  // rendercuisines = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         flexDirection: 'row',
+  //         alignItems: 'center',
+  //         marginTop: 1.5 * vh,
+  //       }}>
+  //       {this.state.cusines.map((item, index) => {
+  //         return (
+  //           <OutfitRegularText style={styles.cus}>
+  //             {item?.name},
+  //           </OutfitRegularText>
+  //         );
+  //       })}
+  //     </View>
+  //   );
+  // };
 
   renderRatings = () => {
     let ratings = [

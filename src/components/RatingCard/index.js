@@ -16,10 +16,10 @@ class ProductItem extends React.Component {
     this.state = {};
   }
 
-  getTintcolor = index => {
-    if (index == 0) {
+  getTintcolor = name => {
+    if (name === 'Gold') {
       return '#F4CE0C';
-    } else if (index == 1) {
+    } else if (name === 'Silver') {
       return '#ADADAD';
     } else {
       return '#E9980F';
@@ -28,17 +28,24 @@ class ProductItem extends React.Component {
 
   render() {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View
+        style={[
+          {flexDirection: 'row', alignItems: 'center'},
+          this.props.style,
+        ]}>
         <Image
           source={icons.box}
           style={[
             styles.cardimage,
-            {tintColor: this.getTintcolor(this.props.index)},
+            {tintColor: this.getTintcolor(this.props.item?.reward_tier)},
           ]}
         />
         <OutfitRegularText
-          style={[styles.name, {color: this.getTintcolor(this.props.index)}]}>
-          {this.props.item?.rate}
+          style={[
+            styles.name,
+            {color: this.getTintcolor(this.props.item?.reward_tier)},
+          ]}>
+          {this.props.item?.reward_tier}
         </OutfitRegularText>
       </View>
     );

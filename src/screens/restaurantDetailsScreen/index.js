@@ -43,17 +43,7 @@ class ResturentDetailScreen extends React.Component {
           name: 'Cuisine 03',
         },
       ],
-      ratings: [
-        {
-          rate: 'Gold',
-        },
-        {
-          rate: 'Silver',
-        },
-        {
-          rate: 'Bronze',
-        },
-      ],
+      ratings: [],
     };
   }
 
@@ -68,47 +58,46 @@ class ResturentDetailScreen extends React.Component {
         details: res?.details,
         lootbox_amount: res?.lootbox_amount,
         provo_cash_price: res?.provo_cash_price,
+        ratings: res?.rewards,
       });
     });
   }
 
-  rendercuisines = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: 1.5 * vh,
-        }}>
-        {/* {this.state.cusines.map((item, index) => {
-          return (
-            <OutfitRegularText style={styles.cus}>
-              {item?.name},
-            </OutfitRegularText>
-          );
-        })} */}
-        <OutfitRegularText style={styles.cus}>
-          {this.state.details?.organ_profiles?.cuisines?.name}
-        </OutfitRegularText>
-      </View>
-    );
-  };
+  // rendercuisines = () => {
+  //   return (
+  //     <View
+  //       style={{
+  //         flexDirection: 'row',
+  //         alignItems: 'center',
+  //         marginTop: 1.5 * vh,
+  //       }}>
+  //       {/* {this.state.cusines.map((item, index) => {
+  //         return (
+  //           <OutfitRegularText style={styles.cus}>
+  //             {item?.name},
+  //           </OutfitRegularText>
+  //         );
+  //       })} */}
+  //       <OutfitRegularText style={styles.cus}>
+  //         {this.state.details?.organ_profiles?.cuisines?.name}
+  //       </OutfitRegularText>
+  //     </View>
+  //   );
+  // };
 
-  renderratings = () => {
+  renderRatings = () => {
     return (
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
           marginTop: 2 * vh,
-          width: 85 * vw,
+          width: 100 * vw,
         }}>
         {this.state.ratings.map((item, index) => {
           return (
-            <View>
-              <RateCard item={item} index={index} />
-            </View>
+            <RateCard item={item} index={index} style={{marginLeft: vw * 5}} />
           );
         })}
       </View>
@@ -121,17 +110,22 @@ class ResturentDetailScreen extends React.Component {
           source={backgrounds.grayBackground}
           style={styles.imgbg}
           resizeMode="cover"
-          imageStyle={{width: 100 * vw}}>
+          imageStyle={{width: 100 * vw, height: vh * 100}}>
           <ScrollView
-            style={{flex: 1}}
-            contentContainerStyle={{height: vh * 130}}>
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{paddingBottom: vh * 10}}>
             <View style={{alignItems: 'center', marginTop: 3 * vh}}>
               <Image
-                source={{uri: imageUrl + this.state.details?.image}}
+                source={
+                  this.state.details?.image
+                    ? {uri: imageUrl + this.state.details?.image}
+                    : sampleimage.placeholder
+                }
+                defaultSource={sampleimage.placeholder}
                 style={styles.cardimg}
               />
             </View>
-            <View style={{paddingHorizontal: 6 * vw}}>
+            <View style={{paddingHorizontal: 5 * vw}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -176,23 +170,32 @@ class ResturentDetailScreen extends React.Component {
                   alignItems: 'center',
                 }}>
                 <View style={styles.catbox}>
-                  {/* <Image source={icons.burger} style={styles.catIcon} /> */}
+                  <Image
+                    source={{
+                      uri:
+                        imageUrl +
+                        this.state.details?.organ_profiles?.categories?.image,
+                    }}
+                    style={styles.catIcon}
+                  />
                   <OutfitRegularText style={styles.catText}>
+                    {'  '}
                     {this.state.details?.organ_profiles?.categories?.name}
                   </OutfitRegularText>
                 </View>
                 {/* <Counter /> */}
               </View>
-              {this.rendercuisines()}
-              {this.renderratings()}
+              {/* {this.rendercuisines()} */}
             </View>
+            {this.renderRatings()}
             <Dash
               style={{
                 width: 100 * vw,
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: vh * 2,
-                marginBottom: vh * -2,
+                marginVertical: vh * 3,
+                // marginTop: vh * 2,
+                // marginBottom: vh * -2,
               }}
               dashColor="#E9E9E9"
               dashLength={0}
@@ -211,13 +214,17 @@ class ResturentDetailScreen extends React.Component {
             </View> */}
             <View style={styles.outerContainer}>
               <View style={styles.priceContainer}>
-                <OutfitSemiBoldText style={styles.priceHeadingText}>By Card:</OutfitSemiBoldText>
+                <OutfitSemiBoldText style={styles.priceHeadingText}>
+                  By Card:
+                </OutfitSemiBoldText>
                 <OutfitRegularText style={styles.priceHeadingText}>
                   ${this.state.lootbox_amount}
                 </OutfitRegularText>
               </View>
               <View style={styles.priceContainer}>
-                <OutfitSemiBoldText style={styles.priceHeadingText}>By ProvoCash:</OutfitSemiBoldText>
+                <OutfitSemiBoldText style={styles.priceHeadingText}>
+                  By ProvoCash:
+                </OutfitSemiBoldText>
                 <OutfitRegularText style={styles.priceHeadingText}>
                   ${this.state.provo_cash_price}
                 </OutfitRegularText>
@@ -233,7 +240,7 @@ class ResturentDetailScreen extends React.Component {
                     lootBoxAmount: this.state.lootbox_amount,
                   })
                 }
-                btnContainer={{marginTop: 5 * vh}}
+                btnContainer={{marginTop: 3 * vh}}
               />
             </View>
           </ScrollView>

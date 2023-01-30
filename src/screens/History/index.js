@@ -112,7 +112,10 @@ class History extends React.Component {
   }
 
   handleRestaurantPress = item => {
-    this.props.navigation.navigate('HistoryDetails', {id: item?.id});
+    this.props.navigation.navigate('HistoryDetails', {
+      id: item?.id,
+      name: item?.name,
+    });
   };
 
   handleMapBtnPress = item => {

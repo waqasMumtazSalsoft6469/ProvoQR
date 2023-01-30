@@ -7,9 +7,10 @@ const styles = StyleSheet.create({
     backgroundColor: ThemeColors.white,
   },
   imgbg: {
+    flex: 1,
     width: 100 * vw,
 
-    height: 100 * vh,
+    // height: 100 * vh,
   },
   label: {
     color: '#C6C5C5',
@@ -133,18 +134,18 @@ const styles = StyleSheet.create({
     width: vh * 3,
   },
   outerContainer: {
-    marginTop: vh*1,
+    // marginTop: vh * 3,
     paddingHorizontal: vw * 5,
   },
   priceContainer: {
-    marginVertical: vh * 2,
+    marginVertical: vh * 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   priceHeadingText: {
     color: ThemeColors.iconColor,
-    fontSize: vh*1.8
+    fontSize: vh * 1.8,
   },
 });
 export default styles;

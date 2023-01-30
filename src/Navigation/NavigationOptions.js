@@ -28,8 +28,7 @@ export const getNavigationOptions = props => {
     ...defaultOptions(activeRouteName, props),
     ...TransitionPresets.SlideFromRightIOS,
     headerShown: shouldHeaderBeShown(activeRouteName),
-    headerTitle: getTitle(activeRouteName),
-
+    title: getTitle(activeRouteName),
     headerBackground: () => null,
   };
 };
