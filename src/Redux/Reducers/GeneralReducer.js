@@ -96,7 +96,12 @@ export default GeneralReducer = (state = initialState, action) => {
         categories: action.payload,
       };
     }
-
+    case actionTypes.getNotifications: {
+      return {
+        ...state,
+        notificationCount: action.payload,
+      };
+    }
     default: {
       return state;
     }

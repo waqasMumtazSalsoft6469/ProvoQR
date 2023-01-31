@@ -9,6 +9,7 @@ const GeneralReducer = {
   mySubscription: [],
   billingDetails: null,
   categories: [],
+  notificationCount: null 
 };
 
 const initialStates = {

@@ -540,9 +540,28 @@ export const getAllNotifications = () => {
   return async dispatch => {
     try {
       const response = await get(endpoints.other.notifications);
+      dispatch({type: actionTypes.getNotifications, payload: response?.count});
       // console.log('response', response);
       return Promise.resolve(response);
     } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+};
+
+export const lootBoxDraw = data => {
+  return async dispatch => {
+    let response = null;
+    try {
+      dispatch({type: actionTypes.loaderOn});
+
+      response = await post(endpoints.other.lootBoxDraw, data, true);
+
+      dispatch({type: actionTypes.loaderOff});
+      return Promise.resolve(response);
+    } catch (e) {
+      dispatch({type: actionTypes.loaderOff});
+      showToast(getMessage(e));
       return Promise.reject(e);
     }
   };

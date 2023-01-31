@@ -20,6 +20,7 @@ import {
 import HomeCategoryCard from '../../components/HomeCategoryCard';
 import KeyboardAdjust from 'react-native-android-keyboard-adjust';
 import EmptyComponent from '../../components/EmptyComponent';
+import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -123,6 +124,15 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
+    reactNativeEasyPushNotifications.onMessageReceived(notif => {
+      console.log('onMessageReceived:', notif);
+      // This method is triggered whenever the app is in foreground and we receive the notification
+    });
+
+    reactNativeEasyPushNotifications.getLastNotificationData(notif => {
+      console.log('getLastNotificationData:', notif);
+      // This method is triggered whenever the user taps on the notification
+    });
     if (Platform.OS === 'android') {
       KeyboardAdjust.setAdjustPan();
     }
@@ -304,6 +314,7 @@ class HomeScreen extends React.Component {
     );
   };
   render() {
+    // console.log('navigation', this.props.navigation);
     return (
       <View style={styles.container}>
         <ImageBackground

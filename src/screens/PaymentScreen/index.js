@@ -54,11 +54,12 @@ class PaymentScreen extends React.Component {
   };
 
   handleSuccessPress = () => {
-    const {from} = this.props.route.params;
+    const {id, from} = this.props.route.params;
     if (from === 'Subscription') {
       this.props.navigation.navigate('Login');
     } else if (from == 'lootbox') {
       this.props.navigation.navigate('LootBoxScreen', {
+        restaurantId: id,
         success: 0,
       });
     } else if (from === 'provo') {
@@ -98,7 +99,7 @@ class PaymentScreen extends React.Component {
         })
         .then(res => {
           if (res?.success) {
-            showToast(res?.message?.message);
+            // showToast(res?.message?.message);
             this.setState({visibleSuccess: true});
           } else {
             showToast(res?.message);
@@ -238,19 +239,22 @@ class PaymentScreen extends React.Component {
             visible={this.state.visibleSuccess}
             setVisible={() => this.setState({visibleSuccess: false})}
             icon={
-              this.props.route?.params?.from == 'lootbox'
-                ? icons.popupAlert
-                : icons.popupTick
+              icons.popupTick
+              // this.props.route?.params?.from == 'lootbox'
+              //   ? icons.popupAlert
+              //   : icons.popupTick
             }
             title={
-              this.props.route?.params?.from == 'lootbox'
-                ? ''
-                : 'Congratulations!'
+              'Congratulations!'
+              // this.props.route?.params?.from == 'lootbox'
+              //   ? ''
+              //   : 'Congratulations!'
             }
             description={
-              this.props.route?.params?.from == 'lootbox'
-                ? 'Are you sure you want to spend $5'
-                : 'Payment has been made successfully'
+              'Payment has been made successfully'
+              // this.props.route?.params?.from == 'lootbox'
+              //   ? 'Are you sure you want to spend $5'
+              //   : 'Payment has been made successfully'
             }
             buttonTitle="OK"
             onButtonPress={this.handleSuccessPress}

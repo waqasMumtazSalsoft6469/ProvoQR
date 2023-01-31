@@ -1,6 +1,6 @@
 import React from 'react';
 import {ImageBackground, View, Image, ScrollView} from 'react-native';
-import {backgrounds, sampleimage} from '../../assets/images';
+import {backgrounds, icons, sampleimage} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import styles from './styles';
 import {vh, vw} from '../../Utils/Units';
@@ -39,10 +39,10 @@ class HistoryDetail extends React.Component {
 
       const response = await this.props.getHistoryDetail(data);
 
-      //   console.log('response', response);
+      console.log('response', response?.lootbox_amount);
 
       this.setState({
-        response: response?.history[0],
+        response: response?.history,
       });
     } catch (error) {
       console.log('error', error);
@@ -60,8 +60,8 @@ class HistoryDetail extends React.Component {
   handleLootBoxPress = () => {
     this.props.navigation.navigate('LootBoxPaymentMethod', {
       id: this.state.response?.organisations?.id,
-      provoCash: this.state.response?.organisations?.provo_cash_price,
-      lootBoxAmount: this.state.response?.organisations?.lootbox_amount,
+      provoCash: this.state.response?.provo_cash_price,
+      lootBoxAmount: this.state.response?.lootbox_amount,
     });
   };
   handleMapPress = () => {
@@ -90,6 +90,12 @@ class HistoryDetail extends React.Component {
   //   );
   // };
 
+  renderBadge = val => {
+    if (val === 'Gold') return icons.gold;
+    else if (val === 'Silver') return icons.silver;
+    else return icons.bronze;
+  };
+
   renderRatings = () => {
     let ratings = [
       {
@@ -100,14 +106,14 @@ class HistoryDetail extends React.Component {
         }`,
       },
       {
-        rate: `No of Lootbox : $${
+        rate: `No of Lootbox : ${
           this.state.response?.no_of_lootbox
             ? this.state.response?.no_of_lootbox
             : 0
         }`,
       },
       {
-        rate: `No of Rewards : $${
+        rate: `No of Rewards : ${
           this.state.response?.no_of_rewards
             ? this.state.response?.no_of_rewards
             : 0
@@ -156,7 +162,13 @@ class HistoryDetail extends React.Component {
           <ScrollView
             contentContainerStyle={{paddingBottom: vh * 5}}
             showsVerticalScrollIndicator={false}>
-            <View style={{alignItems: 'center', marginTop: 3 * vh}}>
+            <View
+              style={{
+                marginHorizontal: vw * 5,
+                alignItems: 'center',
+                marginTop: 3 * vh,
+                borderRadius: vh * 3,
+              }}>
               <Image
                 source={
                   this.state.response?.organisations?.image
@@ -167,6 +179,10 @@ class HistoryDetail extends React.Component {
                     : sampleimage.placeholder
                 }
                 style={styles.cardimg}
+              />
+              <Image
+                source={this.renderBadge(this.state.response.badge)}
+                style={styles.badge}
               />
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
@@ -246,7 +262,7 @@ class HistoryDetail extends React.Component {
             <View style={{alignItems: 'center'}}>
               <Button
                 title="LOOT BOX"
-                // onPress={this.handleLootBoxPress}
+                onPress={this.handleLootBoxPress}
                 btnContainer={{marginTop: 5 * vh}}
               />
             </View>

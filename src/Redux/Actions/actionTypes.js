@@ -40,5 +40,6 @@ const actionTypes = {
   getProductWishlist: 'GET_PRODUCT_WISHLIST',
   getOrder: 'GET_ORDER',
   getMySubscription: 'GET_MY_SUBSCRIPTION',
+  getNotifications: 'GET_NOTIFICATIONS',
 };
 export default actionTypes;

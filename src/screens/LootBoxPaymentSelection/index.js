@@ -12,7 +12,7 @@ import ThemeColors from '../../Utils/ThemeColors';
 import AlertModal from '../../components/Popups/alertModal';
 import {connect} from 'react-redux';
 import {lootBoxPurchaseByCoin} from '../../Redux/Actions/otherActions';
-import { showToast } from '../../Api/HelperFunction';
+import {showToast} from '../../Api/HelperFunction';
 
 class LootBoxPaymentMethod extends React.Component {
   constructor(props) {
@@ -47,11 +47,14 @@ class LootBoxPaymentMethod extends React.Component {
       restaurant_id: id,
     };
     this.props.lootBoxPurchaseByCoin(data).then(res => {
-      console.log('res from lootBoxPurchaseByCoin:', res);
-      showToast(res?.message);
+      // console.log('res from lootBoxPurchaseByCoin:', res);
       if (res) {
+        showToast(res?.message);
         this.setState({visibleSuccess: false});
-        this.props.navigation.navigate('LootBoxScreen', {success: 0});
+        this.props.navigation.navigate('LootBoxScreen', {
+          restaurantId: id,
+          success: 0,
+        });
       }
     });
   };
@@ -90,7 +93,7 @@ class LootBoxPaymentMethod extends React.Component {
           visible={this.state.visibleSuccess}
           setVisible={() => this.setState({visibleSuccess: false})}
           icon={icons.popupAlert}
-          description={'Please confirm purchase of lootbox for 100 ProvoCash'}
+          description={`Please confirm purchase of lootbox for ${this.props.route.params.provoCash} ProvoCash`}
           buttonTitle={'CONFIRM'}
           onButtonPress={this.handleProvocashPress}
         />
@@ -109,4 +112,7 @@ const mapDispatchToProps = dispatch => {
     lootBoxPurchaseByCoin: data => dispatch(lootBoxPurchaseByCoin(data)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(LootBoxPaymentMethod);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LootBoxPaymentMethod);

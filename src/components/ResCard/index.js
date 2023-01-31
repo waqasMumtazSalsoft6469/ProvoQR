@@ -76,8 +76,8 @@ class ProductItem extends React.Component {
   };
 
   renderBadge = val => {
-    if (val == 1) return icons.gold;
-    else if (val == 2) return icons.silver;
+    if (val === 'Gold') return icons.gold;
+    else if (val === 'Silver') return icons.silver;
     else return icons.bronze;
   };
 
@@ -103,7 +103,12 @@ class ProductItem extends React.Component {
             }
           }}>
           <Image
-            source={{uri: imageUrl + this.props.item?.image}}
+            source={
+              this.props.item?.image
+                ? {uri: imageUrl + this.props.item?.image}
+                : sampleimage.placeholder
+            }
+            defaultSource={sampleimage.placeholder}
             style={[
               styles.imgcard,
               {width: this.props.history ? 90 * vw : 90 * vw},
@@ -119,7 +124,7 @@ class ProductItem extends React.Component {
           )}
           {this.props.history && (
             <Image
-              source={this.renderBadge(this.props.item.enum)}
+              source={this.renderBadge(this.props.history.badge)}
               style={styles.badge}
             />
           )}

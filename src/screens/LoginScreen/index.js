@@ -39,6 +39,7 @@ const initialState = {
   image: '',
   formOption: 'Login',
   visible: false,
+  deviceId: '',
 };
 
 class RegisterScreen extends React.Component {
@@ -48,10 +49,12 @@ class RegisterScreen extends React.Component {
   }
 
   componentDidMount() {
-    reactNativeEasyPushNotifications.getDeviceId(deviceId => {
-      console.log('My device id ', deviceId);
+    reactNativeEasyPushNotifications.getDeviceId(id => {
+      console.log('My device id ', id);
+      this.setState({deviceId: id});
       // This method gives the device id which is returned by the firebase
     });
+
     this._unsubscribe = this.props.navigation.addListener('blur', () => {
       this.setState(initialState);
     });
@@ -62,7 +65,7 @@ class RegisterScreen extends React.Component {
   }
 
   handleLogin = () => {
-    const {email, password} = this.state;
+    const {email, password, deviceId} = this.state;
     if (!email || !password) {
       showToast('Please enter email addres');
     } else if (!password) {
@@ -78,7 +81,7 @@ class RegisterScreen extends React.Component {
         email: email,
         password: password,
         device_type: Platform.OS,
-        device_token: 'token',
+        device_token: deviceId,
       };
       this.props
         .login(data)

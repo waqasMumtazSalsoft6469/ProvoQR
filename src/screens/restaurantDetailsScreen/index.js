@@ -30,8 +30,6 @@ class ResturentDetailScreen extends React.Component {
     super(props);
     this.state = {
       details: {},
-      lootbox_amount: 0,
-      provo_cash_price: 0,
       cusines: [
         {
           name: 'Cuisine 01',
@@ -56,8 +54,6 @@ class ResturentDetailScreen extends React.Component {
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       this.setState({
         details: res?.details,
-        lootbox_amount: res?.lootbox_amount,
-        provo_cash_price: res?.provo_cash_price,
         ratings: res?.rewards,
       });
     });
@@ -218,7 +214,7 @@ class ResturentDetailScreen extends React.Component {
                   By Card:
                 </OutfitSemiBoldText>
                 <OutfitRegularText style={styles.priceHeadingText}>
-                  ${this.state.lootbox_amount}
+                  ${this.state?.details?.lootbox_amount}
                 </OutfitRegularText>
               </View>
               <View style={styles.priceContainer}>
@@ -226,7 +222,7 @@ class ResturentDetailScreen extends React.Component {
                   By ProvoCash:
                 </OutfitSemiBoldText>
                 <OutfitRegularText style={styles.priceHeadingText}>
-                  ${this.state.provo_cash_price}
+                  ${this.state?.details?.provo_cash_price}
                 </OutfitRegularText>
               </View>
             </View>
@@ -236,8 +232,8 @@ class ResturentDetailScreen extends React.Component {
                 onPress={() =>
                   this.props.navigation.navigate('LootBoxPaymentMethod', {
                     id: this.state.details?.id,
-                    provoCash: this.state.provo_cash_price,
-                    lootBoxAmount: this.state.lootbox_amount,
+                    provoCash: this.state.details?.provo_cash_price,
+                    lootBoxAmount: this.state?.details?.lootbox_amount,
                   })
                 }
                 btnContainer={{marginTop: 3 * vh}}

@@ -11,15 +11,44 @@ import ThemeColors from '../../Utils/ThemeColors';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import {connect, dispatch} from 'react-redux';
+import {lootBoxDraw} from '../../Redux/Actions/otherActions';
+import {StackActions} from '@react-navigation/native';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
     this.progress = new Animated.Value(0);
     this.textAnim = new Animated.Value(1);
     this.state = {
-      success: this.props.route?.params?.success,
+      success: this.props.route.params.success
+        ? this.props.route.params.success
+        : 0,
     };
   }
+
+  handleRewardBtnPress = () => {
+    // this.props.navigation.dispatch(StackActions.popToTop());
+    // // this.props.navigation.popToTop()
+    this.props.navigation.navigate('GiftStack');
+  };
+
+  handleTryAgainPress = () => {
+    this.props.navigation.navigate('HomeScreen');
+  };
+
+  handleLootBoxDraw = () => {
+    const id = this.props.route.params.restaurantId;
+    const data = {
+      restaurant_id: id,
+    };
+    this.props.lootBoxDraw(data).then(res => {
+      if (res?.message === 'Win') {
+        this.setState({success: 1});
+      } else {
+        this.setState({success: 2});
+      }
+    });
+  };
 
   componentWillUnmount() {
     if (this.state.success == 1) {
@@ -63,7 +92,7 @@ class LootBoxScreen extends React.Component {
           <Image source={sampleimage.closeBox} style={styles.boxImage} />
           <Button
             title="TAP TO OPEN"
-            onPress={() => this.setState({success: 1})}
+            onPress={this.handleLootBoxDraw}
             btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
             labelStyle={{color: ThemeColors.white}}
           />
@@ -89,8 +118,7 @@ class LootBoxScreen extends React.Component {
             Hey ! Thanks for scanning the code. Your reward can be redeemed from
             the rewards library !
           </OutfitLightText>
-          <TouchableHOC
-            onPress={() => this.props.navigation.navigate('RewardScreen')}>
+          <TouchableHOC onPress={this.handleRewardBtnPress}>
             <OutfitLightText style={styles.underlineTextButton}>
               Go To Reward Library
             </OutfitLightText>
@@ -117,7 +145,7 @@ class LootBoxScreen extends React.Component {
             }}>
             "Defeat only happens to those who chose not to try again"
           </OutfitLightText>
-          <TouchableHOC>
+          <TouchableHOC onPress={this.handleTryAgainPress}>
             <OutfitLightText style={styles.underlineTextButton}>
               Nick Vujicic
             </OutfitLightText>
@@ -179,4 +207,15 @@ class LootBoxScreen extends React.Component {
     );
   }
 }
-export default LootBoxScreen;
+
+const mapStateToProps = state => ({
+  // count: state.count,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // explicitly forwarding arguments
+    lootBoxDraw: data => dispatch(lootBoxDraw(data)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(LootBoxScreen);

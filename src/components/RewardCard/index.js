@@ -24,8 +24,13 @@ class RewardCard extends React.Component {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableHOC onPress={this.props.onClick}>
             <Image
-              source={{uri: imageUrl + this.props?.item?.image}}
+              source={
+                this.props?.item?.image
+                  ? {uri: imageUrl + this.props?.item?.image}
+                  : sampleimage.placeholder
+              }
               style={styles.cardimage}
+              defaultSource={sampleimage.placeholder}
             />
           </TouchableHOC>
 

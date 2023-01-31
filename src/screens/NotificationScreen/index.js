@@ -14,8 +14,31 @@ class RegisterScreen extends React.Component {
     this.state = {
       notification: [],
       refreshing: false,
+      page: 1,
+      totalPages: 1,
     };
   }
+
+  onEndReached = () => {
+    if (this.state.page < this.state.totalPages) {
+      this.setState(
+        {
+          page: this.state.page + 1,
+        },
+        this.getNotifications,
+      );
+    }
+  };
+
+  handleOnRefresh = () => {
+    this.setState(
+      {
+        page: 1,
+        totalPages: 1,
+      },
+      this.getNotifications,
+    );
+  };
 
   getNotifications = async () => {
     this.setState({
@@ -23,42 +46,37 @@ class RegisterScreen extends React.Component {
     });
 
     try {
-      //   const filters = {
-      //     page: this.state.page,
-      //     perPage: 10,
-      //   };
+      const filters = {
+        page: this.state.page,
+        perPage: 10,
+      };
 
-      const response = await this.props.getAllNotifications();
+      const response = await this.props.getAllNotifications(filters);
       //   console.log('response', response);
       this.setState({
-        notification: response?.notification,
+        notification: response?.notification?.data,
       });
 
-      //   let data = {
-      //     refreshing: false,
-      //     notifications: response?.notifications?.docs,
-      //     totalPages: response?.notifications?.totalPages,
-      //   };
-
-      //   if (filters.page > 1) {
-      //     data = {
-      //       ...data,
-      //       notifications: [
-      //         ...this.state.notifications,
-      //         ...response?.notifications?.docs,
-      //       ],
-      //     };
-      //   }
-
-      //   this.setState({
-      //     ...data,
-      //   });
-    } catch (error) {
-      this.setState({
+      let data = {
         refreshing: false,
+        notification: response?.notification?.data,
+        totalPages: response?.notification?.last_page,
+      };
+
+      if (filters.page > 1) {
+        data = {
+          ...data,
+          notification: [
+            ...this.state.notification,
+            ...response?.notification?.data,
+          ],
+        };
+      }
+
+      this.setState({
+        ...data,
       });
-      //   showToast(error);
-    } finally {
+    } catch (error) {
       this.setState({
         refreshing: false,
       });
@@ -68,16 +86,6 @@ class RegisterScreen extends React.Component {
   componentDidMount() {
     this.getNotifications();
   }
-
-  handleOnRefresh = () => {
-    this.setState(
-      //   {
-      //     page: 1,
-      //     totalPages: 1,
-      //   },
-      this.getNotifications,
-    );
-  };
 
   renderEmpty = () => {
     if (this.state?.refreshing) {
@@ -103,12 +111,14 @@ class RegisterScreen extends React.Component {
           imageStyle={styles.imageStyle}>
           <FlatList
             data={this.state.notification}
+            keyExtractor={(_, index) => index}
             renderItem={this.renderItem}
             showsVerticalScrollIndicator={false}
             refreshing={this.state.refreshing}
             ListEmptyComponent={this.renderEmpty}
             onRefresh={this.handleOnRefresh}
             contentContainerStyle={styles.contentContainerStyle}
+            onEndReached={this.onEndReached}
           />
         </ImageBackground>
       </View>
@@ -122,7 +132,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
-    getAllNotifications: () => dispatch(getAllNotifications()),
+    getAllNotifications: data => dispatch(getAllNotifications(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

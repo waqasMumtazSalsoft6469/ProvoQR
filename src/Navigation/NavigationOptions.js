@@ -18,6 +18,7 @@ import {vh, vw} from '../Utils/Units';
 import ThemeColors from '../Utils/ThemeColors';
 import OutfitMediumText from '../components/Text/OutfitMediumText';
 import OutfitSemiBoldText from '../components/Text/OutfitSemiBoldText';
+import store from '../Redux/store';
 
 export const getNavigationOptions = props => {
   var activeRouteName = props.route.state
@@ -167,6 +168,10 @@ export const getTitle = activeRouteName => {
   }
 };
 export const showHeaderRight = (activeRouteName, props, onBackPress) => {
+  const data = store.getState();
+  const count = data.GeneralReducer.notificationCount;
+  console.log("count", count);
+
   if (
     (activeRouteName =
       'RewardScreen' ||
@@ -205,7 +210,7 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
               tintColor: ThemeColors.iconColor,
             }}>
             <View style={styles.circle}>
-              <JostRegular style={styles.count}>5</JostRegular>
+              <JostRegular style={styles.count}>{count}</JostRegular>
             </View>
           </ImageBackground>
         </TouchableHOC>

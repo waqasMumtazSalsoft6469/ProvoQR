@@ -12,6 +12,14 @@ const styles = StyleSheet.create({
 
     // height: 100 * vh,
   },
+  badge: {
+    position: 'absolute',
+    height: vh * 5,
+    width: vh * 4,
+    right: vw * 3,
+    top: vw * 3,
+    resizeMode: 'contain',
+  },
   label: {
     color: '#C6C5C5',
     fontSize: 1.7 * vh,

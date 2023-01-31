@@ -4,9 +4,7 @@ import MainNavigator from './MainNavigator';
 const Navigation = () => {
   return (
     <NavigationContainer>
-       
       <MainNavigator />
-
     </NavigationContainer>
   );
 };
