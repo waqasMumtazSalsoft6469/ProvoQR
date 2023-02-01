@@ -16,7 +16,10 @@ import Location from '../screens/LocationScreen';
 
 import AuthNavigator from './AuthNavigator';
 import CompleteProfile from '../screens/CompleteProfile';
-import {getAllCategories} from '../Redux/Actions/otherActions';
+import {
+  getAllCategories,
+  getAllNotifications,
+} from '../Redux/Actions/otherActions';
 
 const MainStack = createStackNavigator();
 
@@ -26,6 +29,7 @@ class MainNavigator extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    this.props.getAllNotifications();
     this.props.getAllCategories();
     AnimatedSplash.hide();
   }
@@ -79,6 +83,7 @@ const mapState = state => {
 const mapProps = dispatch => {
   return {
     getAllCategories: () => dispatch(getAllCategories()),
+    getAllNotifications: () => dispatch(getAllNotifications()),
   };
 };
 export default connect(mapState, mapProps)(MainNavigator);
