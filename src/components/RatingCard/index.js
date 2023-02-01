@@ -27,6 +27,7 @@ class ProductItem extends React.Component {
   };
 
   render() {
+    console.log('item', this.props.item);
     return (
       <View
         style={[
@@ -37,15 +38,15 @@ class ProductItem extends React.Component {
           source={icons.box}
           style={[
             styles.cardimage,
-            {tintColor: this.getTintcolor(this.props.item?.reward_tier)},
+            {tintColor: this.getTintcolor(this.props.item?.badge)},
           ]}
         />
         <OutfitRegularText
           style={[
             styles.name,
-            {color: this.getTintcolor(this.props.item?.reward_tier)},
+            {color: this.getTintcolor(this.props.item?.badge)},
           ]}>
-          {this.props.item?.reward_tier}
+          {this.props.item?.badge}
         </OutfitRegularText>
       </View>
     );

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   count: {
     color: ThemeColors.white,
-    fontSize: 1.5 * vh,
+    fontSize: 1.2 * vh,
   },
   profile: {
     width: 6 * vw,
@@ -276,8 +276,8 @@ const styles = StyleSheet.create({
     color: ThemeColors.primary,
     fontSize: 3 * vh,
   },
-  homeLeftHeaderContainer:{
-    width: vw*60
-  }
+  homeLeftHeaderContainer: {
+    width: vw * 60,
+  },
 });
 export default styles;

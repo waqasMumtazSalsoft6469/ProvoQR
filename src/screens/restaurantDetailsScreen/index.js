@@ -54,7 +54,7 @@ class ResturentDetailScreen extends React.Component {
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       this.setState({
         details: res?.details,
-        ratings: res?.rewards,
+        // ratings: res?.rewards,
       });
     });
   }
@@ -91,7 +91,7 @@ class ResturentDetailScreen extends React.Component {
           marginTop: 2 * vh,
           width: 100 * vw,
         }}>
-        {this.state.ratings.map((item, index) => {
+        {this.state?.details?.badges?.map((item, index) => {
           return (
             <RateCard item={item} index={index} style={{marginLeft: vw * 5}} />
           );
@@ -226,19 +226,21 @@ class ResturentDetailScreen extends React.Component {
                 </OutfitRegularText>
               </View>
             </View>
-            <View style={{alignItems: 'center'}}>
-              <Button
-                title="LOOT BOX"
-                onPress={() =>
-                  this.props.navigation.navigate('LootBoxPaymentMethod', {
-                    id: this.state.details?.id,
-                    provoCash: this.state.details?.provo_cash_price,
-                    lootBoxAmount: this.state?.details?.lootbox_amount,
-                  })
-                }
-                btnContainer={{marginTop: 3 * vh}}
-              />
-            </View>
+            {!this.state?.details?.is_lootbox_purchase && (
+              <View style={{alignItems: 'center'}}>
+                <Button
+                  title="LOOT BOX"
+                  onPress={() =>
+                    this.props.navigation.navigate('LootBoxPaymentMethod', {
+                      id: this.state.details?.id,
+                      provoCash: this.state.details?.provo_cash_price,
+                      lootBoxAmount: this.state?.details?.lootbox_amount,
+                    })
+                  }
+                  btnContainer={{marginTop: 3 * vh}}
+                />
+              </View>
+            )}
           </ScrollView>
         </ImageBackground>
       </View>

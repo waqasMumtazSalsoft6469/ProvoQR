@@ -24,6 +24,7 @@ import {showToast} from '../../Api/HelperFunction';
 import {StackActions} from '@react-navigation/native';
 import {imageUrl} from '../../Api/configs';
 import AlertModal from '../../components/Popups/alertModal';
+import ThemeColors from '../../Utils/ThemeColors';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class RegisterScreen extends React.Component {
     this.setState({
       successModal: false,
     });
-    showToast(res?.message);
+    // showToast(res?.message);
     // dispatch(StackActions.popToTop());
     this.props.navigation.navigate('HomeScreen');
   };
@@ -74,9 +75,10 @@ class RegisterScreen extends React.Component {
     };
     this.props.redeemReward(data).then(res => {
       if (res?.success) {
+        console.log('res', res);
         this.setState({
           visibleModal: false,
-          redeemReward: res,
+          redeemResponse: res,
           successModal: true,
         });
         // showToast(res?.message);
@@ -88,9 +90,16 @@ class RegisterScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.route.params.reward_id;
+    const name = this.props?.route.params.restaurantName;
+
+    this.props?.navigation?.setOptions({
+      title: name,
+    });
+
     const data = {
       reward_id: id,
     };
+
     this.props.getRewardDetail(data).then(res => {
       console.log('res', res?.rewardDetail);
       this.setState({
@@ -201,10 +210,9 @@ class RegisterScreen extends React.Component {
           icon={icons.popupTick}
           title="Congratulations!"
           description={
-            this.state.redeemResponse?.message +
-            'Your code is ' +
-            this.state.redeemResponse?.code
+            this.state.redeemResponse?.message + ' ' + 'Your code is '
           }
+          code={this.state.redeemResponse?.code}
           buttonTitle="OK"
           onButtonPress={this.handleSuccessPress}
         />

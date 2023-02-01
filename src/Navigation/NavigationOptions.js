@@ -170,7 +170,7 @@ export const getTitle = activeRouteName => {
 export const showHeaderRight = (activeRouteName, props, onBackPress) => {
   const data = store.getState();
   const count = data.GeneralReducer.notificationCount;
-  console.log("count", count);
+  console.log('notification count', count);
 
   if (
     (activeRouteName =
@@ -209,9 +209,11 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
               height: 6 * vw,
               tintColor: ThemeColors.iconColor,
             }}>
-            <View style={styles.circle}>
-              <JostRegular style={styles.count}>{count}</JostRegular>
-            </View>
+            {!activeRouteName === 'Notification' && (
+              <View style={styles.circle}>
+                <JostRegular style={styles.count}>{count}</JostRegular>
+              </View>
+            )}
           </ImageBackground>
         </TouchableHOC>
         <TouchableHOC onPress={() => props.navigation.navigate('Profile')}>

@@ -259,13 +259,15 @@ class HistoryDetail extends React.Component {
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
             </View> */}
-            <View style={{alignItems: 'center'}}>
-              <Button
-                title="LOOT BOX"
-                onPress={this.handleLootBoxPress}
-                btnContainer={{marginTop: 5 * vh}}
-              />
-            </View>
+            {!this.state?.response?.organisations?.is_lootbox_purchase && (
+              <View style={{alignItems: 'center'}}>
+                <Button
+                  title="LOOT BOX"
+                  onPress={this.handleLootBoxPress}
+                  btnContainer={{marginTop: 5 * vh}}
+                />
+              </View>
+            )}
           </ScrollView>
         </ImageBackground>
       </View>

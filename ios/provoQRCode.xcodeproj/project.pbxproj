@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* provoQRCodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* provoQRCodeTests.m */; };
+		07A4F9410669E5C45B82B906 /* libPods-provoQRCode-provoQRCodeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5279233E67A84378842EA68 /* libPods-provoQRCode-provoQRCodeTests.a */; };
 		0A8CDAC377C947A6B0709F07 /* Outfit-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A00ACE165D6471F95D9C8B2 /* Outfit-Regular.ttf */; };
 		0B4686E38CEE4E5CA50885EC /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC92F219CE6435384DED45F /* Rubik-Medium.ttf */; };
-		0C80B921A6F3F58F76C31292 /* libPods-provoQRCode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-provoQRCode.a */; };
 		0CB455D59EA9422F9901FEDE /* Blacksword.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0EB979A3DE094DBEB44BC230 /* Blacksword.otf */; };
 		11DAD13E0ADA4C038425749C /* Gilroy-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F69EF1FFD6D4F079CF854C5 /* Gilroy-Medium.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
@@ -23,12 +23,13 @@
 		2FAC4B1206C64EACBDBC2ABD /* Outfit-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5672AB91590E44BD9A94436B /* Outfit-Light.ttf */; };
 		3E23F8E4E1614508AEEA91F6 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD1B604F484C452BACC54FA3 /* Rubik-Regular.ttf */; };
 		6BA49D3D51A648CA99B86DA3 /* Gilroy-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 561E27DC515F402F8825EA8F /* Gilroy-Light.otf */; };
-		7699B88040F8A987B510C191 /* libPods-provoQRCode-provoQRCodeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-provoQRCode-provoQRCodeTests.a */; };
 		928804C33FB84D94B5871223 /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FC6B83A083E45219D5B805A /* Gilroy-Bold.ttf */; };
 		AA8FF2432EE54EF9A743C52B /* Rubik-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 537E956DA51647FBB523A851 /* Rubik-Light.ttf */; };
 		D43B57E3F18E4248B15C468D /* Gilroy-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BEB6E0171389418F9E280707 /* Gilroy-ExtraBold.otf */; };
 		DB8A120D61814EFBB932506B /* Outfit-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3575901E1D994AF0B5DE248D /* Outfit-Medium.ttf */; };
+		DEEAA8149E4E1B7FF5C71DCE /* libPods-provoQRCode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F78492DC487DBBB4FCA0A7 /* libPods-provoQRCode.a */; };
 		EA38E73F78174AE48BB8ED21 /* Outfit-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DA1A6473B5F4F4D83A0D2BE /* Outfit-SemiBold.ttf */; };
+		EF12C2FA298944560049B0C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF12C2F9298944560049B0C3 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		00E356EE1AD99517003FC87E /* provoQRCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = provoQRCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* provoQRCodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = provoQRCodeTests.m; sourceTree = "<group>"; };
+		02F78492DC487DBBB4FCA0A7 /* libPods-provoQRCode.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-provoQRCode.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A00ACE165D6471F95D9C8B2 /* Outfit-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit-Regular.ttf"; path = "../src/assets/fonts/Outfit-Regular.ttf"; sourceTree = "<group>"; };
 		0DA1A6473B5F4F4D83A0D2BE /* Outfit-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit-SemiBold.ttf"; path = "../src/assets/fonts/Outfit-SemiBold.ttf"; sourceTree = "<group>"; };
 		0EB979A3DE094DBEB44BC230 /* Blacksword.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Blacksword.otf; path = ../src/assets/fonts/Blacksword.otf; sourceTree = "<group>"; };
@@ -54,26 +56,27 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = provoQRCode/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = provoQRCode/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = provoQRCode/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-provoQRCode-provoQRCodeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-provoQRCode-provoQRCodeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18583C75B46A7E908D988E07 /* Pods-provoQRCode-provoQRCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode-provoQRCodeTests.debug.xcconfig"; path = "Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3575901E1D994AF0B5DE248D /* Outfit-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit-Medium.ttf"; path = "../src/assets/fonts/Outfit-Medium.ttf"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-provoQRCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode.debug.xcconfig"; path = "Target Support Files/Pods-provoQRCode/Pods-provoQRCode.debug.xcconfig"; sourceTree = "<group>"; };
 		407D7EFBEE674317B1C5B78E /* CircularStdBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CircularStdBold.ttf; path = ../src/assets/fonts/CircularStdBold.ttf; sourceTree = "<group>"; };
 		4AC92F219CE6435384DED45F /* Rubik-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Medium.ttf"; path = "../src/assets/fonts/Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		537E956DA51647FBB523A851 /* Rubik-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Light.ttf"; path = "../src/assets/fonts/Rubik-Light.ttf"; sourceTree = "<group>"; };
 		561E27DC515F402F8825EA8F /* Gilroy-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Light.otf"; path = "../src/assets/fonts/Gilroy-Light.otf"; sourceTree = "<group>"; };
 		5672AB91590E44BD9A94436B /* Outfit-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit-Light.ttf"; path = "../src/assets/fonts/Outfit-Light.ttf"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-provoQRCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode.release.xcconfig"; path = "Target Support Files/Pods-provoQRCode/Pods-provoQRCode.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-provoQRCode-provoQRCodeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode-provoQRCodeTests.debug.xcconfig"; path = "Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-provoQRCode.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-provoQRCode.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F69EF1FFD6D4F079CF854C5 /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Medium.ttf"; path = "../src/assets/fonts/Gilroy-Medium.ttf"; sourceTree = "<group>"; };
 		5FC6B83A083E45219D5B805A /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Bold.ttf"; path = "../src/assets/fonts/Gilroy-Bold.ttf"; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-provoQRCode-provoQRCodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode-provoQRCodeTests.release.xcconfig"; path = "Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests.release.xcconfig"; sourceTree = "<group>"; };
+		8471DCADE0800837CF2F197F /* Pods-provoQRCode-provoQRCodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode-provoQRCodeTests.release.xcconfig"; path = "Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests.release.xcconfig"; sourceTree = "<group>"; };
 		A9CA5928C1904663A6148C8D /* Jost-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Jost-Regular.ttf"; path = "../src/assets/fonts/Jost-Regular.ttf"; sourceTree = "<group>"; };
 		B057D4000364494C83217173 /* index.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = index.js; path = ../src/assets/fonts/index.js; sourceTree = "<group>"; };
+		BA34E2B9FAA598C93616AE42 /* Pods-provoQRCode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode.debug.xcconfig"; path = "Target Support Files/Pods-provoQRCode/Pods-provoQRCode.debug.xcconfig"; sourceTree = "<group>"; };
 		BEB6E0171389418F9E280707 /* Gilroy-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-ExtraBold.otf"; path = "../src/assets/fonts/Gilroy-ExtraBold.otf"; sourceTree = "<group>"; };
 		C508856456BC48C39E521B85 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		C7434E7147225FC118FC2133 /* Pods-provoQRCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-provoQRCode.release.xcconfig"; path = "Target Support Files/Pods-provoQRCode/Pods-provoQRCode.release.xcconfig"; sourceTree = "<group>"; };
 		CD1B604F484C452BACC54FA3 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../src/assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EF12C2F629893AD30049B0C3 /* provoQRCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = provoQRCode.entitlements; path = provoQRCode/provoQRCode.entitlements; sourceTree = "<group>"; };
+		EF12C2F9298944560049B0C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "provoQRCode/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F5279233E67A84378842EA68 /* libPods-provoQRCode-provoQRCodeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-provoQRCode-provoQRCodeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-provoQRCode-provoQRCodeTests.a in Frameworks */,
+				07A4F9410669E5C45B82B906 /* libPods-provoQRCode-provoQRCodeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-provoQRCode.a in Frameworks */,
+				DEEAA8149E4E1B7FF5C71DCE /* libPods-provoQRCode.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +119,8 @@
 		13B07FAE1A68108700A75B9A /* provoQRCode */ = {
 			isa = PBXGroup;
 			children = (
+				EF12C2F9298944560049B0C3 /* GoogleService-Info.plist */,
+				EF12C2F629893AD30049B0C3 /* provoQRCode.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -152,8 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-provoQRCode.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-provoQRCode-provoQRCodeTests.a */,
+				02F78492DC487DBBB4FCA0A7 /* libPods-provoQRCode.a */,
+				F5279233E67A84378842EA68 /* libPods-provoQRCode-provoQRCodeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,10 +198,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-provoQRCode.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-provoQRCode.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-provoQRCode-provoQRCodeTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-provoQRCode-provoQRCodeTests.release.xcconfig */,
+				BA34E2B9FAA598C93616AE42 /* Pods-provoQRCode.debug.xcconfig */,
+				C7434E7147225FC118FC2133 /* Pods-provoQRCode.release.xcconfig */,
+				18583C75B46A7E908D988E07 /* Pods-provoQRCode-provoQRCodeTests.debug.xcconfig */,
+				8471DCADE0800837CF2F197F /* Pods-provoQRCode-provoQRCodeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -208,12 +213,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "provoQRCodeTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				E1CC5B1D47A536845EAC9CED /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				6020059FC50CB8295B870DAA /* [CP] Embed Pods Frameworks */,
+				237BB75ED5B8AAA00A2016E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -229,14 +234,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "provoQRCode" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				9ECB3FF32EE7AB102D213973 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				9584AB0207C00FC98E4B99CD /* [CP] Embed Pods Frameworks */,
+				68117D4F949FA859F8751341 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -305,6 +310,7 @@
 				1440D46069D94AEF902EC9C5 /* Jost-Regular.ttf in Resources */,
 				2FAC4B1206C64EACBDBC2ABD /* Outfit-Light.ttf in Resources */,
 				DB8A120D61814EFBB932506B /* Outfit-Medium.ttf in Resources */,
+				EF12C2FA298944560049B0C3 /* GoogleService-Info.plist in Resources */,
 				0A8CDAC377C947A6B0709F07 /* Outfit-Regular.ttf in Resources */,
 				EA38E73F78174AE48BB8ED21 /* Outfit-SemiBold.ttf in Resources */,
 				15722DF4A2A6467DB77BD357 /* Roboto-Regular.ttf in Resources */,
@@ -334,7 +340,58 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		237BB75ED5B8AAA00A2016E5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6020059FC50CB8295B870DAA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68117D4F949FA859F8751341 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9584AB0207C00FC98E4B99CD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -351,29 +408,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-provoQRCode-provoQRCodeTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		9ECB3FF32EE7AB102D213973 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -395,55 +430,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
+		E1CC5B1D47A536845EAC9CED /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-provoQRCode-provoQRCodeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode/Pods-provoQRCode-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-provoQRCode-provoQRCodeTests/Pods-provoQRCode-provoQRCodeTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -498,7 +504,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-provoQRCode-provoQRCodeTests.debug.xcconfig */;
+			baseConfigurationReference = 18583C75B46A7E908D988E07 /* Pods-provoQRCode-provoQRCodeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -525,7 +531,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-provoQRCode-provoQRCodeTests.release.xcconfig */;
+			baseConfigurationReference = 8471DCADE0800837CF2F197F /* Pods-provoQRCode-provoQRCodeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -549,10 +555,11 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-provoQRCode.debug.xcconfig */;
+			baseConfigurationReference = BA34E2B9FAA598C93616AE42 /* Pods-provoQRCode.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = provoQRCode/provoQRCode.entitlements;
 				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 3YP4TQ9R94;
 				ENABLE_BITCODE = NO;
@@ -582,10 +589,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-provoQRCode.release.xcconfig */;
+			baseConfigurationReference = C7434E7147225FC118FC2133 /* Pods-provoQRCode.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = provoQRCode/provoQRCode.entitlements;
 				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 3YP4TQ9R94;
 				INFOPLIST_FILE = provoQRCode/Info.plist;

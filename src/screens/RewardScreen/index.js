@@ -178,6 +178,7 @@ class RegisterScreen extends React.Component {
             category: 'Redeem',
             reward_id: item?.id,
             status: item?.status,
+            restaurantName: item?.organisations?.name,
           })
         }
         style={styles.imageContainer}>

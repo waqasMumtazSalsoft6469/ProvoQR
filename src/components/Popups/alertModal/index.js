@@ -51,6 +51,11 @@ export default class AlertModal extends Component {
           </OutfitSemiBoldText>
           <OutfitRegularText style={styles.description}>
             {this.props.description}
+            {this.props.code && (
+              <OutfitRegularText style={{color: ThemeColors.primary}}>
+                {this.props.code}
+              </OutfitRegularText>
+            )}
           </OutfitRegularText>
           <View style={styles.buttonContainer}>
             <Button
