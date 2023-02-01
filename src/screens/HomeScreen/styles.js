@@ -38,15 +38,24 @@ const styles = StyleSheet.create({
     color: ThemeColors.iconColor,
     fontSize: vh * 1.9,
   },
-  categoryStyle: {width: '100%', marginTop: vh, marginBottom: vh * 3, paddingLeft: vw * 3},
+  categoryStyle: {
+    width: '100%',
+    marginTop: vh,
+    marginBottom: vh * 3,
+    paddingLeft: vw * 3,
+  },
   bottomFlatListStyle: {
     marginTop: vh,
     marginBottom: 10 * vh,
   },
   recommendedStyle: {marginTop: vh},
-  homeCardContainer: {paddingHorizontal: 5 * vw},
+  homeCardContainer: {
+    paddingHorizontal: 5 * vw,
+    // backgroundColor: 'red',
+    marginVertical: vh * 1,
+  },
   emptyContainer: {
-    marginBottom: vh*3
+    marginBottom: vh * 3,
   },
   recommendedContentContainerStyle: {
     // alignItems: 'center',

@@ -64,7 +64,7 @@ class ProductItem extends React.Component {
           marginTop: 1 * vh,
           width: 75 * vw,
         }}>
-        {this.props?.item?.ratings?.map((item, index) => {
+        {this.props?.item?.badges?.map((item, index) => {
           return (
             <View>
               <RateCard item={item} index={index} />
@@ -93,9 +93,9 @@ class ProductItem extends React.Component {
   };
   render() {
     const location = this.props.location;
-    // console.log('image', this.props.item?.image);
+    console.log('badge', this.props.item);
     return (
-      <View>
+      <View style={[styles.container, this.props?.style]}>
         <TouchableHOC
           onPress={() => {
             if (this.props.onClick) {

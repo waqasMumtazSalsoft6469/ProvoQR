@@ -20,6 +20,9 @@ const styles = StyleSheet.create({
     color: ThemeColors.iconColor,
     fontSize: vh * 2.3,
   },
+  resCardContainer: {
+    marginVertical: vh * 1,
+  },
 });
 
 export default styles;

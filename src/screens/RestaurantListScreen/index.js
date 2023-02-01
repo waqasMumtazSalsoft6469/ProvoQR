@@ -136,17 +136,16 @@ const RestaurantListScreen = props => {
   );
 
   const renderEmpty = () => {
-    if(refreshing){
-      return null
+    if (refreshing) {
+      return null;
     }
-    return(
-      <EmptyComponent text="No restaurants to show" />
-    )
-  }
+    return <EmptyComponent text="No restaurants to show" />;
+  };
 
   const renderItem = ({item}) => {
     return (
       <HomeCard
+        style={styles.resCardContainer}
         item={item}
         onClick={() => handleRestaurantPress(item)}
         viewmap={() => handleMapBtnPress(item)}

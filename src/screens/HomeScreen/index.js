@@ -179,6 +179,7 @@ class HomeScreen extends React.Component {
     });
   };
   renderAllRestaurantItem = ({item}) => {
+    console.log('item from home', item?.badges);
     return (
       <View style={styles.homeCardContainer}>
         <HomeCard
@@ -186,6 +187,7 @@ class HomeScreen extends React.Component {
           onClick={() => this.handleRestaurantPress(item)}
           viewmap={() => this.handleMapBtnPress(item)}
           location={this.state.userLocation}
+          style={{marginVertical: vh * 1}}
         />
       </View>
     );

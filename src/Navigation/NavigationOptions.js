@@ -209,11 +209,9 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
               height: 6 * vw,
               tintColor: ThemeColors.iconColor,
             }}>
-            {!activeRouteName === 'Notification' && (
-              <View style={styles.circle}>
-                <JostRegular style={styles.count}>{count}</JostRegular>
-              </View>
-            )}
+            <View style={styles.circle}>
+              <JostRegular style={styles.count}>{count}</JostRegular>
+            </View>
           </ImageBackground>
         </TouchableHOC>
         <TouchableHOC onPress={() => props.navigation.navigate('Profile')}>

@@ -32,8 +32,8 @@ export default styles = StyleSheet.create({
   },
   paginationDot: {
     width: vh * 1.2,
-    height: vh * 1.5,
-    borderRadius: vh * 1,
+    height: vh * 1.2,
+    borderRadius: (vh * 1.2) / 2,
     backgroundColor: 'red',
   },
 });
