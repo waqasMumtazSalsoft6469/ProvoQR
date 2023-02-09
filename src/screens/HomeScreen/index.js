@@ -102,7 +102,7 @@ class HomeScreen extends React.Component {
   getUserLocation = async () => {
     try {
       const location = await getCurrentLocation();
-      // console.log('CURRENT LOCATION', location);
+      console.log('CURRENT LOCATION', location);
       this.setState({
         userLocation: {
           latitude: parseFloat(location?.latitude),

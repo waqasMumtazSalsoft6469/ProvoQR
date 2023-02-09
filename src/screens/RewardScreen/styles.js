@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     margin: vh * 0.2,
     width: vw * 42,
     height: vh * 20,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     margin: vw * 2,
   },
   image: {

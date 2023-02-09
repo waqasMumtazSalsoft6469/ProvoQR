@@ -7,7 +7,7 @@ import RewardScreen from '../screens/RewardScreen';
 import LootBoxScreen from '../screens/LootBoxScreen';
 import RewardDetail from '../screens/RewardDetailScreen';
 import LootBoxPaymentMethod from '../screens/LootBoxPaymentSelection';
-import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
+// import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
 import {getNavigationOptions} from './NavigationOptions';
 import RestaurantDirection from '../screens/RestaurantDirectionScreen';
 import RestaurantListScreen from '../screens/RestaurantListScreen';
@@ -24,11 +24,11 @@ const MenuStack = () => {
         name="HomeScreen"
         // options={{headerShown: false}}
       />
-      <HomeNavigator.Screen
+      {/* <HomeNavigator.Screen
         component={ResturentDetail}
         name="ResturentDetail"
         options={{headerShown: true}}
-      />
+      /> */}
       <HomeNavigator.Screen
         component={RestaurantListScreen}
         name="RestaurantListScreen"
@@ -64,10 +64,10 @@ const MenuStack = () => {
         component={LootBoxPaymentMethod}
         name="LootBoxPaymentMethod"
       />
-      <HomeNavigator.Screen
+      {/* <HomeNavigator.Screen
         component={ProvoPaymentMethod}
         name="ProvoPaymentMethod"
-      />
+      /> */}
     </HomeNavigator.Navigator>
   );
 };

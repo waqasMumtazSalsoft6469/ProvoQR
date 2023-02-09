@@ -411,24 +411,18 @@ export const getAllRestaurant = data => {
   };
 };
 
-export const getRecommendedRestaurant = () => {
+export const getRecommendedRestaurant = data => {
   return async dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          dispatch({type: actionTypes.softLoaderOn});
-
-          const response = await get(endpoints.other.recommendedRestaurantList);
-          // console.log('action response', response);
-          resolve(response);
-        } catch (e) {
-          showToast(getMessage(e));
-          reject(e);
-        } finally {
-          dispatch({type: actionTypes.softLoaderOff});
-        }
-      }, 300);
-    });
+    try {
+      const response = await get(
+        endpoints.other.recommendedRestaurantList,
+        data,
+      );
+      // console.log('response', response);
+      return Promise.resolve(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 };
 

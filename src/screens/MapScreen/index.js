@@ -185,9 +185,9 @@ class MapScreen extends React.Component {
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       this.setState({
         details: res?.details,
-        ratings: res?.rewards,
-        lootbox_amount: res?.lootbox_amount,
-        provo_cash_price: res?.provo_cash_price,
+        // ratings: res?.badges,
+        // lootbox_amount: res?.lootbox_amount,
+        // provo_cash_price: res?.provo_cash_price,
       });
       setTimeout(() => {
         this.setState({resturentModal: true});
@@ -215,7 +215,7 @@ class MapScreen extends React.Component {
           marginTop: 2 * vh,
           width: 100 * vw,
         }}>
-        {this.state.ratings.map((item, index) => {
+        {this.state.details?.badges?.map((item, index) => {
           return (
             <RateCard item={item} index={index} style={{marginLeft: vw * 5}} />
           );
@@ -290,6 +290,17 @@ class MapScreen extends React.Component {
   //   );
   // };
 
+  handleMarkerPress = location => {
+    if (
+      this.state?.userLocation?.latitude === 0 &&
+      this.state?.userLocation?.longitude === 0
+    ) {
+      showToast('Location request timed out');
+    } else {
+      this.getRestaurantDetails(location?.id);
+    }
+  };
+
   renderMarkers = () => {
     return this.state.restaurants?.map(location => {
       return (
@@ -299,7 +310,10 @@ class MapScreen extends React.Component {
             latitude: Number(location?.lat),
             longitude: Number(location?.lng),
           }}
-          onPress={() => this.getRestaurantDetails(location?.id)}>
+          onPress={
+            () => this.handleMarkerPress(location)
+            // () => this.getRestaurantDetails(location?.id)
+          }>
           <TouchableHOC style={styles.markerTouch}>
             <Image source={icons.marker} style={styles.markerIconStyle} />
             <OutfitLightText style={styles.resName}>
@@ -455,7 +469,7 @@ class MapScreen extends React.Component {
                     By Card:
                   </OutfitSemiBoldText>
                   <OutfitRegularText style={styles.priceHeadingText}>
-                    ${this.state.lootbox_amount}
+                    ${this.state?.details?.lootbox_amount}
                   </OutfitRegularText>
                 </View>
                 <View style={styles.priceContainer}>
@@ -463,7 +477,7 @@ class MapScreen extends React.Component {
                     By ProvoCash:
                   </OutfitSemiBoldText>
                   <OutfitRegularText style={styles.priceHeadingText}>
-                    ${this.state.provo_cash_price}
+                    ${this.state?.details?.provo_cash_price}
                   </OutfitRegularText>
                 </View>
               </View>
@@ -485,8 +499,8 @@ class MapScreen extends React.Component {
                     this.setState({resturentModal: false});
                     this.props.navigation.navigate('LootBoxPaymentMethod', {
                       id: this.state.details?.id,
-                      provoCash: this.state.provo_cash_price,
-                      lootBoxAmount: this.state.lootbox_amount,
+                      provoCash: this.state?.details?.provo_cash_price,
+                      lootBoxAmount: this.state?.details?.lootbox_amount,
                     });
                   }}
                   btnContainer={{marginTop: 3 * vh}}

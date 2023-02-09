@@ -169,7 +169,10 @@ export const getTitle = activeRouteName => {
 };
 export const showHeaderRight = (activeRouteName, props, onBackPress) => {
   const data = store.getState();
-  const count = data.GeneralReducer.notificationCount;
+  const count =
+    data.GeneralReducer.notificationCount === null
+      ? data.GeneralReducer.notificationCount
+      : 0;
   console.log('notification_count', count);
 
   if (

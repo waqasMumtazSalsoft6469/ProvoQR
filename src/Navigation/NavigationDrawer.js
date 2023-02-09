@@ -30,7 +30,6 @@ import DrawerContent from '../components/DrawerComponents/DrawerContent';
 import {vh, vw} from '../Utils/Units';
 import ThemeColors from '../Utils/ThemeColors';
 import ProvoScreen from '../screens/ProvoScreen';
-import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
 
 const App = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -148,10 +147,6 @@ const ProvoStack = props => {
     <DrawerScreenWrapper {...props}>
       <provo.Navigator screenOptions={getNavigationOptions} headerMode="screen">
         <provo.Screen component={ProvoScreen} name="ProvoScreen" />
-        <provo.Screen
-          component={ProvoPaymentMethod}
-          name="ProvoPaymentMethod"
-        />
       </provo.Navigator>
     </DrawerScreenWrapper>
   );

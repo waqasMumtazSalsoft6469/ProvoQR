@@ -7,7 +7,7 @@ export default StyleSheet.create({
   cardimage: {
     resizeMode: 'contain',
     width: 80 * vw,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     borderRadius: 0.5 * vh,
     height: 50 * vw,
   },
@@ -48,7 +48,7 @@ export default StyleSheet.create({
   imgcard: {
     resizeMode: 'cover',
     width: 80 * vw,
-    backgroundColor: ThemeColors.redfboxtext,
+    // backgroundColor: ThemeColors.redfboxtext,
     borderRadius: 3 * vh,
     height: 50 * vw,
   },
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     height: vh * 3,
     width: vw * 8,
     marginRight: vw * 2,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     resizeMode: 'cover',

@@ -145,7 +145,7 @@ public class MainActivity extends ReactActivity {
         setSplashHideAnimation(SPLASHSLIDELEFT);
         AddImageView logoimage = 
        new AddImageView(R.drawable.splashfg, screenHeight * 0.1, screenWidth * 0.25, 
-       AddImageView.getCenterX(screenWidth * 0.2), 
+       AddImageView.getCenterX(screenWidth * 0.25), 
        AddImageView.getCenterY(screenHeight * -0.5),
         AddImageView.FIT_XY, true);
         performSingleAnimation(logoimage, SCALE, 1500,1f, 2f, 1f, 2f);

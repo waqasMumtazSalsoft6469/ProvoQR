@@ -20,6 +20,9 @@ import {
   getAllCategories,
   getAllNotifications,
 } from '../Redux/Actions/otherActions';
+import {getCurrentLocation} from '../Utils/mapHelperFunction';
+import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
+import ResturentDetail from '../screens/restaurantDetailsScreen';
 
 const MainStack = createStackNavigator();
 
@@ -29,6 +32,7 @@ class MainNavigator extends React.Component {
     this.state = {};
   }
   componentDidMount() {
+    getCurrentLocation();
     this.props.getAllNotifications();
     this.props.getAllCategories();
     AnimatedSplash.hide();
@@ -36,6 +40,7 @@ class MainNavigator extends React.Component {
 
   renderSelection = () => {
     const {token, userData} = this.props;
+    console.log('userData', userData);
     return (
       <MainStack.Navigator
         // initialRouteName='HomeTabs'
@@ -66,6 +71,11 @@ class MainNavigator extends React.Component {
           component={EditBillingDetails}
           name="EditBillingDetails"
         />
+        <MainStack.Screen
+          component={ProvoPaymentMethod}
+          name="ProvoPaymentMethod"
+        />
+        <MainStack.Screen component={ResturentDetail} name="ResturentDetail" />
       </MainStack.Navigator>
     );
   };

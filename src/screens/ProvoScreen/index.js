@@ -46,10 +46,17 @@ class ProvoScreen extends React.Component {
     this.props.getProvoPackages().then(res => {
       this.setState({coins: res?.provo_package?.data});
     });
-    this.props.getProvoWallet().then(res => {
-      console.log("provo_wallet", res?.provo_wallet);
-      this.setState({walletAmount: res?.provo_wallet});
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.props.getProvoWallet().then(res => {
+        console.log('provo_wallet', res?.provo_wallet);
+        this.setState({walletAmount: res?.provo_wallet});
+      });
     });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   renderOptions = ({item, index}) => {

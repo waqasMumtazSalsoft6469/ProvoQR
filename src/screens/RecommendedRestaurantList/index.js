@@ -17,6 +17,8 @@ const RecommendedRestaurantList = props => {
   const isLoading = useSelector(state => state.GeneralReducer.softLoading);
 
   const [restaurant, setRestaurant] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [userLocation, setUserLocation] = useState({
     location: {
@@ -42,7 +44,10 @@ const RecommendedRestaurantList = props => {
   };
 
   const handleOnEndReached = () => {
-    getData();
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      getData();
+    }
   };
 
   const handleOnRefresh = () => {
@@ -50,33 +55,27 @@ const RecommendedRestaurantList = props => {
   };
 
   const getData = async () => {
-    // if (!isLoading && currentPage) {
-    //   try {
-    //     const data = {
-    //       page: currentPage,
-    //       per_page: 6,
-    //     };
-    //     if (id) {
-    //       data.category_id = id;
-    //     }
-    //     const response = await dispatch(getRecommendedRestaurant(data));
-    //     if (response?.restaurantList?.current_page === 1) {
-    //       setRestaurant(response?.restaurantList?.data);
-    //     } else {
-    //       setRestaurant(prev => prev.concat(response?.restaurantList?.data));
-    //     }
-    //     if (
-    //       response?.restaurantList?.data?.length <
-    //       response?.restaurantList?.total
-    //     ) {
-    //       setCurrentPage(response?.restaurantList?.current_page + 1);
-    //     } else {
-    //       setCurrentPage(null);
-    //     }
-    //   } catch (error) {}
-    // }
-    const response = await dispatch(getRecommendedRestaurant());
-    setRestaurant(response?.recommended_restaurantList)
+    if (!refreshing && currentPage) {
+      setRefreshing(true);
+      try {
+        const data = {
+          page: currentPage,
+          per_page: 10,
+        };
+        const response = await dispatch(getRecommendedRestaurant(data));
+        if (response?.recommended_restaurantList?.current_page === 1) {
+          setRestaurant(response?.recommended_restaurantList?.data);
+          setTotalPages(response?.recommended_restaurantList?.total);
+        } else {
+          setRestaurant(prev =>
+            prev.concat(response?.recommended_restaurantList?.data),
+          );
+        }
+      } catch (error) {
+      } finally {
+        setRefreshing(false);
+      }
+    }
   };
 
   const getUserLocation = async () => {
@@ -102,11 +101,11 @@ const RecommendedRestaurantList = props => {
     }
   };
 
-//   useEffect(() => {
-//     if (currentPage === 1) {
-//       getData();
-//     }
-//   }, [currentPage]);
+  useEffect(() => {
+    if (currentPage === 1) {
+      getData();
+    }
+  }, [currentPage]);
 
   useEffect(() => {
     setupMethods();
@@ -139,9 +138,9 @@ const RecommendedRestaurantList = props => {
         contentContainerStyle={styles.contentContainerStyle}
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}
-        // refreshing={isLoading}
-        // onRefresh={handleOnRefresh}
-        // onEndReached={handleOnEndReached}
+        refreshing={refreshing}
+        onRefresh={handleOnRefresh}
+        onEndReached={handleOnEndReached}
       />
     </View>
   );
