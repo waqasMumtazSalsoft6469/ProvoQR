@@ -8,15 +8,18 @@ const styles = StyleSheet.create({
     width: vw * 100,
     alignItems: 'center',
   },
-  contentContainerStyle:{
-    paddingBottom: vh*8
+  contentContainerStyle: {
+    paddingBottom: vh * 8,
   },
-  headerContainer:{
-    marginBottom: vh*2
+  headerContainer: {
+    marginBottom: vh * 2,
   },
   headingTextStyle: {
     color: ThemeColors.iconColor,
     fontSize: vh * 2.3,
+  },
+  resCardContainer: {
+    marginVertical: vh * 1,
   },
 });
 

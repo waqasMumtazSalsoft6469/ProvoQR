@@ -19,6 +19,7 @@ import ThemeColors from '../Utils/ThemeColors';
 import OutfitMediumText from '../components/Text/OutfitMediumText';
 import OutfitSemiBoldText from '../components/Text/OutfitSemiBoldText';
 import store from '../Redux/store';
+import {imageUrl} from '../Api/configs';
 
 export const getNavigationOptions = props => {
   var activeRouteName = props.route.state
@@ -79,6 +80,7 @@ export const shouldHeaderBeShown = activeRouteName => {
     case 'RestaurantListScreen':
     case 'CategoryListScreen':
     case 'RecommendedRestaurantList':
+    case 'ResturentMenu':
       return true;
 
     default:
@@ -170,10 +172,11 @@ export const getTitle = activeRouteName => {
 export const showHeaderRight = (activeRouteName, props, onBackPress) => {
   const data = store.getState();
   const count =
-    data.GeneralReducer.notificationCount === null
+    data.GeneralReducer.notificationCount !== null
       ? data.GeneralReducer.notificationCount
       : 0;
-  console.log('notification_count', count);
+  const profile = data?.SessionReducer.userData;
+  console.log('notification_count', profile?.image);
 
   if (
     (activeRouteName =
@@ -219,7 +222,13 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
         </TouchableHOC>
         <TouchableHOC onPress={() => props.navigation.navigate('Profile')}>
           <Image
-            source={sampleimage.profile}
+            source={
+              profile?.image
+                ? {
+                    uri: imageUrl + profile?.image,
+                  }
+                : icons.purpleprofile
+            }
             resizeMode="contain"
             style={styles.profile}
           />

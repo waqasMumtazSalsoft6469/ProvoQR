@@ -164,9 +164,7 @@ class EditProfileScreen extends React.Component {
                       ? {uri: this.state.selectedImage}
                       : this.state.image
                       ? {
-                          uri:
-                            'https://custom-dev.onlinetestingserver.com/provo/public/storage/' +
-                            this.state.image,
+                          uri: imageUrl + this.state.image,
                         }
                       : icons.purpleprofile
                   }
@@ -305,29 +303,39 @@ class EditProfileScreen extends React.Component {
         <Modal
           visible={this.state.visible}
           animationType={'slide'}
-          transparent={true}>
-          <View style={styles.modal}>
-            {this.choices.map((item, index) => {
-              return (
-                <>
-                  <TouchableHOC
-                    onPress={item?.onClick}
-                    style={{marginLeft: vw * 2}}>
-                    <OutfitRegularText
-                      style={{
-                        color: 'black',
-                        fontSize: vh * 2.2,
-                      }}>
-                      {item?.name}
-                    </OutfitRegularText>
-                  </TouchableHOC>
-                  {index < this.choices.length - 1 && (
-                    <View style={styles.line} />
-                  )}
-                </>
-              );
-            })}
-          </View>
+          transparent={true}
+          style={{flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => this.setState({visible: false})}
+            style={{
+              flex: 1,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              justifyContent: 'flex-end',
+            }}>
+            <View style={styles.modal}>
+              {this.choices.map((item, index) => {
+                return (
+                  <>
+                    <TouchableHOC
+                      onPress={item?.onClick}
+                      style={{marginLeft: vw * 2}}>
+                      <OutfitRegularText
+                        style={{
+                          color: 'black',
+                          fontSize: vh * 2.2,
+                        }}>
+                        {item?.name}
+                      </OutfitRegularText>
+                    </TouchableHOC>
+                    {index < this.choices.length - 1 && (
+                      <View style={styles.line} />
+                    )}
+                  </>
+                );
+              })}
+            </View>
+          </TouchableOpacity>
         </Modal>
       </View>
     );

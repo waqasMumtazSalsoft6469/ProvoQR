@@ -64,7 +64,7 @@ class RegisterScreen extends React.Component {
       successModal: false,
     });
     // showToast(res?.message);
-    // dispatch(StackActions.popToTop());
+    dispatch(StackActions.popToTop());
     this.props.navigation.navigate('HomeScreen');
   };
 

@@ -78,18 +78,18 @@ class ResturentMenuScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imgbg}>
-          <ScrollView
+          {/* <ScrollView
             style={{marginBottom: vh * 8, marginHorizontal: vw * 5}}
             showsVerticalScrollIndicator={false}
-            nestedScrollEnabled>
-            <FlatList
-              data={this.state.menu}
-              style={{marginTop: 2 * vh}}
-              renderItem={this.renderMenuList}
-              ListEmptyComponent={this.emptyList}
-              nestedScrollEnabled
-            />
-          </ScrollView>
+            nestedScrollEnabled> */}
+          <FlatList
+            data={this.state.menu}
+            style={{marginTop: 2 * vh}}
+            renderItem={this.renderMenuList}
+            ListEmptyComponent={this.emptyList}
+            // nestedScrollEnabled
+          />
+          {/* </ScrollView> */}
         </ImageBackground>
       </View>
     );

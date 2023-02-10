@@ -17,7 +17,7 @@ import {
 } from '../../Utils/mapHelperFunction';
 import ThemeColors from '../../Utils/ThemeColors';
 import {showToast} from '../../Api/HelperFunction';
-import { googleApiKey } from '../../Utils/mapSearchHelperFunctions';
+import {googleApiKey} from '../../Utils/mapSearchHelperFunctions';
 class RestaurantDirection extends React.Component {
   constructor(props) {
     super(props);
@@ -123,6 +123,9 @@ class RestaurantDirection extends React.Component {
   render() {
     const {latitude, longitude} = this.props.route.params;
 
+    console.log('latitude, longitude', latitude, longitude);
+    console.log('userLoc', this.state.userLocation);
+
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -145,6 +148,8 @@ class RestaurantDirection extends React.Component {
             <Marker
               draggable={false}
               coordinate={{
+                // latitude: 37.3318456,
+                // longitude: -122.0296002,
                 latitude: Number(this.state.userLocation.latitude),
                 longitude: Number(this.state.userLocation.longitude),
               }}>
@@ -153,6 +158,8 @@ class RestaurantDirection extends React.Component {
             <Marker
               draggable={false}
               coordinate={{
+                // latitude: 37.771707,
+                // longitude: -122.4053769,
                 latitude: Number(latitude),
                 longitude: Number(longitude),
               }}>
@@ -161,12 +168,16 @@ class RestaurantDirection extends React.Component {
 
             <MapViewDirections
               origin={{
+                // latitude: 37.3318456,
+                // longitude: -122.0296002,
                 latitude: Number(this.state.userLocation.latitude),
                 longitude: Number(this.state.userLocation.longitude),
                 latitudeDelta: this.state.latitudeDelta,
                 longitudeDelta: this.state.longitudeDelta,
               }}
               destination={{
+                // latitude: 37.771707,
+                // longitude: -122.4053769,
                 latitude: Number(latitude),
                 longitude: Number(longitude),
                 latitudeDelta: this.state.latitudeDelta,

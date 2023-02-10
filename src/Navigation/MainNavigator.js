@@ -23,6 +23,10 @@ import {
 import {getCurrentLocation} from '../Utils/mapHelperFunction';
 import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
 import ResturentDetail from '../screens/restaurantDetailsScreen';
+import RestaurantDirection from '../screens/RestaurantDirectionScreen';
+import ResturentMenuScreen from '../screens/ResturentMenuScreen';
+import LootBoxScreen from '../screens/LootBoxScreen';
+import LootBoxPaymentMethod from '../screens/LootBoxPaymentSelection';
 
 const MainStack = createStackNavigator();
 
@@ -76,6 +80,19 @@ class MainNavigator extends React.Component {
           name="ProvoPaymentMethod"
         />
         <MainStack.Screen component={ResturentDetail} name="ResturentDetail" />
+        <MainStack.Screen
+          component={RestaurantDirection}
+          name="RestaurantDirection"
+        />
+        <MainStack.Screen
+          component={ResturentMenuScreen}
+          name="ResturentMenu"
+        />
+        <MainStack.Screen
+          component={LootBoxPaymentMethod}
+          name="LootBoxPaymentMethod"
+        />
+        <MainStack.Screen component={LootBoxScreen} name="LootBoxScreen" />
       </MainStack.Navigator>
     );
   };

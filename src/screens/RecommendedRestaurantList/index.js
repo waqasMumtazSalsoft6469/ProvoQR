@@ -127,6 +127,7 @@ const RecommendedRestaurantList = props => {
         onClick={() => handleRestaurantPress(item)}
         viewmap={() => handleMapBtnPress(item)}
         location={userLocation?.location}
+        style={styles.resCardContainer}
       />
     );
   };

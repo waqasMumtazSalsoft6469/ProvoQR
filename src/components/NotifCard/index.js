@@ -17,7 +17,7 @@ class ProductItem extends React.Component {
 
   render() {
     return (
-      <TouchableHOC style={styles.card}>
+      <View style={styles.card}>
         <View style={styles.innerContainer}>
           <View style={styles.cardImage}>
             <Image
@@ -38,7 +38,7 @@ class ProductItem extends React.Component {
         <OutfitMediumText style={styles.date}>
           {formatDate(this.props?.item?.created_at)}
         </OutfitMediumText>
-      </TouchableHOC>
+      </View>
     );
   }
 }

@@ -3,7 +3,9 @@ import ThemeColors from '../../Utils/ThemeColors';
 import {vw, vh} from '../../Utils/Units';
 
 export default StyleSheet.create({
-  container: {},
+  container: {
+    // backgroundColor: 'red',
+  },
   cardimage: {
     resizeMode: 'contain',
     width: 80 * vw,

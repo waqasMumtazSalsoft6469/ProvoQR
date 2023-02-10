@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     width: 100 * vw,
 
     flex: 1,
+    alignItems: 'center',
   },
   catname: {
     color: ThemeColors.darkpurple,

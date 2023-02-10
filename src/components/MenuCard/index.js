@@ -22,9 +22,10 @@ class MenuCard extends React.Component {
 
   render() {
     return (
-      <TouchableHOC
-        style={styles.card}
-        onPress={this.props?.onPressCard && this.props?.onPressCard}>
+      // <TouchableHOC
+      //   style={styles.card}
+      //   onPress={this.props?.onPressCard && this.props?.onPressCard}>
+      <View style={styles.card}>
         <View style={{flexDirection: 'row'}}>
           <View>
             <Image
@@ -48,7 +49,8 @@ class MenuCard extends React.Component {
             </OutfitRegularText>
           </View>
         </View>
-      </TouchableHOC>
+      </View>
+      // </TouchableHOC>
     );
   }
 }

@@ -107,9 +107,7 @@ class ProfileScreen extends React.Component {
                 source={
                   profile?.image
                     ? {
-                        uri:
-                          'https://custom-dev.onlinetestingserver.com/provo/public/storage/' +
-                          profile?.image,
+                        uri: imageUrl + profile?.image,
                       }
                     : icons.purpleprofile
                 }

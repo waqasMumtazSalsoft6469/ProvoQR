@@ -115,8 +115,15 @@ class RegisterScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.getData();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.getData();
+    });
   }
+
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+
   renderbuttons = () => {
     return (
       <View style={styles.kgs}>

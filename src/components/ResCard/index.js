@@ -60,14 +60,18 @@ class ProductItem extends React.Component {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
           marginTop: 1 * vh,
           width: 75 * vw,
         }}>
         {this.props?.item?.badges?.map((item, index) => {
           return (
             <View>
-              <RateCard item={item} index={index} />
+              <RateCard
+                item={item}
+                index={index}
+                style={{marginRight: vw * 5}}
+              />
             </View>
           );
         })}

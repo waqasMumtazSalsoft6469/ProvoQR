@@ -44,26 +44,26 @@ const MenuStack = () => {
         name="CategoryListScreen"
         options={{headerShown: true}}
       />
-      <HomeNavigator.Screen
+      {/* <HomeNavigator.Screen
         component={ResturentMenuScreen}
         name="ResturentMenu"
         options={{headerShown: true}}
-      />
-      <HomeNavigator.Screen
+      /> */}
+      {/* <HomeNavigator.Screen
         component={RestaurantDirection}
         name="RestaurantDirection"
-      />
-      <HomeNavigator.Screen
+      /> */}
+      {/* <HomeNavigator.Screen
         component={LootBoxScreen}
         name="LootBoxScreen"
         options={{headerShown: false}}
-      />
-      <HomeNavigator.Screen component={RewardScreen} name="RewardScreen" />
-      <HomeNavigator.Screen component={RewardDetail} name="RewardDetail" />
-      <HomeNavigator.Screen
+      /> */}
+      {/* <HomeNavigator.Screen component={RewardScreen} name="RewardScreen" />
+      <HomeNavigator.Screen component={RewardDetail} name="RewardDetail" /> */}
+      {/* <HomeNavigator.Screen
         component={LootBoxPaymentMethod}
         name="LootBoxPaymentMethod"
-      />
+      /> */}
       {/* <HomeNavigator.Screen
         component={ProvoPaymentMethod}
         name="ProvoPaymentMethod"
