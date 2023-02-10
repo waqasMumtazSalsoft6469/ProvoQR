@@ -220,7 +220,9 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
             </View>
           </ImageBackground>
         </TouchableHOC>
-        <TouchableHOC onPress={() => props.navigation.navigate('Profile')}>
+        <TouchableHOC
+          style={styles.profileContainer}
+          onPress={() => props.navigation.navigate('Profile')}>
           <Image
             source={
               profile?.image
@@ -229,7 +231,7 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
                   }
                 : icons.purpleprofile
             }
-            resizeMode="contain"
+            resizeMode="cover"
             style={styles.profile}
           />
         </TouchableHOC>

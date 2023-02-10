@@ -80,12 +80,20 @@ const styles = StyleSheet.create({
     color: ThemeColors.white,
     fontSize: 1.2 * vh,
   },
-  profile: {
+  profileContainer: {
     width: 6 * vw,
     borderRadius: 3 * vw,
     marginLeft: vw,
     height: 6 * vw,
-    tintColor: ThemeColors.iconColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profile: {
+    width: 6 * vw,
+    borderRadius: 3 * vw,
+    // marginLeft: vw,
+    height: 6 * vw,
+    // tintColor: ThemeColors.iconColor,
   },
   circle: {
     width: 4 * vw,
