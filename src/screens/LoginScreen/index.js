@@ -89,9 +89,10 @@ class RegisterScreen extends React.Component {
           console.log(res?.user?.age, 'LOGIN RESPONSE');
           if (res?.success) {
             showToast('Login Successfull!');
-            if (!res?.user?.age || !res?.user?.gender || !res?.user?.address) {
-              this.props.navigation.navigate('CompleteProfile');
-            }
+            this.props.navigation.navigate('MainNavigator');
+            // if (!res?.user?.age || !res?.user?.gender || !res?.user?.address) {
+            //   this.props.navigation.navigate("MainNavigator");
+            // }
             // else {
             //   this.props.navigation.navigate('DrawerStack');
             // }
@@ -244,6 +245,7 @@ class RegisterScreen extends React.Component {
         <Button
           title="LOGIN"
           onPress={() => this.handleLogin()}
+          // onPress={() => this.props.navigation.navigate('MainNavigator')}
           btnContainer={{marginTop: 2 * vh}}
         />
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -543,27 +545,39 @@ class RegisterScreen extends React.Component {
           visible={this.state.visible}
           animationType={'slide'}
           transparent={true}>
-          <View style={styles.modal}>
-            {this.choices.map((item, index) => {
-              return (
-                <>
-                  <TouchableHOC
-                    onPress={item?.onClick}
-                    style={{marginLeft: vw * 2}}>
-                    <OutfitRegularText
-                      style={{
-                        color: 'black',
-                        fontSize: vh * 2.2,
-                      }}>
-                      {item?.name}
-                    </OutfitRegularText>
-                  </TouchableHOC>
-                  {index < this.choices.length - 1 && (
-                    <View style={styles.line} />
-                  )}
-                </>
-              );
-            })}
+          <View style={{flex: 1}}>
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                height: vh * 100,
+                width: vw * 100,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+              }}
+              activeOpacity={0.9}
+              onPress={() => this.setState({visible: false})}
+            />
+            <View style={styles.modal}>
+              {this.choices.map((item, index) => {
+                return (
+                  <>
+                    <TouchableHOC
+                      onPress={item?.onClick}
+                      style={{marginLeft: vw * 2}}>
+                      <OutfitRegularText
+                        style={{
+                          color: 'black',
+                          fontSize: vh * 2.2,
+                        }}>
+                        {item?.name}
+                      </OutfitRegularText>
+                    </TouchableHOC>
+                    {index < this.choices.length - 1 && (
+                      <View style={styles.line} />
+                    )}
+                  </>
+                );
+              })}
+            </View>
           </View>
         </Modal>
       </View>

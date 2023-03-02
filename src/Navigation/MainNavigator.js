@@ -7,7 +7,6 @@ import Notification from '../screens/NotificationScreen';
 import Profile from '../screens/ProfileScreen';
 import Drawer from './NavigationDrawer';
 import HomeTabs from './HomeTabs';
-import AnimatedSplash from 'react-native-animated-splash';
 import ChangePassword from '../screens/ChangePasswordScreen';
 import EditProfile from '../screens/EditProfileScreen';
 import EditBillingDetails from '../screens/EditBillingDetail';
@@ -16,10 +15,6 @@ import Location from '../screens/LocationScreen';
 
 import AuthNavigator from './AuthNavigator';
 import CompleteProfile from '../screens/CompleteProfile';
-import {
-  getAllCategories,
-  getAllNotifications,
-} from '../Redux/Actions/otherActions';
 import {getCurrentLocation} from '../Utils/mapHelperFunction';
 import ProvoPaymentMethod from '../screens/ProvoPaymentMethod';
 import ResturentDetail from '../screens/restaurantDetailsScreen';
@@ -27,6 +22,11 @@ import RestaurantDirection from '../screens/RestaurantDirectionScreen';
 import ResturentMenuScreen from '../screens/ResturentMenuScreen';
 import LootBoxScreen from '../screens/LootBoxScreen';
 import LootBoxPaymentMethod from '../screens/LootBoxPaymentSelection';
+import {
+  getAllCategories,
+  getProfileData,
+  getAllNotifications,
+} from '../Redux/Actions/otherActions';
 
 const MainStack = createStackNavigator();
 
@@ -38,8 +38,9 @@ class MainNavigator extends React.Component {
   componentDidMount() {
     getCurrentLocation();
     this.props.getAllNotifications();
+    this.props.getProfileData();
     this.props.getAllCategories();
-    AnimatedSplash.hide();
+    // AnimatedSplash.hide();
   }
 
   renderSelection = () => {
@@ -49,10 +50,11 @@ class MainNavigator extends React.Component {
       <MainStack.Navigator
         // initialRouteName='HomeTabs'
         headerMode="screen"
-        screenOptions={getNavigationOptions}>
-        {!token && (
+        screenOptions={getNavigationOptions}
+      >
+        {/* {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
-        )}
+        )} */}
         {token &&
           (!userData?.age || !userData?.address || !userData?.gender) && (
             <MainStack.Screen
@@ -60,7 +62,11 @@ class MainNavigator extends React.Component {
               name="CompleteProfile"
             />
           )}
-        <MainStack.Screen component={Drawer} name="Drawer" />
+        <MainStack.Screen
+          component={Drawer}
+          name="Drawer"
+          options={{headerShown: false}}
+        />
         <MainStack.Screen
           component={Location}
           name="Location"
@@ -111,6 +117,7 @@ const mapProps = dispatch => {
   return {
     getAllCategories: () => dispatch(getAllCategories()),
     getAllNotifications: () => dispatch(getAllNotifications()),
+    getProfileData: () => dispatch(getProfileData()),
   };
 };
 export default connect(mapState, mapProps)(MainNavigator);

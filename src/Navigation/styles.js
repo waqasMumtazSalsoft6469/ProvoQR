@@ -4,6 +4,12 @@ import {fonts} from '../assets/fonts';
 import {vh, vw} from '../Utils/Units';
 
 const styles = StyleSheet.create({
+  headingText: {
+    color: ThemeColors.iconColor,
+    fontFamily: fonts.Outfit.medium,
+    fontSize: vh * 2.6,
+    textAlign: 'center',
+  },
   defaultHeaderTitleStyle: {
     color: 'white',
     alignItems: 'flex-end',
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
     // paddingBottom: 2 * vh,
     paddingLeft: 5 * vw,
   },
-  deafultHeaderStyle: {
+  defaultHeaderStyle: {
     height: 12 * vh,
     // paddingBottom: 2 * vh,
     // alignItems:'center',

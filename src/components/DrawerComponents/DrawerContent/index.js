@@ -19,6 +19,8 @@ const DrawerContent = props => {
   const handleOnDrawerItemPress = routeName => {
     if (routeName == 'Logout') {
       setVisibleModal(true);
+    } else if (routeName == 'Login') {
+      props.navigation.navigate('Authstack');
     } else {
       return props.navigation.navigate(routeName);
     }

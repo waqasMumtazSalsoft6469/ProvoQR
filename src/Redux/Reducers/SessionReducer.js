@@ -30,12 +30,12 @@ export default SessionReducer = (state = initialState, action) => {
         userData: action.session.user,
       };
     }
-    case actionTypes.getProfile: {
-      return {
-        ...state,
-        userData: action.payload,
-      };
-    }
+    // case actionTypes.getProfile: {
+    //   return {
+    //     ...state,
+    //     userData: action.payload,
+    //   };
+    // }
     default: {
       return state;
     }

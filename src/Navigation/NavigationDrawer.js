@@ -30,6 +30,7 @@ import DrawerContent from '../components/DrawerComponents/DrawerContent';
 import {vh, vw} from '../Utils/Units';
 import ThemeColors from '../Utils/ThemeColors';
 import ProvoScreen from '../screens/ProvoScreen';
+import {connect} from 'react-redux';
 
 const App = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -154,6 +155,7 @@ const ProvoStack = props => {
 
 class DrawerNavigation extends Component {
   render() {
+    const {token} = this.props;
     return (
       <ImageBackground
         source={backgrounds.drawerBg}
@@ -196,32 +198,38 @@ class DrawerNavigation extends Component {
             }}
             component={AppStack}
           />
-          <Drawer.Screen
-            name="RestaurantRequests"
-            options={{
-              drawerLabel: 'Restaurant Request',
-              drawerIcon: drawericons.drawer1,
-            }}
-            component={ResReqStack}
-          />
+          {token && (
+            <Drawer.Screen
+              name="RestaurantRequests"
+              options={{
+                drawerLabel: 'Restaurant Request',
+                drawerIcon: drawericons.drawer1,
+              }}
+              component={ResReqStack}
+            />
+          )}
 
-          <Drawer.Screen
-            name="SecretKeys"
-            options={{
-              drawerLabel: 'Secret Key',
-              drawerIcon: drawericons.drawer2,
-            }}
-            component={SecretKeyStack}
-          />
+          {token && (
+            <Drawer.Screen
+              name="SecretKeys"
+              options={{
+                drawerLabel: 'Secret Key',
+                drawerIcon: drawericons.drawer2,
+              }}
+              component={SecretKeyStack}
+            />
+          )}
 
-          <Drawer.Screen
-            name="Histories"
-            options={{
-              drawerLabel: 'History',
-              drawerIcon: drawericons.drawer3,
-            }}
-            component={HistoryStack}
-          />
+          {token && (
+            <Drawer.Screen
+              name="Histories"
+              options={{
+                drawerLabel: 'History',
+                drawerIcon: drawericons.drawer3,
+              }}
+              component={HistoryStack}
+            />
+          )}
 
           <Drawer.Screen
             name="About"
@@ -241,36 +249,43 @@ class DrawerNavigation extends Component {
             component={ContactStack}
           />
 
-          <Drawer.Screen
-            name="MySubscription"
-            options={{
-              drawerLabel: 'Subscription',
-              drawerIcon: drawericons.drawer10,
-            }}
-            component={SubscriptionStack}
-          />
+          {token && (
+            <Drawer.Screen
+              name="MySubscription"
+              options={{
+                drawerLabel: 'Subscription',
+                drawerIcon: drawericons.drawer10,
+              }}
+              component={SubscriptionStack}
+            />
+          )}
+
+          {token && (
+            <Drawer.Screen
+              name="RequestLog"
+              options={{
+                drawerLabel: 'Request Log',
+                drawerIcon: drawericons.drawer7,
+              }}
+              component={ReqLogsStack}
+            />
+          )}
+
+          {token && (
+            <Drawer.Screen
+              name="ProvoCash"
+              options={{
+                drawerLabel: 'ProvoCash',
+                drawerIcon: drawericons.drawer9,
+              }}
+              component={ProvoStack}
+            />
+          )}
 
           <Drawer.Screen
-            name="RequestLog"
+            name={token ? 'Logout' : 'Login'}
             options={{
-              drawerLabel: 'Request Log',
-              drawerIcon: drawericons.drawer7,
-            }}
-            component={ReqLogsStack}
-          />
-
-          <Drawer.Screen
-            name="ProvoCash"
-            options={{
-              drawerLabel: 'ProvoCash',
-              drawerIcon: drawericons.drawer9,
-            }}
-            component={ProvoStack}
-          />
-          <Drawer.Screen
-            name="Logout"
-            options={{
-              drawerLabel: 'Logout',
+              drawerLabel: token ? 'Logout' : 'Login',
               drawerIcon: drawericons.drawer8,
             }}
             component={ReqLogsStack}
@@ -281,4 +296,12 @@ class DrawerNavigation extends Component {
   }
 }
 
-export default DrawerNavigation;
+const mapState = state => {
+  return {
+    token: state.SessionReducer.token,
+  };
+};
+
+export default connect(mapState)(DrawerNavigation);
+
+// export default DrawerNavigation;

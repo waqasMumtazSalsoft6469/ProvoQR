@@ -34,7 +34,7 @@ class ProfileScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.getData();
+    // this.getData();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.getData();
     });
@@ -89,6 +89,7 @@ class ProfileScreen extends React.Component {
   };
   render() {
     const {profile} = this.state;
+    const {userData} = this.props;
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -105,9 +106,9 @@ class ProfileScreen extends React.Component {
               }}>
               <Image
                 source={
-                  profile?.image
+                  userData?.image
                     ? {
-                        uri: imageUrl + profile?.image,
+                        uri: imageUrl + userData?.image,
                       }
                     : icons.purpleprofile
                 }
@@ -115,7 +116,7 @@ class ProfileScreen extends React.Component {
               />
 
               <OutfitMediumText style={styles.name}>
-                {profile?.name}
+                {userData?.name}
               </OutfitMediumText>
               {/* {this.renderbadges()} */}
             </View>
@@ -124,13 +125,13 @@ class ProfileScreen extends React.Component {
                 Email Address
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {profile?.email}
+                {userData?.email}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>Age</OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {profile?.age}
+                {userData?.age}
               </OutfitRegulerText>
             </View>
             {/* <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
@@ -146,7 +147,7 @@ class ProfileScreen extends React.Component {
                 Phone Number
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {profile?.phone}
+                {userData?.phone}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
@@ -154,7 +155,7 @@ class ProfileScreen extends React.Component {
                 Gender
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {profile?.gender}
+                {userData?.gender}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
@@ -162,7 +163,7 @@ class ProfileScreen extends React.Component {
                 Address
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {profile?.address}
+                {userData?.address}
               </OutfitRegulerText>
             </View>
 
@@ -203,6 +204,7 @@ class ProfileScreen extends React.Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
+  userData: state.SessionReducer.userData,
 });
 const mapDispatchToProps = dispatch => {
   return {

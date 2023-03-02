@@ -27,11 +27,20 @@ export const getNavigationOptions = props => {
     : props.route.name;
 
   return {
-    ...defaultOptions(activeRouteName, props),
+    // ...defaultOptions(activeRouteName, props),
     ...TransitionPresets.SlideFromRightIOS,
-    headerShown: shouldHeaderBeShown(activeRouteName),
+    // headerShown: shouldHeaderBeShown(activeRouteName),
+    // title: getTitle(activeRouteName),
+    // headerBackground: () => null,
+
     title: getTitle(activeRouteName),
-    headerBackground: () => null,
+    headerTitleAlign: 'center',
+    headerLeft: () => showHeaderLeft(activeRouteName),
+    headerRight: () => showHeaderRight(activeRouteName),
+    headerStyle: styles.defaultHeaderStyle,
+    headerTitleStyle: styles.headingText,
+    headerRightContainerStyle: styles.defaultHeaderRightContainerStyle,
+    headerLeftContainerStyle: styles.defaultHeaderLeftContainerStyle,
   };
 };
 export const setStatusBar = (activeRouteName, settings) => {
@@ -178,24 +187,26 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
   const profile = data?.SessionReducer.userData;
   console.log('notification_count', profile?.image);
 
-  if (
-    (activeRouteName =
-      'RewardScreen' ||
-      activeRouteName == 'RewardDetail' ||
-      activeRouteName == 'ContactUs' ||
-      activeRouteName == 'AboutUs' ||
-      activeRouteName == 'Notification' ||
-      activeRouteName == 'Profile' ||
-      activeRouteName == 'EditProfile' ||
-      activeRouteName == 'ChangePassword' ||
-      activeRouteName == 'RestaurantRequest' ||
-      activeRouteName == 'RequestLogs' ||
-      activeRouteName == 'SecretKey' ||
-      activeRouteName == 'QRcodeScreen' ||
-      activeRouteName == 'ProvoScreen' ||
-      activeRouteName == 'ProvoPaymentMethod' ||
-      activeRouteName == 'QRcodeSuccess')
-  ) {
+  // if (
+  //   (activeRouteName =
+  //     'RewardScreen' ||
+  //     activeRouteName == 'RewardDetail' ||
+  //     activeRouteName == 'ContactUs' ||
+  //     activeRouteName == 'AboutUs' ||
+  //     activeRouteName == 'Notification' ||
+  //     activeRouteName == 'Profile' ||
+  //     activeRouteName == 'EditProfile' ||
+  //     activeRouteName == 'ChangePassword' ||
+  //     activeRouteName == 'RestaurantRequest' ||
+  //     activeRouteName == 'RequestLogs' ||
+  //     activeRouteName == 'SecretKey' ||
+  //     activeRouteName == 'QRcodeScreen' ||
+  //     activeRouteName == 'ProvoScreen' ||
+  //     activeRouteName == 'ProvoPaymentMethod' ||
+  //     activeRouteName == 'QRcodeSuccess')
+  // )
+
+  if (activeRouteName === 'HomeScreen') {
     return (
       <View style={{flexDirection: 'row'}}>
         <TouchableHOC onPress={() => props.navigation.navigate('Location')}>
@@ -259,7 +270,7 @@ const renderDrawer = props => {
 export const showHeaderLeft = (activeRouteName, props) => {
   // return renderBackButton(activeRouteName, navigation);
   switch (activeRouteName) {
-    case 'HomeTabs':
+    // case 'HomeTabs':
     case 'RestaurantRequest':
     case 'SecretKey':
     case 'ContactUs':
@@ -343,6 +354,6 @@ export const defaultOptions = (activeRouteName, props) => {
     headerRightContainerStyle: styles.defaultHeaderRightContainerStyle,
     headerLeftContainerStyle: styles.defaultHeaderLeftContainerStyle,
     headerTitleAllowFontScaling: true,
-    headerStyle: styles.deafultHeaderStyle,
+    headerStyle: styles.defaultHeaderStyle,
   };
 };
