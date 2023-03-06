@@ -4,7 +4,22 @@ import {themeShadow, vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: 100 * vw,
     backgroundColor: ThemeColors.white,
+  },
+  contentContainerStyle: {
+    alignItems: 'center',
+  },
+  contentContainer: {
+    alignItems: 'center',
+    marginTop: 5 * vh,
+    paddingHorizontal: vw * 2,
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8 * vh,
+    justifyContent: 'center',
   },
   profile: {
     width: 12 * vh,
@@ -12,10 +27,10 @@ const styles = StyleSheet.create({
     borderRadius: 6 * vh,
     resizeMode: 'cover',
   },
-  imgbg: {
-    width: 100 * vw,
-    alignItems: 'center',
-  },
+  // imgbg: {
+  //   flex: 1,
+  //   width: 100 * vw,
+  // },
   or: {
     fontSize: 2 * vh,
     marginLeft: 4 * vw,

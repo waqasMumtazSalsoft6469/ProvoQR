@@ -46,7 +46,7 @@ const provo = createStackNavigator();
 const AppStack = props => {
   return (
     <DrawerScreenWrapper {...props}>
-      <App.Navigator screenOptions={getNavigationOptions} headerMode="screen">
+      <App.Navigator screenOptions={{headerShown: false}} headerMode="screen">
         <App.Screen component={HomeTabs} name="HomeTabs" />
       </App.Navigator>
     </DrawerScreenWrapper>

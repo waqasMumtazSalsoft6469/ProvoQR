@@ -29,6 +29,7 @@ import {showToast} from '../../Api/HelperFunction';
 import {login, userSignup} from '../../Redux/Actions/authActions';
 import {ScrollView} from 'react-native-gesture-handler';
 import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
+import ImagePickerModal from '../../components/Popups/ImagePickerModal';
 const initialState = {
   name: '',
   email: '',
@@ -198,12 +199,7 @@ class RegisterScreen extends React.Component {
 
   renderLogin = () => {
     return (
-      <View
-        style={{
-          alignItems: 'center',
-          marginTop: 5 * vh,
-          paddingHorizontal: vw * 2,
-        }}>
+      <View style={styles.contentContainer}>
         <MainInput
           placeholder="Enter Email Address"
           // style={styles.field}
@@ -221,7 +217,6 @@ class RegisterScreen extends React.Component {
         />
         <MainInput
           placeholder="Enter Password"
-          // style={styles.field}
           ref={r => (this.pw = r)}
           onSubmitEditing={() => this.pw.onFocus()}
           onChangeText={newemail =>
@@ -245,10 +240,9 @@ class RegisterScreen extends React.Component {
         <Button
           title="LOGIN"
           onPress={() => this.handleLogin()}
-          // onPress={() => this.props.navigation.navigate('MainNavigator')}
           btnContainer={{marginTop: 2 * vh}}
         />
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        {/* <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <View
             style={{
               // marginLeft: 7 * vw,
@@ -282,8 +276,8 @@ class RegisterScreen extends React.Component {
               dashGap={0.5 * vh}
               dashStyle={{width: 0.5 * vw}}></Dash>
           </View>
-        </View>
-        <View style={{marginTop: 4 * vh}}>
+        </View> */}
+        {/* <View style={{marginTop: 4 * vh}}>
           <ImageButton
             title={'Continue With Google'}
             stylecon={styles.googlebox}
@@ -307,20 +301,18 @@ class RegisterScreen extends React.Component {
             ]}
             image={icons.fb}
           />
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 8 * vh,
-            justifyContent: 'center',
-          }}>
-          <OutfitRegularText style={styles.account}>
+        </View> */}
+        <View style={styles.bottomContainer}>
+          <OutfitRegularText
+            style={[styles.account, {color: ThemeColors.placeholderGrey}]}>
             Don't have an account?
           </OutfitRegularText>
           <TouchableHOC onPress={() => this.setState({formOption: 'Signup'})}>
-            <OutfitRegularText style={styles.createaccount}>
+            <OutfitRegularText
+              style={[
+                styles.createaccount,
+                {color: ThemeColors.placeholderGrey},
+              ]}>
               Sign Up Here
             </OutfitRegularText>
           </TouchableHOC>
@@ -330,12 +322,7 @@ class RegisterScreen extends React.Component {
   };
   renderSignup = () => {
     return (
-      <View
-        style={{
-          alignItems: 'center',
-          marginTop: 5 * vh,
-          paddingHorizontal: vw * 2,
-        }}>
+      <View style={styles.contentContainer}>
         <ImageBackground
           source={
             this.state.image ? {uri: this.state.image} : icons.purpleprofile
@@ -491,96 +478,56 @@ class RegisterScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={backgrounds.bgimage}
-          resizeMode="cover"
-          style={[styles.imgbg, {flex: 1}]}
-          imageStyle={styles.imgbg}>
-          <KeyboardAwareScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.imgbg}>
-            <View style={styles.options}>
-              <TouchableHOC
-                style={
-                  this.state.formOption === 'Login'
-                    ? styles.darkButton
-                    : styles.lightButton
-                }
-                onPress={() => this.setState({formOption: 'Login'})}>
-                <OutfitMediumText
-                  style={{
-                    color:
-                      this.state.formOption === 'Login'
-                        ? ThemeColors.white
-                        : ThemeColors.fontBlack,
-                  }}>
-                  LOGIN
-                </OutfitMediumText>
-              </TouchableHOC>
-              <TouchableHOC
-                style={
-                  this.state.formOption === 'Signup'
-                    ? styles.darkButton
-                    : styles.lightButton
-                }
-                onPress={() => this.setState({formOption: 'Signup'})}>
-                <OutfitMediumText
-                  style={{
-                    color:
-                      this.state.formOption === 'Signup'
-                        ? ThemeColors.white
-                        : ThemeColors.fontBlack,
-                  }}>
-                  SIGN UP
-                </OutfitMediumText>
-              </TouchableHOC>
-            </View>
-            {this.state.formOption === 'Login'
-              ? this.renderLogin()
-              : this.renderSignup()}
-          </KeyboardAwareScrollView>
-        </ImageBackground>
-        <Modal
-          visible={this.state.visible}
-          animationType={'slide'}
-          transparent={true}>
-          <View style={{flex: 1}}>
-            <TouchableOpacity
-              style={{
-                position: 'absolute',
-                height: vh * 100,
-                width: vw * 100,
-                backgroundColor: 'rgba(0,0,0,0.5)',
-              }}
-              activeOpacity={0.9}
-              onPress={() => this.setState({visible: false})}
-            />
-            <View style={styles.modal}>
-              {this.choices.map((item, index) => {
-                return (
-                  <>
-                    <TouchableHOC
-                      onPress={item?.onClick}
-                      style={{marginLeft: vw * 2}}>
-                      <OutfitRegularText
-                        style={{
-                          color: 'black',
-                          fontSize: vh * 2.2,
-                        }}>
-                        {item?.name}
-                      </OutfitRegularText>
-                    </TouchableHOC>
-                    {index < this.choices.length - 1 && (
-                      <View style={styles.line} />
-                    )}
-                  </>
-                );
-              })}
-            </View>
+      <ImageBackground source={backgrounds.bgimage} style={styles.container}>
+        <KeyboardAwareScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.contentContainerStyle}>
+          <View style={styles.options}>
+            <TouchableHOC
+              style={
+                this.state.formOption === 'Login'
+                  ? styles.darkButton
+                  : styles.lightButton
+              }
+              onPress={() => this.setState({formOption: 'Login'})}>
+              <OutfitMediumText
+                style={{
+                  color:
+                    this.state.formOption === 'Login'
+                      ? ThemeColors.white
+                      : ThemeColors.fontBlack,
+                }}>
+                LOGIN
+              </OutfitMediumText>
+            </TouchableHOC>
+            <TouchableHOC
+              style={
+                this.state.formOption === 'Signup'
+                  ? styles.darkButton
+                  : styles.lightButton
+              }
+              onPress={() => this.setState({formOption: 'Signup'})}>
+              <OutfitMediumText
+                style={{
+                  color:
+                    this.state.formOption === 'Signup'
+                      ? ThemeColors.white
+                      : ThemeColors.fontBlack,
+                }}>
+                SIGN UP
+              </OutfitMediumText>
+            </TouchableHOC>
           </View>
-        </Modal>
-      </View>
+          {this.state.formOption === 'Login'
+            ? this.renderLogin()
+            : this.renderSignup()}
+        </KeyboardAwareScrollView>
+        <ImagePickerModal
+          visible={this.state.visible}
+          choices={this.choices}
+          hide={() => this.setState({visible: false})}
+        />
+      </ImageBackground>
     );
   }
 }

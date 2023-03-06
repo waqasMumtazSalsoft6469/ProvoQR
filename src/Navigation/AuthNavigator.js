@@ -16,7 +16,7 @@ const AuthStack = createStackNavigator();
 
 const HomeNavigator = () => {
   return (
-    <AuthStack.Navigator screenOptions={getNavigationOptions}>
+    <AuthStack.Navigator screenOptions={{headerShown: false}}>
       <AuthStack.Screen component={Login} name="Login" />
       {/* <AuthStack.Screen component={CompleteProfile} name="CompleteProfile" /> */}
       {/* <AuthStack.Screen
@@ -29,7 +29,7 @@ const HomeNavigator = () => {
       <AuthStack.Screen component={Subscription} name="Subscription" />
       {/* <AuthStack.Screen component={Payment} name="Payment" /> */}
       <AuthStack.Screen component={SuccessScreen} name="SuccessScreen" />
-      <AuthStack.Screen component={DrawerNavigation} name="DrawerStack" />
+      {/* <AuthStack.Screen component={DrawerNavigation} name="DrawerStack" /> */}
     </AuthStack.Navigator>
   );
 };
