@@ -17,8 +17,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     alignSelf: 'center',
-    top: 4 * vh,
+    top: 3 * vh,
     borderRadius: 2 * vh,
+  },
+  searchContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: vw * 85,
   },
   boxview: {
     width: 40 * vw,

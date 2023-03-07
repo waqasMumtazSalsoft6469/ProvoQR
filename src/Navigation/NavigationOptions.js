@@ -1,17 +1,9 @@
 import React from 'react';
 import {TransitionPresets} from '@react-navigation/stack';
-import {
-  StatusBar,
-  Image,
-  TouchableOpacity,
-  View,
-  ImageBackground,
-  StyleSheet,
-} from 'react-native';
+import {Image, View, ImageBackground} from 'react-native';
 import styles from './styles';
 import IconButton from '../components/Buttons/IconButton';
-import {backgrounds, icons, sampleimage, sampleImages} from '../assets/images';
-import Header from './headerbackground';
+import {icons} from '../assets/images';
 import JostRegular from '../components/Text/JostRegular';
 import TouchableHOC from '../components/Buttons/TouchableHOC';
 import {vh, vw} from '../Utils/Units';
@@ -21,192 +13,111 @@ import OutfitSemiBoldText from '../components/Text/OutfitSemiBoldText';
 import store from '../Redux/store';
 import {imageUrl} from '../Api/configs';
 
+const headerLeftBackBtnRoutes = {
+  HomeScreen: 'HomeScreen',
+  Location: 'Location',
+  Payment: 'Payment',
+  Profile: 'Profile',
+  EditProfile: 'Edit Profile',
+  ChangePassword: 'Change Password',
+  Notification: 'Notifications',
+  ProvoPaymentMethod: 'Payment',
+  ResturentDetail: 'Restaurant Detail',
+  RestaurantDirection: 'Map',
+  ResturentMenu: 'Menu',
+  LootBoxPaymentMethod: 'Payment',
+  RestaurantListScreen: 'RestaurantListScreen',
+  RecommendedRestaurantList: 'RecommendedRestaurantList',
+  CategoryListScreen: 'CategoryListScreen',
+  MapScreen: 'Map',
+  RewardScreen: 'Reward Library',
+  RewardDetail: 'Reward Details',
+  RestaurantRequest: 'RestaurantRequest',
+  SecretKey: 'SecretKey',
+  History: 'History',
+  HistoryDetails: 'History Details',
+  AboutUs: 'About Us',
+  ContactUs: 'Contact Us',
+  MySubscriptions: 'Subscription',
+  SubscriptionLogs: 'Subscription Logs',
+  RequestLogs: 'RequestLogs',
+  ProvoScreen: 'ProvoScreen',
+};
+
+const titleRoutes = {
+  Location: 'Location',
+  Payment: 'Payment',
+  Profile: 'Profile',
+  EditProfile: 'Edit Profile',
+  ChangePassword: 'Change Password',
+  Notification: 'Notification',
+  ProvoPaymentMethod: 'Payment',
+  ResturentDetail: 'Restaurant Detail',
+  RestaurantDirection: 'Map',
+  ResturentMenu: 'Menu',
+  LootBoxPaymentMethod: 'Payment',
+  MapScreen: 'Map',
+  RewardScreen: 'Reward Library',
+  RewardDetail: 'Reward Details',
+  History: 'History',
+  HistoryDetails: 'History Details',
+  AboutUs: 'About Us',
+  ContactUs: 'Contact Us',
+  MySubscriptions: 'Subscription',
+  SubscriptionLogs: 'Subscription Logs',
+  ProvoScreen: 'Provo',
+};
+
+const headerRightRoutes = {
+  Profile: 'Profile',
+  ResturentDetail: 'Restaurant Detail',
+  ResturentMenu: 'Menu',
+  LootBoxPaymentMethod: 'Payment',
+  HomeScreen: 'HomeScreen',
+  MySubscriptions: 'Subscription',
+  SubscriptionLogs: 'Subscription Logs',
+  ProvoScreen: 'ProvoScreen',
+};
+
 export const getNavigationOptions = props => {
   var activeRouteName = props.route.state
     ? props.route.state.routes[props.route.state.index].name
     : props.route.name;
 
   return {
-    // ...defaultOptions(activeRouteName, props),
     ...TransitionPresets.SlideFromRightIOS,
-    // headerShown: shouldHeaderBeShown(activeRouteName),
-    // title: getTitle(activeRouteName),
-    // headerBackground: () => null,
-
     title: getTitle(activeRouteName),
     headerTitleAlign: 'center',
-    headerLeft: () => showHeaderLeft(activeRouteName),
-    headerRight: () => showHeaderRight(activeRouteName),
+    headerLeft: () => showHeaderLeft(props),
+    headerRight: () => showHeaderRight(props),
     headerStyle: styles.defaultHeaderStyle,
     headerTitleStyle: styles.headingText,
     headerRightContainerStyle: styles.defaultHeaderRightContainerStyle,
     headerLeftContainerStyle: styles.defaultHeaderLeftContainerStyle,
   };
 };
-export const setStatusBar = (activeRouteName, settings) => {
-  // StatusBar.setBackgroundColor('rgba(255,255,255,0.13)', true);
-  // StatusBar.setTranslucent(true);
-  StatusBar.setBarStyle('dark-content', true);
-};
-export const shouldHeaderBeShown = activeRouteName => {
-  setStatusBar(activeRouteName);
-  switch (activeRouteName) {
-    case 'HomeScreen':
-    // case 'Login':
-    // case 'Signup':
-    // case 'PasswordRecovery':
-    // case 'Subscription':
-    case 'Payment':
-    case 'SuccessScreen':
-    case 'RewardScreen':
-    case 'RewardDetail':
-    case 'ContactUs':
-    case 'AboutUs':
-    case 'Notification':
-    case 'EditProfile':
-    case 'Profile':
-    case 'ChangePassword':
-    case 'RestaurantRequest':
-    case 'RequestLogs':
-    case 'SecretKey':
-    case 'History':
-    case 'HistoryDetails':
-    case 'QRcodeScreen':
-    case 'QRcodeSuccess':
-    case 'Location':
-    case 'MapScreen':
-    case 'ShowonMapScreen':
-    case 'MySubscriptions':
-    case 'ResturentDetail':
-    case 'SubscriptionLogs':
-    case 'EditBillingDetails':
-    case 'ResturentCampaignDetails':
-    case 'CampaignDetail':
-    case 'ProvoScreen':
-    case 'ProvoPaymentMethod':
-    case 'LootBoxPaymentMethod':
-    case 'RestaurantDirection':
-    case 'RestaurantListScreen':
-    case 'CategoryListScreen':
-    case 'RecommendedRestaurantList':
-    case 'ResturentMenu':
-      return true;
 
-    default:
-      return false;
+export const getTitle = props => {
+  if (titleRoutes[props?.route?.name]) {
+    return titles[props?.route?.name];
   }
+  return '';
 };
-export const getTitle = activeRouteName => {
-  switch (activeRouteName) {
-    case 'Login':
-      return 'Login';
 
-    case 'Signup':
-      return 'Sign Up';
-
-    case 'PasswordRecovery':
-      return 'Forgot Password';
-
-    case 'Subscription':
-      return 'Subscription';
-
-    case 'Payment':
-      return 'Payment';
-    case 'SuccessScreen':
-      return 'Subscription';
-
-    case 'RewardScreen':
-      return 'Reward Library';
-
-    case 'RewardDetail':
-      return 'Reward Details';
-
-    case 'ContactUs':
-      return 'Contact Us';
-
-    case 'AboutUs':
-      return 'About Us';
-
-    case 'Notification':
-      return 'Notifications';
-
-    case 'Profile':
-      return 'Profile';
-
-    case 'EditProfile':
-      return 'Edit Profile';
-
-    case 'History':
-      return 'History';
-
-    case 'HistoryDetails':
-      return 'Finest Dining';
-
-    case 'QRcodeScreen':
-      return 'Scan QR Code';
-
-    case 'QRcodeSuccess':
-      return 'Scan QR Code';
-
-    case 'Location':
-      return 'Location';
-
-    case 'MapScreen':
-      return 'Map';
-
-    case 'ShowonMapScreen':
-      return 'Map';
-
-    case 'ResturentDetail':
-      return 'Finest Dining';
-    case 'MySubscriptions':
-      return 'Subscription';
-
-    case 'SubscriptionLogs':
-      return 'Subscription Logs';
-    case 'CampaignDetail':
-      return 'Finest Dining';
-    case 'ResturentCampaignDetails':
-      return 'Finest Dining';
-    case 'ResturentMenu':
-      return 'Menu';
-    case 'ProvoScreen':
-      return 'Provo';
-    case 'RestaurantDirection':
-      return 'Map';
-    default:
-      return '';
-  }
-};
-export const showHeaderRight = (activeRouteName, props, onBackPress) => {
+export const showHeaderRight = props => {
   const data = store.getState();
+
   const count =
     data.GeneralReducer.notificationCount !== null
       ? data.GeneralReducer.notificationCount
       : 0;
+
   const profile = data?.SessionReducer.userData;
-  console.log('notification_count', profile?.image);
+  // console.log('notification_count', profile?.image);
 
-  // if (
-  //   (activeRouteName =
-  //     'RewardScreen' ||
-  //     activeRouteName == 'RewardDetail' ||
-  //     activeRouteName == 'ContactUs' ||
-  //     activeRouteName == 'AboutUs' ||
-  //     activeRouteName == 'Notification' ||
-  //     activeRouteName == 'Profile' ||
-  //     activeRouteName == 'EditProfile' ||
-  //     activeRouteName == 'ChangePassword' ||
-  //     activeRouteName == 'RestaurantRequest' ||
-  //     activeRouteName == 'RequestLogs' ||
-  //     activeRouteName == 'SecretKey' ||
-  //     activeRouteName == 'QRcodeScreen' ||
-  //     activeRouteName == 'ProvoScreen' ||
-  //     activeRouteName == 'ProvoPaymentMethod' ||
-  //     activeRouteName == 'QRcodeSuccess')
-  // )
+  const token = data?.SessionReducer?.token;
 
-  if (activeRouteName === 'HomeScreen') {
+  if (headerRightRoutes[props?.route?.name]) {
     return (
       <View style={{flexDirection: 'row'}}>
         <TouchableHOC onPress={() => props.navigation.navigate('Location')}>
@@ -250,110 +161,26 @@ export const showHeaderRight = (activeRouteName, props, onBackPress) => {
     );
   }
 };
-const renderBackButton = (activeRouteName, props) => {
-  return (
-    <IconButton
-      style={{}}
-      icon={icons.backarrow}
-      onPress={() => props.navigation.goBack()}
-    />
-  );
-};
-const renderDrawer = props => {
-  return (
-    <TouchableHOC onPress={() => props.navigation.toggleDrawer()}>
-      <Image source={icons.menu} style={styles.menu} resizeMode="contain" />
-    </TouchableHOC>
-  );
-};
 
-export const showHeaderLeft = (activeRouteName, props) => {
-  // return renderBackButton(activeRouteName, navigation);
-  switch (activeRouteName) {
-    // case 'HomeTabs':
-    case 'RestaurantRequest':
-    case 'SecretKey':
-    case 'ContactUs':
-    case 'RequestLogs':
-    case 'AboutUs':
-    case 'History':
-    case 'MySubscriptions':
-    case 'MapScreen':
-    case 'QRcodeScreen':
-    case 'RewardScreen':
-    case 'RewardDetail':
-    case 'ContactUs':
-    case 'AboutUs':
-    case 'Notification':
-    case 'Profile':
-    case 'EditProfile':
-    case 'ChangePassword':
-    case 'RestaurantRequest':
-    case 'RequestLogs':
-    case 'SecretKey':
-    case 'HistoryDetails':
-    case 'QRcodeSuccess':
-    case 'Location':
-    case 'ResturentDetail':
-    case 'ResturentMenu':
-    case 'EditBillingDetails':
-    case 'SubscriptionLogs':
-    case 'ResturentCampaignDetails':
-    case 'CampaignDetail':
-    case 'MapScreen':
-    case 'ProvoScreen':
-    case 'ProvoPaymentMethod':
-    case 'LootBoxPaymentMethod':
-    case 'Payment':
-    case 'RestaurantDirection':
-    case 'RestaurantListScreen':
-    case 'CategoryListScreen':
-    case 'RecommendedRestaurantList':
-      return renderBackButton(activeRouteName, props);
-    case 'HomeScreen':
-      return renderHomeScreenHeaderLeft();
-    default:
-      return null;
+export const showHeaderLeft = props => {
+  if (headerLeftBackBtnRoutes[props?.route?.name] === 'HomeScreen') {
+    return (
+      <View style={styles.homeLeftHeaderContainer}>
+        <OutfitMediumText style={styles.homeHeaderText}>
+          Grab Your
+        </OutfitMediumText>
+        <OutfitSemiBoldText style={styles.headerTextBold}>
+          Delicious Meal Now!
+        </OutfitSemiBoldText>
+      </View>
+    );
+  } else {
+    return (
+      <IconButton
+        style={{}}
+        icon={icons.backarrow}
+        onPress={() => props.navigation.goBack()}
+      />
+    );
   }
-};
-
-const renderHomeScreenHeaderLeft = () => {
-  return (
-    <View style={styles.homeLeftHeaderContainer}>
-      <OutfitMediumText style={styles.homeHeaderText}>
-        Grab Your
-      </OutfitMediumText>
-      <OutfitSemiBoldText style={styles.headerTextBold}>
-        Delicious Meal Now!
-      </OutfitSemiBoldText>
-    </View>
-  );
-};
-
-export const defaultOptions = (activeRouteName, props) => {
-  return {
-    ...TransitionPresets.SlideFromRightIOS,
-    headerRight: () =>
-      activeRouteName == 'Login' ||
-      activeRouteName == 'CompleteProfile' ||
-      activeRouteName == 'Location' ||
-      activeRouteName == 'Signup' ||
-      activeRouteName == 'PasswordRecovery' ||
-      activeRouteName == 'Subscription' ||
-      activeRouteName == 'Payment' ||
-      activeRouteName == 'SuccessScreen' ||
-      activeRouteName == 'DrawerStack' ||
-      activeRouteName == 'RestaurantDirection'
-        ? null
-        : showHeaderRight(activeRouteName, props),
-    headerLeft: () => showHeaderLeft(activeRouteName, props),
-    headerTitleAlign: 'center',
-
-    headerTitleStyle: styles.defaultHeaderTitleStyle,
-    headerTitleContainerStyle: styles.defaultHeaderTitleContainerStyle,
-    headerRightContainerStyle: styles.defaultHeaderRightContainerStyle,
-    headerLeftContainerStyle: styles.defaultHeaderLeftContainerStyle,
-    headerTitleAllowFontScaling: true,
-    headerStyle: styles.defaultHeaderStyle,
-  };
 };

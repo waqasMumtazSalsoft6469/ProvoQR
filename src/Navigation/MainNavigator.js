@@ -35,12 +35,26 @@ class MainNavigator extends React.Component {
     super(props);
     this.state = {};
   }
+  
+  // componentDidMount() {
+  //   getCurrentLocation();
+  //   this.props.getAllNotifications();
+  //   this.props.getProfileData();
+  //   this.props.getAllCategories();
+  //   // AnimatedSplash.hide();
+  // }
+
   componentDidMount() {
-    getCurrentLocation();
-    this.props.getAllNotifications();
-    this.props.getProfileData();
-    this.props.getAllCategories();
-    // AnimatedSplash.hide();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      getCurrentLocation();
+      this.props.getAllNotifications();
+      this.props.getProfileData();
+      this.props.getAllCategories();
+    });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   renderSelection = () => {
@@ -50,8 +64,7 @@ class MainNavigator extends React.Component {
       <MainStack.Navigator
         // initialRouteName='HomeTabs'
         headerMode="screen"
-        screenOptions={getNavigationOptions}
-      >
+        screenOptions={getNavigationOptions}>
         {/* {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )} */}
@@ -67,11 +80,7 @@ class MainNavigator extends React.Component {
           name="Drawer"
           options={{headerShown: false}}
         />
-        <MainStack.Screen
-          component={Location}
-          name="Location"
-          screenOptions={{headerShown: false}}
-        />
+        <MainStack.Screen component={Location} name="Location" />
         <MainStack.Screen component={Payment} name="Payment" />
         <MainStack.Screen component={Profile} name="Profile" />
         <MainStack.Screen component={ChangePassword} name="ChangePassword" />

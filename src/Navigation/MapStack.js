@@ -15,20 +15,20 @@ const MenuStack = () => {
   return (
     <MapNavigator.Navigator screenOptions={getNavigationOptions}>
       <MapNavigator.Screen component={MapScreen} name="MapScreen" />
-      <MapNavigator.Screen component={ShowonMapScreen} name="ShowonMapScreen" />
-      <MapNavigator.Screen
+      {/* <MapNavigator.Screen component={ShowonMapScreen} name="ShowonMapScreen" /> */}
+      {/* <MapNavigator.Screen
         component={RestaurantDetails}
         name="RestaurantDetails"
-      />
-      <MapNavigator.Screen
+      /> */}
+      {/* <MapNavigator.Screen
         component={ResturentCampaignDetails}
         name="ResturentCampaignDetails"
-      />
+      /> */}
       {/* <MapNavigator.Screen
         component={RestaurantDirection}
         name="RestaurantDirection"
       /> */}
-      <MapNavigator.Screen component={CampaignDetail} name="CampaignDetail" />
+      {/* <MapNavigator.Screen component={CampaignDetail} name="CampaignDetail" /> */}
     </MapNavigator.Navigator>
   );
 };

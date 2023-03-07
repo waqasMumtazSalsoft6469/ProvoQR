@@ -86,7 +86,7 @@ class RegisterScreen extends React.Component {
       };
 
       const response = await this.props.getRewardList(filters);
-      //   console.log('response', response);
+        console.log('reward response', response?.rewardList?.data);
       this.setState({
         reward: response?.rewardList?.data,
       });
@@ -190,7 +190,7 @@ class RegisterScreen extends React.Component {
         }
         style={styles.imageContainer}>
         <Image
-          source={{uri: imageUrl + item?.reward_image}}
+          source={item?.reward_image ? {uri: imageUrl + item?.reward_image} : sampleimage.placeholder}
           style={[styles.image]}
         />
       </TouchableHighlight>

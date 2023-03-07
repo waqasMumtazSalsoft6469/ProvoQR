@@ -351,12 +351,7 @@ class MapScreen extends React.Component {
 
           <View style={styles.box}>
             <View
-              style={{
-                alignItems: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: vw * 85,
-              }}>
+              style={styles.searchContainer}>
               <MainInput
                 placeholder="Search Here..."
                 // style={styles.field}

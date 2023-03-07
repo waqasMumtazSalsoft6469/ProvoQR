@@ -32,17 +32,17 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={RestaurantListScreen}
         name="RestaurantListScreen"
-        options={{headerShown: true}}
+        // options={{headerShown: true}}
       />
       <HomeNavigator.Screen
         component={RecommendedRestaurantList}
         name="RecommendedRestaurantList"
-        options={{headerShown: true}}
+        // options={{headerShown: true}}
       />
       <HomeNavigator.Screen
         component={CategoryListScreen}
         name="CategoryListScreen"
-        options={{headerShown: true}}
+        // options={{headerShown: true}}
       />
       {/* <HomeNavigator.Screen
         component={ResturentMenuScreen}

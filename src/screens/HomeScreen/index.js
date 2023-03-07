@@ -85,6 +85,7 @@ class HomeScreen extends React.Component {
       };
 
       const res = await this.props.getHomData(params);
+      console.log("home res", res);
       this.setState({
         banners: res?.banner,
         recommended: res?.recommended,
@@ -179,7 +180,7 @@ class HomeScreen extends React.Component {
     });
   };
   renderAllRestaurantItem = ({item}) => {
-    console.log('item from home', item?.badges);
+    // console.log('item from home', item?.badges);
     return (
       <View style={styles.homeCardContainer}>
         <HomeCard
