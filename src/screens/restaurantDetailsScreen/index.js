@@ -100,6 +100,7 @@ class ResturentDetailScreen extends React.Component {
     );
   };
   render() {
+    console.log('res detail', this.state.details);
     return (
       <View style={styles.container}>
         <ImageBackground
