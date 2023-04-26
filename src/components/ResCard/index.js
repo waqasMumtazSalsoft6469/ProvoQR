@@ -119,12 +119,21 @@ class ProductItem extends React.Component {
             ]}
             // style={styles.cardimage}
           />
-          {this.props.item.happyHours && (
-            <View style={styles.indicator}>
-              <OutfitSemiBoldText style={styles.happyFont}>
-                ✓ Happy Hours
-              </OutfitSemiBoldText>
-            </View>
+          {this.props.item.happy_hour_deals && (
+            <Image
+              source={icons.happyHourIcon}
+              style={{
+                position: 'absolute',
+                width: vw * 27.7,
+                height: vw * 18.3,
+                resizeMode: 'contain',
+              }}
+            />
+            // <View style={styles.indicator}>
+            //   <OutfitSemiBoldText style={styles.happyFont}>
+            //     ✓ Happy Hours
+            //   </OutfitSemiBoldText>
+            // </View>
           )}
           {this.props.history && (
             <Image

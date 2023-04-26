@@ -81,6 +81,12 @@ class ResturentDetailScreen extends React.Component {
   //   );
   // };
 
+  handleHappyHourMenuPress = () => {
+    this.props?.navigation?.navigate('HappyHourMenuScreen', {
+      deal: this.state?.details?.happy_hour_deals,
+    });
+  };
+
   renderRatings = () => {
     return (
       <View
@@ -100,6 +106,7 @@ class ResturentDetailScreen extends React.Component {
     );
   };
   render() {
+    console.log('about', this.state.details?.organ_profiles);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -189,7 +196,7 @@ class ResturentDetailScreen extends React.Component {
                 width: 100 * vw,
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginVertical: vh * 3,
+                marginVertical: vh * 2,
                 // marginTop: vh * 2,
                 // marginBottom: vh * -2,
               }}
@@ -197,17 +204,35 @@ class ResturentDetailScreen extends React.Component {
               dashLength={0}
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
-            {/* <View
-              style={{
-                paddingHorizontal: 5 * vw,
-                marginTop: 5 * vh,
-                justifyContent: 'space-between',
-              }}>
-              <OutfitSemiBoldText style={styles.recomend}>
-                Happy Hours Deals
-              </OutfitSemiBoldText>
-              <HomeCarouselConmponent />
-            </View> */}
+            {this?.state?.details?.happy_hour_deals && (
+              <View
+                style={{
+                  paddingHorizontal: 5 * vw,
+                  justifyContent: 'space-between',
+                }}>
+                <OutfitSemiBoldText style={styles.recomend}>
+                  Happy Hours Deals
+                </OutfitSemiBoldText>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    this.handleHappyHourMenuPress(
+                      this?.state?.details?.happy_hour_deals,
+                    )
+                  }
+                  style={styles.happyHourBannerImageContainer}>
+                  <Image
+                    source={{
+                      uri:
+                        imageUrl +
+                        this?.state?.details?.happy_hour_deals?.banner_image,
+                    }}
+                    style={styles.happyHourBannerImage}
+                  />
+                </TouchableOpacity>
+                {/* <HomeCarouselConmponent /> */}
+              </View>
+            )}
             <View style={styles.outerContainer}>
               <View style={styles.priceContainer}>
                 <OutfitSemiBoldText style={styles.priceHeadingText}>

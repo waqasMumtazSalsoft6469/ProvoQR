@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     width: vh * 3,
   },
   outerContainer: {
-    // marginTop: vh * 3,
+    marginTop: vh * 3,
     paddingHorizontal: vw * 5,
   },
   priceContainer: {
@@ -146,6 +146,20 @@ const styles = StyleSheet.create({
   priceHeadingText: {
     color: ThemeColors.iconColor,
     fontSize: vh * 1.8,
+  },
+  happyHourBannerImageContainer: {
+    marginTop: vh * 2,
+    width: vw * 90,
+    height: vh * 25,
+    borderRadius: vh * 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  happyHourBannerImage: {
+    width: vw * 90,
+    height: vh * 25,
+    borderRadius: vh * 4,
+    resizeMode: 'cover',
   },
 });
 export default styles;

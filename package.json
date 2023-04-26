@@ -50,6 +50,7 @@
     "react-native-pulse": "^1.0.7",
     "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "^3.2.0",
+    "react-native-safearea-height": "^1.0.6",
     "react-native-screens": "^3.0.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-star-rating": "^1.1.0",

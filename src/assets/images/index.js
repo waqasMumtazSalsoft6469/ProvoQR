@@ -7,6 +7,7 @@ export const backgrounds = {
   grayBackground: require('./background/grayBG.png'),
   redBg: require('./background/redBG.png'),
   drawerBg: require('./background/drawerBg.png'),
+  happyHourMenuScreenBg: require('./background/happyHourMenuScreenBg.png') 
 };
 
 export const sampleimage = {
@@ -28,7 +29,7 @@ export const sampleimage = {
   openBox: require('./sampleImages/openBox.png'),
   happyHour: require('./sampleImages/happyHour.png'),
   category1: require('./sampleImages/category1.png'),
-  placeholder: require('./sampleImages/placeholder.png')
+  placeholder: require('./sampleImages/placeholder.png'),
 };
 
 export const icons = {
@@ -74,6 +75,7 @@ export const icons = {
   popupTick: require('./icons/popupTick.png'),
   popupAlert: require('./icons/popupAlert.png'),
   popupQuestion: require('./icons/popupQuestion.png'),
+  happyHourIcon: require('./icons/happyHourIcon.png'),
 };
 export const tabicons = {
   tab1: require('./tabIcons/tab1.png'),

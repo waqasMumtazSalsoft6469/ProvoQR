@@ -42,6 +42,7 @@ const headerLeftBackBtnRoutes = {
   SubscriptionLogs: 'Subscription Logs',
   RequestLogs: 'RequestLogs',
   ProvoScreen: 'ProvoScreen',
+  HappyHourMenuScreen: 'Happy Hour',
 };
 
 const titleRoutes = {
@@ -66,6 +67,7 @@ const titleRoutes = {
   MySubscriptions: 'Subscription',
   SubscriptionLogs: 'Subscription Logs',
   ProvoScreen: 'Provo',
+  HappyHourMenuScreen: 'Happy Hour',
 };
 
 const headerRightRoutes = {
@@ -77,6 +79,7 @@ const headerRightRoutes = {
   MySubscriptions: 'Subscription',
   SubscriptionLogs: 'Subscription Logs',
   ProvoScreen: 'ProvoScreen',
+  HappyHourMenuScreen: 'Happy Hour',
 };
 
 export const getNavigationOptions = props => {
@@ -86,7 +89,7 @@ export const getNavigationOptions = props => {
 
   return {
     ...TransitionPresets.SlideFromRightIOS,
-    title: getTitle(activeRouteName),
+    title: getTitle(props),
     headerTitleAlign: 'center',
     headerLeft: () => showHeaderLeft(props),
     headerRight: () => showHeaderRight(props),
@@ -99,7 +102,7 @@ export const getNavigationOptions = props => {
 
 export const getTitle = props => {
   if (titleRoutes[props?.route?.name]) {
-    return titles[props?.route?.name];
+    return titleRoutes[props?.route?.name];
   }
   return '';
 };

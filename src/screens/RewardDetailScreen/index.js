@@ -25,6 +25,7 @@ import {StackActions} from '@react-navigation/native';
 import {imageUrl} from '../../Api/configs';
 import AlertModal from '../../components/Popups/alertModal';
 import ThemeColors from '../../Utils/ThemeColors';
+import moment from 'moment';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -109,6 +110,7 @@ class RegisterScreen extends React.Component {
   }
 
   render() {
+    console.log("duration", moment().diff(moment(this?.state?.detailsreward_expiry_date,"MM/DD/YY HH:mm:ss")));
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -116,7 +118,9 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 90 * vh}}>
-          <ScrollView contentContainerStyle={{height: vh * 135}}>
+          <ScrollView
+          // contentContainerStyle={{height: vh * 135}}
+          >
             <View
               style={{
                 alignItems: 'center',

@@ -215,7 +215,7 @@ class RegisterScreen extends React.Component {
           imageStyle={styles.imageStyle}>
           <FlatList
             data={this.state.reward}
-            keyExtractor={(_, index) => index}
+            keyExtractor={(item) => item?.id}
             numColumns={2}
             contentContainerStyle={styles.contentContainerStyle}
             renderItem={this.renderItem}

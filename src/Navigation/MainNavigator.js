@@ -27,6 +27,7 @@ import {
   getProfileData,
   getAllNotifications,
 } from '../Redux/Actions/otherActions';
+import HappyHourMenuScreen from '../screens/HappyHourMenuScreen';
 
 const MainStack = createStackNavigator();
 
@@ -35,7 +36,7 @@ class MainNavigator extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
   // componentDidMount() {
   //   getCurrentLocation();
   //   this.props.getAllNotifications();
@@ -107,7 +108,16 @@ class MainNavigator extends React.Component {
           component={LootBoxPaymentMethod}
           name="LootBoxPaymentMethod"
         />
-        <MainStack.Screen component={LootBoxScreen} name="LootBoxScreen" />
+        <MainStack.Screen
+          component={LootBoxScreen}
+          name="LootBoxScreen"
+          options={{headerShown: false}}
+        />
+        <MainStack.Screen
+          component={HappyHourMenuScreen}
+          name="HappyHourMenuScreen"
+          options={{headerTransparent: true}}
+        />
       </MainStack.Navigator>
     );
   };
