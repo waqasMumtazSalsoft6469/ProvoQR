@@ -27,5 +27,6 @@ const ThemeColors = {
   dashBorderColor: '#E9E9E9',
   notificationBorder: '#F3F3F3',
   notificationCard: '#F2D3D1',
+  rewardText: '#393939',
 };
 export default ThemeColors;

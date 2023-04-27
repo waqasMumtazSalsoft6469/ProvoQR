@@ -14,15 +14,21 @@ import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {connect, dispatch} from 'react-redux';
 import {lootBoxDraw} from '../../Redux/Actions/otherActions';
 import {StackActions} from '@react-navigation/native';
+import moment from 'moment';
+import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import OutfitMediumText from '../../components/Text/OutfitMediumText';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
     this.progress = new Animated.Value(0);
     this.textAnim = new Animated.Value(1);
     this.state = {
-      success: this.props.route.params.success
-        ? this.props.route.params.success
-        : 0,
+      // success: this.props.route.params.success
+      //   ? this.props.route.params.success
+      //   : 0,
+      success: 1,
+      rewardDetail: {},
+      timeLeft: '',
     };
   }
 
@@ -43,6 +49,7 @@ class LootBoxScreen extends React.Component {
     };
     this.props.lootBoxDraw(data).then(res => {
       if (res?.message === 'Win') {
+        this.setState({rewardDetail: res});
         this.setState({success: 1});
       } else {
         this.setState({success: 2});
@@ -53,7 +60,44 @@ class LootBoxScreen extends React.Component {
   componentWillUnmount() {
     if (this.state.success == 1) {
       this._startAnim();
+
+      const interval = setInterval(() => {
+        let exDate = '2023-04-02 12:34:29.000000';
+        const diff = moment(exDate, "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'").diff(
+          moment(),
+        );
+        console.log('diff', diff);
+        const duration = moment.duration(diff);
+        console.log('duration', duration);
+        const time =
+          Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
+        console.log('time', time);
+        console.log('split', time.split(':'));
+        this.setState({timeLeft: time});
+      }, 1000);
+      return () => clearInterval(interval);
     }
+  }
+  componentDidMount() {
+    // if (this.state.success == 1) {
+    // this._startAnim();
+
+    const interval = setInterval(() => {
+      let exDate = '2023-04-29 14:04:05.000000';
+      const diff = moment(exDate, "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'").diff(
+        moment(),
+      );
+      console.log('diff', diff);
+      const duration = moment.duration(diff);
+      console.log('duration', duration);
+      const time =
+        Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
+      console.log('time', time);
+      console.log('split', time.split(':'));
+      this.setState({timeLeft: time});
+    }, 1000);
+    return () => clearInterval(interval);
+    // }
   }
   _startAnim = () => {
     this.progress.setValue(0);
@@ -102,14 +146,36 @@ class LootBoxScreen extends React.Component {
       return (
         <>
           <Image source={sampleimage.openBox} style={styles.openBox} />
-          <OutfitRegularText style={styles.congText}>
-            Congratulation!
-          </OutfitRegularText>
+          <View style={{flexDirection: 'row', borderRadius: vw * 1}}>
+            {this.state?.timeLeft.split(':').map((item, index) => {
+              return (
+                <View style={{flexDirection: 'row'}}>
+                  <View style={styles.boxStyle}>
+                    <OutfitRegularText style={styles.timeStyle}>
+                      {item.slice(0, 1)}
+                    </OutfitRegularText>
+                  </View>
+                  <View style={styles.boxStyle}>
+                    <OutfitRegularText style={styles.timeStyle}>
+                      {item.slice(0, -1)}
+                    </OutfitRegularText>
+                  </View>
+                  {index !== this.state?.timeLeft.split(':').length - 1 && (
+                    <View style={styles.dotContainer}>
+                      <View style={styles.dotStyle} />
+                      <View style={styles.dotStyle} />
+                    </View>
+                  )}
+                </View>
+              );
+            })}
+          </View>
+          <OutfitRegularText style={styles.congText}>Hurray!</OutfitRegularText>
           <OutfitRegularText style={styles.whiteText}>
             You have won a family meal
           </OutfitRegularText>
-          <Image source={icons.voucher} style={styles.voucherIcon} />
-          <OutfitLightText
+          {/* <Image source={icons.voucher} style={styles.voucherIcon} /> */}
+          {/* <OutfitLightText
             style={{
               color: ThemeColors.white,
               textAlign: 'center',
@@ -117,12 +183,27 @@ class LootBoxScreen extends React.Component {
             }}>
             Hey ! Thanks for scanning the code. Your reward can be redeemed from
             the rewards library !
-          </OutfitLightText>
-          <TouchableHOC onPress={this.handleRewardBtnPress}>
+          </OutfitLightText> */}
+          <OutfitSemiBoldText style={styles.headingText}>
+            Reward Info
+          </OutfitSemiBoldText>
+          <OutfitMediumText style={styles.rewardText}>
+            {this.state?.rewardDetail?.restaurant?.name}
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.rewardText}>
+            {this.state?.rewardDetail?.restaurant?.address}
+          </OutfitMediumText>
+          <Button
+            title="OK"
+            onPress={this.handleRewardBtnPress}
+            btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
+            labelStyle={{color: ThemeColors.white}}
+          />
+          {/* <TouchableHOC onPress={this.handleRewardBtnPress}>
             <OutfitLightText style={styles.underlineTextButton}>
               Go To Reward Library
             </OutfitLightText>
-          </TouchableHOC>
+          </TouchableHOC> */}
         </>
       );
     } else {

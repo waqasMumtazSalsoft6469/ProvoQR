@@ -26,6 +26,7 @@ import {imageUrl} from '../../Api/configs';
 import AlertModal from '../../components/Popups/alertModal';
 import ThemeColors from '../../Utils/ThemeColors';
 import moment from 'moment';
+import OutfitMediumText from '../../components/Text/OutfitMediumText';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class RegisterScreen extends React.Component {
       visibleModal: false,
       successModal: false,
       redeemResponse: {},
+      timeLeft: '',
       // cusines: [
       //   {
       //     name: 'Cuisine 01',
@@ -91,11 +93,10 @@ class RegisterScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.route.params.reward_id;
-    const name = this.props?.route.params.restaurantName;
-
-    this.props?.navigation?.setOptions({
-      title: name,
-    });
+    // const name = this.props?.route.params.restaurantName;
+    // this.props?.navigation?.setOptions({
+    //   title: name,
+    // });
 
     const data = {
       reward_id: id,
@@ -107,11 +108,25 @@ class RegisterScreen extends React.Component {
         details: res?.rewardDetail,
       });
     });
+
+    const interval = setInterval(() => {
+      const diff = moment(
+        this.state?.details?.reward_expiry_date,
+        'MM/DD/YY HH:mm:ss',
+      ).diff(moment());
+      // console.log('diff', diff);
+      const duration = moment.duration(diff);
+      // console.log('duration', duration);
+      const time =
+        Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
+      // console.log('time', time);
+      // console.log('split', time.split(':'));
+      this.setState({timeLeft: time});
+    }, 1000);
+    return () => clearInterval(interval);
   }
 
   render() {
-    // console.log("duration", moment().diff(moment(this?.state?.detailsreward_expiry_date,"MM/DD/YY HH:mm:ss")));
-    console.log('duration', this?.state?.detailsreward_expiry_date);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -134,23 +149,35 @@ class RegisterScreen extends React.Component {
               />
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
-              <View style={{flexDirection: 'row', marginTop: 2 * vh}}>
+              {/* <View style={{flexDirection: 'row', marginTop: 2 * vh}}>
                 <OutfitSemiBoldText style={styles.recomend}>
                   About The Reward
                 </OutfitSemiBoldText>
-              </View>
+              </View> */}
 
               <OutfitLightText style={styles.rewtext}>
                 {this.state.details?.reward_description}
               </OutfitLightText>
-              <OutfitLightText style={styles.redeem}>
+              {/* <OutfitLightText style={styles.redeem}>
                 (Make sure you are in the restaurant at time of redemption.)
-              </OutfitLightText>
-              <Image source={icons.rewardCup} style={styles.rewardIcon} />
-              <OutfitRegularText
+              </OutfitLightText> */}
+              {/* <Image source={icons.rewardCup} style={styles.rewardIcon} /> */}
+              {/* <OutfitRegularText
                 style={{marginBottom: vh * 2, alignSelf: 'center'}}>
                 You are a gold member of this restaurant now!
-              </OutfitRegularText>
+              </OutfitRegularText> */}
+              <OutfitSemiBoldText style={styles.midHeadingStyle}>
+                Reward Info
+              </OutfitSemiBoldText>
+              <OutfitMediumText style={styles.midTextStyle}>
+                {this.state.details?.organisations?.name}
+              </OutfitMediumText>
+              <OutfitMediumText style={styles.midTextStyle}>
+                {this.state.details?.organisations?.address}
+              </OutfitMediumText>
+              <OutfitMediumText style={styles.midTextStyle}>
+                {this.state.details?.reward_expiry_date}
+              </OutfitMediumText>
             </View>
             {/* <Dash
               style={{
@@ -175,7 +202,7 @@ class RegisterScreen extends React.Component {
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
             </View> */}
-            <View style={{alignItems: 'center'}}>
+            <View style={{alignItems: 'center', marginTop: vh * 2}}>
               {this.props.route?.params?.status === 'Redeemed' ? (
                 <Button
                   title="REDEEMED"
@@ -187,12 +214,15 @@ class RegisterScreen extends React.Component {
               ) : (
                 <Button
                   title={
-                    this.props.route?.params?.status === 'Available'
+                    (this.props.route?.params?.status === 'Available'
                       ? 'REDEEM REWARD'
-                      : 'Expired'
+                      : 'Expired') +
+                    ' ' +
+                    (this.props.route?.params?.status === 'Available' &&
+                      `(${this.state.timeLeft} LEFT)`)
                   }
                   onPress={() => this.setState({visibleModal: true})}
-                  btnContainer={{marginTop: vh, width: vw * 50}}
+                  btnContainer={{marginTop: vh, width: vw * 80}}
                 />
               )}
             </View>

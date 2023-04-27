@@ -30,6 +30,16 @@ const styles = StyleSheet.create({
     lineHeight: 3 * vh,
     fontSize: 2 * vh,
   },
+  midHeadingStyle: {
+    marginTop: vh * 2,
+    color: ThemeColors.secondaryColor,
+    fontSize: vh * 2,
+  },
+  midTextStyle: {
+    marginTop: vh * 1,
+    color: ThemeColors.rewardText,
+    fontSize: vh * 1.8,
+  },
   imgicon: {
     width: 5 * vw,
     tintColor: '#000000',
