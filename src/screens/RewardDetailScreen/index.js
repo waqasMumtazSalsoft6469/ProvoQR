@@ -110,7 +110,8 @@ class RegisterScreen extends React.Component {
   }
 
   render() {
-    console.log("duration", moment().diff(moment(this?.state?.detailsreward_expiry_date,"MM/DD/YY HH:mm:ss")));
+    // console.log("duration", moment().diff(moment(this?.state?.detailsreward_expiry_date,"MM/DD/YY HH:mm:ss")));
+    console.log('duration', this?.state?.detailsreward_expiry_date);
     return (
       <View style={styles.container}>
         <ImageBackground
