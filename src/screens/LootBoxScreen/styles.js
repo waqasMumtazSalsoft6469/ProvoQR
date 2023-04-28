@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
   boxStyle: {
     height: vw * 12,
     width: vw * 12,
-    borderRadius: vw * 2,
-    marginRight: vw * 1,
+    // borderRadius: vw * 2,
+    // marginRight: vw * 1,
     backgroundColor: ThemeColors.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   timeStyle: {
     color: ThemeColors.secondaryColor,
@@ -101,11 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dotStyle: {
-    height: vw * 1.2,
-    width: vw * 1.2,
-    borderRadius: vw * 1.2,
-    backgroundColor: ThemeColors.white,
-    margin: 2,
+    color: ThemeColors.white,
   },
   headingText: {
     color: ThemeColors.white,

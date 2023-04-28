@@ -24,28 +24,47 @@ const CountDownTimer = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.timerBackfround}>
-        <OutfitRegularText style={styles.timeLabel}>
+      <View style={[styles.timerBackfround, props?.timerBgStyle]}>
+        <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
+          {String(Math.floor(time / 3600))[1]
+            ? String(Math.floor(time / 3600))[0]
+            : '0'}
+        </OutfitRegularText>
+      </View>
+      <View style={[styles.timerBackfround, props?.timerBgStyle]}>
+        <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
+          {String(Math.floor(time / 3600))[1]
+            ? String(Math.floor(time / 3600))[1]
+            : String(Math.floor(time / 3600))[0]}
+        </OutfitRegularText>
+      </View>
+      <OutfitRegularText style={[styles.timeLabel1, props?.dotStyle]}>
+        :
+      </OutfitRegularText>
+      <View style={[styles.timerBackfround, props?.timerBgStyle]}>
+        <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
           {String(Math.floor(time / 60))[1]
             ? String(Math.floor(time / 60))[0]
             : '0'}
         </OutfitRegularText>
       </View>
-      <View style={styles.timerBackfround}>
-        <OutfitRegularText style={styles.timeLabel}>
+      <View style={[styles.timerBackfround, props?.timerBgStyle]}>
+        <OutfitRegularText style={[styles.timeLabel.props?.textStyle]}>
           {String(Math.floor(time / 60))[1]
             ? String(Math.floor(time / 60))[1]
             : String(Math.floor(time / 60))[0]}
         </OutfitRegularText>
       </View>
-      <OutfitRegularText style={styles.timeLabel1}>:</OutfitRegularText>
-      <View style={styles.timerBackfround}>
-        <OutfitRegularText style={styles.timeLabel}>
+      <OutfitRegularText style={[styles.timeLabel1, props?.dotStyle]}>
+        :
+      </OutfitRegularText>
+      <View style={[styles.timerBackfround, props?.timerBgStyle]}>
+        <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
           {String(time % 60)[1] ? String(time % 60)[0] : '0'}
         </OutfitRegularText>
       </View>
-      <View style={styles.timerBackfround}>
-        <OutfitRegularText style={styles.timeLabel}>
+      <View style={[styles.timerBackfround, props?.timerBgStyle]}>
+        <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
           {String(time % 60)[1] ? String(time % 60)[1] : String(time % 60)[0]}
         </OutfitRegularText>
       </View>

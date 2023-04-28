@@ -17,25 +17,30 @@ import {StackActions} from '@react-navigation/native';
 import moment from 'moment';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
+import CountDownTimer from '../../components/CountdownTimer';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
     this.progress = new Animated.Value(0);
     this.textAnim = new Animated.Value(1);
     this.state = {
-      // success: this.props.route.params.success
-      //   ? this.props.route.params.success
-      //   : 0,
-      success: 1,
+      success: this.props.route.params.success
+        ? this.props.route.params.success
+        : 0,
       rewardDetail: {},
-      timeLeft: '',
     };
   }
 
   handleRewardBtnPress = () => {
     // this.props.navigation.dispatch(StackActions.popToTop());
     // // this.props.navigation.popToTop()
-    this.props.navigation.navigate('GiftStack');
+    this.props.navigation.navigate('GiftStack', {
+      screen: 'RewardDetail',
+      params: {
+        reward_id: this.state?.rewardDetail?.rewards?.id,
+        status: 'Available',
+      },
+    });
   };
 
   handleTryAgainPress = () => {
@@ -49,6 +54,7 @@ class LootBoxScreen extends React.Component {
     };
     this.props.lootBoxDraw(data).then(res => {
       if (res?.message === 'Win') {
+        console.log('draw res', res);
         this.setState({rewardDetail: res});
         this.setState({success: 1});
       } else {
@@ -60,44 +66,7 @@ class LootBoxScreen extends React.Component {
   componentWillUnmount() {
     if (this.state.success == 1) {
       this._startAnim();
-
-      const interval = setInterval(() => {
-        let exDate = '2023-04-02 12:34:29.000000';
-        const diff = moment(exDate, "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'").diff(
-          moment(),
-        );
-        console.log('diff', diff);
-        const duration = moment.duration(diff);
-        console.log('duration', duration);
-        const time =
-          Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
-        console.log('time', time);
-        console.log('split', time.split(':'));
-        this.setState({timeLeft: time});
-      }, 1000);
-      return () => clearInterval(interval);
     }
-  }
-  componentDidMount() {
-    // if (this.state.success == 1) {
-    // this._startAnim();
-
-    const interval = setInterval(() => {
-      let exDate = '2023-04-29 14:04:05.000000';
-      const diff = moment(exDate, "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'").diff(
-        moment(),
-      );
-      console.log('diff', diff);
-      const duration = moment.duration(diff);
-      console.log('duration', duration);
-      const time =
-        Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
-      console.log('time', time);
-      console.log('split', time.split(':'));
-      this.setState({timeLeft: time});
-    }, 1000);
-    return () => clearInterval(interval);
-    // }
   }
   _startAnim = () => {
     this.progress.setValue(0);
@@ -146,30 +115,15 @@ class LootBoxScreen extends React.Component {
       return (
         <>
           <Image source={sampleimage.openBox} style={styles.openBox} />
-          <View style={{flexDirection: 'row', borderRadius: vw * 1}}>
-            {this.state?.timeLeft.split(':').map((item, index) => {
-              return (
-                <View style={{flexDirection: 'row'}}>
-                  <View style={styles.boxStyle}>
-                    <OutfitRegularText style={styles.timeStyle}>
-                      {item.slice(0, 1)}
-                    </OutfitRegularText>
-                  </View>
-                  <View style={styles.boxStyle}>
-                    <OutfitRegularText style={styles.timeStyle}>
-                      {item.slice(0, -1)}
-                    </OutfitRegularText>
-                  </View>
-                  {index !== this.state?.timeLeft.split(':').length - 1 && (
-                    <View style={styles.dotContainer}>
-                      <View style={styles.dotStyle} />
-                      <View style={styles.dotStyle} />
-                    </View>
-                  )}
-                </View>
-              );
-            })}
-          </View>
+          <CountDownTimer
+            time={moment(
+              this.state.rewardDetail?.rewards?.reward_expire_date,
+              "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+            ).diff(moment(), 'seconds')}
+            timerBgStyle={styles.boxStyle}
+            textStyle={styles.timeStyle}
+            dotStyle={styles.dotStyle}
+          />
           <OutfitRegularText style={styles.congText}>Hurray!</OutfitRegularText>
           <OutfitRegularText style={styles.whiteText}>
             You have won a family meal
@@ -196,7 +150,11 @@ class LootBoxScreen extends React.Component {
           <Button
             title="OK"
             onPress={this.handleRewardBtnPress}
-            btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
+            btnContainer={{
+              marginTop: vh * 2,
+              borderColor: ThemeColors.white,
+              width: vw * 40,
+            }}
             labelStyle={{color: ThemeColors.white}}
           />
           {/* <TouchableHOC onPress={this.handleRewardBtnPress}>
@@ -240,6 +198,7 @@ class LootBoxScreen extends React.Component {
     if (this.state.success == 1) {
       this._startAnim();
     }
+    console.log('draw detail', this.state.rewardDetail);
     return (
       <View style={styles.container}>
         <ImageBackground

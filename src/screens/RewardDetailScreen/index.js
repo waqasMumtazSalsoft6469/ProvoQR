@@ -67,7 +67,7 @@ class RegisterScreen extends React.Component {
       successModal: false,
     });
     // showToast(res?.message);
-    dispatch(StackActions.popToTop());
+    this.props.navigation.dispatch(StackActions.popToTop());
     this.props.navigation.navigate('HomeScreen');
   };
 
@@ -84,9 +84,6 @@ class RegisterScreen extends React.Component {
           redeemResponse: res,
           successModal: true,
         });
-        // showToast(res?.message);
-        // dispatch(StackActions.popToTop());
-        // this.props.navigation.navigate('HomeScreen');
       }
     });
   };
@@ -110,9 +107,10 @@ class RegisterScreen extends React.Component {
     });
 
     const interval = setInterval(() => {
+      console.log('exDate', this.state?.details?.reward_expire_date);
       const diff = moment(
-        this.state?.details?.reward_expiry_date,
-        'MM/DD/YY HH:mm:ss',
+        this.state?.details?.reward_expire_date,
+        "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
       ).diff(moment());
       // console.log('diff', diff);
       const duration = moment.duration(diff);
@@ -176,7 +174,10 @@ class RegisterScreen extends React.Component {
                 {this.state.details?.organisations?.address}
               </OutfitMediumText>
               <OutfitMediumText style={styles.midTextStyle}>
-                {this.state.details?.reward_expiry_date}
+                {moment(
+                  this.state.details?.reward_expire_date,
+                  "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+                ).format('DD-MM-YYYY HH:mm:ss')}
               </OutfitMediumText>
             </View>
             {/* <Dash

@@ -69,11 +69,6 @@ class MainNavigator extends React.Component {
         {/* {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )} */}
-        <MainStack.Screen
-          component={LootBoxScreen}
-          name="LootBoxScreen"
-          options={{headerShown: false}}
-        />
         {token &&
           (!userData?.age || !userData?.address || !userData?.gender) && (
             <MainStack.Screen
@@ -113,11 +108,11 @@ class MainNavigator extends React.Component {
           component={LootBoxPaymentMethod}
           name="LootBoxPaymentMethod"
         />
-        {/* <MainStack.Screen
+        <MainStack.Screen
           component={LootBoxScreen}
           name="LootBoxScreen"
           options={{headerShown: false}}
-        /> */}
+        />
         <MainStack.Screen
           component={HappyHourMenuScreen}
           name="HappyHourMenuScreen"
