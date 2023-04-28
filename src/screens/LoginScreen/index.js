@@ -30,6 +30,10 @@ import {login, userSignup} from '../../Redux/Actions/authActions';
 import {ScrollView} from 'react-native-gesture-handler';
 import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
 import ImagePickerModal from '../../components/Popups/ImagePickerModal';
+import {
+  getAllNotifications,
+  getProfileData,
+} from '../../Redux/Actions/otherActions';
 const initialState = {
   name: '',
   email: '',
@@ -90,6 +94,8 @@ class RegisterScreen extends React.Component {
           console.log(res?.user?.age, 'LOGIN RESPONSE');
           if (res?.success) {
             showToast('Login Successfull!');
+            this.props.getAllNotifications();
+            this.props.getProfileData();
             this.props.navigation.navigate('MainNavigator');
             // if (!res?.user?.age || !res?.user?.gender || !res?.user?.address) {
             //   this.props.navigation.navigate("MainNavigator");
@@ -540,6 +546,8 @@ const mapDispatchToProps = dispatch => {
     // explicitly forwarding arguments
     login: data => dispatch(login(data)),
     signup: data => dispatch(userSignup(data)),
+    getAllNotifications: () => dispatch(getAllNotifications()),
+    getProfileData: () => dispatch(getProfileData()),
   };
 };
 

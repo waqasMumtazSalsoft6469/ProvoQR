@@ -30,7 +30,10 @@ class PaymentScreen extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.route?.params?.from == 'lootBox') {
+    if (
+      this.props.route?.params?.from == 'lootbox' ||
+      this.props.route?.params?.from == 'provo'
+    ) {
       this.props.navigation.setOptions({title: 'Payment'});
     } else {
       this.props.navigation.setOptions({

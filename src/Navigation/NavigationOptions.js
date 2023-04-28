@@ -120,12 +120,12 @@ export const showHeaderRight = props => {
 
   const token = data?.SessionReducer?.token;
 
-  if (headerRightRoutes[props?.route?.name]) {
+  if (headerRightRoutes[props?.route?.name] && token) {
     return (
       <View style={{flexDirection: 'row'}}>
         <TouchableHOC onPress={() => props.navigation.navigate('Location')}>
           <Image
-            source={icons.whiteloc}
+            source={icons.blackLocIcon}
             resizeMode="contain"
             style={styles.profile}
           />

@@ -48,8 +48,8 @@ class MainNavigator extends React.Component {
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       getCurrentLocation();
-      this.props.getAllNotifications();
-      this.props.getProfileData();
+      // this.props.getAllNotifications();
+      // this.props.getProfileData();
       this.props.getAllCategories();
     });
   }

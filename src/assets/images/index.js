@@ -7,7 +7,7 @@ export const backgrounds = {
   grayBackground: require('./background/grayBG.png'),
   redBg: require('./background/redBG.png'),
   drawerBg: require('./background/drawerBg.png'),
-  happyHourMenuScreenBg: require('./background/happyHourMenuScreenBg.png') 
+  happyHourMenuScreenBg: require('./background/happyHourMenuScreenBg.png'),
 };
 
 export const sampleimage = {
@@ -76,6 +76,7 @@ export const icons = {
   popupAlert: require('./icons/popupAlert.png'),
   popupQuestion: require('./icons/popupQuestion.png'),
   happyHourIcon: require('./icons/happyHourIcon.png'),
+  blackLocIcon: require('./icons/blackLocIcon.png'),
 };
 export const tabicons = {
   tab1: require('./tabIcons/tab1.png'),
