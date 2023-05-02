@@ -24,12 +24,16 @@ class ContactUs extends React.Component {
 
   handleSend = () => {
     const {name, email, subject, message} = this.state;
-    if (!subject) {
-      showToast('Subject is Required');
+    if (!name) {
+      showToast('Please Write Your Name');
+    } else if (!email) {
+      showToast('Please Write Your Email');
+    } else if (!subject) {
+      showToast('Please Write Subject');
     } else if (!message) {
       showToast('Please Write Your Message');
     } else {
-      let data = {subject, message};
+      let data = {name, email, subject, message};
       this.props.contactUs(data).then(res => {
         showToast(res?.messgae);
         this.props.navigation.navigate('HomeScreen');

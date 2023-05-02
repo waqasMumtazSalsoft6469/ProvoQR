@@ -34,6 +34,7 @@ import {
   getAllNotifications,
   getProfileData,
 } from '../../Redux/Actions/otherActions';
+import {DrawerActions} from '@react-navigation/native';
 const initialState = {
   name: '',
   email: '',
@@ -96,6 +97,7 @@ class RegisterScreen extends React.Component {
             showToast('Login Successfull!');
             this.props.getAllNotifications();
             this.props.getProfileData();
+            this.props?.navigation?.dispatch(DrawerActions.closeDrawer());
             this.props.navigation.navigate('MainNavigator');
             // if (!res?.user?.age || !res?.user?.gender || !res?.user?.address) {
             //   this.props.navigation.navigate("MainNavigator");

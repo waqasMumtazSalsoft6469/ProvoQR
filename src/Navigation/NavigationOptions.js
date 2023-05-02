@@ -100,14 +100,14 @@ export const getNavigationOptions = props => {
   };
 };
 
-export const getTitle = props => {
+export function getTitle(props) {
   if (titleRoutes[props?.route?.name]) {
     return titleRoutes[props?.route?.name];
   }
   return '';
-};
+}
 
-export const showHeaderRight = props => {
+export function showHeaderRight(props) {
   const data = store.getState();
 
   const count =
@@ -119,6 +119,7 @@ export const showHeaderRight = props => {
   // console.log('notification_count', profile?.image);
 
   const token = data?.SessionReducer?.token;
+  console.log('NavOp token', token);
 
   if (headerRightRoutes[props?.route?.name] && token) {
     return (
@@ -130,6 +131,7 @@ export const showHeaderRight = props => {
             style={styles.profile}
           />
         </TouchableHOC>
+
         <TouchableHOC onPress={() => props.navigation.navigate('Notification')}>
           <ImageBackground
             source={icons.notif}
@@ -163,9 +165,9 @@ export const showHeaderRight = props => {
       </View>
     );
   }
-};
+}
 
-export const showHeaderLeft = props => {
+export function showHeaderLeft(props) {
   if (headerLeftBackBtnRoutes[props?.route?.name] === 'HomeScreen') {
     return (
       <View style={styles.homeLeftHeaderContainer}>
@@ -186,4 +188,4 @@ export const showHeaderLeft = props => {
       />
     );
   }
-};
+}

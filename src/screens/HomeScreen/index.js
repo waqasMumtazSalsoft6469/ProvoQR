@@ -85,7 +85,7 @@ class HomeScreen extends React.Component {
       };
 
       const res = await this.props.getHomData(params);
-      console.log("home res", res);
+      console.log('home res', res);
       this.setState({
         banners: res?.banner,
         recommended: res?.recommended,
@@ -299,7 +299,7 @@ class HomeScreen extends React.Component {
           value={this.state.searchString}
           onChangeText={this.onChangeText}
         />
-        {this.renderBanner()}
+        {/* {this.renderBanner()} */}
         {this.renderRecommendedRestaurant()}
         {this.renderCategories()}
 

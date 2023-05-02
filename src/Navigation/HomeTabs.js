@@ -10,6 +10,7 @@ import {tabicons} from '../assets/images';
 import Drawer from './NavigationDrawer';
 import IconButton from '../components/Buttons/IconButton';
 import {useSelector} from 'react-redux';
+import {DrawerActions} from '@react-navigation/native';
 
 const TabNavigator = createMaterialTopTabNavigator();
 
@@ -39,7 +40,7 @@ const HomeTabs = props => {
       <TabNavigator.Screen name="MapStack" component={MapStack} />
       {/* <TabNavigator.Screen name="QrcodeStack" component={QrcodeStack} /> */}
       {token && <TabNavigator.Screen name="GiftStack" component={GiftStack} />}
-      <TabNavigator.Screen name="Drawer" component={Drawer} />
+      {/* <TabNavigator.Screen name="Drawer" component={Drawer} /> */}
     </TabNavigator.Navigator>
   );
 };
@@ -77,6 +78,21 @@ const MyTabBar = ({state, navigation}, props) => {
           </View>
         );
       })}
+      <View
+        style={{
+          alignItems: 'center',
+          width: 6 * vw,
+          height: 6 * vw,
+          marginBottom: vh * 2,
+        }}>
+        <IconButton
+          icon={tabicons.tab5}
+          style={styles.iconStyle}
+          iconStyle={styles.btnStyle}
+          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        />
+        {/* {isFocused && <View style={styles.indicatorStyle} />} */}
+      </View>
     </View>
   );
 };
