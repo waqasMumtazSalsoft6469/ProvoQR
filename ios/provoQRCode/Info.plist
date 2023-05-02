@@ -36,13 +36,13 @@
 		</dict>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Privacy - Media Library Usage Description</string>
+	<string>Provo needs your media library permission for uploading images.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Privacy - Camera Usage Description</string>
+	<string>Provo needs your camera permission for uploading images.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Provo needs your location permission to show nearby Ads</string>
+	<string>Provo needs your location permission to show nearby restaurants.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>NSPhotoLibraryUsageDescription</string>
+	<string>Provo needs your photo library permission for uploading images.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Blacksword.otf</string>
