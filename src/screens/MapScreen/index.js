@@ -350,8 +350,7 @@ class MapScreen extends React.Component {
           {/* <View style={{ alignItems: 'center', }}> */}
 
           <View style={styles.box}>
-            <View
-              style={styles.searchContainer}>
+            <View style={styles.searchContainer}>
               <MainInput
                 placeholder="Search Here..."
                 // style={styles.field}
@@ -491,12 +490,16 @@ class MapScreen extends React.Component {
                 <Button
                   title="Loot Box"
                   onPress={() => {
-                    this.setState({resturentModal: false});
-                    this.props.navigation.navigate('LootBoxPaymentMethod', {
-                      id: this.state.details?.id,
-                      provoCash: this.state?.details?.provo_cash_price,
-                      lootBoxAmount: this.state?.details?.lootbox_amount,
-                    });
+                    if (this.props?.token) {
+                      this.setState({resturentModal: false});
+                      this.props.navigation.navigate('LootBoxPaymentMethod', {
+                        id: this.state.details?.id,
+                        provoCash: this.state?.details?.provo_cash_price,
+                        lootBoxAmount: this.state?.details?.lootbox_amount,
+                      });
+                    } else {
+                      showToast('Please Login First.');
+                    }
                   }}
                   btnContainer={{marginTop: 3 * vh}}
                 />
@@ -573,6 +576,7 @@ class MapScreen extends React.Component {
 }
 const mapStateToProps = state => ({
   // count: state.count,
+  token: state.SessionReducer.token,
 });
 const mapDispatchToProps = dispatch => {
   return {

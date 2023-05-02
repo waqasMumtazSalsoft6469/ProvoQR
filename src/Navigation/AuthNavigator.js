@@ -27,7 +27,7 @@ const HomeNavigator = () => {
       <AuthStack.Screen component={Signup} name="Signup" />
       <AuthStack.Screen component={PasswordRecovery} name="PasswordRecovery" />
       <AuthStack.Screen component={Subscription} name="Subscription" />
-      {/* <AuthStack.Screen component={Payment} name="Payment" /> */}
+      <AuthStack.Screen component={Payment} name="Payment" />
       <AuthStack.Screen component={SuccessScreen} name="SuccessScreen" />
       {/* <AuthStack.Screen component={DrawerNavigation} name="DrawerStack" /> */}
     </AuthStack.Navigator>

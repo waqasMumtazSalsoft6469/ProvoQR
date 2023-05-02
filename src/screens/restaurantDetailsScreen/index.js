@@ -24,6 +24,7 @@ import Counter from '../../components/Counter';
 import {restaurantDetails} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
 import {imageUrl} from '../../Api/configs';
+import {showToast} from '../../Api/HelperFunction';
 
 class ResturentDetailScreen extends React.Component {
   constructor(props) {
@@ -107,6 +108,7 @@ class ResturentDetailScreen extends React.Component {
   };
   render() {
     console.log('about', this.state.details?.organ_profiles);
+    // console.log('token from res detail', this.props?.token);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -255,13 +257,17 @@ class ResturentDetailScreen extends React.Component {
               <View style={{alignItems: 'center'}}>
                 <Button
                   title="LOOT BOX"
-                  onPress={() =>
-                    this.props.navigation.navigate('LootBoxPaymentMethod', {
-                      id: this.state.details?.id,
-                      provoCash: this.state.details?.provo_cash_price,
-                      lootBoxAmount: this.state?.details?.lootbox_amount,
-                    })
-                  }
+                  onPress={() => {
+                    if (this?.props?.token) {
+                      this.props.navigation.navigate('LootBoxPaymentMethod', {
+                        id: this.state.details?.id,
+                        provoCash: this.state.details?.provo_cash_price,
+                        lootBoxAmount: this.state?.details?.lootbox_amount,
+                      });
+                    } else {
+                      showToast('Please Login First');
+                    }
+                  }}
                   btnContainer={{marginTop: 3 * vh}}
                 />
               </View>
@@ -275,6 +281,7 @@ class ResturentDetailScreen extends React.Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
+  token: state.SessionReducer.token,
 });
 const mapDispatchToProps = dispatch => {
   return {

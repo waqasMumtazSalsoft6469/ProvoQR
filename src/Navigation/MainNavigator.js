@@ -74,6 +74,7 @@ class MainNavigator extends React.Component {
             <MainStack.Screen
               component={CompleteProfile}
               name="CompleteProfile"
+              options={{headerShown: false}}
             />
           )}
         <MainStack.Screen

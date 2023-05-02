@@ -58,6 +58,7 @@ class PaymentScreen extends React.Component {
 
   handleSuccessPress = () => {
     const {id, from} = this.props.route.params;
+    console.log('handleSuccessPress from', from);
     if (from === 'Subscription') {
       this.props.navigation.navigate('Login');
     } else if (from == 'lootbox') {
