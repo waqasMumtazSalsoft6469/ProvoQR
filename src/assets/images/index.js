@@ -81,6 +81,7 @@ export const icons = {
   popupQuestion: require('./icons/popupQuestion.png'),
   happyHourIcon: require('./icons/happyHourIcon.png'),
   blackLocIcon: require('./icons/blackLocIcon.png'),
+  crossIcon: require('./icons/crossIcon.png'),
 };
 export const tabicons = {
   tab1: require('./tabIcons/tab1.png'),

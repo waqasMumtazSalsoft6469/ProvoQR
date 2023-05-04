@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5 * vw,
   },
   defaultHeaderStyle: {
-    height: 12 * vh,
+    height: 10 * vh,
     // paddingBottom: 2 * vh,
     // alignItems:'center',
     // backgroundColor:'red',

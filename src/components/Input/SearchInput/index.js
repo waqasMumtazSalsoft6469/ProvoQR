@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, TextInput} from 'react-native';
+import {View, Image, TextInput, TouchableOpacity} from 'react-native';
 import {icons} from '../../../assets/images';
 import ThemeColors from '../../../Utils/ThemeColors';
 import styles from './styles';
@@ -16,7 +16,17 @@ const SearchInput = props => {
         style={styles.input}
         value={props?.value}
         onChangeText={props?.onChangeText}
+        onSubmitEditing={props?.onSubmitEditing}
       />
+      {props?.clearBtn && (
+        <TouchableOpacity
+          style={styles.crossIconContainer}
+          onPress={props?.onClear}
+          activeOpacity={0.9}
+          hitSlop={styles.hitSlop}>
+          <Image source={icons.crossIcon} style={styles.crossIconStyle} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

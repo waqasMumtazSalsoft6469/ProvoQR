@@ -36,11 +36,15 @@ class HomeScreen extends React.Component {
     };
   }
 
+  handleClear = () => {
+    this.setState({searchString: ''}, this.getData);
+  };
+
   search = () => {
-    if (this.timeout != null) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-    }
+    // if (this.timeout != null) {
+    //   clearTimeout(this.timeout);
+    //   this.timeout = null;
+    // }
     this.getData();
   };
 
@@ -49,13 +53,13 @@ class HomeScreen extends React.Component {
       searchString: text,
     });
 
-    if (text?.trim()?.length > 2) {
-      if (this.timeout != null) {
-        clearTimeout(this.timeout);
-        this.timeout = null;
-      }
-      this.timeout = setTimeout(this.search, 500);
-    }
+    // if (text?.trim()?.length > 2) {
+    //   if (this.timeout != null) {
+    //     clearTimeout(this.timeout);
+    //     this.timeout = null;
+    //   }
+    //   this.timeout = setTimeout(this.search, 500);
+    // }
   };
 
   renderCategoryEmptyComponent = () => {
@@ -298,6 +302,9 @@ class HomeScreen extends React.Component {
           placeholder="Search...."
           value={this.state.searchString}
           onChangeText={this.onChangeText}
+          onSubmitEditing={this.search}
+          clearBtn={this.state?.searchString?.length > 0}
+          onClear={this.handleClear}
         />
         {/* {this.renderBanner()} */}
         {this.renderRecommendedRestaurant()}
