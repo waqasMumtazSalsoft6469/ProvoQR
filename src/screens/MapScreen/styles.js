@@ -1,4 +1,5 @@
 const {StyleSheet} = require('react-native');
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import ThemeColors from '../../Utils/ThemeColors';
 import {themeShadow, vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
@@ -17,7 +18,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     alignSelf: 'center',
-    top: 3 * vh,
+    // top: 3 * vh,
+    marginTop: getStatusBarHeight() + vh * 5,
     borderRadius: 2 * vh,
   },
   searchContainer: {
@@ -285,7 +287,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   resName: {
-    fontSize: vh * 1.4,
+    fontSize: vh * 4,
+    color: ThemeColors.black,
   },
   outerContainer: {
     // marginTop: vh * 3,

@@ -14,7 +14,11 @@ const MapNavigator = createStackNavigator();
 const MenuStack = () => {
   return (
     <MapNavigator.Navigator screenOptions={getNavigationOptions}>
-      <MapNavigator.Screen component={MapScreen} name="MapScreen" />
+      <MapNavigator.Screen
+        component={MapScreen}
+        name="MapScreen"
+        options={{headerTransparent: true}}
+      />
       {/* <MapNavigator.Screen component={ShowonMapScreen} name="ShowonMapScreen" /> */}
       {/* <MapNavigator.Screen
         component={RestaurantDetails}

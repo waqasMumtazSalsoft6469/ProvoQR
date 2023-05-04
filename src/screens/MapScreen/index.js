@@ -7,7 +7,12 @@ import {
   FlatList,
   Keyboard,
 } from 'react-native';
-import {backgrounds, icons, sampleimage} from '../../assets/images';
+import {
+  backgrounds,
+  icons,
+  lottieImage,
+  sampleimage,
+} from '../../assets/images';
 import MapView, {
   Polyline,
   Marker,
@@ -44,6 +49,7 @@ import {showToast} from '../../Api/HelperFunction';
 import CategoryModal from '../../components/Popups/CategoryModal';
 import {imageUrl} from '../../Api/configs';
 import RateCard from '../../components/RatingCard';
+import AnimatedLottieView from 'lottie-react-native';
 
 var tempTime = 0;
 
@@ -303,6 +309,7 @@ class MapScreen extends React.Component {
 
   renderMarkers = () => {
     return this.state.restaurants?.map(location => {
+      console.log('nearest loc', location?.happy_hour_deals);
       return (
         <Marker
           draggable={false}
@@ -315,7 +322,16 @@ class MapScreen extends React.Component {
             // () => this.getRestaurantDetails(location?.id)
           }>
           <TouchableHOC style={styles.markerTouch}>
-            <Image source={icons.marker} style={styles.markerIconStyle} />
+            {location?.happy_hour_deals ? (
+              <AnimatedLottieView
+                source={lottieImage.fireImage}
+                // style={styles.searchImageStyle}
+                autoPlay={true}
+                loop={true}
+              />
+            ) : (
+              <Image source={icons.marker} style={styles.markerIconStyle} />
+            )}
             <OutfitLightText style={styles.resName}>
               {location?.name}
             </OutfitLightText>

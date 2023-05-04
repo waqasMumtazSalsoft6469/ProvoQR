@@ -10,6 +10,10 @@ export const backgrounds = {
   happyHourMenuScreenBg: require('./background/happyHourMenuScreenBg.png'),
 };
 
+export const lottieImage = {
+  fireImage: require('./lottieImages/fireImage.json'),
+};
+
 export const sampleimage = {
   avatar: require('./sampleImages/avatar.png'),
   home1: require('./sampleImages/home1.png'),
