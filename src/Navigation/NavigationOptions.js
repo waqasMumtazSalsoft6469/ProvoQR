@@ -43,6 +43,7 @@ const headerLeftBackBtnRoutes = {
   RequestLogs: 'RequestLogs',
   ProvoScreen: 'ProvoScreen',
   HappyHourMenuScreen: 'Happy Hour',
+  LootboxTierScreen: 'Menu',
 };
 
 const titleRoutes = {
@@ -53,7 +54,7 @@ const titleRoutes = {
   ChangePassword: 'Change Password',
   Notification: 'Notification',
   ProvoPaymentMethod: 'Payment',
-  ResturentDetail: 'Restaurant Detail',
+  // ResturentDetail: 'Restaurant Detail',
   RestaurantDirection: 'Map',
   ResturentMenu: 'Menu',
   LootBoxPaymentMethod: 'Payment',
@@ -68,6 +69,7 @@ const titleRoutes = {
   SubscriptionLogs: 'Subscription Logs',
   ProvoScreen: 'Provo',
   HappyHourMenuScreen: 'Happy Hour',
+  LootboxTierScreen: 'Menu',
 };
 
 const headerRightRoutes = {
@@ -80,6 +82,7 @@ const headerRightRoutes = {
   SubscriptionLogs: 'Subscription Logs',
   ProvoScreen: 'ProvoScreen',
   HappyHourMenuScreen: 'Happy Hour',
+  LootboxTierScreen: 'Menu',
 };
 
 export const getNavigationOptions = props => {
@@ -95,6 +98,7 @@ export const getNavigationOptions = props => {
     headerRight: () => showHeaderRight(props),
     headerStyle: styles.defaultHeaderStyle,
     headerTitleStyle: styles.headingText,
+    headerTitleContainerStyle: styles.headerTitleContainerStyle,
     headerRightContainerStyle: styles.defaultHeaderRightContainerStyle,
     headerLeftContainerStyle: styles.defaultHeaderLeftContainerStyle,
   };
@@ -182,7 +186,8 @@ export function showHeaderLeft(props) {
   } else {
     return (
       <IconButton
-        style={{}}
+        hitSlop={styles.hitSlop}
+        iconStyle={styles.backIconStyle}
         icon={icons.backarrow}
         onPress={() => props.navigation.goBack()}
       />

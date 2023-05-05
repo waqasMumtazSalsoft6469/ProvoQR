@@ -42,7 +42,6 @@ class ResturentDetailScreen extends React.Component {
           name: 'Cuisine 03',
         },
       ],
-      ratings: [],
     };
   }
 
@@ -55,7 +54,6 @@ class ResturentDetailScreen extends React.Component {
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       this.setState({
         details: res?.details,
-        // ratings: res?.rewards,
       });
     });
   }
@@ -82,6 +80,12 @@ class ResturentDetailScreen extends React.Component {
   //   );
   // };
 
+  handleLootBoxPress = () => {
+    this.props?.navigation?.navigate('LootboxTierScreen', {
+      menu: this.state?.details?.lootboxes,
+    });
+  };
+
   handleHappyHourMenuPress = () => {
     this.props?.navigation?.navigate('HappyHourMenuScreen', {
       deal: this.state?.details?.happy_hour_deals,
@@ -89,16 +93,10 @@ class ResturentDetailScreen extends React.Component {
   };
 
   renderRatings = () => {
+    // console.log('tiers', this.state?.details?.lootboxes);
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          // justifyContent: 'space-between',
-          marginTop: 2 * vh,
-          width: 100 * vw,
-        }}>
-        {this.state?.details?.badges?.map((item, index) => {
+      <View style={styles.tiersContainer}>
+        {this.state?.details?.lootboxes?.map((item, index) => {
           return (
             <RateCard item={item} index={index} style={{marginLeft: vw * 5}} />
           );
@@ -119,6 +117,9 @@ class ResturentDetailScreen extends React.Component {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{paddingBottom: vh * 10}}>
+            {/* <OutfitSemiBoldText style={styles.headingText}>
+              {this.props?.route?.params?.name}
+            </OutfitSemiBoldText> */}
             <View style={{alignItems: 'center', marginTop: 3 * vh}}>
               <Image
                 source={
@@ -192,7 +193,7 @@ class ResturentDetailScreen extends React.Component {
               </View>
               {/* {this.rendercuisines()} */}
             </View>
-            {this.renderRatings()}
+            {this.state?.details?.lootboxes?.length && this.renderRatings()}
             <Dash
               style={{
                 width: 100 * vw,
@@ -206,9 +207,50 @@ class ResturentDetailScreen extends React.Component {
               dashLength={0}
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
+
+            {this.state?.details?.lootboxes?.length && (
+              <View style={styles.outerContainer}>
+                <View style={styles.priceContainer}>
+                  <OutfitSemiBoldText style={styles.priceHeadingText}>
+                    By Card:
+                  </OutfitSemiBoldText>
+                  <OutfitRegularText style={styles.priceHeadingText}>
+                    ${this.state?.details?.lootbox_amount}
+                  </OutfitRegularText>
+                </View>
+                <View style={styles.priceContainer}>
+                  <OutfitSemiBoldText style={styles.priceHeadingText}>
+                    By ProvoCash:
+                  </OutfitSemiBoldText>
+                  <OutfitRegularText style={styles.priceHeadingText}>
+                    ${this.state?.details?.provo_cash_price}
+                  </OutfitRegularText>
+                </View>
+              </View>
+            )}
+            {this.state?.details?.lootboxes?.length && (
+              <View style={{alignItems: 'center', marginVertical: vh * 3}}>
+                <Button
+                  title="LOOT BOX"
+                  onPress={this.handleLootBoxPress}
+                  // onPress={() => {
+                  //   if (this?.props?.token) {
+                  //     this.props.navigation.navigate('LootBoxPaymentMethod', {
+                  //       id: this.state.details?.id,
+                  //       provoCash: this.state.details?.provo_cash_price,
+                  //       lootBoxAmount: this.state?.details?.lootbox_amount,
+                  //     });
+                  //   } else {
+                  //     showToast('Please Login First');
+                  //   }
+                  // }}
+                />
+              </View>
+            )}
             {this?.state?.details?.happy_hour_deals && (
               <View
                 style={{
+                  // marginTop: vh * 3,
                   paddingHorizontal: 5 * vw,
                   justifyContent: 'space-between',
                 }}>
@@ -233,43 +275,6 @@ class ResturentDetailScreen extends React.Component {
                   />
                 </TouchableOpacity>
                 {/* <HomeCarouselConmponent /> */}
-              </View>
-            )}
-            <View style={styles.outerContainer}>
-              <View style={styles.priceContainer}>
-                <OutfitSemiBoldText style={styles.priceHeadingText}>
-                  By Card:
-                </OutfitSemiBoldText>
-                <OutfitRegularText style={styles.priceHeadingText}>
-                  ${this.state?.details?.lootbox_amount}
-                </OutfitRegularText>
-              </View>
-              <View style={styles.priceContainer}>
-                <OutfitSemiBoldText style={styles.priceHeadingText}>
-                  By ProvoCash:
-                </OutfitSemiBoldText>
-                <OutfitRegularText style={styles.priceHeadingText}>
-                  ${this.state?.details?.provo_cash_price}
-                </OutfitRegularText>
-              </View>
-            </View>
-            {!this.state?.details?.is_lootbox_purchase && (
-              <View style={{alignItems: 'center'}}>
-                <Button
-                  title="LOOT BOX"
-                  onPress={() => {
-                    if (this?.props?.token) {
-                      this.props.navigation.navigate('LootBoxPaymentMethod', {
-                        id: this.state.details?.id,
-                        provoCash: this.state.details?.provo_cash_price,
-                        lootBoxAmount: this.state?.details?.lootbox_amount,
-                      });
-                    } else {
-                      showToast('Please Login First');
-                    }
-                  }}
-                  btnContainer={{marginTop: 3 * vh}}
-                />
               </View>
             )}
           </ScrollView>

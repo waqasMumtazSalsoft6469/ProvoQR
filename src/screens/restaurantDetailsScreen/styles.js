@@ -12,6 +12,11 @@ const styles = StyleSheet.create({
 
     // height: 100 * vh,
   },
+  headingText: {
+    color: ThemeColors.iconColor,
+    fontSize: vh * 2.6,
+    marginLeft: vw * 5,
+  },
   label: {
     color: '#C6C5C5',
     fontSize: 1.7 * vh,
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
     width: vh * 3,
   },
   outerContainer: {
-    marginTop: vh * 3,
+    // marginTop: vh * 3,
     paddingHorizontal: vw * 5,
   },
   priceContainer: {
@@ -160,6 +165,11 @@ const styles = StyleSheet.create({
     height: vh * 25,
     borderRadius: vh * 4,
     resizeMode: 'cover',
+  },
+  tiersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2 * vh,
   },
 });
 export default styles;

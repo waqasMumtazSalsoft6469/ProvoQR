@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     fontSize: vh * 2.6,
     textAlign: 'center',
   },
+  headerTitleContainerStyle: {
+    width: '50%',
+  },
   defaultHeaderTitleStyle: {
     color: 'white',
     alignItems: 'flex-end',
@@ -292,6 +295,17 @@ const styles = StyleSheet.create({
   },
   homeLeftHeaderContainer: {
     width: vw * 60,
+  },
+  backIconStyle: {
+    height: vw * 5,
+    width: vw * 5,
+    resizeMode: 'contain',
+  },
+  hitSlop: {
+    right: 10,
+    left: 10,
+    top: 10,
+    bottom: 10,
   },
 });
 export default styles;

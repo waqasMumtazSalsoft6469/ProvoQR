@@ -38,15 +38,15 @@ class ProductItem extends React.Component {
           source={icons.box}
           style={[
             styles.cardimage,
-            {tintColor: this.getTintcolor(this.props.item?.badge)},
+            {tintColor: this.getTintcolor(this.props.item?.name)},
           ]}
         />
         <OutfitRegularText
           style={[
             styles.name,
-            {color: this.getTintcolor(this.props.item?.badge)},
+            {color: this.getTintcolor(this.props.item?.name)},
           ]}>
-          {this.props.item?.badge}
+          {this.props.item?.name}
         </OutfitRegularText>
       </View>
     );

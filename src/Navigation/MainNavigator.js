@@ -28,6 +28,7 @@ import {
   getAllNotifications,
 } from '../Redux/Actions/otherActions';
 import HappyHourMenuScreen from '../screens/HappyHourMenuScreen';
+import LootboxTierScreen from '../screens/LootboxTierScreen';
 
 const MainStack = createStackNavigator();
 
@@ -118,6 +119,10 @@ class MainNavigator extends React.Component {
           component={HappyHourMenuScreen}
           name="HappyHourMenuScreen"
           options={{headerTransparent: true}}
+        />
+        <MainStack.Screen
+          component={LootboxTierScreen}
+          name="LootboxTierScreen"
         />
       </MainStack.Navigator>
     );
