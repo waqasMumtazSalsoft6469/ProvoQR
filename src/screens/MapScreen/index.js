@@ -50,6 +50,7 @@ import CategoryModal from '../../components/Popups/CategoryModal';
 import {imageUrl} from '../../Api/configs';
 import RateCard from '../../components/RatingCard';
 import AnimatedLottieView from 'lottie-react-native';
+import SearchInput from '../../components/Input/SearchInput';
 
 var tempTime = 0;
 
@@ -70,54 +71,6 @@ class MapScreen extends React.Component {
       provo_cash_price: '',
     };
   }
-  animateToRegion = (latitude, longitude) => {
-    setTimeout(() => {
-      this.mapRef?.animateToRegion(
-        {
-          latitude: Number(latitude),
-          longitude: Number(longitude),
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: 0.0002,
-        },
-        2000,
-      );
-    }, 500);
-  };
-  getUserLocation = async () => {
-    try {
-      const location = await getCurrentLocation();
-      this.setState({
-        userLocation: {
-          latitude: parseFloat(location?.latitude),
-          longitude: parseFloat(location?.longitude),
-        },
-      });
-
-      this.props
-        .getNearestRestaurant({
-          lat: parseFloat(location?.latitude),
-          lng: parseFloat(location?.longitude),
-        })
-        .then(res => {
-          console.log('getNearestRestaurant', res?.nearestRestaurant?.data[0]);
-          this.setState({restaurants: res?.nearestRestaurant?.data});
-          this.animateToRegion(
-            parseFloat(
-              res?.nearestRestaurant?.data[0]?.lat
-                ? res?.nearestRestaurant?.data[0]?.lat
-                : 0,
-            ),
-            parseFloat(
-              res?.nearestRestaurant?.data[0]?.lng
-                ? res?.nearestRestaurant?.data[0]?.lng
-                : 0,
-            ),
-          );
-        });
-    } catch (error) {
-      showToast(error);
-    }
-  };
 
   handleCategory = categoryId => {
     // console.log('categoryId', categoryId);
@@ -149,42 +102,41 @@ class MapScreen extends React.Component {
       });
   };
 
-  onChangeSearch = text => {
-    this.setState({search: text});
-    const {search, userLocation} = this.state;
-    setTimeout(() => {
-      tempTime = tempTime + 1;
-      if (tempTime == 2) {
-        this.props
-          .getNearestRestaurant({
-            lat: parseFloat(userLocation?.latitude),
-            lng: parseFloat(userLocation?.longitude),
-            search_text: text,
-          })
-          .then(res => {
-            tempTime = 0;
-            Keyboard.dismiss();
-            if (res?.nearestRestaurant?.data?.length > 0) {
-              this.setState({restaurants: res?.nearestRestaurant?.data});
-              this.animateToRegion(
-                parseFloat(res?.nearestRestaurant?.data[0]?.lat),
-                parseFloat(res?.nearestRestaurant?.data[0]?.lng),
-              );
-            } else {
-              showToast('No Restarant Found');
-            }
-          });
-      }
-    }, 5000);
+  handleClear = () => {
+    this.setState({search: ''}, this.getNearestRestaurant);
   };
 
-  setupMethods = async () => {
-    try {
-      await checkLocationPermissions();
-      this.getUserLocation();
-    } catch (error) {
-      console.log('location** error ', error);
-    }
+  search = () => {
+    this.getNearestRestaurant();
+  };
+
+  onChangeSearch = text => {
+    this.setState({search: text});
+    // const {search, userLocation} = this.state;
+    // setTimeout(() => {
+    //   tempTime = tempTime + 1;
+    //   if (tempTime == 2) {
+    //     this.props
+    //       .getNearestRestaurant({
+    //         lat: parseFloat(userLocation?.latitude),
+    //         lng: parseFloat(userLocation?.longitude),
+    //         search_text: text,
+    //       })
+    //       .then(res => {
+    //         tempTime = 0;
+    //         Keyboard.dismiss();
+    //         if (res?.nearestRestaurant?.data?.length > 0) {
+    //           this.setState({restaurants: res?.nearestRestaurant?.data});
+    //           this.animateToRegion(
+    //             parseFloat(res?.nearestRestaurant?.data[0]?.lat),
+    //             parseFloat(res?.nearestRestaurant?.data[0]?.lng),
+    //           );
+    //         } else {
+    //           showToast('No Restarant Found');
+    //         }
+    //       });
+    //   }
+    // }, 5000);
   };
 
   getRestaurantDetails = id => {
@@ -200,6 +152,96 @@ class MapScreen extends React.Component {
       }, 500);
     });
   };
+
+  getNearestRestaurant = async () => {
+    this.setState({
+      refreshing: true,
+    });
+
+    try {
+      const filters = {
+        lat: this.state?.userLocation?.latitude,
+        lng: this.state?.userLocation?.longitude,
+        search_text: this.state?.search,
+        category_id: this.state?.category,
+      };
+
+      const response = await this.props.getNearestRestaurant(filters);
+      // console.log('nearest response', response);
+      this.setState({
+        refreshing: false,
+        restaurants: response?.nearestRestaurant?.data,
+      });
+    } catch (error) {
+      this.setState({
+        refreshing: false,
+      });
+    }
+  };
+
+  animateToRegion = (latitude, longitude) => {
+    setTimeout(() => {
+      this.mapRef?.animateToRegion(
+        {
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: 0.0002,
+        },
+        2000,
+      );
+    }, 500);
+  };
+  getUserLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      this.animateToRegion(
+        parseFloat(location?.latitude),
+        parseFloat(location?.longitude),
+      );
+      this.setState({
+        userLocation: {
+          latitude: parseFloat(location?.latitude),
+          longitude: parseFloat(location?.longitude),
+        },
+      });
+      this.getNearestRestaurant();
+
+      // this.props
+      //   .getNearestRestaurant({
+      //     lat: parseFloat(location?.latitude),
+      //     lng: parseFloat(location?.longitude),
+      //   })
+      //   .then(res => {
+      //     console.log('getNearestRestaurant', res?.nearestRestaurant?.data[0]);
+      //     this.setState({restaurants: res?.nearestRestaurant?.data});
+      //     this.animateToRegion(
+      //       parseFloat(
+      //         res?.nearestRestaurant?.data[0]?.lat
+      //           ? res?.nearestRestaurant?.data[0]?.lat
+      //           : 0,
+      //       ),
+      //       parseFloat(
+      //         res?.nearestRestaurant?.data[0]?.lng
+      //           ? res?.nearestRestaurant?.data[0]?.lng
+      //           : 0,
+      //       ),
+      //     );
+      //   });
+    } catch (error) {
+      showToast(error);
+    }
+  };
+
+  setupMethods = async () => {
+    try {
+      await checkLocationPermissions();
+      this.getUserLocation();
+    } catch (error) {
+      console.log('location** error ', error);
+    }
+  };
+
   componentDidMount() {
     this.setupMethods();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -360,6 +402,14 @@ class MapScreen extends React.Component {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}>
+            {this.state?.userLocation && (
+              <Marker coordinate={this.state?.userLocation}>
+                <Image
+                  source={icons.mapButton}
+                  style={styles.markerIconStyle}
+                />
+              </Marker>
+            )}
             {this.renderMarkers()}
           </MapView>
 
@@ -367,7 +417,7 @@ class MapScreen extends React.Component {
 
           <View style={styles.box}>
             <View style={styles.searchContainer}>
-              <MainInput
+              {/* <MainInput
                 placeholder="Search Here..."
                 // style={styles.field}
                 ref={r => (this.email = r)}
@@ -375,6 +425,17 @@ class MapScreen extends React.Component {
                 leftIcon={icons.search}
                 style={{width: vw * 70}}
                 onChangeText={text => this.onChangeSearch(text)}
+              /> */}
+              <SearchInput
+                placeholder="Search...."
+                value={this.state.search}
+                onChangeText={this.onChangeSearch}
+                onSubmitEditing={this.search}
+                clearBtn={this.state?.search?.length > 0}
+                onClear={this.handleClear}
+                style={{width: vw*70}}
+                // onFocus={this.handleOnFocus}
+                // onBlur={this.handleOnBlur}
               />
               <TouchableHOC
                 style={styles.filterBg}

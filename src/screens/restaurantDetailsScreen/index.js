@@ -108,8 +108,7 @@ class ResturentDetailScreen extends React.Component {
     );
   };
   render() {
-    console.log('about', this.state.details?.organ_profiles);
-    // console.log('token from res detail', this.props?.token);
+    console.log('res details', this.state.details);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -196,7 +195,7 @@ class ResturentDetailScreen extends React.Component {
               </View>
               {/* {this.rendercuisines()} */}
             </View>
-            {this.state?.details?.lootboxes?.length && this.renderRatings()}
+            {this.state?.details?.lootboxes?.length > 0 && this.renderRatings()}
             <Dash
               style={{
                 width: 100 * vw,
@@ -211,7 +210,7 @@ class ResturentDetailScreen extends React.Component {
               dashGap={1 * vh}
               dashStyle={{width: 2 * vw}}></Dash>
 
-            {this.state?.details?.lootboxes?.length && (
+            {this.state?.details?.lootboxes?.length > 0 && (
               <View style={styles.outerContainer}>
                 <View style={styles.priceContainer}>
                   <OutfitSemiBoldText style={styles.priceHeadingText}>
@@ -231,7 +230,7 @@ class ResturentDetailScreen extends React.Component {
                 </View>
               </View>
             )}
-            {this.state?.details?.lootboxes?.length && (
+            {this.state?.details?.lootboxes?.length > 0 && (
               <View style={{alignItems: 'center', marginVertical: vh * 3}}>
                 <Button title="LOOT BOX" onPress={this.handleLootBoxPress} />
               </View>

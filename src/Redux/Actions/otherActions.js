@@ -320,23 +320,31 @@ export const getReferalCode = () => {
 };
 
 export const getNearestRestaurants = data => {
-  return async dispatch => {
-    return new Promise((resolve, reject) => {
-      setTimeout(async () => {
-        try {
-          dispatch({type: actionTypes.loaderOn});
+  // return async dispatch => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(async () => {
+  //       try {
+  //         dispatch({type: actionTypes.loaderOn});
 
-          const response = await post(endpoints.other.nearRes, data, true);
+  //         const response = await post(endpoints.other.nearRes, data, true);
 
-          resolve(response);
-        } catch (e) {
-          showToast(getMessage(e));
-          reject(e);
-        } finally {
-          dispatch({type: actionTypes.loaderOff});
-        }
-      }, 300);
-    });
+  //         resolve(response);
+  //       } catch (e) {
+  //         showToast(getMessage(e));
+  //         reject(e);
+  //       } finally {
+  //         dispatch({type: actionTypes.loaderOff});
+  //       }
+  //     }, 300);
+  //   });
+  // };
+  return async () => {
+    try {
+      const response = await post(endpoints.other.nearRes, data, true);
+      return Promise.resolve(response);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 };
 
@@ -530,10 +538,10 @@ export const getHistoryDetail = data => {
   };
 };
 
-export const getAllNotifications = () => {
+export const getAllNotifications = data => {
   return async dispatch => {
     try {
-      const response = await get(endpoints.other.notifications);
+      const response = await get(endpoints.other.notifications, data);
       dispatch({type: actionTypes.getNotifications, payload: response?.count});
       // console.log('response', response);
       return Promise.resolve(response);

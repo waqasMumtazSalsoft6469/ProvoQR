@@ -55,7 +55,7 @@ class ProductItem extends React.Component {
   };
 
   renderratings = () => {
-    if (this.props?.item?.lootboxes?.length) {
+    if (this.props?.item?.lootboxes?.length > 0) {
       return (
         <View style={styles.tiersContainer}>
           {this.props?.item?.lootboxes?.map((item, index) => {
@@ -114,7 +114,7 @@ class ProductItem extends React.Component {
             ]}
             // style={styles.cardimage}
           />
-          {this.props.item.happy_hour_deals && (
+          {this.props.item?.is_happyhour_active && (
             <Image
               source={icons.happyHourIcon}
               style={{
