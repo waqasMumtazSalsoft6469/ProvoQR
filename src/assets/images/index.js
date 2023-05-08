@@ -34,6 +34,7 @@ export const sampleimage = {
   happyHour: require('./sampleImages/happyHour.png'),
   category1: require('./sampleImages/category1.png'),
   placeholder: require('./sampleImages/placeholder.png'),
+  noImage: require('./sampleImages/noImage.png'),
 };
 
 export const icons = {

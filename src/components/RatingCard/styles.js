@@ -5,9 +5,9 @@ import {vw, vh} from '../../Utils/Units';
 export default StyleSheet.create({
   cardimage: {
     resizeMode: 'cover',
-    width: 3.5 * vh,
+    width: 3 * vh,
     backgroundColor: 'red',
-    height: 2.5 * vh,
+    height: 2.2 * vh,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
@@ -22,7 +22,7 @@ export default StyleSheet.create({
   name: {
     color: '#FFB829',
     marginLeft: 4 * vw,
-    fontSize: 2 * vh,
+    fontSize: 1.7 * vh,
   },
   imgicon: {
     width: 4 * vw,

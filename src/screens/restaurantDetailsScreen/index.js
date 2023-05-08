@@ -82,7 +82,10 @@ class ResturentDetailScreen extends React.Component {
 
   handleLootBoxPress = () => {
     this.props?.navigation?.navigate('LootboxTierScreen', {
-      menu: this.state?.details?.lootboxes,
+      id: this.state.details?.id,
+      lootBoxes: this.state?.details?.lootboxes,
+      provoCash: this.state.details?.provo_cash_price,
+      lootBoxAmount: this.state?.details?.lootbox_amount,
     });
   };
 
@@ -230,21 +233,7 @@ class ResturentDetailScreen extends React.Component {
             )}
             {this.state?.details?.lootboxes?.length && (
               <View style={{alignItems: 'center', marginVertical: vh * 3}}>
-                <Button
-                  title="LOOT BOX"
-                  onPress={this.handleLootBoxPress}
-                  // onPress={() => {
-                  //   if (this?.props?.token) {
-                  //     this.props.navigation.navigate('LootBoxPaymentMethod', {
-                  //       id: this.state.details?.id,
-                  //       provoCash: this.state.details?.provo_cash_price,
-                  //       lootBoxAmount: this.state?.details?.lootbox_amount,
-                  //     });
-                  //   } else {
-                  //     showToast('Please Login First');
-                  //   }
-                  // }}
-                />
+                <Button title="LOOT BOX" onPress={this.handleLootBoxPress} />
               </View>
             )}
             {this?.state?.details?.happy_hour_deals && (

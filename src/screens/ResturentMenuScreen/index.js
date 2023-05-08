@@ -33,7 +33,7 @@ class ResturentMenuScreen extends React.Component {
     return (
       <Dash
         style={{
-          width: 100 * vw,
+          width: 90 * vw,
           flexDirection: 'row',
           alignItems: 'center',
           marginTop: vh * 2,
@@ -87,6 +87,7 @@ class ResturentMenuScreen extends React.Component {
             style={{marginTop: 2 * vh}}
             renderItem={this.renderMenuList}
             ListEmptyComponent={this.emptyList}
+            contentContainerStyle={styles.contentContainerStyle}
             // nestedScrollEnabled
           />
           {/* </ScrollView> */}

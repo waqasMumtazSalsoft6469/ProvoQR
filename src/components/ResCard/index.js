@@ -55,28 +55,23 @@ class ProductItem extends React.Component {
   };
 
   renderratings = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          // justifyContent: 'space-between',
-          marginTop: 1 * vh,
-          width: 75 * vw,
-        }}>
-        {this.props?.item?.badges?.map((item, index) => {
-          return (
-            <View>
-              <RateCard
-                item={item}
-                index={index}
-                style={{marginRight: vw * 5}}
-              />
-            </View>
-          );
-        })}
-      </View>
-    );
+    if (this.props?.item?.lootboxes?.length) {
+      return (
+        <View style={styles.tiersContainer}>
+          {this.props?.item?.lootboxes?.map((item, index) => {
+            return (
+              <View>
+                <RateCard
+                  item={item}
+                  index={index}
+                  style={{marginRight: vw * 5}}
+                />
+              </View>
+            );
+          })}
+        </View>
+      );
+    }
   };
 
   renderBadge = val => {

@@ -29,8 +29,13 @@ class MenuCard extends React.Component {
         <View style={{flexDirection: 'row'}}>
           <View>
             <Image
-              source={{uri: imageUrl + this.props.item?.image}}
+              source={
+                this.props.item?.image
+                  ? {uri: imageUrl + this.props.item?.image}
+                  : sampleimage?.noImage
+              }
               style={styles.cardimage}
+              defaultSource={sampleimage.noImage}
             />
           </View>
 

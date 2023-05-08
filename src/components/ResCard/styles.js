@@ -4,7 +4,7 @@ import {vw, vh} from '../../Utils/Units';
 
 export default StyleSheet.create({
   container: {
-    // backgroundColor: 'red',
+    // backgroundColor: 'yellow',
   },
   cardimage: {
     resizeMode: 'contain',
@@ -86,5 +86,10 @@ export default StyleSheet.create({
   },
   happyFont: {
     color: ThemeColors.white,
+  },
+  tiersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 1 * vh,
   },
 });

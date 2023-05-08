@@ -89,5 +89,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: vh * 80,
   },
+  contentContainerStyle: {
+    paddingBottom: vw * 5,
+  },
 });
 export default styles;

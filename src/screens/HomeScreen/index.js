@@ -33,6 +33,7 @@ class HomeScreen extends React.Component {
       userLocation: {latitude: '', longitude: ''},
       searchString: '',
       refreshing: false,
+      isSearchFocused: false,
     };
   }
 
@@ -60,6 +61,14 @@ class HomeScreen extends React.Component {
     //   }
     //   this.timeout = setTimeout(this.search, 500);
     // }
+  };
+
+  handleOnBlur = () => {
+    this.setState({isSearchFocused: false});
+  };
+
+  handleOnFocus = () => {
+    this.setState({isSearchFocused: true});
   };
 
   renderCategoryEmptyComponent = () => {
@@ -198,7 +207,11 @@ class HomeScreen extends React.Component {
     );
   };
   renderCategories = () => {
-    if (this.state.refreshing || this.state.searchString?.length > 0) {
+    if (
+      this.state.refreshing ||
+      this.state.searchString?.length > 0 ||
+      this.state.isSearchFocused
+    ) {
       return null;
     }
     return (
@@ -246,7 +259,11 @@ class HomeScreen extends React.Component {
     );
   };
   renderRecommendedRestaurant = () => {
-    if (this.state.refreshing || this.state.searchString?.length > 0) {
+    if (
+      this.state.refreshing ||
+      this.state.searchString?.length > 0 ||
+      this.state.isSearchFocused
+    ) {
       return null;
     }
     return (
@@ -305,6 +322,8 @@ class HomeScreen extends React.Component {
           onSubmitEditing={this.search}
           clearBtn={this.state?.searchString?.length > 0}
           onClear={this.handleClear}
+          onFocus={this.handleOnFocus}
+          onBlur={this.handleOnBlur}
         />
         {/* {this.renderBanner()} */}
         {this.renderRecommendedRestaurant()}

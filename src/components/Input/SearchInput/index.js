@@ -17,6 +17,8 @@ const SearchInput = props => {
         value={props?.value}
         onChangeText={props?.onChangeText}
         onSubmitEditing={props?.onSubmitEditing}
+        onFocus={props?.onFocus}
+        onBlur={props?.onBlur}
       />
       {props?.clearBtn && (
         <TouchableOpacity
