@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   ImageBackground,
   View,
@@ -6,6 +6,8 @@ import {
   Text,
   FlatList,
   Keyboard,
+  Linking,
+  TouchableOpacity,
 } from 'react-native';
 import {
   backgrounds,
@@ -16,6 +18,7 @@ import {
 import MapView, {
   Polyline,
   Marker,
+  Circle,
   Callout,
   CalloutSubview,
 } from 'react-native-maps';
@@ -66,40 +69,38 @@ class MapScreen extends React.Component {
       search: '',
       details: {},
       category: '',
-      ratings: [],
-      lootbox_amount: '',
-      provo_cash_price: '',
     };
   }
 
+  handleHappyHourMenuPress = () => {
+    this.setState({resturentModal: false});
+    this.props?.navigation?.navigate('HappyHourMenuScreen', {
+      deal: this.state?.details?.happy_hour_deals,
+    });
+  };
+
+  handleLootBoxPress = () => {
+    this.setState({resturentModal: false});
+    this.props?.navigation?.navigate('LootboxTierScreen', {
+      id: this.state.details?.id,
+      lootBoxes: this.state.details?.lootboxes,
+      provoCash: this.state.details?.provo_cash_price,
+      lootBoxAmount: this.state.details?.lootbox_amount,
+    });
+  };
+
+  handleViewMapPress = (lat, lng) => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
+  };
+
   handleCategory = categoryId => {
-    // console.log('categoryId', categoryId);
-    const {userLocation} = this.state;
-    this.props
-      .getNearestRestaurant({
-        lat: parseFloat(userLocation?.latitude),
-        lng: parseFloat(userLocation?.longitude),
-        category_id: categoryId?.id,
-      })
-      .then(res => {
-        if (res?.nearestRestaurant?.data?.length > 0) {
-          this.setState({restaurants: res?.nearestRestaurant?.data});
-          this.animateToRegion(
-            parseFloat(
-              res?.nearestRestaurant?.data[0]?.lat
-                ? res?.nearestRestaurant?.data[0]?.lat
-                : 0,
-            ),
-            parseFloat(
-              res?.nearestRestaurant?.data[0]?.lng
-                ? res?.nearestRestaurant?.data[0]?.lng
-                : 0,
-            ),
-          );
-        } else {
-          showToast('No Restarant Found');
-        }
-      });
+    this.setState({category: categoryId?.id}, this.getNearestRestaurant);
   };
 
   handleClear = () => {
@@ -112,40 +113,12 @@ class MapScreen extends React.Component {
 
   onChangeSearch = text => {
     this.setState({search: text});
-    // const {search, userLocation} = this.state;
-    // setTimeout(() => {
-    //   tempTime = tempTime + 1;
-    //   if (tempTime == 2) {
-    //     this.props
-    //       .getNearestRestaurant({
-    //         lat: parseFloat(userLocation?.latitude),
-    //         lng: parseFloat(userLocation?.longitude),
-    //         search_text: text,
-    //       })
-    //       .then(res => {
-    //         tempTime = 0;
-    //         Keyboard.dismiss();
-    //         if (res?.nearestRestaurant?.data?.length > 0) {
-    //           this.setState({restaurants: res?.nearestRestaurant?.data});
-    //           this.animateToRegion(
-    //             parseFloat(res?.nearestRestaurant?.data[0]?.lat),
-    //             parseFloat(res?.nearestRestaurant?.data[0]?.lng),
-    //           );
-    //         } else {
-    //           showToast('No Restarant Found');
-    //         }
-    //       });
-    //   }
-    // }, 5000);
   };
 
   getRestaurantDetails = id => {
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       this.setState({
         details: res?.details,
-        // ratings: res?.badges,
-        // lootbox_amount: res?.lootbox_amount,
-        // provo_cash_price: res?.provo_cash_price,
       });
       setTimeout(() => {
         this.setState({resturentModal: true});
@@ -167,7 +140,10 @@ class MapScreen extends React.Component {
       };
 
       const response = await this.props.getNearestRestaurant(filters);
-      // console.log('nearest response', response);
+      this.animateToRegion(
+        parseFloat(response?.nearestRestaurant?.data[0]?.lat),
+        parseFloat(response?.nearestRestaurant?.data[0]?.lng),
+      );
       this.setState({
         refreshing: false,
         restaurants: response?.nearestRestaurant?.data,
@@ -185,8 +161,8 @@ class MapScreen extends React.Component {
         {
           latitude: Number(latitude),
           longitude: Number(longitude),
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: 0.0002,
+          latitudeDelta: 0.0622,
+          longitudeDelta: 0.0121,
         },
         2000,
       );
@@ -195,39 +171,20 @@ class MapScreen extends React.Component {
   getUserLocation = async () => {
     try {
       const location = await getCurrentLocation();
-      this.animateToRegion(
-        parseFloat(location?.latitude),
-        parseFloat(location?.longitude),
-      );
+
+      // this.animateToRegion(
+      //   parseFloat(location?.latitude),
+      //   parseFloat(location?.longitude),
+      // );
+
       this.setState({
         userLocation: {
           latitude: parseFloat(location?.latitude),
           longitude: parseFloat(location?.longitude),
         },
       });
-      this.getNearestRestaurant();
 
-      // this.props
-      //   .getNearestRestaurant({
-      //     lat: parseFloat(location?.latitude),
-      //     lng: parseFloat(location?.longitude),
-      //   })
-      //   .then(res => {
-      //     console.log('getNearestRestaurant', res?.nearestRestaurant?.data[0]);
-      //     this.setState({restaurants: res?.nearestRestaurant?.data});
-      //     this.animateToRegion(
-      //       parseFloat(
-      //         res?.nearestRestaurant?.data[0]?.lat
-      //           ? res?.nearestRestaurant?.data[0]?.lat
-      //           : 0,
-      //       ),
-      //       parseFloat(
-      //         res?.nearestRestaurant?.data[0]?.lng
-      //           ? res?.nearestRestaurant?.data[0]?.lng
-      //           : 0,
-      //       ),
-      //     );
-      //   });
+      this.getNearestRestaurant();
     } catch (error) {
       showToast(error);
     }
@@ -255,15 +212,8 @@ class MapScreen extends React.Component {
 
   renderRatings = () => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          // justifyContent: 'space-between',
-          marginTop: 2 * vh,
-          width: 100 * vw,
-        }}>
-        {this.state.details?.badges?.map((item, index) => {
+      <View style={styles.tiersContainer}>
+        {this.state.details?.lootboxes?.map((item, index) => {
           return (
             <RateCard item={item} index={index} style={{marginLeft: vw * 5}} />
           );
@@ -351,7 +301,6 @@ class MapScreen extends React.Component {
 
   renderMarkers = () => {
     return this.state.restaurants?.map(location => {
-      console.log('nearest loc', location?.happy_hour_deals);
       return (
         <Marker
           draggable={false}
@@ -367,7 +316,7 @@ class MapScreen extends React.Component {
             {location?.happy_hour_deals ? (
               <AnimatedLottieView
                 source={lottieImage.fireImage}
-                // style={styles.searchImageStyle}
+                style={styles.markerIconStyle}
                 autoPlay={true}
                 loop={true}
               />
@@ -402,6 +351,18 @@ class MapScreen extends React.Component {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}>
+            <Circle
+              // key={(lat + long + 2).toString()}
+              center={{
+                latitude: this.state?.userLocation?.latitude,
+                longitude: this.state?.userLocation?.longitude,
+              }}
+              radius={80467.2}
+              strokeWidth={0.5}
+              strokeColor={'#FBAA29'}
+              fillColor={'rgba(251,170,41,0.15)'}
+              // onRegionChangeComplete={this.onRegionChangeComplete.bind(this)}
+            />
             {this.state?.userLocation && (
               <Marker coordinate={this.state?.userLocation}>
                 <Image
@@ -417,15 +378,6 @@ class MapScreen extends React.Component {
 
           <View style={styles.box}>
             <View style={styles.searchContainer}>
-              {/* <MainInput
-                placeholder="Search Here..."
-                // style={styles.field}
-                ref={r => (this.email = r)}
-                // onSubmitEditing={() => this.pw.onFocus()}
-                leftIcon={icons.search}
-                style={{width: vw * 70}}
-                onChangeText={text => this.onChangeSearch(text)}
-              /> */}
               <SearchInput
                 placeholder="Search...."
                 value={this.state.search}
@@ -433,9 +385,7 @@ class MapScreen extends React.Component {
                 onSubmitEditing={this.search}
                 clearBtn={this.state?.search?.length > 0}
                 onClear={this.handleClear}
-                style={{width: vw*70}}
-                // onFocus={this.handleOnFocus}
-                // onBlur={this.handleOnBlur}
+                style={{width: vw * 70}}
               />
               <TouchableHOC
                 style={styles.filterBg}
@@ -472,20 +422,27 @@ class MapScreen extends React.Component {
                   </OutfitSemiBoldText>
                   <View style={styles.menuContainer}>
                     <TouchableHOC
-                      onPress={() => {
-                        this.setState({resturentModal: false});
-                        this.props.navigation.navigate('RestaurantDirection', {
-                          latitude: this.state.details?.lat,
-                          longitude: this.state.details?.lng,
-                        });
-                      }}
-                      onSelect={() => {
-                        this.setState({resturentModal: false});
-                        this.props.navigation.navigate('RestaurantDirection', {
-                          latitude: this.state.details?.lat,
-                          longitude: this.state.details?.lng,
-                        });
-                      }}>
+                      onPress={() =>
+                        this.handleViewMapPress(
+                          this.state?.details?.lat,
+                          this.state?.details?.lng,
+                        )
+                      }
+                      // onPress={() => {
+                      //   this.setState({resturentModal: false});
+                      //   this.props.navigation.navigate('RestaurantDirection', {
+                      //     latitude: this.state.details?.lat,
+                      //     longitude: this.state.details?.lng,
+                      //   });
+                      // }}
+                      // onSelect={() => {
+                      //   this.setState({resturentModal: false});
+                      //   this.props.navigation.navigate('RestaurantDirection', {
+                      //     latitude: this.state.details?.lat,
+                      //     longitude: this.state.details?.lng,
+                      //   });
+                      // }}
+                    >
                       <OutfitRegularText style={styles.buttonText}>
                         View on Map
                       </OutfitRegularText>
@@ -519,7 +476,8 @@ class MapScreen extends React.Component {
                 </View>
                 {/* {this.rendercuisines()} */}
               </View>
-              {this.renderRatings()}
+              {this.state?.details?.lootboxes?.length > 0 &&
+                this.renderRatings()}
 
               <Dash
                 style={{
@@ -563,24 +521,40 @@ class MapScreen extends React.Component {
                 </OutfitSemiBoldText>
                 <HomeCarouselConmponent />
               </View> */}
-              <View style={{alignItems: 'center'}}>
-                <Button
-                  title="Loot Box"
-                  onPress={() => {
-                    if (this.props?.token) {
-                      this.setState({resturentModal: false});
-                      this.props.navigation.navigate('LootBoxPaymentMethod', {
-                        id: this.state.details?.id,
-                        provoCash: this.state?.details?.provo_cash_price,
-                        lootBoxAmount: this.state?.details?.lootbox_amount,
-                      });
-                    } else {
-                      showToast('Please Login First.');
+              {this.state?.details?.lootboxes?.length > 0 && (
+                <View style={{alignItems: 'center'}}>
+                  <Button
+                    title="Loot Box"
+                    onPress={this.handleLootBoxPress}
+                    btnContainer={{marginTop: 3 * vh}}
+                  />
+                </View>
+              )}
+              {this?.state?.details?.happy_hour_deals && (
+                <View style={styles.happyHourContainer}>
+                  <OutfitSemiBoldText style={styles.recomend}>
+                    Happy Hours Deals
+                  </OutfitSemiBoldText>
+                  <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={() =>
+                      this.handleHappyHourMenuPress(
+                        this?.state?.details?.happy_hour_deals,
+                      )
                     }
-                  }}
-                  btnContainer={{marginTop: 3 * vh}}
-                />
-              </View>
+                    style={styles.happyHourBannerImageContainer}>
+                    <Image
+                      source={{
+                        uri:
+                          imageUrl +
+                          this?.state?.details?.happy_hour_deals?.banner_image,
+                      }}
+                      style={styles.happyHourBannerImage}
+                    />
+                  </TouchableOpacity>
+                  {/* <HomeCarouselConmponent /> */}
+                </View>
+              )}
             </ScrollView>
           </BottomSheetWrapper>
           {/* <BottomSheetWrapper

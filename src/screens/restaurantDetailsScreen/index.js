@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {backgrounds, icons, sampleimage, tabicons} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
@@ -79,6 +80,16 @@ class ResturentDetailScreen extends React.Component {
   //     </View>
   //   );
   // };
+
+  handleMapDirectionPress = () => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${this.state?.details?.lat},${this.state?.details?.lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
+  };
 
   handleLootBoxPress = () => {
     this.props?.navigation?.navigate('LootboxTierScreen', {
@@ -154,13 +165,7 @@ class ResturentDetailScreen extends React.Component {
                       Menu
                     </OutfitRegularText>
                   </TouchableHOC>
-                  <TouchableHOC
-                    onPress={() =>
-                      this.props.navigation.navigate('RestaurantDirection', {
-                        latitude: this.state.details?.lat,
-                        longitude: this.state.details?.lng,
-                      })
-                    }>
+                  <TouchableHOC onPress={this.handleMapDirectionPress}>
                     <OutfitRegularText style={styles.buttonText}>
                       Get Direction
                     </OutfitRegularText>

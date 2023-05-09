@@ -75,13 +75,13 @@ class LootBoxPaymentMethod extends React.Component {
               <Image source={provoCash.vector2} style={styles.image} />
 
               <Button
-                title="BY CARD"
+                title="CARD"
                 btnContainer={styles.upperBtn}
                 onPress={this.handleCardBtnPress}
                 labelStyle={{color: ThemeColors.white}}
               />
               <Button
-                title="BY PROVOCASH"
+                title="PROVOCASH"
                 btnContainer={styles.lowerBtn}
                 onPress={() => this.setState({visibleSuccess: true})}
                 labelStyle={{color: ThemeColors.secondaryColor}}

@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   resName: {
-    fontSize: vh * 4,
+    fontSize: vh * 1.6,
     color: ThemeColors.black,
   },
   outerContainer: {
@@ -303,6 +303,30 @@ const styles = StyleSheet.create({
   priceHeadingText: {
     color: ThemeColors.iconColor,
     fontSize: vh * 1.8,
+  },
+  tiersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2 * vh,
+  },
+  happyHourContainer: {
+    marginVertical: vh * 3,
+    paddingHorizontal: 5 * vw,
+    justifyContent: 'space-between',
+  },
+  happyHourBannerImageContainer: {
+    marginTop: vh * 2,
+    width: vw * 90,
+    height: vh * 25,
+    borderRadius: vh * 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  happyHourBannerImage: {
+    width: vw * 90,
+    height: vh * 25,
+    borderRadius: vh * 4,
+    resizeMode: 'cover',
   },
 });
 export default styles;

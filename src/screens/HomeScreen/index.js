@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, View, FlatList, Platform} from 'react-native';
+import {ImageBackground, View, FlatList, Platform, Linking} from 'react-native';
 import {backgrounds} from '../../assets/images';
 import styles from './styles';
 import HomeCard from '../../components/ResCard';
@@ -21,6 +21,7 @@ import HomeCategoryCard from '../../components/HomeCategoryCard';
 import KeyboardAdjust from 'react-native-android-keyboard-adjust';
 import EmptyComponent from '../../components/EmptyComponent';
 import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
+import {showToast} from '../../Api/HelperFunction';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -181,10 +182,13 @@ class HomeScreen extends React.Component {
     );
   };
   handleMapBtnPress = item => {
-    this.props.navigation.navigate('RestaurantDirection', {
-      latitude: item?.lat,
-      longitude: item?.lng,
-    });
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
   };
   handleRestaurantPress = item => {
     this.props.navigation.navigate('ResturentDetail', {
@@ -210,7 +214,8 @@ class HomeScreen extends React.Component {
     if (
       this.state.refreshing ||
       this.state.searchString?.length > 0 ||
-      this.state.isSearchFocused
+      this.state.isSearchFocused ||
+      this.state.categories?.length < 1
     ) {
       return null;
     }
@@ -262,7 +267,8 @@ class HomeScreen extends React.Component {
     if (
       this.state.refreshing ||
       this.state.searchString?.length > 0 ||
-      this.state.isSearchFocused
+      this.state.isSearchFocused ||
+      this.state.recommended?.length < 1
     ) {
       return null;
     }

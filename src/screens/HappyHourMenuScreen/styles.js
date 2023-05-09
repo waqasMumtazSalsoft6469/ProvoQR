@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {vh, vw} from '../../Utils/Units';
 import {getStatusBarHeight} from 'react-native-safearea-height';
+import ThemeColors from '../../Utils/ThemeColors';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +11,19 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {alignItems: 'center', paddingBottom: vh * 5},
   topIconStyle: {width: vw * 45.3, height: vw * 29.8, resizeMode: 'contain'},
-  menuCardStyle: {height: vh * 80, width: vw * 90, resizeMode: 'cover'},
+  menuCardStyle: {
+    marginTop: vh * 2,
+    height: vh * 80,
+    width: vw * 90,
+    resizeMode: 'cover',
+  },
+  footerContainer: {
+    alignItems: 'center',
+  },
+  footerText: {
+    color: ThemeColors.white,
+    fontSize: vh * 2,
+  },
 });
 
 export default styles;
