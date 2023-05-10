@@ -14,4 +14,10 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     // marginVertical: vh * 3,
   },
+  prizeDetailBtnText: {
+    marginTop: vh * 2,
+    color: '#365EB1',
+    textDecorationLine: 'underline',
+    fontSize: 1.7 * vh,
+  },
 });

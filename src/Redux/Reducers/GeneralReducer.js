@@ -102,6 +102,12 @@ export default GeneralReducer = (state = initialState, action) => {
         notificationCount: action.payload,
       };
     }
+    case actionTypes.saveRestaurantId: {
+      return {
+        ...state,
+        restaurant_id: action.payload,
+      };
+    }
     default: {
       return state;
     }

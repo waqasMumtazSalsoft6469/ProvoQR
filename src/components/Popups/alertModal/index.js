@@ -57,6 +57,13 @@ export default class AlertModal extends Component {
               </OutfitRegularText>
             )}
           </OutfitRegularText>
+          {this.props?.showPrizeDetailBtn && (
+            <TouchableHOC onPress={this.props?.handlePrizeDetailBtn}>
+              <OutfitRegularText style={styles.prizeDetailBtnText}>
+                Check Prize Details
+              </OutfitRegularText>
+            </TouchableHOC>
+          )}
           <View style={styles.buttonContainer}>
             <Button
               title={this.props.buttonTitle}

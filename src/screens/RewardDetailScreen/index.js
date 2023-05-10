@@ -90,10 +90,10 @@ class RegisterScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.route.params.reward_id;
-    // const name = this.props?.route.params.restaurantName;
-    // this.props?.navigation?.setOptions({
-    //   title: name,
-    // });
+    const name = this.props?.route.params.restaurantName;
+    this.props?.navigation?.setOptions({
+      title: name,
+    });
 
     const data = {
       reward_id: id,
@@ -142,7 +142,15 @@ class RegisterScreen extends React.Component {
                 borderRadius: vh * 2,
               }}>
               <Image
-                source={{uri: imageUrl + this.state.details?.reward_image}}
+                source={
+                  this.state.details?.my_win_lootbox?.menu?.image
+                    ? {
+                        uri:
+                          imageUrl +
+                          this.state.details?.my_win_lootbox?.menu?.image,
+                      }
+                    : sampleimage.placeholder
+                }
                 style={styles.cardimg}
               />
             </View>
@@ -154,7 +162,7 @@ class RegisterScreen extends React.Component {
               </View> */}
 
               <OutfitLightText style={styles.rewtext}>
-                {this.state.details?.reward_description}
+                {this.state.details?.reward_tier}
               </OutfitLightText>
               {/* <OutfitLightText style={styles.redeem}>
                 (Make sure you are in the restaurant at time of redemption.)
@@ -168,11 +176,14 @@ class RegisterScreen extends React.Component {
                 Reward Info
               </OutfitSemiBoldText>
               <OutfitMediumText style={styles.midTextStyle}>
-                {this.state.details?.organisations?.name}
+                {this.state.details?.my_win_lootbox?.menu?.name}
               </OutfitMediumText>
-              <OutfitMediumText style={styles.midTextStyle}>
-                {this.state.details?.organisations?.address}
+              <OutfitMediumText style={styles.rewtext}>
+                Description
               </OutfitMediumText>
+              {/* <OutfitMediumText style={styles.midTextStyle}>
+                {this.state.details?.my_win_lootbox?.menu?.detail}
+              </OutfitMediumText> */}
               <OutfitMediumText style={styles.midTextStyle}>
                 {moment(
                   this.state.details?.reward_expire_date,

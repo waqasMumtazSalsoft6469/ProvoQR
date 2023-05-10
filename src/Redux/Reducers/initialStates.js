@@ -9,7 +9,8 @@ const GeneralReducer = {
   mySubscription: [],
   billingDetails: null,
   categories: [],
-  notificationCount: null 
+  notificationCount: null,
+  restaurant_id: null,
 };
 
 const initialStates = {

@@ -83,6 +83,7 @@ export const icons = {
   happyHourIcon: require('./icons/happyHourIcon.png'),
   blackLocIcon: require('./icons/blackLocIcon.png'),
   crossIcon: require('./icons/crossIcon.png'),
+  restaurantDummyIcon: require('./icons/restaurantDummyIcon.png'),
 };
 export const tabicons = {
   tab1: require('./tabIcons/tab1.png'),

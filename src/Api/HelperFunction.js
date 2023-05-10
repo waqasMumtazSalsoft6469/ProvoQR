@@ -2,6 +2,7 @@ import Toast from 'react-native-toast';
 import store from '../Redux/store';
 import {EventRegister} from 'react-native-event-listeners';
 import moment from 'moment/moment';
+import {events} from '../Utils/Constants';
 
 export const showToast = msg => {
   setTimeout(() => {
@@ -38,6 +39,11 @@ export const handleResponse = ({response, jsonResponse}) => {
       break;
     }
     case 401: {
+      const message = getMessage(jsonResponse);
+      return Promise.reject(message);
+    }
+    case 400: {
+      EventRegister.emit(events.buyProvoCash);
       const message = getMessage(jsonResponse);
       return Promise.reject(message);
     }

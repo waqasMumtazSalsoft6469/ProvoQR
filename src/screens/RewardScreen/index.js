@@ -86,7 +86,7 @@ class RegisterScreen extends React.Component {
       };
 
       const response = await this.props.getRewardList(filters);
-        console.log('reward response', response?.rewardList?.data);
+      console.log('reward response', response?.rewardList?.data);
       this.setState({
         reward: response?.rewardList?.data,
       });
@@ -179,21 +179,36 @@ class RegisterScreen extends React.Component {
 
   renderItem = ({item}) => {
     return (
-      <TouchableHighlight
-        onPress={() =>
-          this.props.navigation.navigate('RewardDetail', {
-            category: 'Redeem',
-            reward_id: item?.id,
-            status: item?.status,
-            restaurantName: item?.organisations?.name,
-          })
-        }
-        style={styles.imageContainer}>
+      <View>
+        <TouchableHighlight
+          onPress={() =>
+            this.props.navigation.navigate('RewardDetail', {
+              category: 'Redeem',
+              reward_id: item?.id,
+              status: item?.status,
+              restaurantName: item?.organisations?.name,
+            })
+          }
+          style={styles.imageContainer}>
+          <Image
+            source={
+              item?.my_win_lootbox?.menu?.image
+                ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
+                : sampleimage.noImage
+            }
+            style={[styles.image]}
+          />
+        </TouchableHighlight>
+
         <Image
-          source={item?.reward_image ? {uri: imageUrl + item?.reward_image} : sampleimage.placeholder}
-          style={[styles.image]}
+          source={
+            item?.organisations?.image
+              ? {uri: imageUrl + item?.organisations?.image}
+              : icons.restaurantDummyIcon
+          }
+          style={styles.resLogoStyle}
         />
-      </TouchableHighlight>
+      </View>
     );
   };
 
@@ -215,7 +230,7 @@ class RegisterScreen extends React.Component {
           imageStyle={styles.imageStyle}>
           <FlatList
             data={this.state.reward}
-            keyExtractor={(item) => item?.id}
+            keyExtractor={item => item?.id}
             numColumns={2}
             contentContainerStyle={styles.contentContainerStyle}
             renderItem={this.renderItem}

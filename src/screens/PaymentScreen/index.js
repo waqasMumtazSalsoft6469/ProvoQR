@@ -56,8 +56,13 @@ class PaymentScreen extends React.Component {
     }
   };
 
+  handlePrizeDetailBtn = () => {
+    this.props.navigation?.navigate('LootboxTierScreen');
+  };
+
   handleSuccessPress = () => {
-    const {id, from} = this.props.route.params;
+    const {id, from} = this.props?.route?.params;
+    console.log('navigateTo', this.props?.route?.params?.navigateTo);
     console.log('handleSuccessPress from', from);
     if (from === 'Subscription') {
       this.props.navigation.navigate('Login');
@@ -67,7 +72,11 @@ class PaymentScreen extends React.Component {
         success: 0,
       });
     } else if (from === 'provo') {
-      this.props.navigation.navigate('HomeScreen');
+      if (this.props?.route?.params?.navigateTo) {
+        this.props.navigation.navigate(this.props?.route?.params?.navigateTo);
+      } else {
+        this.props.navigation.navigate('HomeScreen');
+      }
     } else {
       this.props.navigation.navigate('MySubscription');
     }
@@ -238,6 +247,8 @@ class PaymentScreen extends React.Component {
             buttonTitle="Yes"
             onButtonPress={this.confirmPayment}
             no={() => this.setState({conVis: false})}
+            showPrizeDetailBtn={this.props?.route?.params?.from === 'lootbox'}
+            handlePrizeDetailBtn={this.handlePrizeDetailBtn}
           />
           <AlertModal
             visible={this.state.visibleSuccess}

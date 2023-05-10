@@ -102,6 +102,7 @@ class ProvoScreen extends React.Component {
       this.props.navigation.navigate('ProvoPaymentMethod', {
         packageId: this.state.selectedPackage,
         from: 'provo',
+        navigateTo: this.props?.route?.params?.navigateTo,
       });
     }
   };

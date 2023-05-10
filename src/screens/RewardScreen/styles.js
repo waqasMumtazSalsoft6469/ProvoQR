@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingHorizontal: vw * 4,
+    paddingBottom: vh * 10,
     // alignItems: 'center',
   },
   emptyContainer: {
@@ -106,6 +107,14 @@ const styles = StyleSheet.create({
   emptyText: {
     color: ThemeColors.iconColor,
     fontSize: vh * 1.8,
+  },
+  resLogoStyle: {
+    position: 'absolute',
+    bottom: vw * 5,
+    right: vw * 5,
+    height: vw * 6,
+    width: vw * 6,
+    resizeMode: 'contain',
   },
   // contentContainerStyle: {backgroundColor: 'transparent'},
 });

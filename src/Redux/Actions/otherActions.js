@@ -568,3 +568,12 @@ export const lootBoxDraw = data => {
     }
   };
 };
+
+export const saveRestaurant = data => {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.saveRestaurantId,
+      payload: data,
+    });
+  };
+};

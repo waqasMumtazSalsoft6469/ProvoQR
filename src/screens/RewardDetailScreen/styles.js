@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   imgbg: {
     width: 100 * vw,
 
-    height: 100 * vh,
+    flex: 1,
   },
   label: {
     color: '#C6C5C5',
@@ -33,12 +33,12 @@ const styles = StyleSheet.create({
   midHeadingStyle: {
     marginTop: vh * 2,
     color: ThemeColors.secondaryColor,
-    fontSize: vh * 2,
+    fontSize: vh * 2.3,
   },
   midTextStyle: {
     marginTop: vh * 1,
     color: ThemeColors.rewardText,
-    fontSize: vh * 1.8,
+    fontSize: vh * 2,
   },
   imgicon: {
     width: 5 * vw,

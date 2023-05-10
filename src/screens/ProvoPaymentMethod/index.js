@@ -47,6 +47,7 @@ class ProvoPaymentMethod extends React.Component {
         option: this.state.selectedOption,
         id: this.props.route.params.packageId,
         from: this.props.route?.params?.from,
+        navigateTo: this.props.route?.params?.navigateTo,
       });
     }
   };
