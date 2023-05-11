@@ -79,11 +79,16 @@ class RegisterScreen extends React.Component {
     this.props.redeemReward(data).then(res => {
       if (res?.success) {
         console.log('res', res);
-        this.setState({
-          visibleModal: false,
-          redeemResponse: res,
-          successModal: true,
+        this.setState({visibleModal: false});
+        this.props.navigation?.navigate('RedeemRewardScreen', {
+          code: res?.code,
+          restaurant_id: this.state.details?.organisation_id,
         });
+        // this.setState({
+        //   visibleModal: false,
+        //   redeemResponse: res,
+        //   successModal: true,
+        // });
       }
     });
   };
@@ -117,7 +122,7 @@ class RegisterScreen extends React.Component {
       // console.log('duration', duration);
       const time =
         Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
-      // console.log('time', time);
+      console.log('minute', moment.utc(diff).format(':mm'));
       // console.log('split', time.split(':'));
       this.setState({timeLeft: time});
     }, 1000);
@@ -125,6 +130,13 @@ class RegisterScreen extends React.Component {
   }
 
   render() {
+    console.log(
+      'time',
+      moment(
+        '2023-05-13 08:15:42.000000',
+        "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+      ).diff(moment(), 'minutes'),
+    );
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -132,9 +144,7 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 90 * vh}}>
-          <ScrollView
-          // contentContainerStyle={{height: vh * 135}}
-          >
+          <ScrollView contentContainerStyle={{paddingBottom: vh * 10}}>
             <View
               style={{
                 alignItems: 'center',
@@ -178,12 +188,15 @@ class RegisterScreen extends React.Component {
               <OutfitMediumText style={styles.midTextStyle}>
                 {this.state.details?.my_win_lootbox?.menu?.name}
               </OutfitMediumText>
-              <OutfitMediumText style={styles.rewtext}>
+              <OutfitMediumText style={styles.rewardDesHeadingText}>
                 Description
               </OutfitMediumText>
-              {/* <OutfitMediumText style={styles.midTextStyle}>
+              <OutfitMediumText style={styles.midTextStyle}>
                 {this.state.details?.my_win_lootbox?.menu?.detail}
-              </OutfitMediumText> */}
+              </OutfitMediumText>
+              <OutfitMediumText style={styles.rewardDesHeadingText}>
+                Reward Expiration Date & Time
+              </OutfitMediumText>
               <OutfitMediumText style={styles.midTextStyle}>
                 {moment(
                   this.state.details?.reward_expire_date,
@@ -243,13 +256,17 @@ class RegisterScreen extends React.Component {
         <TwoAlertModal
           visible={this.state.visibleModal}
           setVisible={() => this.setState({visibleModal: false})}
-          icon={icons.popupQuestion}
-          title=""
+          title="Are you ready?"
+          time={moment(
+            this.state.details?.reward_expire_date,
+            "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+          ).diff(moment(), 'seconds')}
           description={'Are you sure you want to redeem this reward?'}
           leftButtonTitle="YES"
           onLeftButtonPress={this.handlePopupPress}
           rightButtonTitle="NO"
           onRightButtonPress={() => this.setState({visibleModal: false})}
+          popupContainer={{paddingVertical: 0}}
         />
         <AlertModal
           visible={this.state.successModal}

@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
     lineHeight: 3 * vh,
     fontSize: 2 * vh,
   },
+  rewardDesHeadingText: {
+    color: '#818080',
+    marginTop: vh * 2,
+    lineHeight: 3 * vh,
+    fontSize: 2 * vh,
+  },
   midHeadingStyle: {
     marginTop: vh * 2,
     color: ThemeColors.secondaryColor,

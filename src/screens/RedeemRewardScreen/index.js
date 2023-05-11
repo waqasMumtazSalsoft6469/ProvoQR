@@ -1,0 +1,71 @@
+import React, {useEffect} from 'react';
+import {ImageBackground, Image, View, Animated, Easing} from 'react-native';
+import {backgrounds, icons, sampleimage} from '../../assets/images';
+import styles from './styles';
+import TouchableHOC from '../../components/Buttons/TouchableHOC';
+import {vh, vw} from '../../Utils/Units';
+import AnimatedLottieView from 'lottie-react-native';
+import celebAnim from './celebAnim.json';
+import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import Button from '../../components/Buttons/SimpleButton';
+import ThemeColors from '../../Utils/ThemeColors';
+
+const RedeemRewardScreen = props => {
+  const code = props?.route?.params?.code;
+  const restaurant_id = props?.route?.params?.restaurant_id;
+
+  const handleRewardBtnPress = () => {
+    props?.navigation.navigate('LootboxTierScreen', {id: restaurant_id});
+  };
+
+  return (
+    <ImageBackground source={backgrounds.redBg} style={styles.container}>
+      <TouchableHOC
+        onPress={() => props.navigation.goBack()}
+        style={{
+          zIndex: 999,
+          position: 'absolute',
+          top: vh * 6,
+          left: vw * 8,
+        }}>
+        <Image source={icons.backarrow} style={styles.back} />
+      </TouchableHOC>
+      <AnimatedLottieView
+        source={celebAnim}
+        autoPlay={true}
+        loop={true}
+        style={{
+          height: 100 * vh,
+          width: 100 * vw,
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          //   zIndex: 99999,
+        }}
+      />
+      <Image source={sampleimage.openBox} style={styles.openBox} />
+      <OutfitSemiBoldText style={styles.congText}>Hurray!</OutfitSemiBoldText>
+      <OutfitRegularText style={styles.whiteText}>
+        You have redeemed your reward.
+      </OutfitRegularText>
+      <OutfitRegularText style={styles.whiteCodeText}>
+        Your code is{' '}
+        <OutfitRegularText style={styles.codeText}>{code}</OutfitRegularText>
+      </OutfitRegularText>
+      <Button
+        title="OK"
+        onPress={handleRewardBtnPress}
+        btnContainer={{
+          marginTop: vh * 5,
+          borderColor: ThemeColors.white,
+          width: vw * 40,
+        }}
+        labelStyle={{color: ThemeColors.white}}
+      />
+    </ImageBackground>
+  );
+};
+
+export default RedeemRewardScreen;

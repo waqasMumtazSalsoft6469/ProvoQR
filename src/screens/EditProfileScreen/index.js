@@ -98,12 +98,21 @@ class EditProfileScreen extends React.Component {
       showToast('Please enter your phone number');
     } else if (!address) {
       showToast('Please select your location address');
-    } else if (!image) {
-      showToast('Please select profile image');
-    } else {
+    }
+    // else if (!image) {
+    //   showToast('Please select profile image');
+    // }
+    else {
+      data = {
+        name: name,
+        address: address,
+        phone: phone,
+        age: age,
+        gender: gender,
+      };
+
       let _image = null;
-      data = {};
-      let profileImg = {};
+
       if (selectedImage) {
         let splittedUri = selectedImage?.split('.');
         _image = {
@@ -111,27 +120,39 @@ class EditProfileScreen extends React.Component {
           type: `image/${splittedUri[splittedUri?.length - 1]}`,
           name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
         };
+        data.image = _image;
       }
-      profileImg[`image`] = _image;
-      if (selectedImage) {
-        data = {
-          name: name,
-          address: address,
-          phone: phone,
-          ...profileImg,
-          age: age,
-          gender: gender,
-        };
-      } else {
-        data = {
-          name: name,
-          address: address,
-          phone: phone,
-          image: image,
-          age: age,
-          gender: gender,
-        };
-      }
+
+      // data = {};
+      // let profileImg = {};
+      // if (selectedImage) {
+      //   let splittedUri = selectedImage?.split('.');
+      //   _image = {
+      //     uri: selectedImage,
+      //     type: `image/${splittedUri[splittedUri?.length - 1]}`,
+      //     name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
+      //   };
+      // }
+      // profileImg[`image`] = _image;
+      // if (selectedImage) {
+      //   data = {
+      //     name: name,
+      //     address: address,
+      //     phone: phone,
+      //     ...profileImg,
+      //     age: age,
+      //     gender: gender,
+      //   };
+      // } else {
+      //   data = {
+      //     name: name,
+      //     address: address,
+      //     phone: phone,
+      //     image: image,
+      //     age: age,
+      //     gender: gender,
+      //   };
+      // }
 
       this.props.editProfile(data).then(res => {
         if (res?.success) {

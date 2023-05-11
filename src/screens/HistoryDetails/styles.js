@@ -146,5 +146,21 @@ const styles = StyleSheet.create({
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   icon: {height: vh * 2.5, width: vh * 2.5, marginRight: vw * 2},
+  midHeadingStyle: {
+    marginTop: vh * 2,
+    color: ThemeColors.secondaryColor,
+    fontSize: vh * 2.3,
+  },
+  midTextStyle: {
+    marginTop: vh * 1,
+    color: ThemeColors.rewardText,
+    fontSize: vh * 2,
+  },
+  rewardDesHeadingText: {
+    color: '#818080',
+    marginTop: vh * 2,
+    lineHeight: 3 * vh,
+    fontSize: 2 * vh,
+  },
 });
 export default styles;

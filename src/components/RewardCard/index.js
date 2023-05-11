@@ -22,17 +22,17 @@ class RewardCard extends React.Component {
     return (
       <View style={styles.card}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableHOC onPress={this.props.onClick}>
-            <Image
-              source={
-                this.props?.item?.image
-                  ? {uri: imageUrl + this.props?.item?.image}
-                  : sampleimage.placeholder
-              }
-              style={styles.cardimage}
-              defaultSource={sampleimage.placeholder}
-            />
-          </TouchableHOC>
+          {/* <TouchableHOC onPress={this.props.onClick}> */}
+          <Image
+            source={
+              this.props?.item?.image
+                ? {uri: imageUrl + this.props?.item?.image}
+                : sampleimage.noImage
+            }
+            style={styles.cardimage}
+            defaultSource={sampleimage.noImage}
+          />
+          {/* </TouchableHOC> */}
 
           <View style={{marginLeft: 2.5 * vw, width: 50 * vw}}>
             <OutfitMediumText style={styles.name}>

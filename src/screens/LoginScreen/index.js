@@ -128,37 +128,28 @@ class RegisterScreen extends React.Component {
       showToast('Please enter your full name');
     } else if (!email) {
       showToast('Please enter your email address');
-    } else if (!password) {
-      showToast('Please enter password');
-    } else if (!confpw) {
-      showToast('Please enter confirm password');
-    } else if (!phone) {
-      showToast('Please enter your phone number');
-    } else if (!address) {
-      showToast('Please select your location address');
-    } else if (!image) {
-      showToast('Please select profile image');
     } else if (
       !email.match(
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       )
     ) {
       showToast('Please insert valid email address');
-    } else if (password != confpw) {
-      showToast('Password and confirm password should be same.');
+    } else if (!phone) {
+      showToast('Please enter your phone number');
+    } else if (!password) {
+      showToast('Please enter password');
+    } else if (!confpw) {
+      showToast('Please enter confirm password');
+    }
+    // else if (!address) {
+    //   showToast('Please select your location address');
+    // }
+    // else if (!image) {
+    //   showToast('Please select profile image');
+    // }
+    else if (password != confpw) {
+      showToast('Passwords do not match');
     } else {
-      let _image = null;
-      let profileImg = {};
-      if (image) {
-        let splittedUri = image?.split('.');
-        _image = {
-          uri: image,
-          type: `image/${splittedUri[splittedUri?.length - 1]}`,
-          name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
-        };
-      }
-      profileImg[`image`] = _image;
-
       let data = {
         full_name: name,
         email: email,
@@ -166,8 +157,24 @@ class RegisterScreen extends React.Component {
         phone: phone,
         password: password,
         password_confirmation: confpw,
-        ...profileImg,
+        // ...profileImg,
       };
+      // let profileImg = {};
+      if (image) {
+        let _image = null;
+        let splittedUri = image?.split('.');
+        _image = {
+          uri: image,
+          type: `image/${splittedUri[splittedUri?.length - 1]}`,
+          name: `profileImage.${splittedUri[splittedUri?.length - 1]}`,
+        };
+        data.image = _image;
+      }
+
+      console.log('signup data', data);
+      // return;
+      // profileImg[`image`] = _image;
+
       this.props.signup(data).then(res => {
         if (res?.success) {
           showToast(res?.message);
@@ -459,7 +466,7 @@ class RegisterScreen extends React.Component {
 
         <Button
           title="CONTINUE"
-          onPress={() => this.handleSignUp()}
+          onPress={this.handleSignUp}
           btnContainer={styles.signupBtn}
         />
 

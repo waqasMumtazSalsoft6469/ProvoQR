@@ -30,6 +30,7 @@ import {
 import HappyHourMenuScreen from '../screens/HappyHourMenuScreen';
 import LootboxTierScreen from '../screens/LootboxTierScreen';
 import RewardDetailScreen from '../screens/RewardDetailScreen';
+import RedeemRewardScreen from '../screens/RedeemRewardScreen';
 
 const MainStack = createStackNavigator();
 
@@ -71,6 +72,7 @@ class MainNavigator extends React.Component {
         {/* {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )} */}
+
         {token &&
           (!userData?.age || !userData?.address || !userData?.gender) && (
             <MainStack.Screen
@@ -125,7 +127,6 @@ class MainNavigator extends React.Component {
           component={LootboxTierScreen}
           name="LootboxTierScreen"
         />
-        <MainStack.Screen component={RewardDetailScreen} name="RewardDetail" />
       </MainStack.Navigator>
     );
   };

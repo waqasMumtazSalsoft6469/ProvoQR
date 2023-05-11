@@ -42,6 +42,7 @@ export const endpoints = {
     recommendedRestaurantList: '/get/recommended/restaurant/list',
     notifications: '/user/notify',
     lootBoxDraw: '/get/lootbox',
+    lootBoxes: '/get/lootbox/prizes',
   },
 };
 

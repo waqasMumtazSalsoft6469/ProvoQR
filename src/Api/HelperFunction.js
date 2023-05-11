@@ -16,7 +16,7 @@ export const handleResponse = ({response, jsonResponse}) => {
       console.log('case 200');
       if (
         jsonResponse.hasOwnProperty('errors') ||
-        (jsonResponse.hasOwnProperty('error') && jsonResponse.error == true)
+        jsonResponse.hasOwnProperty('error')
       ) {
         const message = getMessage(jsonResponse);
         return Promise.reject(message);
@@ -42,7 +42,7 @@ export const handleResponse = ({response, jsonResponse}) => {
       const message = getMessage(jsonResponse);
       return Promise.reject(message);
     }
-    case 400: {
+    case 417: {
       EventRegister.emit(events.buyProvoCash);
       const message = getMessage(jsonResponse);
       return Promise.reject(message);

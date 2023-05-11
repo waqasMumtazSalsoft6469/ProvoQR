@@ -1,5 +1,12 @@
 import React from 'react';
-import {ImageBackground, View, Image, ScrollView} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Image,
+  ScrollView,
+  Linking,
+  FlatList,
+} from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 import styles from './styles';
@@ -11,6 +18,10 @@ import DetailList from '../../components/DetailList';
 import {getHistoryDetail} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
 import {imageUrl} from '../../Api/configs';
+import {showToast} from '../../Api/HelperFunction';
+import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import OutfitMediumText from '../../components/Text/OutfitMediumText';
+import moment from 'moment';
 
 class HistoryDetail extends React.Component {
   constructor(props) {
@@ -65,10 +76,66 @@ class HistoryDetail extends React.Component {
     });
   };
   handleMapPress = () => {
-    this.props.navigation.navigate('RestaurantDirection', {
-      latitude: this.state.response?.organisations?.lat,
-      longitude: this.state.response?.organisations?.lng,
-    });
+    // this.props.navigation.navigate('RestaurantDirection', {
+    //   latitude: this.state.response?.organisations?.lat,
+    //   longitude: this.state.response?.organisations?.lng,
+    // });
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${this.state.response?.organisations?.lat},${this.state.response?.organisations?.lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
+  };
+
+  renderHistoryItem = ({item}) => {
+    console.log('history item', item?.my_win_lootbox?.menu?.image);
+    return (
+      <View style={{width: vw * 90, marginBottom: vh * 3}}>
+        <Image
+          source={
+            item?.my_win_lootbox?.menu?.image
+              ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
+              : sampleimage.placeholder
+            // sampleimage.placeholder
+          }
+          style={styles.cardimg}
+        />
+        <OutfitSemiBoldText style={styles.midHeadingStyle}>
+          Reward Info
+        </OutfitSemiBoldText>
+        <OutfitMediumText style={styles.midTextStyle}>
+          {item?.my_win_lootbox?.menu?.name}
+        </OutfitMediumText>
+        <OutfitMediumText style={styles.rewardDesHeadingText}>
+          Description
+        </OutfitMediumText>
+        <OutfitMediumText style={styles.midTextStyle}>
+          {item?.my_win_lootbox?.menu?.detail}
+        </OutfitMediumText>
+        <OutfitMediumText style={styles.rewardDesHeadingText}>
+          Reward Expiration Date & Time
+        </OutfitMediumText>
+        <OutfitMediumText style={styles.midTextStyle}>
+          {moment(
+            item?.reward_expire_date,
+            "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+          ).format('DD-MM-YYYY HH:mm:ss')}
+        </OutfitMediumText>
+      </View>
+    );
+  };
+
+  renderRewardHistory = () => {
+    return (
+      <View style={{alignItems: 'center', marginTop: vh * 3}}>
+        <FlatList
+          data={this.state.response?.organisations?.reward_histories}
+          renderItem={this.renderHistoryItem}
+        />
+      </View>
+    );
   };
 
   // rendercuisines = () => {
@@ -180,10 +247,10 @@ class HistoryDetail extends React.Component {
                 }
                 style={styles.cardimg}
               />
-              <Image
+              {/* <Image
                 source={this.renderBadge(this.state.response.badge)}
                 style={styles.badge}
-              />
+              /> */}
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
               <View
@@ -234,8 +301,9 @@ class HistoryDetail extends React.Component {
                 {/* <Counter /> */}
               </View>
               {/* {this.rendercuisines()} */}
-              {this.renderRatings()}
+              {/* {this.renderRatings()} */}
             </View>
+            {this.renderRewardHistory()}
             {/* <Dash
               style={{
                 width: 100 * vw,
@@ -259,7 +327,7 @@ class HistoryDetail extends React.Component {
               </OutfitSemiBoldText>
               <HomeCarouselConmponent />
             </View> */}
-            {!this.state?.response?.organisations?.is_lootbox_purchase && (
+            {/* {!this.state?.response?.organisations?.is_lootbox_purchase && (
               <View style={{alignItems: 'center'}}>
                 <Button
                   title="LOOT BOX"
@@ -267,7 +335,7 @@ class HistoryDetail extends React.Component {
                   btnContainer={{marginTop: 5 * vh}}
                 />
               </View>
-            )}
+            )} */}
           </ScrollView>
         </ImageBackground>
       </View>

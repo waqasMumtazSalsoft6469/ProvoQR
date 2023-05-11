@@ -388,7 +388,8 @@ export const lootBoxPurchaseByCard = data => {
 
           resolve(response);
         } catch (e) {
-          showToast(getMessage(e));
+          console.log("by card e", e);
+          showToast(e);
           reject(e);
         } finally {
           dispatch({type: actionTypes.loaderOff});
@@ -558,6 +559,24 @@ export const lootBoxDraw = data => {
       dispatch({type: actionTypes.loaderOn});
 
       response = await post(endpoints.other.lootBoxDraw, data, true);
+
+      dispatch({type: actionTypes.loaderOff});
+      return Promise.resolve(response);
+    } catch (e) {
+      dispatch({type: actionTypes.loaderOff});
+      showToast(getMessage(e));
+      return Promise.reject(e);
+    }
+  };
+};
+
+export const getLootBoxes = data => {
+  return async dispatch => {
+    let response = null;
+    try {
+      dispatch({type: actionTypes.loaderOn});
+
+      response = await post(endpoints.other.lootBoxes, data, true);
 
       dispatch({type: actionTypes.loaderOff});
       return Promise.resolve(response);

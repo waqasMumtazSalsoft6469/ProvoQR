@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import styles from './styles';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
@@ -6,8 +6,9 @@ import MenuCard from '../../components/MenuCard';
 import {vh} from '../../Utils/Units';
 import Dash from 'react-native-dash';
 import Button from '../../components/Buttons/SimpleButton';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
+import {getLootBoxes} from '../../Redux/Actions/otherActions';
 
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
@@ -16,12 +17,28 @@ const LootboxTierScreen = props => {
   const lootBoxAmount = props?.route?.params?.lootBoxAmount;
   console.log('lootBoxes', lootBoxes);
 
+  const dispatch = useDispatch();
+
   const token = useSelector(state => state.SessionReducer.token);
 
+  const [response, setResponse] = useState([]);
   const [yOffset, setYOffset] = useState(0);
   const [frameHeight, setFrameHeight] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
 
+  const getLootBox = () => {
+    const data = {
+      restaurant_id: id,
+    };
+    dispatch(getLootBoxes(data)).then(res => {
+      // console.log('loot_boxes', res);
+      setResponse(res);
+    });
+  };
+
+  useEffect(() => {
+    getLootBox();
+  }, []);
   const handleLootBoxPress = () => {
     if (token) {
       props.navigation.navigate('LootBoxPaymentMethod', {
@@ -118,7 +135,7 @@ const LootboxTierScreen = props => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={lootBoxes}
+        data={response}
         keyExtractor={(_, index) => index}
         renderItem={renderMenuList}
         contentContainerStyle={styles.contentContainerStyle}

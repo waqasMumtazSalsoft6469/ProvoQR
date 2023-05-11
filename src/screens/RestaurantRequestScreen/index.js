@@ -35,7 +35,7 @@ const RestaurantRequest = props => {
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState(null);
 
-  handleDoneAddress = (address, latitude, longitude) => {
+  const handleDoneAddress = (address, latitude, longitude) => {
     setRestaurantAddress(address);
     setLatitude(latitude);
     setLongitude(longitude);
@@ -65,24 +65,36 @@ const RestaurantRequest = props => {
     launchImageLibrary(options, img => imgs(img));
   };
   const imgs = data => {
+    console.log('image data', data);
     if (data?.assets != null) {
       setVisible(false);
       setImage(data.assets[0].uri);
     }
   };
 
-  handleSubmit = () => {
-    if (!image) {
-      showToast('Please Select Restaurant Image');
-    } else if (!restaurant_name) {
+  const handleSubmit = () => {
+    // if (!image) {
+    //   showToast('Please Select Restaurant Image');
+    // }
+    if (!restaurant_name) {
       showToast('Please Enter Restaurant Name');
     } else if (!restaurant_address) {
       showToast('Please Add Restaurant Address');
-    } else if (!description) {
-      showToast('Please Enter Description');
-    } else {
+    }
+    // else if (!description) {
+    //   showToast('Please Enter Description');
+    // }
+    else {
+      let data = {
+        restaurant_name,
+        restaurant_address,
+        lat,
+        lng,
+        // ...profileImg,
+      };
+
       let _image = null;
-      let profileImg = {};
+      // let profileImg = {};
       if (image) {
         let splittedUri = image?.split('.');
         _image = {
@@ -90,16 +102,24 @@ const RestaurantRequest = props => {
           type: `image/${splittedUri[splittedUri?.length - 1]}`,
           name: `restaurantImage.${splittedUri[splittedUri?.length - 1]}`,
         };
+        data.image = _image;
       }
-      profileImg[`image`] = _image;
-      let data = {
-        restaurant_name,
-        restaurant_address,
-        description,
-        lat,
-        lng,
-        ...profileImg,
-      };
+      if (description) {
+        data.description = description;
+      }
+
+      console.log('res req data', data);
+      // return
+
+      // profileImg[`image`] = _image;
+      // let data = {
+      //   restaurant_name,
+      //   restaurant_address,
+      //   description,
+      //   lat,
+      //   lng,
+      //   ...profileImg,
+      // };
       dispatch(addRestaurantRequest(data)).then(res => {
         // showToast(res?.message);
         setModal(true);
@@ -165,6 +185,7 @@ const RestaurantRequest = props => {
             </ImageBackground>
             <MainInput
               placeholder="Enter Restaurant Name"
+              value={restaurant_name}
               onChangeText={newemail => setRestaurantName(newemail)}
               defaultValue={restaurant_name}
               label="Restaurant Name"
@@ -180,7 +201,7 @@ const RestaurantRequest = props => {
                   style={styles.fieldContainer}
                   onPress={() =>
                     props.navigation.navigate('Location', {
-                      handleDoneAddress: handleDoneAddress,
+                      handleDoneAddress,
                     })
                   }>
                   <OutfitRegularText
@@ -200,6 +221,7 @@ const RestaurantRequest = props => {
               placeholder="Description"
               ref={r => (this.email = r)}
               // onSubmitEditing={() => this.pw.onFocus()}
+              value={description}
               onChangeText={newemail => setDescription(newemail)}
               defaultValue={description}
               label="Enter Description"
@@ -225,26 +247,35 @@ const RestaurantRequest = props => {
         onButtonPress={confirmYes}
       />
       <Modal visible={visible} animationType={'slide'} transparent={true}>
-        <View style={styles.modal}>
-          {choices.map((item, index) => {
-            return (
-              <>
-                <TouchableHOC
-                  onPress={item?.onClick}
-                  style={{marginLeft: vw * 2}}>
-                  <OutfitRegularText
-                    style={{
-                      color: 'black',
-                      fontSize: vh * 2.2,
-                    }}>
-                    {item?.name}
-                  </OutfitRegularText>
-                </TouchableHOC>
-                {index < choices.length - 1 && <View style={styles.line} />}
-              </>
-            );
-          })}
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => setVisible(false)}
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'flex-end',
+          }}>
+          <View style={styles.modal}>
+            {choices.map((item, index) => {
+              return (
+                <>
+                  <TouchableHOC
+                    onPress={item?.onClick}
+                    style={{marginLeft: vw * 2}}>
+                    <OutfitRegularText
+                      style={{
+                        color: 'black',
+                        fontSize: vh * 2.2,
+                      }}>
+                      {item?.name}
+                    </OutfitRegularText>
+                  </TouchableHOC>
+                  {index < choices.length - 1 && <View style={styles.line} />}
+                </>
+              );
+            })}
+          </View>
+        </TouchableOpacity>
       </Modal>
     </View>
   );

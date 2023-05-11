@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, View, Image, FlatList} from 'react-native';
+import {ImageBackground, View, Image, FlatList, Linking} from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import RewardCard from '../../components/RewardCard';
@@ -86,15 +86,29 @@ class RestaurantLogs extends React.Component {
     this.getData();
   }
 
+  handleMapBtnPress = item => {
+    console.log("req log item", item?.lat);
+    // return
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
+  };
+
   renderItem = ({item, index}) => {
     return (
       <RewardCard
         item={item}
-        viewmap={() =>
-          this.props.navigation.navigate('RestaurantDirection', {
-            latitude: item?.lat,
-            longitude: item?.lng,
-          })
+        viewmap={
+          () => this.handleMapBtnPress(item)
+
+          // this.props.navigation.navigate('RestaurantDirection', {
+          //   latitude: item?.lat,
+          //   longitude: item?.lng,
+          // })
         }
       />
     );

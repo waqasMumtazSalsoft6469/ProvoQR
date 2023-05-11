@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, View, FlatList} from 'react-native';
+import {ImageBackground, View, FlatList, Linking} from 'react-native';
 import {backgrounds} from '../../assets/images';
 import styles from './styles';
 import HomeCard from '../../components/ResCard';
@@ -129,10 +129,13 @@ class History extends React.Component {
   };
 
   handleMapBtnPress = item => {
-    this.props.navigation.navigate('RestaurantDirection', {
-      latitude: item?.lat,
-      longitude: item?.lng,
-    });
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
   };
 
   renderItem = ({item, index}) => {
@@ -140,7 +143,7 @@ class History extends React.Component {
       <View style={{marginVertical: 2 * vh}}>
         <HomeCard
           item={item?.organisations}
-          history={item}
+          // history={item}
           onClick={() => this.handleRestaurantPress(item?.organisations)}
           viewmap={() => this.handleMapBtnPress(item?.organisations)}
           location={this.state.userLocation}
