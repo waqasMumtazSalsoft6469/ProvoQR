@@ -115,19 +115,36 @@ class MapScreen extends React.Component {
   };
 
   search = () => {
-    let location;
-    Geocoder.from(this.state.search)
-      .then(json => {
-        location = json.results[0].geometry.location;
-        console.log('Geocoder', location);
-        this.animateToRegion(
-          parseFloat(location?.lat),
-          parseFloat(location?.lng),
-        );
-      })
-      .catch(error => console.warn(error));
-    // console.log('getGeoCode res', res);
-    this.getNearestRestaurant();
+    try {
+      Geocoder.from(this.state.search)
+        .then(json => {
+          let location = json.results[0].geometry.location;
+          console.log('Geocoder', location);
+          this.setState(
+            {
+              userLocation: {
+                latitude: parseFloat(location?.lat),
+                longitude: parseFloat(location?.lng),
+              },
+            },
+            this.getNearestRestaurant,
+          );
+          // .then(() => {
+          //   this.getNearestRestaurant();
+          // });
+          // this.animateToRegion(
+          //   parseFloat(location?.lat),
+          //   parseFloat(location?.lng),
+          // );
+        })
+        .catch(error => {
+          console.log(error);
+          this.getNearestRestaurant();
+        });
+      // console.log('getGeoCode res', res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   onChangeSearch = text => {
@@ -160,14 +177,28 @@ class MapScreen extends React.Component {
 
       const response = await this.props.getNearestRestaurant(filters);
 
-      if (response?.nearestRestaurant?.data?.length > 0) {
+      if (response?.nearestRestaurant?.data[0]?.lat) {
         this.animateToRegion(
           parseFloat(response?.nearestRestaurant?.data[0]?.lat),
           parseFloat(response?.nearestRestaurant?.data[0]?.lng),
         );
       } else {
-        showToast('No Restaurant Found.');
+        this.animateToRegion(
+          parseFloat(this.state.userLocation?.latitude),
+          parseFloat(this.state.userLocation?.longitude),
+        );
       }
+      // else {
+      //   showToast('No Restaurant Found.');
+      // }
+      // this.animateToRegion(
+      //   parseFloat(response?.nearestRestaurant?.data[0]?.lat),
+      //   parseFloat(response?.nearestRestaurant?.data[0]?.lng),
+      // );
+      // this.animateToRegion(
+      //   parseFloat(this.state.userLocation?.latitude),
+      //   parseFloat(this.state.userLocation?.longitude),
+      // );
       this.setState({
         refreshing: false,
         restaurants: response?.nearestRestaurant?.data,
@@ -196,10 +227,10 @@ class MapScreen extends React.Component {
     try {
       const location = await getCurrentLocation();
 
-      // this.animateToRegion(
-      //   parseFloat(location?.latitude),
-      //   parseFloat(location?.longitude),
-      // );
+      this.animateToRegion(
+        parseFloat(location?.latitude),
+        parseFloat(location?.longitude),
+      );
 
       this.setState({
         userLocation: {
@@ -516,24 +547,26 @@ class MapScreen extends React.Component {
                 dashGap={1 * vh}
                 dashStyle={{width: 2 * vw}}></Dash>
 
-              {this.state?.details?.lootboxes?.length > 0 && <View style={styles.outerContainer}>
-                <View style={styles.priceContainer}>
-                  <OutfitSemiBoldText style={styles.priceHeadingText}>
-                    By Card:
-                  </OutfitSemiBoldText>
-                  <OutfitRegularText style={styles.priceHeadingText}>
-                    ${this.state?.details?.lootbox_amount}
-                  </OutfitRegularText>
+              {this.state?.details?.lootboxes?.length > 0 && (
+                <View style={styles.outerContainer}>
+                  <View style={styles.priceContainer}>
+                    <OutfitSemiBoldText style={styles.priceHeadingText}>
+                      By Card:
+                    </OutfitSemiBoldText>
+                    <OutfitRegularText style={styles.priceHeadingText}>
+                      ${this.state?.details?.lootbox_amount}
+                    </OutfitRegularText>
+                  </View>
+                  <View style={styles.priceContainer}>
+                    <OutfitSemiBoldText style={styles.priceHeadingText}>
+                      By ProvoCash:
+                    </OutfitSemiBoldText>
+                    <OutfitRegularText style={styles.priceHeadingText}>
+                      ${this.state?.details?.provo_cash_price}
+                    </OutfitRegularText>
+                  </View>
                 </View>
-                <View style={styles.priceContainer}>
-                  <OutfitSemiBoldText style={styles.priceHeadingText}>
-                    By ProvoCash:
-                  </OutfitSemiBoldText>
-                  <OutfitRegularText style={styles.priceHeadingText}>
-                    ${this.state?.details?.provo_cash_price}
-                  </OutfitRegularText>
-                </View>
-              </View>}
+              )}
               {/* <View
                 style={{
                   paddingHorizontal: 5 * vw,
@@ -554,7 +587,8 @@ class MapScreen extends React.Component {
                   />
                 </View>
               )}
-              {this?.state?.details?.happy_hour_deals && (
+              {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >
+                0 && (
                 <View style={styles.happyHourContainer}>
                   <OutfitSemiBoldText style={styles.recomend}>
                     Happy Hours Deals

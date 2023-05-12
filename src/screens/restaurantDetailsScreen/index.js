@@ -240,7 +240,7 @@ class ResturentDetailScreen extends React.Component {
                 <Button title="LOOT BOX" onPress={this.handleLootBoxPress} />
               </View>
             )}
-            {this?.state?.details?.happy_hour_deals && (
+            {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length > 0 && (
               <View
                 style={{
                   // marginTop: vh * 3,

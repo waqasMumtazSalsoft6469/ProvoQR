@@ -203,7 +203,7 @@ class RegisterScreen extends React.Component {
         <Image
           source={
             item?.organisations?.image
-              ? {uri: imageUrl + item?.organisations?.image}
+              ? {uri: imageUrl + item?.organisations?.logo}
               : icons.restaurantDummyIcon
           }
           style={styles.resLogoStyle}

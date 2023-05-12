@@ -215,7 +215,8 @@ const styles = StyleSheet.create({
     // alignItems:'center',
     // backgroundColor:'red',
     // width: 100 * vw,
-    backgroundColor: '#F3F3F3',
+    // backgroundColor: '#F3F3F3',
+    backgroundColor: '#F2F2F2',
   },
   deafultbigHeaderStyle: {
     height: 35 * vw,

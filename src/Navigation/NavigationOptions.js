@@ -70,7 +70,7 @@ const titleRoutes = {
   ProvoScreen: 'Provo',
   HappyHourMenuScreen: 'Happy Hour',
   LootboxTierScreen: 'Menu',
-  LocationSearchScreen: 'Search Location'
+  LocationSearchScreen: 'Search Location',
 };
 
 const headerRightRoutes = {
