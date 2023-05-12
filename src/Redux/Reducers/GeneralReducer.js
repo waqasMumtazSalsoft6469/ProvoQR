@@ -108,6 +108,12 @@ export default GeneralReducer = (state = initialState, action) => {
         restaurant_id: action.payload,
       };
     }
+    case actionTypes.saveUserLocation: {
+      return {
+        ...state,
+        location: action.payload,
+      };
+    }
     default: {
       return state;
     }

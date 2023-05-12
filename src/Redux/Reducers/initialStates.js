@@ -11,6 +11,15 @@ const GeneralReducer = {
   categories: [],
   notificationCount: null,
   restaurant_id: null,
+  location: {
+    coordinate: {
+      latitude: 0,
+      longitude: 0,
+    },
+    address: "",
+    city: "",
+    country: "",
+  },
 };
 
 const initialStates = {

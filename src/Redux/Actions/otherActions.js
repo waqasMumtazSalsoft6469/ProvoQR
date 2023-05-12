@@ -3,6 +3,7 @@ import actionTypes from './actionTypes';
 import {endpoints} from '../../Api/configs';
 import {post, get, postForSubscription} from '../../Api';
 import {showToast, getMessage} from '../../Api/HelperFunction';
+import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 
 export const getHomeData = data => {
   return async dispatch => {
@@ -388,7 +389,7 @@ export const lootBoxPurchaseByCard = data => {
 
           resolve(response);
         } catch (e) {
-          console.log("by card e", e);
+          console.log('by card e', e);
           showToast(e);
           reject(e);
         } finally {
@@ -594,5 +595,40 @@ export const saveRestaurant = data => {
       type: actionTypes.saveRestaurantId,
       payload: data,
     });
+  };
+};
+
+export const saveLocation = data => {
+  return async dispatch => {
+    try {
+      const response = await getAddressByLatLong(coordinate)();
+      console.log('dave location', response?.results[0]);
+      let address_city = '';
+      let address_country = '';
+      response?.results[0]?.address_components.map(item => {
+        if (item?.types[0] === 'administrative_area_level_2') {
+          address_city = item?.long_name;
+        }
+        if (item?.types[0] === 'country') {
+          address_country = item?.long_name;
+        }
+      });
+      const data = {
+        coordinate: {
+          latitude: response?.results[0]?.geometry?.location?.lat ?? 0,
+          longitude: response?.results[0]?.geometry?.location?.lng ?? 0,
+        },
+        address: response?.results[0]?.formatted_address ?? '',
+        city: address_city,
+        country: address_country,
+      };
+      dispatch({
+        type: actionTypes.saveUserLocation,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 };

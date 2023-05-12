@@ -22,6 +22,7 @@ import KeyboardAdjust from 'react-native-android-keyboard-adjust';
 import EmptyComponent from '../../components/EmptyComponent';
 import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
 import {showToast} from '../../Api/HelperFunction';
+import LocationComponent from '../../components/LocationComponent';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class HomeScreen extends React.Component {
       recommended: [],
       allRestaurant: [],
       categories: [],
-      userLocation: {latitude: '', longitude: ''},
+      userLocation: {latitude: 0, longitude: 0},
       searchString: '',
       refreshing: false,
       isSearchFocused: false,
@@ -349,7 +350,7 @@ class HomeScreen extends React.Component {
     );
   };
   render() {
-    // console.log('navigation', this.props.navigation);
+    console.log('navigation');
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -368,6 +369,7 @@ class HomeScreen extends React.Component {
             onRefresh={this.handleOnRefresh}
             ListEmptyComponent={this.renderEmpty}
           />
+          {/* <LocationComponent coordinates={this.state.userLocation} /> */}
         </ImageBackground>
       </View>
     );

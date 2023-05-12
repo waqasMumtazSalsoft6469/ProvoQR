@@ -175,7 +175,7 @@ class ProductItem extends React.Component {
           {/* {this.rendercuisines()} */}
         </View>
 
-        {/* {this.props.history ? this.renderHistoryRating() : this.renderratings()} */}
+        {this.props.history ? null : this.renderratings()}
       </View>
     );
   }

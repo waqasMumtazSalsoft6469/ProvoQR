@@ -143,7 +143,7 @@ class History extends React.Component {
       <View style={{marginVertical: 2 * vh}}>
         <HomeCard
           item={item?.organisations}
-          // history={item}
+          history={item}
           onClick={() => this.handleRestaurantPress(item?.organisations)}
           viewmap={() => this.handleMapBtnPress(item?.organisations)}
           location={this.state.userLocation}

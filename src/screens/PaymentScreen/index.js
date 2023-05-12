@@ -57,7 +57,10 @@ class PaymentScreen extends React.Component {
   };
 
   handlePrizeDetailBtn = () => {
-    this.props.navigation?.navigate('LootboxTierScreen');
+    this.setState({conVis: false})
+    this.props.navigation?.navigate('LootboxTierScreen', {
+      id: this.props?.route?.params?.id,
+    });
   };
 
   handleSuccessPress = () => {

@@ -1,6 +1,6 @@
 const {StyleSheet} = require('react-native');
 import ThemeColors from '../../Utils/ThemeColors';
-import {vh, vw} from '../../Utils/Units';
+import {themeShadow, vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
     flex: 1,
   },
-  haeding: {fontSize: vh * 3, marginBottom: vh * 5},
+  haeding: {fontSize: vh * 3, marginBottom: vh * 3},
   label: {alignSelf: 'flex-start', marginLeft: vw * 7},
   locationscroll: {
     width: 100 * vw,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 1.5 * vh,
   },
   box: {
-    paddingVertical: 4 * vh,
+    paddingVertical: 3 * vh,
     // position: 'absolute',
     alignItems: 'center',
   },
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 2,
-    paddingBottom: vh * 1.5,
+    // paddingBottom: vh * 1.5,
   },
   backOpacity: {
     width: vw * 92,
@@ -75,6 +75,26 @@ const styles = StyleSheet.create({
   markerIconStyle: {
     height: vh * 5,
     width: vh * 5,
+    resizeMode: 'contain',
+  },
+  addressContainer: {
+    width: 85 * vw,
+    backgroundColor: ThemeColors.backgroundGray,
+    paddingHorizontal: 3 * vw,
+    borderRadius: 4 * vw,
+    height: 7 * vh,
+    marginTop: vh * 1,
+    ...themeShadow,
+    // alignItems: 'center',
+  },
+  addressText: {
+    color: ThemeColors.fontBlack,
+    fontSize: vh * 1.6,
+  },
+  cuuLocIconStyle: {
+    height: vh * 3,
+    width: vh * 3,
+    // tintColor: themeColors.blue,
     resizeMode: 'contain',
   },
 });

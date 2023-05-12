@@ -130,6 +130,7 @@ class HistoryDetail extends React.Component {
   renderRewardHistory = () => {
     return (
       <View style={{alignItems: 'center', marginTop: vh * 3}}>
+        <OutfitSemiBoldText style={styles.rewardHeadingText}>Rewards</OutfitSemiBoldText>
         <FlatList
           data={this.state.response?.organisations?.reward_histories}
           renderItem={this.renderHistoryItem}

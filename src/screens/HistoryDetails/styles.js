@@ -162,5 +162,11 @@ const styles = StyleSheet.create({
     lineHeight: 3 * vh,
     fontSize: 2 * vh,
   },
+  rewardHeadingText: {
+    color: ThemeColors.fontBlack,
+    fontSize: vh * 3,
+    width: vw * 90,
+    marginBottom: vh * 2,
+  },
 });
 export default styles;

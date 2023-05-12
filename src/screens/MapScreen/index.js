@@ -54,8 +54,15 @@ import {imageUrl} from '../../Api/configs';
 import RateCard from '../../components/RatingCard';
 import AnimatedLottieView from 'lottie-react-native';
 import SearchInput from '../../components/Input/SearchInput';
+import {
+  getGeoCode,
+  getLatlngByAddress,
+  googleApiKey,
+} from '../../Utils/mapSearchHelperFunctions';
+import Geocoder from 'react-native-geocoding';
 
 var tempTime = 0;
+Geocoder.init(googleApiKey, {language: 'en'});
 
 class MapScreen extends React.Component {
   constructor(props) {
@@ -108,6 +115,18 @@ class MapScreen extends React.Component {
   };
 
   search = () => {
+    let location;
+    Geocoder.from(this.state.search)
+      .then(json => {
+        location = json.results[0].geometry.location;
+        console.log('Geocoder', location);
+        this.animateToRegion(
+          parseFloat(location?.lat),
+          parseFloat(location?.lng),
+        );
+      })
+      .catch(error => console.warn(error));
+    // console.log('getGeoCode res', res);
     this.getNearestRestaurant();
   };
 
@@ -140,10 +159,15 @@ class MapScreen extends React.Component {
       };
 
       const response = await this.props.getNearestRestaurant(filters);
-      this.animateToRegion(
-        parseFloat(response?.nearestRestaurant?.data[0]?.lat),
-        parseFloat(response?.nearestRestaurant?.data[0]?.lng),
-      );
+
+      if (response?.nearestRestaurant?.data?.length > 0) {
+        this.animateToRegion(
+          parseFloat(response?.nearestRestaurant?.data[0]?.lat),
+          parseFloat(response?.nearestRestaurant?.data[0]?.lng),
+        );
+      } else {
+        showToast('No Restaurant Found.');
+      }
       this.setState({
         refreshing: false,
         restaurants: response?.nearestRestaurant?.data,
@@ -492,7 +516,7 @@ class MapScreen extends React.Component {
                 dashGap={1 * vh}
                 dashStyle={{width: 2 * vw}}></Dash>
 
-              <View style={styles.outerContainer}>
+              {this.state?.details?.lootboxes?.length > 0 && <View style={styles.outerContainer}>
                 <View style={styles.priceContainer}>
                   <OutfitSemiBoldText style={styles.priceHeadingText}>
                     By Card:
@@ -509,7 +533,7 @@ class MapScreen extends React.Component {
                     ${this.state?.details?.provo_cash_price}
                   </OutfitRegularText>
                 </View>
-              </View>
+              </View>}
               {/* <View
                 style={{
                   paddingHorizontal: 5 * vw,

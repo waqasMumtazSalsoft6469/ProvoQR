@@ -31,6 +31,7 @@ import HappyHourMenuScreen from '../screens/HappyHourMenuScreen';
 import LootboxTierScreen from '../screens/LootboxTierScreen';
 import RewardDetailScreen from '../screens/RewardDetailScreen';
 import RedeemRewardScreen from '../screens/RedeemRewardScreen';
+import LocationSearchScreen from '../screens/LocationSearchScreen';
 
 const MainStack = createStackNavigator();
 
@@ -126,6 +127,10 @@ class MainNavigator extends React.Component {
         <MainStack.Screen
           component={LootboxTierScreen}
           name="LootboxTierScreen"
+        />
+        <MainStack.Screen
+          component={LocationSearchScreen}
+          name="LocationSearchScreen"
         />
       </MainStack.Navigator>
     );

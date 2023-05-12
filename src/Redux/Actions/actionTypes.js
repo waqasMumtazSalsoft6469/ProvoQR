@@ -42,5 +42,6 @@ const actionTypes = {
   getMySubscription: 'GET_MY_SUBSCRIPTION',
   getNotifications: 'GET_NOTIFICATIONS',
   saveRestaurantId: 'SAVE_RESTAURANT_ID',
+  saveUserLocation: 'SAVE_USER_LOCATION',
 };
 export default actionTypes;

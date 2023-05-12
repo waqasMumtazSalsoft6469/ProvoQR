@@ -23,7 +23,9 @@ const CountDownTimer = props => {
     }
   }, [time]);
 
-  console.log('mmm', moment.utc(props.time * 60).format('mm'));
+  // console.log('minnn', String(Math.floor((time % 3600) / 60))[1]);
+  // console.log('miiinn', props?.time);
+  // console.log('utc min', moment.utc(props?.time).format('mm'));
 
   return (
     <View style={[styles.container, props?.timerContainerStyle]}>
@@ -46,18 +48,16 @@ const CountDownTimer = props => {
       </OutfitRegularText>
       <View style={[styles.timerBackfround, props?.timerBgStyle]}>
         <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
-          {/* {String(Math.floor(time / 60))[1]
-            ? String(Math.floor(time / 60))[0]
-            : '0'} */}
-          {moment.utc(props?.time).format('mm')[0]}
+          {String(Math.floor((time % 3600) / 60))[1]
+            ? String(Math.floor((time % 3600) / 60))[0]
+            : '0'}
         </OutfitRegularText>
       </View>
       <View style={[styles.timerBackfround, props?.timerBgStyle]}>
-        <OutfitRegularText style={[styles.timeLabel.props?.textStyle]}>
-          {/* {String(Math.floor(time / 60))[1]
-            ? String(Math.floor(time / 60))[1]
-            : String(Math.floor(time / 60))[0]} */}
-          {moment.utc(props?.time).format('mm')[1]}
+        <OutfitRegularText style={[styles.timeLabel, props?.textStyle]}>
+          {String(Math.floor((time % 3600) / 60))[1]
+            ? String(Math.floor((time % 3600) / 60))[1]
+            : String(Math.floor((time % 3600) / 60))[0]}
         </OutfitRegularText>
       </View>
       <OutfitRegularText style={[styles.timeLabel1, props?.dotStyle]}>

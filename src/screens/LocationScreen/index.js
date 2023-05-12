@@ -1,5 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ImageBackground, View, Image, Platform, StyleSheet} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {backgrounds, icons} from '../../assets/images';
 import styles from './styles';
 import MainInput from '../../components/Input/MainInput';
@@ -7,7 +15,7 @@ import RubikRegular from '../../components/Text/RubikRegular';
 import MapView, {Polyline, Marker} from 'react-native-maps';
 import Uploadimage from '../../components/Popups/UploadImage';
 import Button from '../../components/Buttons/SimpleButton';
-import {vh, vw} from '../../Utils/Units';
+import {themeShadow, vh, vw} from '../../Utils/Units';
 import BottomSheetWrapper from '../../components/BottomSheetWrapper';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import ThemeColors from '../../Utils/ThemeColors';
@@ -21,6 +29,7 @@ import {
 import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 import {useDispatch} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
+import OutfitRegularText from '../../components/Text/OutfitRegularText';
 
 const AddressLocation = props => {
   const dispatch = useDispatch();
@@ -43,13 +52,40 @@ const AddressLocation = props => {
   const mapRef = useRef(null);
   const inputRef = useRef(null);
 
+  const handleRoute = location => {
+    console.log('route loc', location);
+    setSearchedAddress(location?.formatted_address);
+    const coordiantes = {
+      latitude: location?.geometry?.location?.lat,
+      longitude: location?.geometry?.location?.lng,
+    };
+    setUserLocation({
+      location: {
+        latitude: parseFloat(location?.geometry?.location?.lat),
+        longitude: parseFloat(location?.geometry?.location?.lng),
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+        address: location?.formatted_address,
+      },
+    });
+    animateToRegion(coordiantes);
+  };
+
+  const handleSearchAddress = () => {
+    props.navigation?.navigate('LocationSearchScreen', {handleRoute});
+  };
+
   const handleDonePress = () => {
-    props.route.params.handleDoneAddress(
-      searchedAddress,
-      userLocation?.location?.latitude,
-      userLocation?.location?.longitude,
-    );
-    props.navigation.goBack();
+    if (props?.route?.params?.handleDoneAddress) {
+      props?.route?.params?.handleDoneAddress(
+        searchedAddress,
+        userLocation?.location?.latitude,
+        userLocation?.location?.longitude,
+      );
+      props.navigation.goBack();
+    } else {
+      props.navigation.goBack();
+    }
   };
 
   const animateToRegion = location => {
@@ -165,6 +201,14 @@ const AddressLocation = props => {
           Scroll the screen to set your location by moving the marker
         </RubikRegular>
       </View>
+
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={{position: 'absolute', right: vw * 5, top: vh * 8}}
+        onPress={getUserLocation}>
+        <Image source={icons.currentLocIcon} style={styles.cuuLocIconStyle} />
+      </TouchableOpacity>
+
       <View style={styles.bottomWrapper}>
         <View style={styles.backOpacity} />
 
@@ -175,7 +219,21 @@ const AddressLocation = props => {
             Add a New Address
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.label}>Address</OutfitMediumText>
-          <MainInput
+          <TouchableOpacity
+            style={styles.addressContainer}
+            onPress={handleSearchAddress}
+            activeOpacity={0.9}>
+            <ScrollView
+              horizontal
+              contentContainerStyle={{
+                alignItems: 'center',
+              }}>
+              <OutfitRegularText style={styles.addressText}>
+                {searchedAddress ?? 'Search Location'}
+              </OutfitRegularText>
+            </ScrollView>
+          </TouchableOpacity>
+          {/* <MainInput
             selection={selection}
             onSelectionChange={({nativeEvent: {selection, text}}) =>
               setSelection(selection)
@@ -188,11 +246,11 @@ const AddressLocation = props => {
             ref={inputRef}
             defaultValue={searchedAddress}
             onChangeText={text => setSearchedAddress(text)}
-          />
+          /> */}
           <Button
             title="CONTINUE"
             onPress={handleDonePress}
-            btnContainer={{marginTop: 2 * vh}}
+            btnContainer={{marginTop: 3 * vh}}
           />
         </View>
       </View>
