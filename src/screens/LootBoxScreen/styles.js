@@ -60,13 +60,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   congText: {
-    fontSize: vh * 3,
+    fontSize: vh * 5,
     color: ThemeColors.white,
     marginTop: vh * 2,
   },
   whiteText: {
     color: ThemeColors.white,
-    fontSize: vh * 2,
+    fontSize: vh * 2.5,
   },
   voucherIcon: {
     height: vh * 5,

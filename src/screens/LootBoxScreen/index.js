@@ -124,7 +124,7 @@ class LootBoxScreen extends React.Component {
             textStyle={styles.timeStyle}
             dotStyle={styles.dotStyle}
           />
-          <OutfitRegularText style={styles.congText}>Hurray!</OutfitRegularText>
+          <OutfitSemiBoldText style={styles.congText}>Hurray!</OutfitSemiBoldText>
           <OutfitRegularText style={styles.whiteText}>
             You have won a family meal
           </OutfitRegularText>
