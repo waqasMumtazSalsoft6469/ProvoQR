@@ -1,11 +1,14 @@
 import React from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity, View, Text} from 'react-native';
 import styles from './styles';
 import SearchInput from '../../components/Input/SearchInput';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import {useRef} from 'react';
-import {addressPrediction, getLatlngByAddress} from '../../Utils/mapSearchHelperFunctions';
+import {
+  addressPrediction,
+  getLatlngByAddress,
+} from '../../Utils/mapSearchHelperFunctions';
 import {useDispatch} from 'react-redux';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 
@@ -49,10 +52,10 @@ const LocationSearchScreen = props => {
     }
   };
   const handleItemPress = async item => {
-    console.log("item", item);
+    console.log('item', item);
     try {
       const response = await dispatch(getLatlngByAddress(item?.place_id));
-      console.log("latlng  res", response);
+      console.log('latlng  res', response);
       props.route.params.handleRoute(response?.results[0]);
       props.navigation.goBack();
     } catch (e) {
@@ -73,10 +76,12 @@ const LocationSearchScreen = props => {
       <TouchableOpacity
         style={styles.itemContaienr}
         activeOpacity={0.9}
-        onPress={() => handleItemPress(item)}>
-        <OutfitRegularText style={styles.itemText}>
+        onPress={() => handleItemPress(item)}
+        hitSlop={styles.hitslop}>
+        <Text style={styles.itemText}>{item?.description}</Text>
+        {/* <OutfitRegularText style={styles.itemText}>
           {item?.description}
-        </OutfitRegularText>
+        </OutfitRegularText> */}
         <View style={styles.border} />
       </TouchableOpacity>
     );
