@@ -23,6 +23,7 @@ import EmptyComponent from '../../components/EmptyComponent';
 import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
 import {showToast} from '../../Api/HelperFunction';
 import LocationComponent from '../../components/LocationComponent';
+import {headerRightOptions, showHeaderRight} from '../../Navigation/NavigationOptions';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -38,6 +39,16 @@ class HomeScreen extends React.Component {
       isSearchFocused: false,
     };
   }
+
+  handleDoneAddress = (address, latitude, longitude) => {
+    this.setState({userLocation: {latitude, longitude}});
+  };
+
+  handleLocationPress = () => {
+    this.props.navigation.navigate('Location', {
+      handleDoneAddress: this.handleDoneAddress,
+    });
+  };
 
   handleClear = () => {
     this.setState({searchString: ''}, this.getData);
@@ -149,6 +160,11 @@ class HomeScreen extends React.Component {
       console.log('getLastNotificationData:', notif);
       // This method is triggered whenever the user taps on the notification
     });
+
+    this.props?.navigation?.setOptions({
+      headerRight: () => showHeaderRight(this.props, this.handleLocationPress),
+    });
+
     if (Platform.OS === 'android') {
       KeyboardAdjust.setAdjustPan();
     }
@@ -369,7 +385,7 @@ class HomeScreen extends React.Component {
             onRefresh={this.handleOnRefresh}
             ListEmptyComponent={this.renderEmpty}
           />
-          {/* <LocationComponent coordinates={this.state.userLocation} /> */}
+          <LocationComponent coordinates={this.state.userLocation} />
         </ImageBackground>
       </View>
     );

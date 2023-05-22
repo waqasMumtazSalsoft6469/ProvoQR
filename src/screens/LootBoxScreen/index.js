@@ -1,5 +1,12 @@
 import React from 'react';
-import {ImageBackground, View, Image, Animated, Easing} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Image,
+  Animated,
+  Easing,
+  ScrollView,
+} from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import {vh, vw} from '../../Utils/Units';
 import celebAnim from './celebAnim.json';
@@ -120,6 +127,7 @@ class LootBoxScreen extends React.Component {
               this.state.rewardDetail?.rewards?.reward_expire_date,
               "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
             ).diff(moment(), 'seconds')}
+            timerContainerStyle={{marginVertical: 0}}
             timerBgStyle={styles.boxStyle}
             textStyle={styles.timeStyle}
             dotStyle={styles.dotStyle}
@@ -144,11 +152,18 @@ class LootBoxScreen extends React.Component {
             Reward Info
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.rewardText}>
+            {this.state?.rewardDetail?.rewards?.my_win_lootbox?.menu?.name}
+          </OutfitMediumText>
+          <OutfitSemiBoldText style={styles.headingText}>
+            Restaurant Details
+          </OutfitSemiBoldText>
+          <OutfitMediumText style={styles.rewardText}>
             {this.state?.rewardDetail?.restaurant?.name}
           </OutfitMediumText>
           <OutfitMediumText style={styles.rewardText}>
             {this.state?.rewardDetail?.restaurant?.address}
           </OutfitMediumText>
+
           <Button
             title="OK"
             onPress={this.handleRewardBtnPress}
@@ -209,42 +224,48 @@ class LootBoxScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imgbg}>
-          <TouchableHOC
-            onPress={() => this.props.navigation.goBack()}
-            style={{
-              zIndex: 999,
-              position: 'absolute',
-              top: vh * 6,
-              left: vw * 8,
+          <ScrollView
+            contentContainerStyle={{
+              // backgroundColor: 'red',
+              paddingBottom: vh * 8,
             }}>
-            <Image source={icons.backarrow} style={styles.back} />
-          </TouchableHOC>
-          <LottieView
-            resizeMode="cover"
-            ref={animation => {
-              this.animation = animation;
-            }}
-            source={celebAnim}
-            progress={this.progress}
-            style={{
-              height: 100 * vh,
-              width: 100 * vw,
-              backgroundColor: 'transparent',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-            }}
-          />
-          <View
-            style={{
-              alignItems: 'center',
-              marginTop: 8 * vh,
-              justifyContent: 'center',
-              height: '100%',
-            }}>
-            {/* <Blacksword style={styles.title}>{this.rendertitle()}</Blacksword> */}
-            {this.getText()}
-          </View>
+            <TouchableHOC
+              onPress={() => this.props.navigation.goBack()}
+              style={{
+                zIndex: 999,
+                position: 'absolute',
+                top: vh * 6,
+                left: vw * 8,
+              }}>
+              <Image source={icons.backarrow} style={styles.back} />
+            </TouchableHOC>
+            <LottieView
+              resizeMode="cover"
+              ref={animation => {
+                this.animation = animation;
+              }}
+              source={celebAnim}
+              progress={this.progress}
+              style={{
+                height: 100 * vh,
+                width: 100 * vw,
+                backgroundColor: 'transparent',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+              }}
+            />
+            <View
+              style={{
+                alignItems: 'center',
+                marginTop: 8 * vh,
+                justifyContent: 'center',
+                height: '100%',
+              }}>
+              {/* <Blacksword style={styles.title}>{this.rendertitle()}</Blacksword> */}
+              {this.getText()}
+            </View>
+          </ScrollView>
         </ImageBackground>
       </View>
     );

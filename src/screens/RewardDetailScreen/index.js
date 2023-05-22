@@ -82,7 +82,7 @@ class RegisterScreen extends React.Component {
         this.setState({visibleModal: false});
         this.props.navigation?.navigate('RedeemRewardScreen', {
           code: res?.code,
-          restaurant_id: this.state.details?.organisation_id,
+          restaurant: this.state.details,
         });
         // this.setState({
         //   visibleModal: false,

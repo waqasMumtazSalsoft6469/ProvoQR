@@ -112,7 +112,10 @@ export function getTitle(props) {
   return '';
 }
 
-export function showHeaderRight(props) {
+export function showHeaderRight(props, locationPress) {
+  console.log('props', props);
+  console.log('locationPress', locationPress);
+
   const data = store.getState();
 
   const count =
@@ -129,7 +132,12 @@ export function showHeaderRight(props) {
   if (headerRightRoutes[props?.route?.name] && token) {
     return (
       <View style={{flexDirection: 'row'}}>
-        <TouchableHOC onPress={() => props.navigation.navigate('Location')}>
+        <TouchableHOC
+          onPress={
+            locationPress
+              ? () => locationPress()
+              : () => props.navigation.navigate('Location')
+          }>
           <Image
             source={icons.blackLocIcon}
             resizeMode="contain"

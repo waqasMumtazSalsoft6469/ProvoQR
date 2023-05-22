@@ -115,14 +115,72 @@ class HistoryDetail extends React.Component {
           {item?.my_win_lootbox?.menu?.detail}
         </OutfitMediumText>
         <OutfitMediumText style={styles.rewardDesHeadingText}>
-          Reward Expiration Date & Time
+          Reward Status
+        </OutfitMediumText>
+        <OutfitMediumText style={styles.midTextStyle}>
+          {item?.status}
+        </OutfitMediumText>
+        <OutfitMediumText style={styles.rewardDesHeadingText}>
+          Reward {item?.status === 'Redeemed' ? 'Redemption' : 'Expiration'}{' '}
+          Date & Time
         </OutfitMediumText>
         <OutfitMediumText style={styles.midTextStyle}>
           {moment(
-            item?.reward_expire_date,
+            item?.status === 'Redeemed'
+              ? item?.redemption_time
+              : item?.reward_expire_date,
             "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
           ).format('DD-MM-YYYY HH:mm:ss')}
         </OutfitMediumText>
+        {/* {item?.status === 'Redeemed' ? (
+          <>
+            <OutfitMediumText style={styles.rewardDesHeadingText}>
+              Reward Status
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.midTextStyle}>
+              {item?.status}
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.rewardDesHeadingText}>
+              Reward Redemption Date & Time
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.midTextStyle}>
+              {moment(
+                item?.redemption_time,
+                "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+              ).format('DD-MM-YYYY HH:mm:ss')}
+            </OutfitMediumText>
+          </>
+        ) : item?.status === 'Available' ? (
+          <>
+            <OutfitMediumText style={styles.rewardDesHeadingText}>
+              Reward Status
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.midTextStyle}>
+              {item?.status}
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.rewardDesHeadingText}>
+              Reward Expiration Date & Time
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.midTextStyle}>
+              {moment(
+                item?.reward_expire_date,
+                "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+              ).format('DD-MM-YYYY HH:mm:ss')}
+            </OutfitMediumText>
+          </>
+        ) : (
+          <>
+            <OutfitMediumText style={styles.rewardDesHeadingText}>
+              Reward Expiration Date & Time
+            </OutfitMediumText>
+            <OutfitMediumText style={styles.midTextStyle}>
+              {moment(
+                item?.reward_expire_date,
+                "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+              ).format('DD-MM-YYYY HH:mm:ss')}
+            </OutfitMediumText>
+          </>
+        )} */}
       </View>
     );
   };
@@ -130,7 +188,9 @@ class HistoryDetail extends React.Component {
   renderRewardHistory = () => {
     return (
       <View style={{alignItems: 'center', marginTop: vh * 3}}>
-        <OutfitSemiBoldText style={styles.rewardHeadingText}>Rewards</OutfitSemiBoldText>
+        <OutfitSemiBoldText style={styles.rewardHeadingText}>
+          Rewards
+        </OutfitSemiBoldText>
         <FlatList
           data={this.state.response?.organisations?.reward_histories}
           renderItem={this.renderHistoryItem}

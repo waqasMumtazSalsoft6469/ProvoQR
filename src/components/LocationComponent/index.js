@@ -1,25 +1,26 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {saveLocation} from '../../Redux/Actions/otherActions';
 import {useDispatch, useSelector} from 'react-redux';
+import { getCurrentLocation } from '../../Utils/mapHelperFunction';
 
 const LocationComponent = props => {
   const dispatch = useDispatch();
 
-  const userLoc = useSelector(state => state.GeneralReducer?.location)
+  const userLocation = useSelector(state => state.GeneralReducer?.location)
   // const { profile, userLocation, saveLocation } = useProfile();
-  console.log('userLocation from loc comp', userLoc);
+  console.log('userLocation from loc comp', userLocation);
 
   useEffect(() => {
     if (props?.coordinates) {
       dispatch(saveLocation(props?.coordinates));
     }
-    // else if (
-    //   userLocation?.coordinate?.latitude === 0 &&
-    //   userLocation?.coordinate?.longitude === 0
-    // ) {
-    //   console.log("useEffect");
-    //   setupMethods();
-    // }
+    else if (
+      userLocation?.coordinate?.latitude === 0 &&
+      userLocation?.coordinate?.longitude === 0
+    ) {
+      console.log("useEffect");
+      setupMethods();
+    }
     // dependency for == if user changes location from map or for first time
   }, [props?.coordinates]);
 
@@ -53,27 +54,27 @@ const LocationComponent = props => {
   //   };
   // }, [openingSettings]);
 
-  // const getUserLocation = () => {
-  //   getCurrentLocation()
-  //     .then(location => {
-  //       console.log("curr loc", location);
-  //       saveLocation(location);
-  //     })
-  //     .catch(handleOnCancel);
-  // };
-  // const setupMethods = async () => {
-  //   // console.log("setupMethods");
-  //   checkLocationPermissions()
-  //     .then(() => {
-  //       // console.log("then");
-  //       getUserLocation();
-  //     })
-  //     .catch(() => {
-  //       // console.log("catch");
-  //       handleOnCancel();
-  //       // popupRef.current.show();
-  //     });
-  // };
+  const getUserLocation = () => {
+    getCurrentLocation()
+      .then(location => {
+        console.log("curr loc", location);
+        saveLocation(location);
+      })
+      // .catch(handleOnCancel);
+  };
+  const setupMethods = async () => {
+    // console.log("setupMethods");
+    checkLocationPermissions()
+      .then(() => {
+        // console.log("then");
+        getUserLocation();
+      })
+      .catch(() => {
+        console.log("catch");
+        // handleOnCancel();
+        // popupRef.current.show();
+      });
+  };
   // const handleOnCancel = () => {
   //   if (profile?.lat && profile?.lng) {
   //     saveLocation({

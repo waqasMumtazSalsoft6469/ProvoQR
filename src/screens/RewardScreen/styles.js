@@ -1,4 +1,5 @@
 const {StyleSheet} = require('react-native');
+import { getStatusBarHeight } from 'react-native-safearea-height';
 import ThemeColors from '../../Utils/ThemeColors';
 import {vh, vw} from '../../Utils/Units';
 const styles = StyleSheet.create({
@@ -11,6 +12,7 @@ const styles = StyleSheet.create({
     // height: vh * 90,
     // paddingBottom: vh * 7,
     flex: 1,
+    paddingTop: vh*3
   },
   imageStyle: {
     width: 100 * vw,

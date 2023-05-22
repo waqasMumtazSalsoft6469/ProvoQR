@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: vw * 80,
     height: vh * 30,
   },
-  openBox: {width: vw * 80, height: vh * 40},
+  openBox: {width: vw * 80, height: vh * 40, resizeMode: 'contain'},
 
   underlineText: {
     marginTop: vh * 10,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: ThemeColors.white,
     textDecorationLine: 'underline',
   },
-  homeBtnText: {marginTop: vh * 3, marginBottom: vh * 5},
+  homeBtnText: {marginTop: vh * 3},
   congText: {
     fontSize: vh * 5,
     color: ThemeColors.white,
@@ -106,13 +106,16 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: ThemeColors.white,
-    fontSize: vh * 2,
+    fontSize: vh * 2.5,
     marginTop: vh * 2,
+    textAlign: 'center',
   },
   rewardText: {
     color: ThemeColors.white,
-    fontSize: vh * 1.7,
+    fontSize: vh * 2,
     marginTop: vh * 1,
+    textAlign: 'center',
+    width: '70%'
   },
 });
 export default styles;

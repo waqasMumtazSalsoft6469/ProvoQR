@@ -6,13 +6,20 @@ import {showToast, getMessage} from '../../Api/HelperFunction';
 import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 
 export const getHomeData = data => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
+          const location = {
+            lat: getState()?.GeneralReducer?.location?.coordinate?.latitude,
+            lng: getState()?.GeneralReducer?.location?.coordinate?.longitude,
+          };
           // dispatch({type: actionTypes.loaderOn});
 
-          const response = await get(endpoints.other.home, data);
+          const response = await get(endpoints.other.home, {
+            ...data,
+            ...location,
+          });
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -401,13 +408,21 @@ export const lootBoxPurchaseByCard = data => {
 };
 
 export const getAllRestaurant = data => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
           // dispatch({type: actionTypes.softLoaderOn});
 
-          const response = await get(endpoints.other.restaurantList, data);
+          const location = {
+            lat: getState()?.GeneralReducer?.location?.coordinate?.latitude,
+            lng: getState()?.GeneralReducer?.location?.coordinate?.longitude,
+          };
+
+          const response = await get(endpoints.other.restaurantList, {
+            ...data,
+            ...location,
+          });
           // console.log('action response', response);
           resolve(response);
         } catch (e) {
@@ -422,13 +437,18 @@ export const getAllRestaurant = data => {
 };
 
 export const getRecommendedRestaurant = data => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
-      const response = await get(
-        endpoints.other.recommendedRestaurantList,
-        data,
-      );
-      // console.log('response', response);
+      const location = {
+        lat: getState()?.GeneralReducer?.location?.coordinate?.latitude,
+        lng: getState()?.GeneralReducer?.location?.coordinate?.longitude,
+      };
+
+      const response = await get(endpoints.other.recommendedRestaurantList, {
+        ...data,
+        ...location,
+      });
+      console.log('getRecommendedRestaurant', response);
       return Promise.resolve(response);
     } catch (e) {
       return Promise.reject(e);
@@ -598,7 +618,7 @@ export const saveRestaurant = data => {
   };
 };
 
-export const saveLocation = data => {
+export const saveLocation = coordinate => {
   return async dispatch => {
     try {
       const response = await getAddressByLatLong(coordinate)();

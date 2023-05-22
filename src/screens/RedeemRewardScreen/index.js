@@ -10,13 +10,16 @@ import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import Button from '../../components/Buttons/SimpleButton';
 import ThemeColors from '../../Utils/ThemeColors';
+import OutfitMediumText from '../../components/Text/OutfitMediumText';
 
 const RedeemRewardScreen = props => {
   const code = props?.route?.params?.code;
-  const restaurant_id = props?.route?.params?.restaurant_id;
+  const restaurant = props?.route?.params?.restaurant;
 
   const handleRewardBtnPress = () => {
-    props?.navigation.navigate('LootboxTierScreen', {id: restaurant_id});
+    props?.navigation.navigate('LootboxTierScreen', {
+      id: restaurant?.organisation_id,
+    });
   };
 
   return (
@@ -54,6 +57,23 @@ const RedeemRewardScreen = props => {
         Your code is{' '}
         <OutfitRegularText style={styles.codeText}>{code}</OutfitRegularText>
       </OutfitRegularText>
+
+      <OutfitSemiBoldText style={styles.headingText}>
+        Reward Info
+      </OutfitSemiBoldText>
+      <OutfitMediumText style={styles.rewardText}>
+        {restaurant?.my_win_lootbox?.menu?.name}
+      </OutfitMediumText>
+      <OutfitSemiBoldText style={styles.headingText}>
+        Restaurant Details
+      </OutfitSemiBoldText>
+      <OutfitMediumText style={styles.rewardText}>
+        {restaurant?.organisations?.name}
+      </OutfitMediumText>
+      <OutfitMediumText style={styles.rewardText}>
+        {restaurant?.organisations?.address}
+      </OutfitMediumText>
+
       <Button
         title="OK"
         onPress={handleRewardBtnPress}

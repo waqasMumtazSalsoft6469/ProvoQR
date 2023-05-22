@@ -38,6 +38,19 @@ const styles = StyleSheet.create({
     color: ThemeColors.primary,
     fontSize: vh * 2.5,
   },
+  headingText: {
+    color: ThemeColors.white,
+    fontSize: vh * 2.5,
+    marginTop: vh * 2,
+    textAlign: 'center',
+  },
+  rewardText: {
+    color: ThemeColors.white,
+    fontSize: vh * 2.3,
+    marginTop: vh * 1,
+    textAlign: 'center',
+    width: '70%',
+  },
 });
 
 export default styles;
