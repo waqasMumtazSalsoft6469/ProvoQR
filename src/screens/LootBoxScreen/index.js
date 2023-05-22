@@ -124,7 +124,9 @@ class LootBoxScreen extends React.Component {
             textStyle={styles.timeStyle}
             dotStyle={styles.dotStyle}
           />
-          <OutfitSemiBoldText style={styles.congText}>Hurray!</OutfitSemiBoldText>
+          <OutfitSemiBoldText style={styles.congText}>
+            Hurray!
+          </OutfitSemiBoldText>
           <OutfitRegularText style={styles.whiteText}>
             You have won a family meal
           </OutfitRegularText>
@@ -157,11 +159,12 @@ class LootBoxScreen extends React.Component {
             }}
             labelStyle={{color: ThemeColors.white}}
           />
-          {/* <TouchableHOC onPress={this.handleRewardBtnPress}>
-            <OutfitLightText style={styles.underlineTextButton}>
-              Go To Reward Library
+          <TouchableHOC onPress={this.handleTryAgainPress}>
+            <OutfitLightText
+              style={[styles.underlineTextButton, styles.homeBtnText]}>
+              Go To Home
             </OutfitLightText>
-          </TouchableHOC> */}
+          </TouchableHOC>
         </>
       );
     } else {

@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     color: ThemeColors.white,
     textDecorationLine: 'underline',
   },
+  homeBtnText: {marginTop: vh * 3, marginBottom: vh * 5},
   congText: {
     fontSize: vh * 5,
     color: ThemeColors.white,

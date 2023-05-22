@@ -127,7 +127,7 @@ const RestaurantRequest = props => {
     }
   };
 
-  confirmYes = () => {
+  const confirmYes = () => {
     setModal(false);
     props.navigation.dispatch(
       CommonActions.reset({
