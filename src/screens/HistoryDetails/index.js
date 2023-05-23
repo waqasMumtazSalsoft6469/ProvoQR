@@ -90,7 +90,7 @@ class HistoryDetail extends React.Component {
   };
 
   renderHistoryItem = ({item}) => {
-    console.log('history item', item?.my_win_lootbox?.menu?.image);
+    console.log('history item', moment(item?.redemption_time).utc().format("YYYY-MM-DD hh:mm:ss"));
     return (
       <View style={{width: vw * 90, marginBottom: vh * 3}}>
         <Image

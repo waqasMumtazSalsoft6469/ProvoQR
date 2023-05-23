@@ -9,6 +9,7 @@ import {
   getCurrentLocation,
 } from '../../Utils/mapHelperFunction';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import EmptyComponent from '../../components/EmptyComponent';
 
 const RecommendedRestaurantList = props => {
   const id = props?.route?.params?.id;
@@ -112,6 +113,13 @@ const RecommendedRestaurantList = props => {
     getData();
   }, []);
 
+  const renderEmpty = () => {
+    if (refreshing) {
+      return null;
+    }
+    return <EmptyComponent text="No restaurants to show" />;
+  };
+
   const renderHeader = restaurant.length ? (
     <View style={styles.headerContainer}>
       <OutfitSemiBoldText style={styles.headingTextStyle}>
@@ -142,6 +150,7 @@ const RecommendedRestaurantList = props => {
         refreshing={refreshing}
         onRefresh={handleOnRefresh}
         onEndReached={handleOnEndReached}
+        ListEmptyComponent={renderEmpty}
       />
     </View>
   );

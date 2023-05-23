@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    paddingTop: vh * 2,
   },
   contentContainerStyle: {
     paddingTop: vh * 2,

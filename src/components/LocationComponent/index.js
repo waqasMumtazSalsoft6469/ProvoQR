@@ -1,66 +1,34 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {saveLocation} from '../../Redux/Actions/otherActions';
 import {useDispatch, useSelector} from 'react-redux';
-import { getCurrentLocation } from '../../Utils/mapHelperFunction';
+import {getCurrentLocation} from '../../Utils/mapHelperFunction';
 
 const LocationComponent = props => {
   const dispatch = useDispatch();
-
-  const userLocation = useSelector(state => state.GeneralReducer?.location)
-  // const { profile, userLocation, saveLocation } = useProfile();
+  const userLocation = useSelector(state => state.GeneralReducer?.location);
+  const profile = useSelector(state => state.SessionReducer.userData);
   console.log('userLocation from loc comp', userLocation);
+  console.log('profile from loc comp', profile);
 
   useEffect(() => {
     if (props?.coordinates) {
       dispatch(saveLocation(props?.coordinates));
-    }
-    else if (
+    } else if (
       userLocation?.coordinate?.latitude === 0 &&
       userLocation?.coordinate?.longitude === 0
     ) {
-      console.log("useEffect");
+      console.log('useEffect');
       setupMethods();
     }
     // dependency for == if user changes location from map or for first time
   }, [props?.coordinates]);
 
-  // useEffect(() => {
-  //   const subscription = AppState.addEventListener("change", nextAppState => {
-  //     if (
-  //       appState.current.match(/inactive|background/) &&
-  //       nextAppState === "active"
-  //     ) {
-  //       if (!userLocation.address && openingSettings) {
-  //         const permission =
-  //           Platform.OS == "android"
-  //             ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-  //             : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE;
-  //         check(permission).then(res => {
-  //           if (res === RESULTS.GRANTED) {
-  //             getUserLocation();
-  //           } else {
-  //             handleOnCancel();
-  //           }
-  //         });
-  //         setOpeningSettings(false);
-  //       }
-  //     }
-  //     appState.current = nextAppState;
-  //     setAppStateVisible(appState.current);
-  //   });
-
-  //   return () => {
-  //     subscription.remove();
-  //   };
-  // }, [openingSettings]);
-
   const getUserLocation = () => {
-    getCurrentLocation()
-      .then(location => {
-        console.log("curr loc", location);
-        saveLocation(location);
-      })
-      // .catch(handleOnCancel);
+    getCurrentLocation().then(location => {
+      console.log('curr loc', location);
+      saveLocation(location);
+    })
+    .catch(handleOnCancel);
   };
   const setupMethods = async () => {
     // console.log("setupMethods");
@@ -70,19 +38,18 @@ const LocationComponent = props => {
         getUserLocation();
       })
       .catch(() => {
-        console.log("catch");
-        // handleOnCancel();
-        // popupRef.current.show();
+        console.log('catch');
+        handleOnCancel();
       });
   };
-  // const handleOnCancel = () => {
-  //   if (profile?.lat && profile?.lng) {
-  //     saveLocation({
-  //       latitude: profile?.lat,
-  //       longitude: profile?.lng,
-  //     });
-  //   }
-  // };
+  const handleOnCancel = () => {
+    if (profile?.lat && profile?.lng) {
+      saveLocation({
+        latitude: profile?.lat,
+        longitude: profile?.lng,
+      });
+    }
+  };
 };
 export default LocationComponent;
 

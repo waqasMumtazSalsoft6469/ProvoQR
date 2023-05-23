@@ -38,6 +38,8 @@ class EditProfileScreen extends React.Component {
       image: '',
       selectedImage: '',
       visible: false,
+      latitude: null,
+      longitude: null,
     };
   }
 
@@ -111,6 +113,11 @@ class EditProfileScreen extends React.Component {
         gender: gender,
       };
 
+      if (this.state?.latitude && this.state?.longitude) {
+        data.lat = this.state?.latitude;
+        data.lng = this.state?.longitude;
+      }
+
       let _image = null;
 
       if (selectedImage) {
@@ -165,7 +172,7 @@ class EditProfileScreen extends React.Component {
   };
 
   handleDoneAddress = (address, latitude, longitude) => {
-    this.setState({address: address});
+    this.setState({address: address, latitude, longitude});
   };
 
   render() {
@@ -214,17 +221,18 @@ class EditProfileScreen extends React.Component {
                   </TouchableOpacity>
                 </ImageBackground>
                 <MainInput
+                  label="Name"
                   placeholder="Enter Full Name"
                   // style={styles.field}
-                  ref={r => (this.email = r)}
-                  // onSubmitEditing={() => this.pw.onFocus()}
-                  onChangeText={newemail =>
+                  ref={r => (this.name = r)}
+                  onSubmitEditing={() => this.phone.onFocus()}
+                  value={this.state.name}
+                  onChangeText={value =>
                     this.setState({
-                      name: newemail,
+                      name: value,
                     })
                   }
-                  value={this.state.name}
-                  label="Name"
+                  returnKeyType="next"
                 />
               </View>
 
@@ -245,15 +253,45 @@ class EditProfileScreen extends React.Component {
                 <MainInput
                   placeholder="Enter Phone"
                   // style={styles.field}
-                  ref={r => (this.email = r)}
-                  // onSubmitEditing={() => this.pw.onFocus()}
-                  onChangeText={newemail =>
+                  ref={r => (this.phone = r)}
+                  onSubmitEditing={() => this.age.onFocus()}
+                  onChangeText={value =>
                     this.setState({
-                      phone: newemail,
+                      phone: value,
                     })
                   }
                   value={this.state.phone}
                   label="Phone Number"
+                  keyboardType="phone-pad"
+                  returnKeyType="next"
+                />
+                <MainInput
+                  label="Age"
+                  placeholder="Enter Age"
+                  ref={r => (this.age = r)}
+                  onSubmitEditing={() => this.gender.onFocus()}
+                  // style={styles.field}
+                  value={this.state.age}
+                  onChangeText={value =>
+                    this.setState({
+                      age: value,
+                    })
+                  }
+                  keyboardType="number-pad"
+                  returnKeyType="next"
+                />
+                <MainInput
+                  label="Gender"
+                  placeholder="Enter Gender"
+                  ref={r => (this.gender = r)}
+                  // onSubmitEditing={() => this.pw.onFocus()}
+                  // style={styles.field}
+                  value={this.state.gender}
+                  onChangeText={value =>
+                    this.setState({
+                      gender: value,
+                    })
+                  }
                 />
                 <View style={[styles.labelview]}>
                   <OutfitMediumText style={[styles.label]}>
