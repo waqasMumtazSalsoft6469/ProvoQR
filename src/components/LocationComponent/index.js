@@ -1,7 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {saveLocation} from '../../Redux/Actions/otherActions';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCurrentLocation} from '../../Utils/mapHelperFunction';
+import {
+  checkLocationPermissions,
+  getCurrentLocation,
+} from '../../Utils/mapHelperFunction';
 
 const LocationComponent = props => {
   const dispatch = useDispatch();
@@ -9,26 +12,30 @@ const LocationComponent = props => {
   const profile = useSelector(state => state.SessionReducer.userData);
   console.log('userLocation from loc comp', userLocation);
   console.log('profile from loc comp', profile);
+  console.log('props?.coordinates from loc comp', props?.coordinates);
 
   useEffect(() => {
+    console.log('useEffect');
     if (props?.coordinates) {
+      console.log('if');
       dispatch(saveLocation(props?.coordinates));
     } else if (
       userLocation?.coordinate?.latitude === 0 &&
       userLocation?.coordinate?.longitude === 0
     ) {
-      console.log('useEffect');
+      console.log('else');
       setupMethods();
     }
     // dependency for == if user changes location from map or for first time
   }, [props?.coordinates]);
 
   const getUserLocation = () => {
-    getCurrentLocation().then(location => {
-      console.log('curr loc', location);
-      saveLocation(location);
-    })
-    .catch(handleOnCancel);
+    getCurrentLocation()
+      .then(location => {
+        console.log('curr loc', location);
+        dispatch(saveLocation(location));
+      })
+      .catch(handleOnCancel);
   };
   const setupMethods = async () => {
     // console.log("setupMethods");
@@ -44,10 +51,12 @@ const LocationComponent = props => {
   };
   const handleOnCancel = () => {
     if (profile?.lat && profile?.lng) {
-      saveLocation({
-        latitude: profile?.lat,
-        longitude: profile?.lng,
-      });
+      dispatch(
+        saveLocation({
+          latitude: profile?.lat,
+          longitude: profile?.lng,
+        }),
+      );
     }
   };
 };

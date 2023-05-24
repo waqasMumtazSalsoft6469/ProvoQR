@@ -17,6 +17,7 @@ const RestaurantListScreen = props => {
 
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.GeneralReducer.softLoading);
+  const location = useSelector(state => state.GeneralReducer?.location);
 
   const [restaurant, setRestaurant] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -93,28 +94,28 @@ const RestaurantListScreen = props => {
     }
   };
 
-  const getUserLocation = async () => {
-    try {
-      const location = await getCurrentLocation();
-      // console.log('CURRENT LOCATION', location);
-      setUserLocation({
-        location: {
-          latitude: parseFloat(location?.latitude),
-          longitude: parseFloat(location?.longitude),
-        },
-      });
-    } catch (error) {
-      console.log('location** error ', error);
-    }
-  };
-  const setupMethods = async () => {
-    try {
-      await checkLocationPermissions();
-      getUserLocation();
-    } catch (error) {
-      console.log('location** error ', error);
-    }
-  };
+  // const getUserLocation = async () => {
+  //   try {
+  //     const location = await getCurrentLocation();
+  //     // console.log('CURRENT LOCATION', location);
+  //     setUserLocation({
+  //       location: {
+  //         latitude: parseFloat(location?.latitude),
+  //         longitude: parseFloat(location?.longitude),
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log('location** error ', error);
+  //   }
+  // };
+  // const setupMethods = async () => {
+  //   try {
+  //     await checkLocationPermissions();
+  //     getUserLocation();
+  //   } catch (error) {
+  //     console.log('location** error ', error);
+  //   }
+  // };
 
   useEffect(() => {
     if (currentPage === 1) {
@@ -123,7 +124,7 @@ const RestaurantListScreen = props => {
   }, [currentPage]);
 
   useEffect(() => {
-    setupMethods();
+    // setupMethods();
     getData();
   }, []);
 
@@ -149,7 +150,7 @@ const RestaurantListScreen = props => {
         item={item}
         onClick={() => handleRestaurantPress(item)}
         viewmap={() => handleMapBtnPress(item)}
-        location={userLocation?.location}
+        location={location?.coordinate}
       />
     );
   };

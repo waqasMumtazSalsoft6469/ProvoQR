@@ -23,7 +23,10 @@ import EmptyComponent from '../../components/EmptyComponent';
 import reactNativeEasyPushNotifications from 'react-native-easy-push-notifications';
 import {showToast} from '../../Api/HelperFunction';
 import LocationComponent from '../../components/LocationComponent';
-import {headerRightOptions, showHeaderRight} from '../../Navigation/NavigationOptions';
+import {
+  headerRightOptions,
+  showHeaderRight,
+} from '../../Navigation/NavigationOptions';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -33,7 +36,7 @@ class HomeScreen extends React.Component {
       recommended: [],
       allRestaurant: [],
       categories: [],
-      userLocation: {latitude: 0, longitude: 0},
+      userLocation: null,
       searchString: '',
       refreshing: false,
       isSearchFocused: false,
@@ -41,7 +44,7 @@ class HomeScreen extends React.Component {
   }
 
   handleDoneAddress = (address, latitude, longitude) => {
-    this.setState({userLocation: {latitude, longitude}});
+    this.setState({userLocation: {latitude, longitude}}, this.getData);
   };
 
   handleLocationPress = () => {
@@ -108,10 +111,19 @@ class HomeScreen extends React.Component {
     try {
       let params = {
         search_text: this.state.searchString,
+        // page: 1,
+        // entries: 10,
+        // lat: this.props.location.coordinate.latitude,
+        // lng: this.props.location.coordinate.longitude,
       };
 
       const res = await this.props.getHomData(params);
-      console.log('home res', res);
+      console.log(
+        this.props.location.coordinate,
+        'this.props.location.coordinatethis.props.location.coordinate',
+      );
+      console.log('home res restaurants', JSON.stringify(res, null, 2));
+
       this.setState({
         banners: res?.banner,
         recommended: res?.recommended,
@@ -126,29 +138,29 @@ class HomeScreen extends React.Component {
     }
   };
 
-  getUserLocation = async () => {
-    try {
-      const location = await getCurrentLocation();
-      console.log('CURRENT LOCATION', location);
-      this.setState({
-        userLocation: {
-          latitude: parseFloat(location?.latitude),
-          longitude: parseFloat(location?.longitude),
-        },
-      });
-    } catch (error) {
-      console.log('user location error ', error);
-    }
-  };
+  // getUserLocation = async () => {
+  //   try {
+  //     const location = await getCurrentLocation();
+  //     console.log('CURRENT LOCATION', location);
+  //     this.setState({
+  //       userLocation: {
+  //         latitude: parseFloat(location?.latitude),
+  //         longitude: parseFloat(location?.longitude),
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log('user location error ', error);
+  //   }
+  // };
 
-  setupMethods = async () => {
-    try {
-      await checkLocationPermissions();
-      this.getUserLocation();
-    } catch (error) {
-      console.log('location** error ', error);
-    }
-  };
+  // setupMethods = async () => {
+  //   try {
+  //     await checkLocationPermissions();
+  //     this.getUserLocation();
+  //   } catch (error) {
+  //     console.log('location** error ', error);
+  //   }
+  // };
 
   componentDidMount() {
     reactNativeEasyPushNotifications.onMessageReceived(notif => {
@@ -168,7 +180,7 @@ class HomeScreen extends React.Component {
     if (Platform.OS === 'android') {
       KeyboardAdjust.setAdjustPan();
     }
-    this.setupMethods();
+    // this.setupMethods();
     this.getData();
   }
 
@@ -216,12 +228,12 @@ class HomeScreen extends React.Component {
   renderAllRestaurantItem = ({item}) => {
     // console.log('item from home', item?.badges);
     return (
-      <View style={styles.homeCardContainer}>
+      <View key={item?.id} style={styles.homeCardContainer}>
         <HomeCard
           item={item}
           onClick={() => this.handleRestaurantPress(item)}
           viewmap={() => this.handleMapBtnPress(item)}
-          location={this.state.userLocation}
+          location={this.props.location?.coordinate}
           style={{marginVertical: vh * 1}}
         />
       </View>
@@ -367,6 +379,10 @@ class HomeScreen extends React.Component {
   };
   render() {
     console.log('navigation');
+    console.log(
+      this.props.location,
+      'state.GeneralReducer?.locationstate.GeneralReducer?.location',
+    );
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -394,6 +410,7 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
+  location: state.GeneralReducer?.location,
 });
 const mapDispatchToProps = dispatch => {
   return {

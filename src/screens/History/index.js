@@ -146,7 +146,7 @@ class History extends React.Component {
           history={item}
           onClick={() => this.handleRestaurantPress(item?.organisations)}
           viewmap={() => this.handleMapBtnPress(item?.organisations)}
-          location={this.state.userLocation}
+          location={this.props.location?.coordinate}
         />
         {index + 1 < this.state.response && (
           <Dash
@@ -195,6 +195,7 @@ class History extends React.Component {
 
 const mapStateToProps = state => ({
   // count: state.count,
+  location: state.GeneralReducer?.location,
 });
 
 const mapDispatchToProps = dispatch => {

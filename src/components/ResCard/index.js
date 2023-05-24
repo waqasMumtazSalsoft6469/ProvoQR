@@ -92,7 +92,7 @@ class ProductItem extends React.Component {
   };
   render() {
     const location = this.props.location;
-    // console.log('badge', this.props.item);
+    console.log('location', location);
     return (
       <View style={[styles.container, this.props?.style]}>
         <TouchableHOC

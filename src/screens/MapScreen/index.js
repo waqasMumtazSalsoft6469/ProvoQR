@@ -216,7 +216,7 @@ class MapScreen extends React.Component {
         {
           latitude: Number(latitude),
           longitude: Number(longitude),
-          latitudeDelta: 0.0622,
+          latitudeDelta: 0.0322,
           longitudeDelta: 0.0121,
         },
         2000,

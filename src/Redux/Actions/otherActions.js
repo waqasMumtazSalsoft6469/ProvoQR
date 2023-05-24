@@ -6,7 +6,9 @@ import {showToast, getMessage} from '../../Api/HelperFunction';
 import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 
 export const getHomeData = data => {
+  
   return async (dispatch, getState) => {
+    console.log(getState(), 'getState()?.GeneralReducer?.location?')
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
@@ -18,7 +20,7 @@ export const getHomeData = data => {
 
           const response = await get(endpoints.other.home, {
             ...data,
-            ...location,
+            ...location
           });
           resolve(response);
         } catch (e) {

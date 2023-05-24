@@ -12,6 +12,7 @@ import OutfitMediumText from '../components/Text/OutfitMediumText';
 import OutfitSemiBoldText from '../components/Text/OutfitSemiBoldText';
 import store from '../Redux/store';
 import {imageUrl} from '../Api/configs';
+import {showToast} from '../Api/HelperFunction';
 
 const headerLeftBackBtnRoutes = {
   HomeScreen: 'HomeScreen',
@@ -129,7 +130,7 @@ export function showHeaderRight(props, locationPress) {
   const token = data?.SessionReducer?.token;
   console.log('NavOp token', token);
 
-  if (headerRightRoutes[props?.route?.name] && token) {
+  if (headerRightRoutes[props?.route?.name]) {
     return (
       <View style={{flexDirection: 'row'}}>
         <TouchableHOC
@@ -145,7 +146,14 @@ export function showHeaderRight(props, locationPress) {
           />
         </TouchableHOC>
 
-        <TouchableHOC onPress={() => props.navigation.navigate('Notification')}>
+        <TouchableHOC
+          onPress={() => {
+            if (token) {
+              props.navigation.navigate('Notification');
+            } else {
+              showToast('Please Login First');
+            }
+          }}>
           <ImageBackground
             source={icons.notif}
             resizeMode="contain"
@@ -162,7 +170,13 @@ export function showHeaderRight(props, locationPress) {
         </TouchableHOC>
         <TouchableHOC
           style={styles.profileContainer}
-          onPress={() => props.navigation.navigate('Profile')}>
+          onPress={() => {
+            if (token) {
+              props.navigation.navigate('Profile');
+            } else {
+              showToast('Please Login First');
+            }
+          }}>
           <Image
             source={
               profile?.image
