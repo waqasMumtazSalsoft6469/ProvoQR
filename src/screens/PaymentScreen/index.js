@@ -12,9 +12,12 @@ import {Masks} from 'react-native-mask-input';
 import {connect} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
 import {
+  getAllNotifications,
+  getProfileData,
   lootBoxPurchaseByCard,
   provoCashPayment,
 } from '../../Redux/Actions/otherActions';
+import { DrawerActions } from '@react-navigation/native';
 
 class PaymentScreen extends React.Component {
   constructor(props) {
@@ -57,7 +60,7 @@ class PaymentScreen extends React.Component {
   };
 
   handlePrizeDetailBtn = () => {
-    this.setState({conVis: false})
+    this.setState({conVis: false});
     this.props.navigation?.navigate('LootboxTierScreen', {
       id: this.props?.route?.params?.id,
     });
@@ -68,7 +71,11 @@ class PaymentScreen extends React.Component {
     console.log('navigateTo', this.props?.route?.params?.navigateTo);
     console.log('handleSuccessPress from', from);
     if (from === 'Subscription') {
-      this.props.navigation.navigate('Login');
+      // this.props.navigation.navigate('Login');
+      this.props.getAllNotifications();
+      this.props.getProfileData();
+      this.props?.navigation?.dispatch(DrawerActions.closeDrawer());
+      this.props.navigation.navigate('MainNavigator');
     } else if (from == 'lootbox') {
       this.props.navigation.navigate('LootBoxScreen', {
         restaurantId: id,
@@ -294,6 +301,8 @@ const mapDispatchToProps = dispatch => {
     subscribePackage: (data, token) => dispatch(subscribePackage(data, token)),
     provoCashPayment: data => dispatch(provoCashPayment(data)),
     lootBoxPurchaseByCard: data => dispatch(lootBoxPurchaseByCard(data)),
+    getAllNotifications: () => dispatch(getAllNotifications()),
+    getProfileData: () => dispatch(getProfileData()),
   };
 };
 

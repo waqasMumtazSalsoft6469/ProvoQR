@@ -28,9 +28,9 @@ const DrawerContent = props => {
 
   const handlePressLogout = () => {
     dispatch(logout());
+    setVisibleModal(false);
     props.navigation.toggleDrawer();
-    props.navigation.navigate('Authstack', {screen: 'Login'}),
-      setVisibleModal(false);
+    props.navigation.navigate('Authstack', {screen: 'Login'});
   };
 
   const progress = useDrawerProgress();

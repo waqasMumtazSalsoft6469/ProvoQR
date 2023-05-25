@@ -55,7 +55,7 @@ class CompleteProfile extends React.Component {
   }
 
   handleDoneAddress = (address, latitude, longitude) => {
-    this.setState({address: address});
+    this.setState({address: address, lat: latitude, lng: longitude});
   };
 
   handleComplete = () => {
@@ -66,10 +66,12 @@ class CompleteProfile extends React.Component {
       showToast('Please Enter Your Address.');
     } else {
       let data = {age: age, gender: selectedGender, address: address};
-      if ((lat, lng)) {
+      if (lat, lng) {
         data.lat = lat;
         data.lng = lng;
       }
+      console.log("com prof data", data);
+      // return
       this.props.completeProfile(data).then(res => {
         this.props.navigation.navigate('Drawer');
       });

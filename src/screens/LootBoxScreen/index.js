@@ -108,19 +108,20 @@ class LootBoxScreen extends React.Component {
   getText = () => {
     if (this.state.success == 0) {
       return (
-        <>
+        <View style={{alignItems: 'center', marginTop: vh * 30}}>
           <Image source={sampleimage.closeBox} style={styles.boxImage} />
           <Button
             title="TAP TO OPEN"
             onPress={this.handleLootBoxDraw}
+            // style={{marginBottom: }}
             btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
             labelStyle={{color: ThemeColors.white}}
           />
-        </>
+        </View>
       );
     } else if (this.state.success == 1) {
       return (
-        <>
+        <View style={{alignItems: 'center', marginTop: vh * 2}}>
           <Image source={sampleimage.openBox} style={styles.openBox} />
           <CountDownTimer
             time={moment(
@@ -180,11 +181,11 @@ class LootBoxScreen extends React.Component {
               Go To Home
             </OutfitLightText>
           </TouchableHOC>
-        </>
+        </View>
       );
     } else {
       return (
-        <>
+        <View style={{alignItems: 'center', marginTop: vh * 30}}>
           <Image source={icons.tryAgain} style={styles.tryagain} />
           <OutfitRegularText style={styles.congText}>
             Try Again!{' '}
@@ -207,7 +208,7 @@ class LootBoxScreen extends React.Component {
               Nick Vujicic
             </OutfitLightText>
           </TouchableHOC>
-        </>
+        </View>
       );
     }
   };
@@ -224,48 +225,49 @@ class LootBoxScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imgbg}>
-          <ScrollView
-            contentContainerStyle={{
-              // backgroundColor: 'red',
-              paddingBottom: vh * 8,
+          <TouchableHOC
+            onPress={() => this.props.navigation.goBack()}
+            style={{
+              zIndex: 999,
+              position: 'absolute',
+              top: vh * 6,
+              left: vw * 8,
             }}>
-            <TouchableHOC
-              onPress={() => this.props.navigation.goBack()}
-              style={{
-                zIndex: 999,
-                position: 'absolute',
-                top: vh * 6,
-                left: vw * 8,
-              }}>
-              <Image source={icons.backarrow} style={styles.back} />
-            </TouchableHOC>
-            <LottieView
-              resizeMode="cover"
-              ref={animation => {
-                this.animation = animation;
-              }}
-              source={celebAnim}
-              progress={this.progress}
-              style={{
-                height: 100 * vh,
-                width: 100 * vw,
-                backgroundColor: 'transparent',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-              }}
-            />
-            <View
-              style={{
+            <Image source={icons.backarrow} style={styles.back} />
+          </TouchableHOC>
+          <LottieView
+            resizeMode="cover"
+            ref={animation => {
+              this.animation = animation;
+            }}
+            source={celebAnim}
+            progress={this.progress}
+            style={{
+              height: 100 * vh,
+              width: 100 * vw,
+              backgroundColor: 'transparent',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+            }}
+          />
+          <View
+            style={{
+              alignItems: 'center',
+              marginTop: 8 * vh,
+              // justifyContent: 'center',
+              // height: '100%',
+            }}>
+            <ScrollView
+              contentContainerStyle={{
                 alignItems: 'center',
-                marginTop: 8 * vh,
-                justifyContent: 'center',
-                height: '100%',
-              }}>
+                paddingBottom: vh * 8,
+              }}
+              showsVerticalScrollIndicator={false}>
               {/* <Blacksword style={styles.title}>{this.rendertitle()}</Blacksword> */}
               {this.getText()}
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         </ImageBackground>
       </View>
     );

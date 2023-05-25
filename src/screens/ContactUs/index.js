@@ -24,6 +24,7 @@ class ContactUs extends React.Component {
 
   handleSend = () => {
     const {name, email, subject, message} = this.state;
+    console.log('name', name);
     if (!name) {
       showToast('Please Write Your Name');
     } else if (!email) {
@@ -40,6 +41,15 @@ class ContactUs extends React.Component {
       });
     }
   };
+
+  componentDidMount() {
+    // const {name, email} = this.props?.userDetails;
+    // console.log('contact us', this.props.userDetails);
+    this.setState({
+      name: this.props?.userDetails?.name ?? '',
+      email: this.props?.userDetails?.email ?? '',
+    });
+  }
 
   render() {
     const {userDetails} = this.props;
@@ -59,6 +69,7 @@ class ContactUs extends React.Component {
                 // style={styles.field}
                 ref={r => (this.name = r)}
                 onSubmitEditing={() => this.email.onFocus()}
+                value={this.state.name}
                 onChangeText={newemail =>
                   this.setState({
                     name: newemail,
@@ -73,6 +84,7 @@ class ContactUs extends React.Component {
                 // style={styles.field}
                 ref={r => (this.email = r)}
                 onSubmitEditing={() => this.subject.onFocus()}
+                value={this.state.email}
                 onChangeText={newemail =>
                   this.setState({
                     email: newemail,

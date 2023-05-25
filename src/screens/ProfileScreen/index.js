@@ -131,7 +131,7 @@ class ProfileScreen extends React.Component {
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>Age</OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {userData?.age}
+                {userData?.age ?? "Edit"}
               </OutfitRegulerText>
             </View>
             {/* <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
@@ -155,7 +155,7 @@ class ProfileScreen extends React.Component {
                 Gender
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {userData?.gender}
+                {userData?.gender ?? "Edit"}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
@@ -163,7 +163,7 @@ class ProfileScreen extends React.Component {
                 Address
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {userData?.address}
+                {userData?.address ?? "Edit"}
               </OutfitRegulerText>
             </View>
 

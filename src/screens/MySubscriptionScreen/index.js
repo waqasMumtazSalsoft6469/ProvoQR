@@ -89,6 +89,13 @@ class MySuscription extends React.Component {
   };
 
   render() {
+    console.log(
+      'end date',
+      moment(this.state?.subscription?.end_date, 'YYYY-MM-DD').diff(
+        moment(),
+        'days',
+      ),
+    );
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -120,9 +127,9 @@ class MySuscription extends React.Component {
                 <View style={styles.locationscroll}>
                   <OutfitRegularText style={styles.scrolltext}>
                     (Package Expires in {''}
-                    {moment
+                    {/* {moment
                       .duration(
-                        moment(new Date()).diff(
+                        moment().diff(
                           moment(
                             this.state.subscription?.end_date,
                             'YYYY-MM-DD',
@@ -130,7 +137,12 @@ class MySuscription extends React.Component {
                         ),
                       )
                       .asDays()
-                      ?.toFixed(0)}{' '}
+                      ?.toFixed(0)}{' '} */}
+                    {moment(
+                      this.state.subscription?.end_date,
+                      'YYYY-MM-DD',
+                    ).diff(moment(), 'days')}
+                    {' '}
                     Days)
                   </OutfitRegularText>
                 </View>

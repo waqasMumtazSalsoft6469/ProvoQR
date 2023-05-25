@@ -38,9 +38,11 @@ class RewardCard extends React.Component {
             <OutfitMediumText style={styles.name}>
               {this.props.item.name}
             </OutfitMediumText>
-            <RubikLight style={styles.cus} numberOfLines={1}>
-              {this.props.item.description}
-            </RubikLight>
+            {this.props.item.description && (
+              <RubikLight style={styles.cus} numberOfLines={1}>
+                {this.props.item.description}
+              </RubikLight>
+            )}
             <RubikLight style={styles.cus} numberOfLines={1}>
               {this.props.item.address}
             </RubikLight>

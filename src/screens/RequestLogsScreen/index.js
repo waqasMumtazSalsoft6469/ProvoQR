@@ -83,11 +83,13 @@ class RestaurantLogs extends React.Component {
   };
 
   componentDidMount() {
-    this.getData();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.getData();
+    });
   }
 
   handleMapBtnPress = item => {
-    console.log("req log item", item?.lat);
+    console.log('req log item', item?.lat);
     // return
     const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
     const supported = Linking.canOpenURL(url);

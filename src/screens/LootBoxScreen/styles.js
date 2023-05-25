@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: vh * 2,
     marginTop: vh * 1,
     textAlign: 'center',
-    width: '70%'
+    // width: '70%'
   },
 });
 export default styles;

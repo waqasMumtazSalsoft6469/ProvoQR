@@ -129,13 +129,13 @@ const RestaurantRequest = props => {
 
   const confirmYes = () => {
     setModal(false);
-    props.navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'Home'}],
-      }),
-    );
-    // props.navigation.goBack();
+    // props.navigation.dispatch(
+    //   CommonActions.reset({
+    //     index: 1,
+    //     routes: [{name: 'Home'}],
+    //   }),
+    // );
+    props.navigation.goBack();
   };
 
   return (

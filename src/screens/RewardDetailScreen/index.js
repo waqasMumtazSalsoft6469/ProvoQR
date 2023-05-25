@@ -27,6 +27,7 @@ import AlertModal from '../../components/Popups/alertModal';
 import ThemeColors from '../../Utils/ThemeColors';
 import moment from 'moment';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
+import { showHeaderRight } from '../../Navigation/NavigationOptions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -93,11 +94,17 @@ class RegisterScreen extends React.Component {
     });
   };
 
+  handleBackPress = () => {
+    // this.props.navigation.dispatch(StackActions.popToTop());
+    this.props.navigation.navigate('RewardScreen');
+  };
+
   componentDidMount() {
     const id = this.props.route.params.reward_id;
     const name = this.props?.route.params.restaurantName;
     this.props?.navigation?.setOptions({
       title: name,
+      headerRight: () => showHeaderRight(this.props, this.handleBackPress),
     });
 
     const data = {

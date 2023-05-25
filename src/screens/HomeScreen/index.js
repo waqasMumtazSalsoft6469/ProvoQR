@@ -113,15 +113,19 @@ class HomeScreen extends React.Component {
         search_text: this.state.searchString,
         // page: 1,
         // entries: 10,
-        // lat: this.props.location.coordinate.latitude,
-        // lng: this.props.location.coordinate.longitude,
+        lat:
+          this.state?.userLocation?.latitude ?? this.props?.location?.latitude,
+        lng:
+          this.state.userLocation?.longitude ?? this.props?.location?.longitude,
       };
 
+      console.log('home res params', params);
+
       const res = await this.props.getHomData(params);
-      console.log(
-        this.props.location.coordinate,
-        'this.props.location.coordinatethis.props.location.coordinate',
-      );
+      // console.log(
+      //   this.props.location.coordinate,
+      //   'this.props.location.coordinatethis.props.location.coordinate',
+      // );
       console.log('home res restaurants', JSON.stringify(res, null, 2));
 
       this.setState({
@@ -173,8 +177,15 @@ class HomeScreen extends React.Component {
       // This method is triggered whenever the user taps on the notification
     });
 
-    this.props?.navigation?.setOptions({
-      headerRight: () => showHeaderRight(this.props, this.handleLocationPress),
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.props?.navigation?.setOptions({
+        headerRight: () =>
+          showHeaderRight(this.props, this.handleLocationPress),
+      });
+    });
+
+    this._unsubBlur = this.props.navigation.addListener('blur', () => {
+      this.setState({searchString: ''});
     });
 
     if (Platform.OS === 'android') {
@@ -378,11 +389,11 @@ class HomeScreen extends React.Component {
     );
   };
   render() {
-    console.log('navigation');
-    console.log(
-      this.props.location,
-      'state.GeneralReducer?.locationstate.GeneralReducer?.location',
-    );
+    // console.log('navigation');
+    // console.log(
+    //   this.props.location,
+    //   'state.GeneralReducer?.locationstate.GeneralReducer?.location',
+    // );
     return (
       <View style={styles.container}>
         <ImageBackground

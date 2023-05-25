@@ -17,11 +17,12 @@ export const getHomeData = data => {
             lng: getState()?.GeneralReducer?.location?.coordinate?.longitude,
           };
           // dispatch({type: actionTypes.loaderOn});
-
+          
           const response = await get(endpoints.other.home, {
             ...data,
-            ...location
+            // ...location
           });
+          console.log(response, 'action respose')
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

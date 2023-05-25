@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   imgbg: {
     width: 100 * vw,
     flex: 1,
+    paddingTop: vh*3
     // alignItems: 'center',
   },
   imageStyle: {width: 100 * vw},

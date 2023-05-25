@@ -194,7 +194,7 @@ export function showHeaderRight(props, locationPress) {
   }
 }
 
-export function showHeaderLeft(props) {
+export function showHeaderLeft(props, backPress) {
   if (headerLeftBackBtnRoutes[props?.route?.name] === 'HomeScreen') {
     return (
       <View style={styles.homeLeftHeaderContainer}>
@@ -212,7 +212,9 @@ export function showHeaderLeft(props) {
         hitSlop={styles.hitSlop}
         iconStyle={styles.backIconStyle}
         icon={icons.backarrow}
-        onPress={() => props.navigation.goBack()}
+        onPress={
+          backPress ? () => backPress() : () => props.navigation.goBack()
+        }
       />
     );
   }
