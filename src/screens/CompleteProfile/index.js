@@ -30,6 +30,7 @@ import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {connect} from 'react-redux';
 import {completeProfile} from '../../Redux/Actions/authActions';
 import {showToast} from '../../Api/HelperFunction';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 
 class CompleteProfile extends React.Component {
   constructor(props) {
@@ -66,11 +67,11 @@ class CompleteProfile extends React.Component {
       showToast('Please Enter Your Address.');
     } else {
       let data = {age: age, gender: selectedGender, address: address};
-      if (lat, lng) {
+      if ((lat, lng)) {
         data.lat = lat;
         data.lng = lng;
       }
-      console.log("com prof data", data);
+      console.log('com prof data', data);
       // return
       this.props.completeProfile(data).then(res => {
         this.props.navigation.navigate('Drawer');
@@ -89,7 +90,7 @@ class CompleteProfile extends React.Component {
 
         <ImageBackground
           source={backgrounds.bgimage}
-          style={{width: 100 * vw}}
+          style={{width: 100 * vw, flex: 1, paddingTop: getStatusBarHeight()}}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 100 * vh}}>
           <ScrollView>

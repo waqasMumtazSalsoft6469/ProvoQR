@@ -37,6 +37,7 @@ class ContactUs extends React.Component {
       let data = {name, email, subject, message};
       this.props.contactUs(data).then(res => {
         showToast(res?.messgae);
+        this.setState({subject: '', message: ''});  
         this.props.navigation.navigate('HomeScreen');
       });
     }
@@ -99,6 +100,7 @@ class ContactUs extends React.Component {
                 // style={styles.field}
                 ref={r => (this.subject = r)}
                 onSubmitEditing={() => this.message.onFocus()}
+                value={this.state.subject}
                 onChangeText={newemail =>
                   this.setState({
                     subject: newemail,
@@ -112,6 +114,7 @@ class ContactUs extends React.Component {
                 // style={styles.field}
                 ref={r => (this.message = r)}
                 // onSubmitEditing={() => this.pw.onFocus()}
+                value={this.state.message}
                 onChangeText={newemail =>
                   this.setState({
                     message: newemail,

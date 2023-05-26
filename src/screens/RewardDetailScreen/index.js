@@ -28,7 +28,10 @@ import AlertModal from '../../components/Popups/alertModal';
 import ThemeColors from '../../Utils/ThemeColors';
 import moment from 'moment';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
-import { showHeaderLeft, showHeaderRight } from '../../Navigation/NavigationOptions';
+import {
+  showHeaderLeft,
+  showHeaderRight,
+} from '../../Navigation/NavigationOptions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -95,19 +98,36 @@ class RegisterScreen extends React.Component {
     });
   };
 
-  handleBackPress = () => {
-    // this.props.navigation.dispatch(StackActions.popToTop());
-    this.props.navigation.navigate('RewardScreen');
-    return true;
-  };
+  // handleBackPress = () => {
+  //   // this.props.navigation.dispatch(StackActions.popToTop());
+
+  //   // if (!this.props.navigation.isFocused()) {
+  //   //   // The screen is not focused, so don't do anything
+  //   //   return false;
+  //   // }
+
+  //   this.props.navigation.navigate('RewardScreen');
+  //   // return true;
+  // };
 
   componentDidMount() {
     const id = this.props.route.params.reward_id;
     const name = this.props?.route.params.restaurantName;
-    this.props?.navigation?.setOptions({
-      title: name,
-      headerLeft: () => showHeaderLeft(this.props, this.handleBackPress),
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.props?.navigation?.setOptions({
+        title: name,
+        // headerLeft: () => showHeaderLeft(this.props, this.handleBackPress),
+      });
+      // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     });
+
+    // this._unsubBlur = this.props.navigation.addListener('blur', () => {
+    //   BackHandler.removeEventListener(
+    //     'hardwareBackPress',
+    //     this.handleBackPress,
+    //   );
+    // });
 
     const data = {
       reward_id: id,
@@ -119,8 +139,6 @@ class RegisterScreen extends React.Component {
         details: res?.rewardDetail,
       });
     });
-
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 
     const interval = setInterval(() => {
       console.log('exDate', this.state?.details?.reward_expire_date);
@@ -140,9 +158,10 @@ class RegisterScreen extends React.Component {
     return () => clearInterval(interval);
   }
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-  }
+  // componentWillUnmount() {
+  //   // BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  //   this.Back.remove();
+  // }
 
   render() {
     console.log(

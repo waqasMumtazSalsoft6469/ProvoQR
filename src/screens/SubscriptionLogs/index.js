@@ -83,17 +83,22 @@ class SubscriptionLogs extends React.Component {
                 <OutfitRegularText style={styles.scrolltext}>
                   (Package Expires in {''}
                   {this.state.subscription?.end_date
-                    ? moment
-                        .duration(
-                          moment(new Date()).diff(
-                            moment(
-                              this.state.subscription?.end_date,
-                              'YYYY-MM-DD',
-                            ),
-                          ),
-                        )
-                        .asDays()
-                        ?.toFixed(0)
+                    ? // moment
+                      //     .duration(
+                      //       moment(new Date()).diff(
+                      //         moment(
+                      //           this.state.subscription?.end_date,
+                      //           'YYYY-MM-DD',
+                      //         ),
+                      //       ),
+                      //     )
+                      //     .asDays()
+                      //     ?.toFixed(0)
+                      //
+                      moment(
+                        this.state.subscription?.end_date,
+                        'YYYY-MM-DD',
+                      ).diff(moment(), 'days')
                     : 0}{' '}
                   Days){' '}
                 </OutfitRegularText>

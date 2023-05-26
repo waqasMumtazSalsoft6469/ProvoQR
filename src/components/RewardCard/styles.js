@@ -6,7 +6,7 @@ export default StyleSheet.create({
   cardimage: {
     resizeMode: 'contain',
     width: 30 * vw,
-    borderRadius: 3 * vh,
+    borderRadius: 5 * vh,
     height: 30 * vw,
     ...themeShadow,
   },

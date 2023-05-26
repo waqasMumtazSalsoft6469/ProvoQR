@@ -4,7 +4,7 @@ import {backgrounds, icons, sampleimage} from '../../assets/images';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import RewardCard from '../../components/RewardCard';
 import styles from './styles';
-import {vh} from '../../Utils/Units';
+import {vh, vw} from '../../Utils/Units';
 import {getRestaurantRequest} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
 import EmptyComponent from '../../components/EmptyComponent';
@@ -135,7 +135,9 @@ class RestaurantLogs extends React.Component {
           source={backgrounds.grayBackground}
           style={styles.imgbg}
           resizeMode="cover"
-          imageStyle={styles.imgbg}>
+          // imageStyle={styles.imgbg}
+          imageStyle={{width: 100 * vw, height: 100 * vh}}
+          >
           <View style={{alignItems: 'center', marginTop: vh}}>
             <OutfitSemiBoldText style={{fontSize: vh * 2.5}}>
               Restaurant Request Logs

@@ -31,7 +31,7 @@ const headerLeftBackBtnRoutes = {
   RecommendedRestaurantList: 'RecommendedRestaurantList',
   CategoryListScreen: 'CategoryListScreen',
   MapScreen: 'Map',
-  RewardScreen: 'Reward Library',
+  // RewardScreen: 'Reward Library',
   RewardDetail: 'Redeem Reward',
   RestaurantRequest: 'RestaurantRequest',
   SecretKey: 'SecretKey',

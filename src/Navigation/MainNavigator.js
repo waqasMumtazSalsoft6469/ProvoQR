@@ -29,7 +29,7 @@ import {
 } from '../Redux/Actions/otherActions';
 import HappyHourMenuScreen from '../screens/HappyHourMenuScreen';
 import LootboxTierScreen from '../screens/LootboxTierScreen';
-import RewardDetailScreen from '../screens/RewardDetailScreen';
+import RewardDetail from '../screens/RewardDetailScreen';
 import RedeemRewardScreen from '../screens/RedeemRewardScreen';
 import LocationSearchScreen from '../screens/LocationSearchScreen';
 
@@ -74,14 +74,14 @@ class MainNavigator extends React.Component {
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )} */}
 
-        {/* {token &&
+        {token &&
           (!userData?.age || !userData?.address || !userData?.gender) && (
             <MainStack.Screen
               component={CompleteProfile}
               name="CompleteProfile"
               options={{headerShown: false}}
             />
-          )} */}
+          )}
         <MainStack.Screen
           component={Drawer}
           name="Drawer"
@@ -132,6 +132,7 @@ class MainNavigator extends React.Component {
           component={LocationSearchScreen}
           name="LocationSearchScreen"
         />
+        <MainStack.Screen component={RewardDetail} name="RewardDetail" />
       </MainStack.Navigator>
     );
   };

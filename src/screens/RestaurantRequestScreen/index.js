@@ -135,6 +135,10 @@ const RestaurantRequest = props => {
     //     routes: [{name: 'Home'}],
     //   }),
     // );
+    setRestaurantName();
+    setRestaurantAddress();
+    setDescription();
+    setImage(null);
     props.navigation.goBack();
   };
 

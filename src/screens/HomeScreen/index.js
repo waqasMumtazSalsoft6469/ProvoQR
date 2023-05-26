@@ -185,7 +185,7 @@ class HomeScreen extends React.Component {
     });
 
     this._unsubBlur = this.props.navigation.addListener('blur', () => {
-      this.setState({searchString: ''});
+      this.setState({searchString: ''}, this.getData);
     });
 
     if (Platform.OS === 'android') {
