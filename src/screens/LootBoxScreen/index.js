@@ -20,7 +20,7 @@ import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {connect, dispatch} from 'react-redux';
 import {lootBoxDraw} from '../../Redux/Actions/otherActions';
-import {StackActions} from '@react-navigation/native';
+import {CommonActions, StackActions} from '@react-navigation/native';
 import moment from 'moment';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
@@ -41,6 +41,7 @@ class LootBoxScreen extends React.Component {
   handleRewardBtnPress = () => {
     // this.props.navigation.dispatch(StackActions.popToTop());
     // // this.props.navigation.popToTop()
+
     this.props.navigation.navigate('GiftStack', {
       screen: 'RewardDetail',
       params: {

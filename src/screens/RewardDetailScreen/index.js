@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 
@@ -27,7 +28,7 @@ import AlertModal from '../../components/Popups/alertModal';
 import ThemeColors from '../../Utils/ThemeColors';
 import moment from 'moment';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
-import { showHeaderRight } from '../../Navigation/NavigationOptions';
+import { showHeaderLeft, showHeaderRight } from '../../Navigation/NavigationOptions';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class RegisterScreen extends React.Component {
   handleBackPress = () => {
     // this.props.navigation.dispatch(StackActions.popToTop());
     this.props.navigation.navigate('RewardScreen');
+    return true;
   };
 
   componentDidMount() {
@@ -104,7 +106,7 @@ class RegisterScreen extends React.Component {
     const name = this.props?.route.params.restaurantName;
     this.props?.navigation?.setOptions({
       title: name,
-      headerRight: () => showHeaderRight(this.props, this.handleBackPress),
+      headerLeft: () => showHeaderLeft(this.props, this.handleBackPress),
     });
 
     const data = {
@@ -117,6 +119,8 @@ class RegisterScreen extends React.Component {
         details: res?.rewardDetail,
       });
     });
+
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 
     const interval = setInterval(() => {
       console.log('exDate', this.state?.details?.reward_expire_date);
@@ -134,6 +138,10 @@ class RegisterScreen extends React.Component {
       this.setState({timeLeft: time});
     }, 1000);
     return () => clearInterval(interval);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   render() {
