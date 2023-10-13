@@ -61,6 +61,7 @@ const MyTabBar = ({state, navigation}, props) => {
         };
         return (
           <View
+            key={index}
             style={{
               alignItems: 'center',
               width: 6 * vw,

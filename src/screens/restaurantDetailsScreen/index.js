@@ -48,11 +48,13 @@ class ResturentDetailScreen extends React.Component {
 
   componentDidMount() {
     const id = this.props.route.params.id;
+    // alert(`Organization ID >> ${id}`);
     const name = this.props.route.params.name;
     this.props.navigation.setOptions({
       title: name,
     });
     this.props.restaurantDetails({organisation_id: id}).then(res => {
+      console.log('Resturants Detail Response Data ******>>>>>>>>>', res);
       this.setState({
         details: res?.details,
       });
@@ -119,7 +121,7 @@ class ResturentDetailScreen extends React.Component {
     );
   };
   render() {
-    console.log('res details', this.state.details);
+    // console.log('res details', this.state.details);
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -200,6 +202,10 @@ class ResturentDetailScreen extends React.Component {
               </View>
               {/* {this.rendercuisines()} */}
             </View>
+            {/* {console.log(
+              'Loooot Boooooxxxx Detail ***>>>>>',
+              this.state?.details.lootboxes,
+            )} */}
             {this.state?.details?.lootboxes?.length > 0 && this.renderRatings()}
             <Dash
               style={{
@@ -240,7 +246,8 @@ class ResturentDetailScreen extends React.Component {
                 <Button title="LOOT BOX" onPress={this.handleLootBoxPress} />
               </View>
             )}
-            {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length > 0 && (
+            {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >
+              0 && (
               <View
                 style={{
                   // marginTop: vh * 3,

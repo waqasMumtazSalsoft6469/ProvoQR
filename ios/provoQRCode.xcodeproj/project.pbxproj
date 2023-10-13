@@ -560,8 +560,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = provoQRCode/provoQRCode.entitlements;
-				CURRENT_PROJECT_VERSION = 18;
-				DEVELOPMENT_TEAM = 3YP4TQ9R94;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = XWQ64C989P;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = provoQRCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
@@ -569,14 +571,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appsfnh.QrCode;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uaapps.provoQRCode;
 				PRODUCT_NAME = provoQRCode;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -594,22 +597,25 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = provoQRCode/provoQRCode.entitlements;
-				CURRENT_PROJECT_VERSION = 18;
-				DEVELOPMENT_TEAM = 3YP4TQ9R94;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = XWQ64C989P;
 				INFOPLIST_FILE = provoQRCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appsfnh.QrCode;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uaapps.provoQRCode;
 				PRODUCT_NAME = provoQRCode;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;

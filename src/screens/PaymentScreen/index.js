@@ -17,7 +17,7 @@ import {
   lootBoxPurchaseByCard,
   provoCashPayment,
 } from '../../Redux/Actions/otherActions';
-import { DrawerActions } from '@react-navigation/native';
+import {DrawerActions, StackActions} from '@react-navigation/native';
 
 class PaymentScreen extends React.Component {
   constructor(props) {
@@ -70,13 +70,17 @@ class PaymentScreen extends React.Component {
     const {id, from} = this.props?.route?.params;
     console.log('navigateTo', this.props?.route?.params?.navigateTo);
     console.log('handleSuccessPress from', from);
+
     if (from === 'Subscription') {
       // this.props.navigation.navigate('Login');
       this.props.getAllNotifications();
       this.props.getProfileData();
       this.props?.navigation?.dispatch(DrawerActions.closeDrawer());
-      this.props.navigation.navigate('MainNavigator');
+      this.props?.navigation?.dispatch(StackActions.replace('MainNavigator'));
+      // this.props.navigation.navigate('MainNavigator');
     } else if (from == 'lootbox') {
+      // alert(`Resturant ID >>>, ${id}`);
+      // return;
       this.props.navigation.navigate('LootBoxScreen', {
         restaurantId: id,
         success: 0,
@@ -94,13 +98,16 @@ class PaymentScreen extends React.Component {
 
   confirmPayment = () => {
     const {name, cardNumber, expiry, cvv} = this.state;
-    const {id, token, from} = this.props.route.params;
+    const {id, token, from, lootbox_id} = this.props.route.params;
+    console.log('LootBox ID >>>>', lootbox_id);
+    // return;
     let data = {
       card_holder_name: name,
       card_num: cardNumber,
       cvv_num: cvv,
       expiry_date: expiry,
       package_id: id,
+      lootbox_id,
     };
 
     if (from === 'provo') {
@@ -112,6 +119,8 @@ class PaymentScreen extends React.Component {
         }
       });
     } else if (from === 'lootbox') {
+      // alert(id);
+      // return;
       this.props
         .lootBoxPurchaseByCard({
           card_holder_name: name,
@@ -119,8 +128,10 @@ class PaymentScreen extends React.Component {
           cvv_num: cvv,
           expiry_date: expiry,
           restaurant_id: id,
+          lootbox_id,
         })
         .then(res => {
+          console.log('LootBox Payment Response >>>>>', res);
           if (res?.success) {
             // showToast(res?.message?.message);
             this.setState({visibleSuccess: true});

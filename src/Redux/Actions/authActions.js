@@ -13,7 +13,7 @@ export const login = data => {
 
           const response = await post(endpoints.auth.login, data, false);
           dispatch({type: actionTypes.login, session: response});
-          
+
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -32,9 +32,9 @@ export const sendEmail = data => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
-          
+
           const response = await post(endpoints.auth.sendEmail, data, true);
-          
+
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -53,9 +53,9 @@ export const verifyOTP = data => {
       setTimeout(async () => {
         try {
           dispatch({type: actionTypes.loaderOn});
-          
+
           const response = await post(endpoints.auth.verifyOTP, data, true);
-          
+
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -76,7 +76,7 @@ export const setPassword = data => {
           dispatch({type: actionTypes.loaderOn});
 
           const response = await post(endpoints.auth.setPassword, data, true);
-          
+
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

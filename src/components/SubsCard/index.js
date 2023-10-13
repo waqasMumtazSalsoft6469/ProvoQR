@@ -56,6 +56,7 @@ class SubCard extends React.Component {
   };
 
   render() {
+    console.log('PRICE PACKAGE ***>>>', this.props.item?.price);
     return (
       <View style={[styles.container, this.props.con]}>
         <ImageBackground
@@ -64,7 +65,11 @@ class SubCard extends React.Component {
           imageStyle={[styles.footerimagebg]}>
           <View style={{alignItems: 'center'}}>
             <View style={{flexDirection: 'row'}}>
-              {this.props.item?.price !== 0 ? (
+              <OutfitSemiBoldText style={styles.dollar}>$</OutfitSemiBoldText>
+              <OutfitSemiBoldText style={styles.amount}>
+                {this.props.item?.price}
+              </OutfitSemiBoldText>
+              {/* {this.props.item?.price !== 0 ? (
                 <>
                   <OutfitSemiBoldText style={styles.dollar}>
                     $
@@ -77,7 +82,7 @@ class SubCard extends React.Component {
                 <OutfitSemiBoldText style={styles.amount1}>
                   {this.props.item?.price}
                 </OutfitSemiBoldText>
-              )}
+              )} */}
             </View>
 
             <OutfitRegularText style={styles.month}>

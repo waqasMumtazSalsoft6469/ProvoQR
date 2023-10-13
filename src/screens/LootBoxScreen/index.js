@@ -61,6 +61,7 @@ class LootBoxScreen extends React.Component {
 
   handleLootBoxDraw = () => {
     const id = this.props.route.params.restaurantId;
+    // alert(`Resturant ID >>>`, id);
     const data = {
       restaurant_id: id,
     };

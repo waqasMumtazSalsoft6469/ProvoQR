@@ -43,11 +43,14 @@ class ProvoPaymentMethod extends React.Component {
     if (this.state.selectedOption == 2 && !this.props.billingDetails) {
       showToast('You have not saved any billing details.');
     } else {
+      // alert(this.props.route.params.packageId);
+      // return;
       this.props.navigation.navigate('Payment', {
         option: this.state.selectedOption,
         id: this.props.route.params.packageId,
         from: this.props.route?.params?.from,
         navigateTo: this.props.route?.params?.navigateTo,
+        lootbox_id: this.props?.route?.params?.lootbox_id,
       });
     }
   };

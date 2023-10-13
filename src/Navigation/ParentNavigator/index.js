@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
-import MainNavigator from '../MainNavigator';
+// import MainNavigator from '../MainNavigator';
+import MainNavigator from '../MainNavigator2';
 import AuthNavigator from '../AuthNavigator';
 import AnimatedSplash from 'react-native-animated-splash';
 

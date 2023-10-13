@@ -12,10 +12,11 @@ import {getLootBoxes} from '../../Redux/Actions/otherActions';
 
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
+  const lootbox_id = lootBoxes[0]?.lootbox_id;
   const id = props?.route?.params?.id;
   const provoCash = props?.route?.params?.provoCash;
   const lootBoxAmount = props?.route?.params?.lootBoxAmount;
-  console.log('lootBoxes', lootBoxes);
+  console.log('LootBoxes Data ****>>>>>>>', JSON.stringify(lootBoxes));
 
   const dispatch = useDispatch();
 
@@ -45,6 +46,7 @@ const LootboxTierScreen = props => {
         id,
         provoCash,
         lootBoxAmount,
+        lootbox_id,
       });
     } else {
       showToast('Please Login First');

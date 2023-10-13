@@ -64,7 +64,9 @@ class MainNavigator extends React.Component {
 
   renderSelection = () => {
     const {token, userData} = this.props;
-    console.log('userData', userData);
+    console.log('MainNavigator Screen userData >>>>>>>>', userData);
+    console.log('MainNavigator Token userData >>>>>>>>', token);
+
     return (
       <MainStack.Navigator
         // initialRouteName='HomeTabs'
@@ -141,17 +143,21 @@ class MainNavigator extends React.Component {
     return <View style={{flex: 1}}>{this.renderSelection()}</View>;
   }
 }
-const mapState = state => {
+const mapStateToProps = state => {
+  console.log(
+    'Main Navigator MapStateToProps State ***>>>>>',
+    state.SessionReducer.userData,
+  );
   return {
     token: state.SessionReducer.token,
     userData: state.SessionReducer.userData,
   };
 };
-const mapProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     getAllCategories: () => dispatch(getAllCategories()),
     getAllNotifications: () => dispatch(getAllNotifications()),
     getProfileData: () => dispatch(getProfileData()),
   };
 };
-export default connect(mapState, mapProps)(MainNavigator);
+export default connect(mapStateToProps, mapDispatchToProps)(MainNavigator);

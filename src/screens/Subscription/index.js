@@ -31,11 +31,12 @@ const Subscription = props => {
         <SubsCard
           item={subscription[index]}
           success={(itemIndex, item) => {
-            props.navigation.navigate('Payment', {
-              id: subscription[itemIndex]?.id,
-              token,
-              from: props?.route?.name,
-            });
+            console.log('Selected Package >>>>', subscription[itemIndex]);
+            // props.navigation.navigate('Payment', {
+            //   id: subscription[itemIndex]?.id,
+            //   token,
+            //   from: props?.route?.name,
+            // });
           }}
           index={index}
           activeindex={activeindex}
@@ -43,6 +44,11 @@ const Subscription = props => {
       </View>
     );
   };
+
+  // console.log(
+  //   'Subscription Packages ***>>>>>',
+  //   subscription[subscription.length - 1],
+  // );
 
   return (
     <View style={styles.container}>
@@ -71,6 +77,7 @@ const Subscription = props => {
               subscription.map((item, i) => {
                 return (
                   <TouchableHOC
+                    key={i}
                     onPress={() => setSelectedPackage(i)}
                     style={styles.headingHorizontal}>
                     <OutfitMediumText
@@ -79,7 +86,7 @@ const Subscription = props => {
                           ? styles.selectStyle
                           : styles.unselectedStyle
                       }>
-                      {item.title == 'TRIAL PACKAGE'
+                      {item.name == 'Free Trial'
                         ? 'Trail Package'
                         : `Package ${i + 1}`}
                     </OutfitMediumText>

@@ -40,9 +40,11 @@ class LootBoxPaymentMethod extends React.Component {
   }
 
   handleBuyProvoCashBtn = () => {
+    const lootbox_id = this.props?.route?.params?.lootbox_id;
     this.props?.saveRestaurant({
       id: this?.props?.route?.params?.id,
       provoCash: this.props?.route?.params?.provoCash,
+      lootbox_id,
     });
     this.props.navigation.navigate('ProvoCash', {
       screen: 'ProvoScreen',
@@ -53,14 +55,19 @@ class LootBoxPaymentMethod extends React.Component {
   };
 
   handleCardBtnPress = () => {
+    const lootbox_id = this.props?.route?.params?.lootbox_id;
     const id = this.props?.route?.params?.id ?? this.props?.restaurant_id?.id;
+    console.log('Resturant **>> ID', id);
+    // return;
     this.props.navigation.navigate('ProvoPaymentMethod', {
       packageId: id,
       from: 'lootbox',
+      lootbox_id,
     });
   };
 
   handleProvocashPress = () => {
+    const lootbox_id = this.props?.route?.params?.lootbox_id;
     const id = this.props?.route?.params?.id ?? this.props?.restaurant_id?.id;
     const data = {
       restaurant_id: id,
@@ -144,7 +151,7 @@ class LootBoxPaymentMethod extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("GeneralReducer", state?.GeneralReducer?.restaurant_id);
+  console.log('GeneralReducer', state?.GeneralReducer?.restaurant_id);
   return {
     // count: state.count,
     restaurant_id: state.GeneralReducer.restaurant_id,

@@ -72,8 +72,9 @@ class CompleteProfile extends React.Component {
         data.lng = lng;
       }
       console.log('com prof data', data);
-      // return
+      // return;
       this.props.completeProfile(data).then(res => {
+        console.log('completeProfile Response >>>', res);
         this.props.navigation.navigate('Drawer');
       });
     }
