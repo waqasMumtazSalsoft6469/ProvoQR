@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+// import HomeScreen from '../screens/HomeScreen';
 import ResturentDetail from '../screens/restaurantDetailsScreen';
 import ResturentMenuScreen from '../screens/ResturentMenuScreen';
 import RewardScreen from '../screens/RewardScreen';

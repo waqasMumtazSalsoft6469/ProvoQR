@@ -156,6 +156,7 @@ class CompleteProfile extends React.Component {
                 {this.state.gender.map((val, index) => {
                   return (
                     <TouchableHOC
+                      index={index}
                       style={styles.row}
                       onPress={() =>
                         this.setState({selectedGender: val.label})

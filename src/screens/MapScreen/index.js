@@ -499,7 +499,7 @@ class MapScreen extends React.Component {
                       // }}
                     >
                       <OutfitRegularText style={styles.buttonText}>
-                        View on Map
+                        View on Maps
                       </OutfitRegularText>
                     </TouchableHOC>
                   </View>

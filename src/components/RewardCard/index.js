@@ -47,7 +47,7 @@ class RewardCard extends React.Component {
               {this.props.item.address}
             </RubikLight>
             <TouchableHOC onPress={this.props.viewmap}>
-              <RubikLight style={styles.viewmap}>View On Map</RubikLight>
+              <RubikLight style={styles.viewmap}>View On Maps</RubikLight>
             </TouchableHOC>
           </View>
         </View>

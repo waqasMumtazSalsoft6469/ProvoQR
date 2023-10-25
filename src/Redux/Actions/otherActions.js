@@ -7,7 +7,11 @@ import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 
 export const getHomeData = data => {
   return async (dispatch, getState) => {
-    console.log(getState(), 'getState()?.GeneralReducer?.location?');
+    console.log(
+      'getState()?.GeneralReducer?.location? new **>>>>> 1',
+      getState()?.GeneralReducer,
+    );
+    console.log('Get Home Action Data Params >>>>>>>>', data);
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
@@ -17,11 +21,13 @@ export const getHomeData = data => {
           };
           // dispatch({type: actionTypes.loaderOn});
 
+          console.log('User Current Location >>>>', location);
+
           const response = await get(endpoints.other.home, {
             ...data,
-            // ...location
+            // ...location,
           });
-          console.log(response, 'action respose');
+          console.log('Home Action Response ****>>>', response);
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));
@@ -624,7 +630,7 @@ export const saveLocation = coordinate => {
   return async dispatch => {
     try {
       const response = await getAddressByLatLong(coordinate)();
-      console.log('dave location', response?.results[0]);
+      console.log('Save location Data', response?.results[0]);
       let address_city = '';
       let address_country = '';
       response?.results[0]?.address_components.map(item => {

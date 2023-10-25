@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableHighlight,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
@@ -26,6 +27,10 @@ import {connect} from 'react-redux';
 import {getRewardList} from '../../Redux/Actions/otherActions';
 import {imageUrl} from '../../Api/configs';
 import EmptyComponent from '../../components/EmptyComponent';
+import happyHour from '../../assets/images/sampleImages/happyHour.png';
+import ImageGrid from './ImagesGrid';
+
+const windowWidth = Dimensions.get('window').width;
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -142,7 +147,7 @@ class RegisterScreen extends React.Component {
             style={
               this.state.selectreward == true ? styles.poundtext : styles.select
             }>
-            Rewards
+            Prize
           </RubikRegular>
         </TouchableHOC>
         <TouchableHOC
@@ -177,7 +182,7 @@ class RegisterScreen extends React.Component {
     );
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({item, index}) => {
     return (
       <View>
         <TouchableHighlight
@@ -189,14 +194,21 @@ class RegisterScreen extends React.Component {
               restaurantName: item?.organisations?.name,
             })
           }
-          style={styles.imageContainer}>
+          // style={styles.imageContainer}
+          style={
+            index % 6 < 3
+              ? styles.bigImageContainer
+              : styles.smallImageContainer
+          }>
           <Image
-            source={
-              item?.my_win_lootbox?.menu?.image
-                ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
-                : sampleimage.noImage
-            }
-            style={[styles.image]}
+            source={happyHour}
+            // source={
+            //   item?.my_win_lootbox?.menu?.image
+            //     ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
+            //     : sampleimage.noImage
+            // }
+            // style={[styles.image]}
+            style={index % 6 < 3 ? styles.smallImage : styles.bigImage}
           />
         </TouchableHighlight>
 
@@ -221,6 +233,54 @@ class RegisterScreen extends React.Component {
   };
 
   render() {
+    const dummyData = [
+      {
+        id: 1,
+        name: 'Item 1',
+        source: happyHour,
+      },
+      {
+        id: 2,
+        name: 'Item 2',
+        source: happyHour,
+      },
+      {
+        id: 3,
+        name: 'Item 3',
+        source: happyHour,
+      },
+      {
+        id: 4,
+        name: 'Item 4',
+        source: happyHour,
+      },
+      {
+        id: 5,
+        name: 'Item 5',
+        source: happyHour,
+      },
+      {
+        id: 6,
+        name: 'Item 5',
+        source: happyHour,
+      },
+      {
+        id: 7,
+        name: 'Item 5',
+        source: happyHour,
+      },
+      {
+        id: 8,
+        name: 'Item 5',
+        source: happyHour,
+      },
+      {
+        id: 9,
+        name: 'Item 5',
+        source: happyHour,
+      },
+    ];
+
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -228,10 +288,12 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imageStyle}>
-          <FlatList
-            data={this.state.reward}
+          <ImageGrid imageArray={dummyData} image={happyHour} />
+          {/* <FlatList
+            // data={this.state.reward}
+            data={dummyData}
             keyExtractor={item => item?.id}
-            numColumns={2}
+            numColumns={3}
             contentContainerStyle={styles.contentContainerStyle}
             renderItem={this.renderItem}
             refreshing={this.state.refreshing}
@@ -241,7 +303,7 @@ class RegisterScreen extends React.Component {
             }
             ListFooterComponent={this.state.refreshing && this.renderFooter}
             onEndReached={this.onEndReached}
-          />
+          /> */}
           {/* <MasonryList
             data={this.state.reward}
             keyExtractor={(_, index) => index}

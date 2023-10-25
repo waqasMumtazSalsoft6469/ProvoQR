@@ -22,6 +22,7 @@ const DrawerButton = props => {
 
   return (
     <AnimatedTouchable
+      key={props?.index}
       onPress={() => props.onPress(props.routeName)}
       style={[styles.container, animatedStyles]}>
       <Image style={styles.icon} source={props.icon} />

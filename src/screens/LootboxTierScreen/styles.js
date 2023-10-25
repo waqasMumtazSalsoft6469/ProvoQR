@@ -8,6 +8,15 @@ const styles = StyleSheet.create({
     width: vw * 100,
     alignItems: 'center',
   },
+  cardimage: {
+    resizeMode: 'cover',
+    width: 3 * vh,
+    backgroundColor: 'red',
+    height: 2.2 * vh,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    marginLeft: 4 * vw,
+  },
   contentContainerStyle: {
     paddingBottom: vh * 5,
   },

@@ -54,7 +54,10 @@ class ResturentDetailScreen extends React.Component {
       title: name,
     });
     this.props.restaurantDetails({organisation_id: id}).then(res => {
-      console.log('Resturants Detail Response Data ******>>>>>>>>>', res);
+      console.log(
+        'Resturants Detail Response Data New ******>>>>>>>>>',
+        res.details,
+      );
       this.setState({
         details: res?.details,
       });
@@ -94,6 +97,8 @@ class ResturentDetailScreen extends React.Component {
   };
 
   handleLootBoxPress = () => {
+    // console.log('Restaurant IDD >>>', this.state.details?.id);
+    // return;
     this.props?.navigation?.navigate('LootboxTierScreen', {
       id: this.state.details?.id,
       lootBoxes: this.state?.details?.lootboxes,

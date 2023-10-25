@@ -90,7 +90,10 @@ class HistoryDetail extends React.Component {
   };
 
   renderHistoryItem = ({item}) => {
-    console.log('history item', moment(item?.redemption_time).utc().format("YYYY-MM-DD hh:mm:ss"));
+    console.log(
+      'history item',
+      moment(item?.redemption_time).utc().format('YYYY-MM-DD hh:mm:ss'),
+    );
     return (
       <View style={{width: vw * 90, marginBottom: vh * 3}}>
         <Image
@@ -189,7 +192,7 @@ class HistoryDetail extends React.Component {
     return (
       <View style={{alignItems: 'center', marginTop: vh * 3}}>
         <OutfitSemiBoldText style={styles.rewardHeadingText}>
-          Rewards
+          Prize
         </OutfitSemiBoldText>
         <FlatList
           data={this.state.response?.organisations?.reward_histories}
@@ -241,7 +244,7 @@ class HistoryDetail extends React.Component {
         }`,
       },
       {
-        rate: `No of Rewards : ${
+        rate: `No of Prize : ${
           this.state.response?.no_of_rewards
             ? this.state.response?.no_of_rewards
             : 0
@@ -326,7 +329,7 @@ class HistoryDetail extends React.Component {
                 <View style={styles.menuContainer}>
                   <TouchableHOC onPress={this.handleMapPress}>
                     <OutfitRegularText style={styles.buttonText}>
-                      View on Map
+                      View on Maps
                     </OutfitRegularText>
                   </TouchableHOC>
                 </View>

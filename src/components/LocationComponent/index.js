@@ -12,12 +12,14 @@ const LocationComponent = props => {
   const profile = useSelector(state => state.SessionReducer.userData);
   console.log('userLocation from loc comp', userLocation);
   console.log('profile from loc comp', profile);
-  console.log('props?.coordinates from loc comp', props?.coordinates);
+  console.log(
+    'props?.coordinates from loc comp waqas **>>',
+    props?.coordinates,
+  );
 
   useEffect(() => {
     console.log('useEffect');
     if (props?.coordinates) {
-      console.log('if');
       dispatch(saveLocation(props?.coordinates));
     } else if (
       userLocation?.coordinate?.latitude === 0 &&

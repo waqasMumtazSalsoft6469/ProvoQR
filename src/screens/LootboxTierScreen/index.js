@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, Image} from 'react-native';
 import styles from './styles';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import MenuCard from '../../components/MenuCard';
@@ -9,6 +9,8 @@ import Button from '../../components/Buttons/SimpleButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
 import {getLootBoxes} from '../../Redux/Actions/otherActions';
+import EmptyComponent from '../../components/EmptyComponent';
+import {icons} from '../../assets/images';
 
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
@@ -32,9 +34,20 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
-      // console.log('loot_boxes', res);
+      console.log('loot_boxes api new', res);
+      //  /get/lootbox/prizes
       setResponse(res);
     });
+  };
+
+  const getTintcolor = name => {
+    if (name === 'Gold') {
+      return '#F4CE0C';
+    } else if (name === 'Silver') {
+      return '#ADADAD';
+    } else {
+      return '#E9980F';
+    }
   };
 
   useEffect(() => {
@@ -69,12 +82,22 @@ const LootboxTierScreen = props => {
     return <MenuCard key={item?.id} item={item} />;
   };
 
+  const renderEmpty = () => {
+    return <EmptyComponent text="No found lootbox to show" />;
+  };
+
   const renderMenuList = ({item, index}) => {
     return (
       <View key={index}>
-        <OutfitSemiBoldText style={styles.headingTextStyle}>
-          {item?.name}
-        </OutfitSemiBoldText>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <OutfitSemiBoldText style={styles.headingTextStyle}>
+            {item?.name}
+          </OutfitSemiBoldText>
+          <Image
+            source={icons.box}
+            style={[styles.cardimage, {tintColor: getTintcolor(item?.name)}]}
+          />
+        </View>
         <FlatList
           data={item?.menu}
           // data={item?.menu}
@@ -91,7 +114,7 @@ const LootboxTierScreen = props => {
     return (
       <View style={styles.footerContainer}>
         <Button
-          title="LOOT BOX"
+          title={`$${lootBoxAmount} LOOT BOX`}
           onPress={handleLootBoxPress}
           // onPress={() => {
           //   if (this?.props?.token) {
@@ -137,13 +160,14 @@ const LootboxTierScreen = props => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={response}
+        data={lootBoxes}
         keyExtractor={(_, index) => index}
         renderItem={renderMenuList}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
+        ListEmptyComponent={renderEmpty}
         scrollEventThrottle={160}
         onScroll={event => {
           // console.log('yOffset', event.nativeEvent.contentOffset.y);

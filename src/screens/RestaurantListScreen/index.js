@@ -143,6 +143,8 @@ const RestaurantListScreen = props => {
     return <EmptyComponent text="No restaurants to show" />;
   };
 
+  // console.log('Restaurants Data *****>>>>>>', JSON.stringify(restaurant));
+
   const renderItem = ({item}) => {
     return (
       <HomeCard
@@ -159,6 +161,7 @@ const RestaurantListScreen = props => {
       <FlatList
         data={restaurant}
         renderItem={renderItem}
+        keyExtractor={item => `item_${item?.id}`}
         contentContainerStyle={styles.contentContainerStyle}
         ListHeaderComponent={renderHeader}
         showsVerticalScrollIndicator={false}

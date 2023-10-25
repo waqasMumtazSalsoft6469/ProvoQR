@@ -2,7 +2,12 @@ import React from 'react';
 import {Image, View, ImageBackground, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
-import {vw, vh, calculateDistance} from '../../Utils/Units';
+import {
+  vw,
+  vh,
+  calculateDistance,
+  calculateDistanceInMiles,
+} from '../../Utils/Units';
 import {icons, sampleimage} from '../../assets/images';
 import GilroyBold from '../../components/Text/GilroyBold';
 import RateCard from '../RatingCard';
@@ -150,7 +155,7 @@ class ProductItem extends React.Component {
             </OutfitSemiBoldText>
             <TouchableHOC onPress={this.props.viewmap} style={{}}>
               <OutfitRegularText style={styles.viewmap}>
-                View On Map
+                View On Maps
               </OutfitRegularText>
             </TouchableHOC>
           </View>
@@ -163,13 +168,19 @@ class ProductItem extends React.Component {
             }}>
             <Image source={icons.whiteloc} style={styles.imgicon} />
             <OutfitSemiBoldText style={styles.dis}>
-              {calculateDistance(
+              {/* {calculateDistance(
+                location?.latitude,
+                location?.longitude,
+                this.props.item.lat,
+                this.props.item.lng,
+              )?.toFixed(0)}{' '} */}
+              {calculateDistanceInMiles(
                 location?.latitude,
                 location?.longitude,
                 this.props.item.lat,
                 this.props.item.lng,
               )?.toFixed(0)}{' '}
-              km
+              mi
             </OutfitSemiBoldText>
           </View>
           {/* {this.rendercuisines()} */}

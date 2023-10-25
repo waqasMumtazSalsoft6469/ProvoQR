@@ -44,7 +44,13 @@ class HomeScreen extends React.Component {
   }
 
   handleDoneAddress = (address, latitude, longitude) => {
-    this.setState({userLocation: {latitude, longitude}}, this.getData);
+    this.setState({userLocation: {latitude, longitude}}, () => {
+      this.getData();
+      console.log(
+        'After Updated Location In Function Arrow New 333 **>>>',
+        this.state.userLocation,
+      );
+    });
   };
 
   handleLocationPress = () => {
@@ -113,13 +119,22 @@ class HomeScreen extends React.Component {
         search_text: this.state.searchString,
         // page: 1,
         // entries: 10,
+        // lat: 24.873887127454214,
+        // lng: 67.06722252546429,
+        // lat: 46.818188,
+        // lat: 46.818188, Switzerland
+        // lng: 8.227512, Switzerland
+        //   lat: this.props.location?.coordinate?.latitude,
+        // lng: this.props?.location?.coordinate?.longitude,
         lat:
-          this.state?.userLocation?.latitude ?? this.props?.location?.latitude,
+          this.state?.userLocation?.latitude ??
+          this.props.location?.coordinate?.latitude,
         lng:
-          this.state.userLocation?.longitude ?? this.props?.location?.longitude,
+          this.state.userLocation?.longitude ??
+          this.props?.location?.coordinate?.longitude,
       };
 
-      console.log('home res params', params);
+      console.log('Home res params New 55', params);
 
       const res = await this.props.getHomData(params);
       // console.log(
@@ -167,6 +182,7 @@ class HomeScreen extends React.Component {
   // };
 
   componentDidMount() {
+    console.log('Component Did Mount Location **>>', this.props.location);
     reactNativeEasyPushNotifications.onMessageReceived(notif => {
       console.log('onMessageReceived:', notif);
       // This method is triggered whenever the app is in foreground and we receive the notification
@@ -316,7 +332,7 @@ class HomeScreen extends React.Component {
       <View>
         <View style={styles.viewAllBtnContainer}>
           <OutfitSemiBoldText style={styles.subHeadingText}>
-            Recommended For You
+            Happy Hour Restaurants
           </OutfitSemiBoldText>
           <TouchableHOC onPress={this.handleViewAllRecommendedRestaurantPress}>
             <OutfitRegularText style={styles.btnText}>
@@ -388,7 +404,13 @@ class HomeScreen extends React.Component {
       </View>
     );
   };
+
   render() {
+    console.log(
+      'State Location New UserLocation 2222 New ***>>>',
+      this.props.location,
+    );
+
     // console.log('navigation');
     // console.log(
     //   this.props.location,

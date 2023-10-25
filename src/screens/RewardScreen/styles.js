@@ -1,7 +1,11 @@
-const {StyleSheet} = require('react-native');
-import { getStatusBarHeight } from 'react-native-safearea-height';
+// const {StyleSheet} = require('react-native');
+import {StyleSheet, Dimensions} from 'react-native';
+import {getStatusBarHeight} from 'react-native-safearea-height';
 import ThemeColors from '../../Utils/ThemeColors';
 import {vh, vw} from '../../Utils/Units';
+
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -12,7 +16,7 @@ const styles = StyleSheet.create({
     // height: vh * 90,
     // paddingBottom: vh * 7,
     flex: 1,
-    paddingTop: vh*3
+    paddingTop: vh * 3,
   },
   imageStyle: {
     width: 100 * vw,
@@ -85,11 +89,12 @@ const styles = StyleSheet.create({
     backgroundColor: ThemeColors.white,
   },
   imageContainer: {
-    margin: vh * 0.2,
+    // margin: vh * 0.2,
     width: vw * 42,
     height: vh * 20,
+    aspectRatio: 1,
     // backgroundColor: 'red',
-    margin: vw * 2,
+    //margin: vw * 2,
   },
   image: {
     resizeMode: 'cover',
@@ -97,6 +102,36 @@ const styles = StyleSheet.create({
     // height: '100%',
     width: vw * 42,
     height: vh * 20,
+  },
+  bigImageContainer: {
+    width: '66.666%',
+    padding: 2,
+  },
+  smallImageContainer: {
+    width: '33.333%',
+    padding: 2,
+  },
+  // smallImageContainer: {
+  //   width: windowWidth / 2,
+  //   aspectRatio: 1, // Maintain a 1:1 aspect ratio for each small image container
+  //   margin: 2,
+  // },
+  bigImage: {
+    width: '100%',
+    aspectRatio: 1, // Maintain square aspect ratio
+  },
+  smallImage: {
+    width: '100%',
+    aspectRatio: 1, // Maintain square aspect ratio
+  },
+  largeImageContainer: {
+    width: windowWidth / 2,
+    aspectRatio: 1.5, // Maintain a 3:2 aspect ratio for the large image container
+    margin: 2,
+  },
+  largeImage: {
+    flex: 1,
+    resizeMode: 'cover',
   },
   contentContainerStyle: {
     paddingHorizontal: vw * 4,
