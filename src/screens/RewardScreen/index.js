@@ -29,6 +29,7 @@ import {imageUrl} from '../../Api/configs';
 import EmptyComponent from '../../components/EmptyComponent';
 import happyHour from '../../assets/images/sampleImages/happyHour.png';
 import ImageGrid from './ImagesGrid';
+import {twoLeft} from './rewards';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -252,31 +253,6 @@ class RegisterScreen extends React.Component {
       {
         id: 4,
         name: 'Item 4',
-        source: happyHour,
-      },
-      {
-        id: 5,
-        name: 'Item 5',
-        source: happyHour,
-      },
-      {
-        id: 6,
-        name: 'Item 5',
-        source: happyHour,
-      },
-      {
-        id: 7,
-        name: 'Item 5',
-        source: happyHour,
-      },
-      {
-        id: 8,
-        name: 'Item 5',
-        source: happyHour,
-      },
-      {
-        id: 9,
-        name: 'Item 5',
         source: happyHour,
       },
     ];
