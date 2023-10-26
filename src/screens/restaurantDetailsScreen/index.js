@@ -260,7 +260,7 @@ class ResturentDetailScreen extends React.Component {
                   justifyContent: 'space-between',
                 }}>
                 <OutfitSemiBoldText style={styles.recomend}>
-                  Happy Hours Deals
+                  Happy Hours Deals Test
                 </OutfitSemiBoldText>
                 <TouchableOpacity
                   activeOpacity={0.9}
@@ -270,6 +270,10 @@ class ResturentDetailScreen extends React.Component {
                     )
                   }
                   style={styles.happyHourBannerImageContainer}>
+                  {console.log(
+                    'Happ Hour Image **>>>',
+                    this?.state?.details?.happy_hour_deals?.banner_image,
+                  )}
                   <Image
                     source={{
                       uri:

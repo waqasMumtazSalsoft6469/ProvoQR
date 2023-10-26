@@ -29,6 +29,8 @@ import {imageUrl} from '../../Api/configs';
 import EmptyComponent from '../../components/EmptyComponent';
 import happyHour from '../../assets/images/sampleImages/happyHour.png';
 import ImageGrid from './ImagesGrid';
+import NewGrid from './NewGrid';
+import GridNew2 from './NewGrid2';
 import {twoLeft} from './rewards';
 
 const windowWidth = Dimensions.get('window').width;
@@ -195,21 +197,22 @@ class RegisterScreen extends React.Component {
               restaurantName: item?.organisations?.name,
             })
           }
-          // style={styles.imageContainer}
-          style={
-            index % 6 < 3
-              ? styles.bigImageContainer
-              : styles.smallImageContainer
-          }>
+          style={styles.imageContainer}
+          // style={
+          //   index % 6 < 3
+          //     ? styles.bigImageContainer
+          //     : styles.smallImageContainer
+          // }
+        >
           <Image
-            source={happyHour}
-            // source={
-            //   item?.my_win_lootbox?.menu?.image
-            //     ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
-            //     : sampleimage.noImage
-            // }
-            // style={[styles.image]}
-            style={index % 6 < 3 ? styles.smallImage : styles.bigImage}
+            // source={happyHour}
+            source={
+              item?.my_win_lootbox?.menu?.image
+                ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
+                : sampleimage.noImage
+            }
+            style={[styles.image]}
+            //style={index % 6 < 3 ? styles.smallImage : styles.bigImage}
           />
         </TouchableHighlight>
 
@@ -264,10 +267,11 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imageStyle}>
-          <ImageGrid imageArray={dummyData} image={happyHour} />
-          {/* <FlatList
-            // data={this.state.reward}
-            data={dummyData}
+          {/* <GridNew2 /> */}
+          {/* <ImageGrid imageArray={dummyData} image={happyHour} /> */}
+          <FlatList
+            data={this.state.reward}
+            // data={dummyData}
             keyExtractor={item => item?.id}
             numColumns={3}
             contentContainerStyle={styles.contentContainerStyle}
@@ -279,7 +283,7 @@ class RegisterScreen extends React.Component {
             }
             ListFooterComponent={this.state.refreshing && this.renderFooter}
             onEndReached={this.onEndReached}
-          /> */}
+          />
           {/* <MasonryList
             data={this.state.reward}
             keyExtractor={(_, index) => index}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet, FlatList} from 'react-native';
-import {twoLeft} from './rewards';
+import {twoLeft, inLine, twoRight} from './rewards';
 
 import MasonryList from 'react-native-masonry-list';
 
@@ -38,6 +38,49 @@ const ImageGrid = ({imageArray, image}) => {
     return images;
   };
 
+  const images = [
+    {
+      id: 1,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg',
+    },
+    {
+      id: 2,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg',
+    },
+    {
+      id: 3,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
+    },
+    // Add more images here...
+  ];
+
+  const components = [twoLeft, inLine, twoRight];
+
+  // Initialize variables
+  let currentComponentIndex = 0;
+
+  // Function to render 3 images with the current component
+  function renderImagesWithComponent(images, component) {
+    for (let i = 0; i < 3; i++) {
+      const image = images.shift(); // Get and remove the first image from the array
+      if (image) {
+        component.render(image);
+      }
+    }
+  }
+
+  // Loop over the 20 images and call the custom rendering function
+  while (images.length > 0) {
+    const currentComponent = components[currentComponentIndex];
+    renderImagesWithComponent(images, currentComponent);
+
+    // Increment the currentComponentIndex, and make sure it wraps around
+    currentComponentIndex = (currentComponentIndex + 1) % components.length;
+  }
+
   console.log('Total Length Of Images Arry >>', imageArray.length);
   const groupedArray = [];
   for (let i = 0; i < imageArray.length; i += 3) {
@@ -47,8 +90,46 @@ const ImageGrid = ({imageArray, image}) => {
 
   console.log('groupedArray ***>>>', JSON.stringify(groupedArray));
 
+  const Latestimages = [
+    {
+      id: 1,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg',
+    },
+    {
+      id: 2,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg',
+    },
+    {
+      id: 3,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
+    },
+    {
+      id: 4,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
+    },
+    {
+      id: 5,
+      source:
+        'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg',
+    },
+    {
+      id: 6,
+      source:
+        'https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg',
+    },
+    // Add more images here...
+  ];
+
   return (
-    <View>{twoLeft(image)}</View>
+    <>
+      <View>{twoLeft(image)}</View>
+      <View style={{height: '16%'}}>{inLine(image)}</View>
+      <View>{twoRight(image)}</View>
+    </>
     // <MasonryList
     //   images={[
     //     // Can be used with different image object fieldnames.
