@@ -67,7 +67,7 @@ class PaymentScreen extends React.Component {
   };
 
   handleSuccessPress = () => {
-    const {id, from} = this.props?.route?.params;
+    const {id, from, lootbox_id} = this.props?.route?.params;
     console.log('navigateTo', this.props?.route?.params?.navigateTo);
     console.log('handleSuccessPress from', from);
 
@@ -84,6 +84,7 @@ class PaymentScreen extends React.Component {
       this.props.navigation.navigate('LootBoxScreen', {
         restaurantId: id,
         success: 0,
+        lootbox_id,
       });
     } else if (from === 'provo') {
       if (this.props?.route?.params?.navigateTo) {
@@ -131,7 +132,7 @@ class PaymentScreen extends React.Component {
           lootbox_id,
         })
         .then(res => {
-          console.log('LootBox Payment Response >>>>>', res);
+          console.log('LootBox Payment Response By Card >>>>>', res);
           if (res?.success) {
             // showToast(res?.message?.message);
             this.setState({visibleSuccess: true});

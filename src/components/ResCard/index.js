@@ -180,7 +180,7 @@ class ProductItem extends React.Component {
                 this.props.item.lat,
                 this.props.item.lng,
               )?.toFixed(0)}{' '}
-              mi
+              ML
             </OutfitSemiBoldText>
           </View>
           {/* {this.rendercuisines()} */}

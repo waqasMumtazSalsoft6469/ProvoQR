@@ -94,7 +94,7 @@ class RegisterScreen extends React.Component {
       };
 
       const response = await this.props.getRewardList(filters);
-      console.log('reward response', response?.rewardList?.data);
+      console.log('reward response new 11', response?.rewardList?.data);
       this.setState({
         reward: response?.rewardList?.data,
       });

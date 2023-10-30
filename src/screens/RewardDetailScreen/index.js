@@ -67,6 +67,27 @@ class RegisterScreen extends React.Component {
     };
   }
 
+  // Declare this.interval as a class property
+  interval;
+
+  startInterval = () => {
+    this.interval = setInterval(() => {
+      // console.log('exDate', this.state?.details?.reward_expire_date);
+      const diff = moment(
+        this.state?.details?.reward_expire_date,
+        "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+      ).diff(moment());
+      // console.log('diff', diff);
+      const duration = moment.duration(diff);
+      // console.log('duration', duration);
+      const time =
+        Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
+      // console.log('minute', moment.utc(diff).format(':mm'));
+      // console.log('split', time.split(':'));
+      this.setState({timeLeft: time});
+    }, 1000);
+  };
+
   handleSuccessPress = () => {
     this.setState({
       successModal: false,
@@ -133,44 +154,51 @@ class RegisterScreen extends React.Component {
       reward_id: id,
     };
 
+    console.log('Reward ID **>>>', data);
+
     this.props.getRewardDetail(data).then(res => {
-      console.log('res', res?.rewardDetail);
+      // alert('alert');
+      console.log('res new **>>', res?.rewardDetail);
       this.setState({
         details: res?.rewardDetail,
       });
     });
 
-    const interval = setInterval(() => {
-      console.log('exDate', this.state?.details?.reward_expire_date);
-      const diff = moment(
-        this.state?.details?.reward_expire_date,
-        "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
-      ).diff(moment());
-      // console.log('diff', diff);
-      const duration = moment.duration(diff);
-      // console.log('duration', duration);
-      const time =
-        Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
-      console.log('minute', moment.utc(diff).format(':mm'));
-      // console.log('split', time.split(':'));
-      this.setState({timeLeft: time});
-    }, 1000);
-    return () => clearInterval(interval);
+    this.startInterval();
+
+    // const interval = setInterval(() => {
+    //   // console.log('exDate', this.state?.details?.reward_expire_date);
+    //   const diff = moment(
+    //     this.state?.details?.reward_expire_date,
+    //     "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+    //   ).diff(moment());
+    //   // console.log('diff', diff);
+    //   const duration = moment.duration(diff);
+    //   // console.log('duration', duration);
+    //   const time =
+    //     Math.floor(duration.asHours()) + moment.utc(diff).format(':mm:ss');
+    //   // console.log('minute', moment.utc(diff).format(':mm'));
+    //   // console.log('split', time.split(':'));
+    //   this.setState({timeLeft: time});
+    // }, 1000);
+    // return () => clearInterval(interval);
   }
 
-  // componentWillUnmount() {
-  //   // BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-  //   this.Back.remove();
-  // }
+  componentWillUnmount() {
+    // alert('Component Un Mount ');
+    clearInterval(this.interval);
+  }
 
   render() {
-    console.log(
-      'time',
-      moment(
-        '2023-05-13 08:15:42.000000',
-        "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
-      ).diff(moment(), 'minutes'),
-    );
+    // console.log(
+    //   'time',
+    //   moment(
+    //     '2023-05-13 08:15:42.000000',
+    //     "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
+    //   ).diff(moment(), 'minutes'),
+    // );
+    console.log('Reward Detail Data **>>', this.state.details?.my_win_lootbox);
+
     return (
       <View style={styles.container}>
         <ImageBackground
@@ -234,8 +262,8 @@ class RegisterScreen extends React.Component {
               <OutfitMediumText style={styles.midTextStyle}>
                 {moment(
                   this.state.details?.reward_expire_date,
-                  "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
-                ).format('DD-MM-YYYY HH:mm:ss')}
+                  'DD-MM-YYYY HH:mm:ss',
+                ).format('MM/DD/YYYY HH:mm A')}
               </OutfitMediumText>
             </View>
             {/* <Dash

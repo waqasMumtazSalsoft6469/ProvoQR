@@ -60,15 +60,16 @@ class LootBoxScreen extends React.Component {
   };
 
   handleLootBoxDraw = () => {
-    const id = this.props.route.params.restaurantId;
-
+    const {restaurantId, lootbox_id} = this.props.route.params;
+    alert(`Restaurant ID >> ${restaurantId} LootBox ID >> ${lootbox_id}`);
+    // return;
     const data = {
-      restaurant_id: id,
+      restaurant_id: restaurantId,
     };
-    console.log('DATA RESTAURANT >>>>', data);
+    console.log('DATA RESTAURANT 22 >>>>', data);
     // return;
     this.props.lootBoxDraw(data).then(res => {
-      console.log('Response LootBoxDraw New *****>>>>', res);
+      console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
         console.log('draw res', res);
         this.setState({rewardDetail: res});

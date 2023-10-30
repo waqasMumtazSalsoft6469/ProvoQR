@@ -67,18 +67,23 @@ class LootBoxPaymentMethod extends React.Component {
   };
 
   handleProvocashPress = () => {
+    // return;
     const lootbox_id = this.props?.route?.params?.lootbox_id;
     const id = this.props?.route?.params?.id ?? this.props?.restaurant_id?.id;
+    // alert(lootbox_id);
     const data = {
       restaurant_id: id,
+      lootbox_id: lootbox_id,
     };
+    // return;
     this.props.lootBoxPurchaseByCoin(data).then(res => {
-      console.log('res from lootBoxPurchaseByCoin:', res);
+      console.log('res from lootBoxPurchaseByCoin: New', res);
       if (res) {
         showToast(res?.message);
         this.setState({visibleSuccess: false});
         this.props.navigation.navigate('LootBoxScreen', {
           restaurantId: id,
+          lootbox_id: lootbox_id,
           success: 0,
         });
       }

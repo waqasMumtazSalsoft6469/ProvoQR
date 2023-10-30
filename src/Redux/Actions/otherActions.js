@@ -365,6 +365,7 @@ export const getNearestRestaurants = data => {
 };
 
 export const lootBoxPurchaseByCoin = data => {
+  console.log('lootBoxPurchaseByCoin New >', data);
   return async dispatch => {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
@@ -379,6 +380,7 @@ export const lootBoxPurchaseByCoin = data => {
 
           resolve(response);
         } catch (e) {
+          console.log('Error lootBoxPurchaseByCoin >>', e);
           showToast(getMessage(e));
           reject(e);
         } finally {
