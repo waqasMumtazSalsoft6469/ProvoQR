@@ -99,10 +99,13 @@ class ProvoScreen extends React.Component {
     if (!this.state.selectedPackage) {
       showToast('Please Select Any Package');
     } else {
+      // alert(this.props?.route?.params?.lootbox_id);
+      // return;
       this.props.navigation.navigate('ProvoPaymentMethod', {
         packageId: this.state.selectedPackage,
         from: 'provo',
         navigateTo: this.props?.route?.params?.navigateTo,
+        lootbox_id: this.props?.route?.params?.lootbox_id,
       });
     }
   };

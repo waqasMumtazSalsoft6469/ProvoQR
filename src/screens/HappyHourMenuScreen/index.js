@@ -19,13 +19,12 @@ const HappyHourMenuScreen = props => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [openModal, setModal] = useState(false);
 
-  const handleCloseModal = () => {
-    setModal(false);
-  };
-
   const handleModalVisibility = index => {
     setActiveIndex(index);
     setModal(true);
+  };
+  const handleCloseModal = () => {
+    setModal(false);
   };
 
   const CarouselFooterComponent = ({imageIndex}) => {
@@ -37,7 +36,7 @@ const HappyHourMenuScreen = props => {
       </View>
     );
   };
-  console.log("deal menu images", deal);
+  console.log('deal menu images', deal);
   return (
     <ImageBackground
       source={backgrounds.happyHourMenuScreenBg}
@@ -45,7 +44,7 @@ const HappyHourMenuScreen = props => {
       <ScrollView contentContainerStyle={styles.contentContainerStyle}>
         <Image source={icons.happyHourIcon} style={styles.topIconStyle} />
         {deal?.happyhourmenus?.map((item, index) => {
-          console.log("deal?.happyhourmenus item", item);
+          console.log('deal?.happyhourmenus item', item);
           return (
             <TouchableOpacity
               key={item?.id}

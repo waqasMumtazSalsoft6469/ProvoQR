@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, View, Linking} from 'react-native';
 import styles from './styles';
 import HomeCard from '../../components/ResCard';
 import {getAllRestaurant} from '../../Redux/Actions/otherActions';
@@ -10,6 +10,7 @@ import {
 } from '../../Utils/mapHelperFunction';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import EmptyComponent from '../../components/EmptyComponent';
+import {showToast} from '../../Api/HelperFunction';
 
 const RestaurantListScreen = props => {
   const name = props?.route?.params?.name;
@@ -32,11 +33,23 @@ const RestaurantListScreen = props => {
   });
 
   const handleMapBtnPress = item => {
-    props.navigation.navigate('RestaurantDirection', {
-      latitude: item?.lat,
-      longitude: item?.lng,
-    });
+    // console.log('items >>>>', item);
+    // return;
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
+    const supported = Linking.canOpenURL(url);
+    if (supported) {
+      Linking.openURL(url);
+    } else {
+      showToast(`Don't know how to open this URL: ${url}`);
+    }
   };
+
+  // const handleMapBtnPress = item => {
+  //   props.navigation.navigate('RestaurantDirection', {
+  //     latitude: item?.lat,
+  //     longitude: item?.lng,
+  //   });
+  // };
 
   const renderHeadingText = () => {
     if (name) {

@@ -88,6 +88,16 @@ class RegisterScreen extends React.Component {
     }, 1000);
   };
 
+  getTintcolor = name => {
+    if (name === 'Gold') {
+      return '#F4CE0C';
+    } else if (name === 'Silver') {
+      return '#ADADAD';
+    } else {
+      return '#E9980F';
+    }
+  };
+
   handleSuccessPress = () => {
     this.setState({
       successModal: false,
@@ -197,7 +207,10 @@ class RegisterScreen extends React.Component {
     //     "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
     //   ).diff(moment(), 'minutes'),
     // );
-    console.log('Reward Detail Data **>>', this.state.details?.my_win_lootbox);
+    console.log(
+      'Reward Detail Data **>>',
+      this.state?.details?.provo_cash_price,
+    );
 
     return (
       <View style={styles.container}>
@@ -232,10 +245,22 @@ class RegisterScreen extends React.Component {
                   About The Reward
                 </OutfitSemiBoldText>
               </View> */}
-
-              <OutfitLightText style={styles.rewtext}>
-                {this.state.details?.reward_tier}
-              </OutfitLightText>
+              <View style={styles.rewardHeadContainer}>
+                <Image
+                  source={icons.box}
+                  style={[
+                    styles.tierImage,
+                    {
+                      tintColor: this.getTintcolor(
+                        this.state.details?.my_win_lootbox?.tier_name,
+                      ),
+                    },
+                  ]}
+                />
+                <OutfitLightText style={styles.rewtext}>
+                  {this.state.details?.my_win_lootbox?.tier_name}
+                </OutfitLightText>
+              </View>
               {/* <OutfitLightText style={styles.redeem}>
                 (Make sure you are in the restaurant at time of redemption.)
               </OutfitLightText> */}

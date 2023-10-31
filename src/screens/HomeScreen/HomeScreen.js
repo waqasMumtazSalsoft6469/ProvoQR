@@ -124,11 +124,13 @@ const HomeScreen = ({navigation}) => {
     React.useCallback(() => {
       let isActive = true;
 
-      if (isActive) getData();
+      getData();
 
-      return () => {
-        isActive = false;
-      };
+      // if (isActive) getData();
+
+      // return () => {
+      //   isActive = false;
+      // };
     }, [location]),
   );
 

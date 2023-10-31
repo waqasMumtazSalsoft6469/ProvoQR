@@ -88,7 +88,9 @@ class PaymentScreen extends React.Component {
       });
     } else if (from === 'provo') {
       if (this.props?.route?.params?.navigateTo) {
-        this.props.navigation.navigate(this.props?.route?.params?.navigateTo);
+        this.props.navigation.navigate(this.props?.route?.params?.navigateTo, {
+          lootbox_id: lootbox_id,
+        });
       } else {
         this.props.navigation.navigate('HomeScreen');
       }
@@ -101,15 +103,18 @@ class PaymentScreen extends React.Component {
     const {name, cardNumber, expiry, cvv} = this.state;
     const {id, token, from, lootbox_id} = this.props.route.params;
     console.log('LootBox ID >>>>', lootbox_id);
+    let card_number = cardNumber.replace(/\s/g, '');
+    // alert(`Card Number >> ${card_number}`);
     // return;
     let data = {
       card_holder_name: name,
-      card_num: cardNumber,
+      card_num: card_number,
       cvv_num: cvv,
       expiry_date: expiry,
       package_id: id,
       lootbox_id,
     };
+    console.log('Parameter Object >>>>', data);
 
     if (from === 'provo') {
       this.props.provoCashPayment(data).then(res => {

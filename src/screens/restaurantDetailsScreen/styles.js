@@ -12,6 +12,13 @@ const styles = StyleSheet.create({
 
     // height: 100 * vh,
   },
+  footerContainer: {
+    alignItems: 'center',
+  },
+  footerText: {
+    color: ThemeColors.white,
+    fontSize: vh * 2,
+  },
   headingText: {
     color: ThemeColors.iconColor,
     fontSize: vh * 2.6,

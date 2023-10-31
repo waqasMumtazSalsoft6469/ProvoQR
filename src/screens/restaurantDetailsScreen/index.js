@@ -11,6 +11,8 @@ import {
 import {backgrounds, icons, sampleimage, tabicons} from '../../assets/images';
 import TouchableHOC from '../../components/Buttons/TouchableHOC';
 
+import ImageView from 'react-native-image-viewing';
+
 import RateCard from '../../components/RatingCard';
 import styles from './styles';
 import {vh, vw} from '../../Utils/Units';
@@ -32,6 +34,7 @@ class ResturentDetailScreen extends React.Component {
     super(props);
     this.state = {
       details: {},
+      modal: false,
       cusines: [
         {
           name: 'Cuisine 01',
@@ -55,7 +58,7 @@ class ResturentDetailScreen extends React.Component {
     });
     this.props.restaurantDetails({organisation_id: id}).then(res => {
       console.log(
-        'Resturants Detail Response Data New ******>>>>>>>>>',
+        'Resturants Detail Response Data New 11 ******>>>>>>>>>',
         res.details,
       );
       this.setState({
@@ -108,9 +111,10 @@ class ResturentDetailScreen extends React.Component {
   };
 
   handleHappyHourMenuPress = () => {
-    this.props?.navigation?.navigate('HappyHourMenuScreen', {
-      deal: this.state?.details?.happy_hour_deals,
-    });
+    // this.props?.navigation?.navigate('HappyHourMenuScreen', {
+    //   deal: this.state?.details?.happy_hour_deals,
+    // });
+    this.setState({modal: true});
   };
 
   renderRatings = () => {
@@ -125,6 +129,22 @@ class ResturentDetailScreen extends React.Component {
       </View>
     );
   };
+
+  handleCloseModal = () => {
+    this.setState({modal: false});
+  };
+
+  CarouselFooterComponent = ({imageIndex}) => {
+    return (
+      <View style={styles.footerContainer}>
+        <OutfitRegularText style={styles.footerText}>
+          {imageIndex + 1} /{' '}
+          {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length}
+        </OutfitRegularText>
+      </View>
+    );
+  };
+
   render() {
     // console.log('res details', this.state.details);
     return (
@@ -270,10 +290,10 @@ class ResturentDetailScreen extends React.Component {
                     )
                   }
                   style={styles.happyHourBannerImageContainer}>
-                  {console.log(
+                  {/* {console.log(
                     'Happ Hour Image **>>>',
                     this?.state?.details?.happy_hour_deals?.banner_image,
-                  )}
+                  )} */}
                   <Image
                     source={{
                       uri:
@@ -288,6 +308,18 @@ class ResturentDetailScreen extends React.Component {
             )}
           </ScrollView>
         </ImageBackground>
+        <ImageView
+          images={this?.state?.details?.happy_hour_deals?.happyhourmenus?.map(
+            item => ({
+              uri: imageUrl + item?.image,
+            }),
+          )}
+          imageIndex={0}
+          visible={this.state.modal}
+          onRequestClose={this.handleCloseModal}
+          FooterComponent={this.CarouselFooterComponent}
+          presentationStyle="overFullScreen"
+        />
       </View>
     );
   }

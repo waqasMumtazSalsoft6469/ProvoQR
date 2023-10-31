@@ -50,6 +50,7 @@ class LootBoxPaymentMethod extends React.Component {
       screen: 'ProvoScreen',
       params: {
         navigateTo: 'LootBoxPaymentMethod',
+        lootbox_id: lootbox_id,
       },
     });
   };

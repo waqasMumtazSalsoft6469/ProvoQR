@@ -6,6 +6,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: ThemeColors.white,
   },
+  tierImage: {
+    resizeMode: 'cover',
+    width: 4 * vh,
+    backgroundColor: 'red',
+    height: 2.7 * vh,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    // marginLeft: 4 * vw,
+  },
   imgbg: {
     width: 100 * vw,
 
@@ -24,11 +33,16 @@ const styles = StyleSheet.create({
     marginTop: vh,
     fontSize: 1.6 * vh,
   },
+  rewardHeadContainer: {
+    marginTop: vh,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   rewtext: {
     color: '#818080',
-    marginTop: vh,
     lineHeight: 3 * vh,
     fontSize: 2 * vh,
+    marginLeft: 8,
   },
   rewardDesHeadingText: {
     color: '#818080',

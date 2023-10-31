@@ -27,6 +27,8 @@ class MySuscription extends React.Component {
 
   componentDidMount() {
     this.props.getMySubscription().then(res => {
+      console.log('My Current Package ***>>>', res?.subscriptionPlans);
+      let activePackage = res?.subscriptionPlans;
       this.setState({subscription: res?.subscriptionPlans[0]});
     });
     this.props.subPackges().then(res => {
@@ -141,8 +143,7 @@ class MySuscription extends React.Component {
                     {moment(
                       this.state.subscription?.end_date,
                       'YYYY-MM-DD',
-                    ).diff(moment(), 'days')}
-                    {' '}
+                    ).diff(moment(), 'days')}{' '}
                     Days)
                   </OutfitRegularText>
                 </View>

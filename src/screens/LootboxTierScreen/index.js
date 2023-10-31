@@ -14,11 +14,11 @@ import {icons} from '../../assets/images';
 
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
+  console.log('LootBoxes Data New ****>>>>>>>', JSON.stringify(lootBoxes));
   const lootbox_id = lootBoxes[0]?.lootbox_id;
   const id = props?.route?.params?.id;
   const provoCash = props?.route?.params?.provoCash;
   const lootBoxAmount = props?.route?.params?.lootBoxAmount;
-  console.log('LootBoxes Data ****>>>>>>>', JSON.stringify(lootBoxes));
 
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
-      console.log('loot_boxes api new', res);
+      console.log('loot_boxes api new', JSON.stringify(res));
       //  /get/lootbox/prizes
       setResponse(res);
     });
