@@ -27,8 +27,8 @@ class MySuscription extends React.Component {
 
   componentDidMount() {
     this.props.getMySubscription().then(res => {
-      console.log('My Current Package ***>>>', res?.subscriptionPlans);
-      let activePackage = res?.subscriptionPlans;
+      // console.log('My Current Package ***>>>', res?.subscriptionPlans);
+      // let activePackage = res?.subscriptionPlans;
       this.setState({subscription: res?.subscriptionPlans[0]});
     });
     this.props.subPackges().then(res => {

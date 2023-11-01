@@ -1,208 +1,372 @@
 import React from 'react';
-import {View, Image, StyleSheet, FlatList} from 'react-native';
-import {twoLeft, inLine, twoRight} from './rewards';
+import {
+  View,
+  Image,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+import {vh} from '../../Utils/Units';
+import {sampleimage} from '../../assets/images';
+import {imageUrl} from '../../Api/configs';
+import {useNavigation} from '@react-navigation/native';
 
-import MasonryList from 'react-native-masonry-list';
+const MenuScreen = ({originalData}) => {
+  console.log('Original Data >>>', originalData);
+  let navigation = useNavigation();
 
-const ImageGrid = ({imageArray, image}) => {
-  const renderImages = () => {
-    const images = [];
-
-    for (let i = 0; i < imageArray.length; i++) {
-      const image = imageArray[i];
-
-      if (i === 0) {
-        // First image is large, alone on the right
-        images.push(
-          <View key={image.id} style={styles.largeImageContainer}>
-            <Image source={image.source} style={styles.largeImage} />
-          </View>,
-        );
-      } else if (i < 3) {
-        // The next two images are small and on the left
-        images.push(
-          <View key={image.id} style={styles.smallImageContainer}>
-            <Image source={image.source} style={styles.smallImage} />
-          </View>,
-        );
-      } else {
-        // The rest of the images are placed in the same row
-        images.push(
-          <View key={image.id} style={styles.smallImageContainer}>
-            <Image source={image.source} style={styles.smallImage} />
-          </View>,
-        );
-      }
-    }
-
-    return images;
+  const handleNavigation = item => {
+    // console.log('Selected Item Data >>>>>>>>', item);
+    navigation.navigate('RewardDetail', {
+      category: 'Redeem',
+      reward_id: item?.id,
+      status: item?.status,
+      restaurantName: item?.organisations?.name,
+    });
   };
 
-  const images = [
-    {
-      id: 1,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg',
-    },
-    {
-      id: 2,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg',
-    },
-    {
-      id: 3,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
-    },
-    // Add more images here...
-  ];
+  const renderItems = ({item, index}) => (
+    <View key={item[index]}>
+      {console.log('IDDDDDD Item >>>', item[index]?.id)}
+      <View
+        // key={item[index]?.id}
+        style={{
+          width: '100%',
+          // backgroundColor: 'lightblue',
+          flexDirection: 'row',
+          height: vh * 30,
+        }}>
+        {index % 2 == 0 ? (
+          <>
+            <View style={{width: '50%'}}>
+              {item[0] && (
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[0])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[0]?.my_win_lootbox?.menu?.image
+                        ? imageUrl + item[0]?.my_win_lootbox?.menu?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
+                </TouchableOpacity>
+              )}
+              {item[1] && (
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[1])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[1]?.my_win_lootbox?.menu?.image
+                        ? imageUrl + item[1]?.my_win_lootbox?.menu?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+            {item[2] && (
+              <TouchableOpacity
+                style={styles.bigPic}
+                onPress={() => handleNavigation(item[2])}
+                activeOpacity={0.6}>
+                <Image
+                  source={{
+                    uri: item[2]?.my_win_lootbox?.menu?.image
+                      ? imageUrl + item[2]?.my_win_lootbox?.menu?.image
+                      : sampleimage.noImage,
+                  }}
+                  style={styles.imageStyle}
+                />
+              </TouchableOpacity>
+            )}
+          </>
+        ) : (
+          <>
+            {item[0] && (
+              <TouchableOpacity
+                style={styles.bigPic}
+                onPress={() => handleNavigation(item[0])}
+                activeOpacity={0.6}>
+                <Image
+                  source={{
+                    uri: item[0]?.my_win_lootbox?.menu?.image
+                      ? imageUrl + item[0]?.my_win_lootbox?.menu?.image
+                      : sampleimage.noImage,
+                  }}
+                  style={styles.imageStyle}
+                />
+              </TouchableOpacity>
+            )}
 
-  const components = [twoLeft, inLine, twoRight];
-
-  // Initialize variables
-  let currentComponentIndex = 0;
-
-  // Function to render 3 images with the current component
-  function renderImagesWithComponent(images, component) {
-    for (let i = 0; i < 3; i++) {
-      const image = images.shift(); // Get and remove the first image from the array
-      if (image) {
-        component.render(image);
-      }
-    }
-  }
-
-  // Loop over the 20 images and call the custom rendering function
-  while (images.length > 0) {
-    const currentComponent = components[currentComponentIndex];
-    renderImagesWithComponent(images, currentComponent);
-
-    // Increment the currentComponentIndex, and make sure it wraps around
-    currentComponentIndex = (currentComponentIndex + 1) % components.length;
-  }
-
-  console.log('Total Length Of Images Arry >>', imageArray.length);
-  const groupedArray = [];
-  for (let i = 0; i < imageArray.length; i += 3) {
-    const group = imageArray.slice(i, i + 3);
-    groupedArray.push({data: group});
-  }
-
-  console.log('groupedArray ***>>>', JSON.stringify(groupedArray));
-
-  const Latestimages = [
-    {
-      id: 1,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg',
-    },
-    {
-      id: 2,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg',
-    },
-    {
-      id: 3,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
-    },
-    {
-      id: 4,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
-    },
-    {
-      id: 5,
-      source:
-        'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg',
-    },
-    {
-      id: 6,
-      source:
-        'https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg',
-    },
-    // Add more images here...
-  ];
-
+            <View style={{width: '50%'}}>
+              {item[1] && (
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[1])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[1]?.my_win_lootbox?.menu?.image
+                        ? imageUrl + item[1]?.my_win_lootbox?.menu?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
+                </TouchableOpacity>
+              )}
+              {item[2] && (
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[2])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[2]?.my_win_lootbox?.menu?.image
+                        ? imageUrl + item[2]?.my_win_lootbox?.menu?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+          </>
+        )}
+      </View>
+      <View
+        style={{
+          width: '100%',
+          height: vh * 15,
+          flexDirection: 'row',
+        }}>
+        {item[3] && (
+          <TouchableOpacity
+            style={styles.rowcenter}
+            onPress={() => handleNavigation(item[3])}
+            activeOpacity={0.6}>
+            <Image
+              source={{
+                uri: item[3]?.my_win_lootbox?.menu?.image
+                  ? imageUrl + item[3]?.my_win_lootbox?.menu?.image
+                  : sampleimage.noImage,
+              }}
+              style={styles.imageStyle}
+            />
+          </TouchableOpacity>
+        )}
+        {item[4] && (
+          <TouchableOpacity
+            style={styles.rowcenter}
+            onPress={() => handleNavigation(item[4])}
+            activeOpacity={0.6}>
+            <Image
+              source={{
+                uri: item[4]?.my_win_lootbox?.menu?.image
+                  ? imageUrl + item[4]?.my_win_lootbox?.menu?.image
+                  : sampleimage.noImage,
+              }}
+              style={styles.imageStyle}
+            />
+          </TouchableOpacity>
+        )}
+        {item[5] && (
+          <TouchableOpacity
+            style={styles.rowcenter}
+            onPress={() => handleNavigation(item[5])}
+            activeOpacity={0.6}>
+            <Image
+              source={{
+                uri: item[5]?.my_win_lootbox?.menu?.image
+                  ? imageUrl + item[5]?.my_win_lootbox?.menu?.image
+                  : sampleimage.noImage,
+              }}
+              style={styles.imageStyle}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
+  );
   return (
-    <>
-      <View>{twoLeft(image)}</View>
-      <View style={{height: '16%'}}>{inLine(image)}</View>
-      <View>{twoRight(image)}</View>
-    </>
-    // <MasonryList
-    //   images={[
-    //     // Can be used with different image object fieldnames.
-    //     // Ex. source, source.uri, uri, URI, url, URL
-    //     {
-    //       uri: 'https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg',
-    //     },
-    //     // IMPORTANT: It is REQUIRED for LOCAL IMAGES
-    //     // to include a dimensions field with the
-    //     // actual width and height of the image or
-    //     // it will throw an error.
-    //     // { source: require("yourApp/image.png"),
-    //     //     dimensions: { width: 1080, height: 1920 }
-    //     // },
-    //     // "width" & "height" is an alternative to the dimensions
-    //     // field that will also be acceptable.
-    //     // { source: require("yourApp/image.png"),
-    //     //     width: 1080,
-    //     //     height: 1920 },
-    //     {
-    //       source: {
-    //         uri: 'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg',
-    //       },
-    //     },
-    //     {
-    //       uri: 'https://luehangs.site/pic-chat-app-images/animals-avian-beach-760984.jpg',
-    //       // Optional: Adding a dimensions field with
-    //       // the actual width and height for REMOTE IMAGES
-    //       // will help improve performance.
-    //       dimensions: {width: 1080, height: 1920},
-    //     },
-    //     {
-    //       URI: 'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
-    //       // Optional: Does not require an id for each
-    //       // image object, but is for best practices.
-    //       id: 'blpccx4cn',
-    //     },
-    //     {
-    //       url: 'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg',
-    //     },
-    //     {
-    //       URL: 'https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg',
-    //     },
-    //   ]}
-    //   // Version *2.14.0 update
-    //   // onEndReached={() => {
-    //   //     // add more images when scrolls reaches end
-    //   // }}
-    // />
+    <View>
+      {originalData ? (
+        <>
+          <FlatList
+            data={originalData}
+            // data={dummyData}
+            keyExtractor={(item, indx) => `item_${indx}`}
+            // contentContainerStyle={styles.contentContainerStyle}
+            renderItem={renderItems}
+            // refreshing={this.state.refreshing}
+            // onRefresh={this.onRefresh}
+            // ListEmptyComponent={
+            //   !this.state.refreshing && this.renderEmptyComponent
+            // }
+            // ListFooterComponent={this.state.refreshing && this.renderFooter}
+            // onEndReached={this.onEndReached}
+          />
+          {/* {originalData?.map((item, index) => {
+            console.log('Render Loop Item >>', item[0].source);
+            return (
+              <>
+                <View
+                  key={index}
+                  style={{
+                    width: '100%',
+                    flexDirection: 'row',
+                    height: vh * 30,
+                  }}>
+                  {index % 2 == 0 ? (
+                    <>
+                      <View style={{width: '50%'}}>
+                        {item[0] && (
+                          <View style={styles.rowfirst}>
+                            <Image
+                              source={{uri: item[0]?.source}}
+                              style={styles.imageStyle}
+                            />
+                          </View>
+                        )}
+                        {item[1] && (
+                          <View style={styles.rowfirst}>
+                            <Image
+                              source={{uri: item[1]?.source}}
+                              style={styles.imageStyle}
+                            />
+                          </View>
+                        )}
+                      </View>
+                      {item[2] && (
+                        <View style={styles.bigPic}>
+                          <Image
+                            source={{uri: item[2]?.source}}
+                            style={styles.imageStyle}
+                          />
+                        </View>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {item[0] && (
+                        <View style={styles.bigPic}>
+                          
+                          <Image
+                            source={{uri: item[0]?.source}}
+                            style={styles.imageStyle}
+                          />
+                        </View>
+                      )}
+
+                      <View style={{width: '50%'}}>
+                        {item[1] && (
+                          <View style={styles.rowfirst}>
+                            <Image
+                              source={{uri: item[1]?.source}}
+                              style={styles.imageStyle}
+                            />
+                          </View>
+                        )}
+                        {item[2] && (
+                          <View style={styles.rowfirst}>
+                            <Image
+                              source={{uri: item[2]?.source}}
+                              style={styles.imageStyle}
+                            />
+                          </View>
+                        )}
+                      </View>
+                    </>
+                  )}
+                </View>
+                <View
+                  style={{
+                    width: '100%',
+                    height: vh * 15,
+                    flexDirection: 'row',
+                  }}>
+                  {item[3] && (
+                    <View style={styles.rowcenter}>
+                      <Image
+                        source={{uri: item[3]?.source}}
+                        style={styles.imageStyle}
+                      />
+                    </View>
+                  )}
+                  {item[4] && (
+                    <View style={styles.rowcenter}>
+                      <Image
+                        source={{uri: item[4]?.source}}
+                        style={styles.imageStyle}
+                      />
+
+                    
+                    </View>
+                  )}
+                  {item[5] && (
+                    <View style={styles.rowcenter}>
+                      <Image
+                        source={{uri: item[5]?.source}}
+                        style={styles.imageStyle}
+                      />
+                    </View>
+                  )}
+                </View>
+              </>
+            );
+          })} */}
+        </>
+      ) : (
+        <Text>No found prize library list</Text>
+      )}
+    </View>
   );
 };
 
+export default MenuScreen;
+
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  bigPic: {
+    width: '50%',
+    justifyContent: 'center',
+    // borderWidth: vh * 0.1,
+    alignItems: 'center',
+    // backgroundColor: 'lightpink',
+    height: '100%',
   },
-  smallImageContainer: {
+  rowfirst: {
+    width: '100%',
+    height: '50%',
+    alignItems: 'center',
+    // borderWidth: vh * 0.1,
+    justifyContent: 'center',
+    // backgroundColor: 'cyan',
+  },
+  rowcenter: {
     flex: 1,
-    width: '50%', // Adjust the width as needed
-    aspectRatio: 1, // Maintain aspect ratio
+    // borderWidth: vh * 0.1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: 'lightblue',
   },
-  largeImageContainer: {
-    flex: 2,
-    width: '50%', // Adjust the width as needed
-    aspectRatio: 1, // Maintain aspect ratio
+  picContainer: {
+    // backgroundColor: 'lightgreen',
   },
-  smallImage: {
-    width: '100%', // Make the images take up the full width of their container
+  container: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    alignSelf: 'center',
+
+    height: vh * 100,
   },
-  largeImage: {
-    width: '100%', // Make the large image take up the full width of its container
+  imageStyle: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
-
-export default ImageGrid;

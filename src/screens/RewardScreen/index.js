@@ -28,10 +28,7 @@ import {getRewardList} from '../../Redux/Actions/otherActions';
 import {imageUrl} from '../../Api/configs';
 import EmptyComponent from '../../components/EmptyComponent';
 import happyHour from '../../assets/images/sampleImages/happyHour.png';
-import ImageGrid from './ImagesGrid';
-import NewGrid from './NewGrid';
-import GridNew2 from './NewGrid2';
-import {twoLeft} from './rewards';
+import MenuScreen from './ImagesGrid';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -44,6 +41,7 @@ class RegisterScreen extends React.Component {
       page: 1,
       totalPages: 1,
       refreshing: false,
+      rewardMenuList: [],
       urls: [
         reward1,
         reward2,
@@ -82,6 +80,69 @@ class RegisterScreen extends React.Component {
     );
   };
 
+  makeArr = () => {
+    const originalArray = [
+      {
+        id: 1,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-blond-blonde-hair-478544.jpg',
+      },
+      {
+        id: 2,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-women-beauty-40901.jpg',
+      },
+      {
+        id: 3,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
+      },
+      {
+        id: 4,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
+      },
+      {
+        id: 5,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg',
+      },
+      {
+        id: 6,
+        source:
+          'https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg',
+      },
+      {
+        id: 7,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-blond-fishnet-stockings-48134.jpg',
+      },
+      {
+        id: 8,
+        source:
+          'https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg',
+      },
+      {
+        id: 9,
+        source:
+          'https://luehangs.site/pic-chat-app-images/attractive-balance-beautiful-186263.jpg',
+      },
+      // Add more images here...
+    ];
+
+    // Initialize an array to hold the resulting "groupArray"
+    const groupArray = [];
+    // Set the maximum number of objects in each "data" sub-array
+    const maxObjectsPerData = 6;
+
+    // Iterate through the original array and split it into "data" sub-arrays
+    for (let i = 0; i < originalArray.length; i += maxObjectsPerData) {
+      const subArray = originalArray.slice(i, i + maxObjectsPerData);
+      groupArray.push(subArray);
+    }
+    this.setState({rewardMenuList: groupArray});
+  };
+
   getData = async () => {
     this.setState({
       refreshing: true,
@@ -94,10 +155,33 @@ class RegisterScreen extends React.Component {
       };
 
       const response = await this.props.getRewardList(filters);
-      console.log('reward response new 11', response?.rewardList?.data);
+      console.log('reward response new 11 11', response?.rewardList?.data);
       this.setState({
         reward: response?.rewardList?.data,
       });
+
+      const groupArray = [];
+      // Set the maximum number of objects in each "data" sub-array
+      const maxObjectsPerData = 6;
+
+      // Iterate through the original array and split it into "data" sub-arrays
+      for (
+        let i = 0;
+        i < response?.rewardList?.data?.length;
+        i += maxObjectsPerData
+      ) {
+        const subArray = response?.rewardList?.data?.slice(
+          i,
+          i + maxObjectsPerData,
+        );
+        // groupArray.push({data: subArray});
+        groupArray.push(subArray);
+      }
+      // console.log(
+      //   'groupArray ***>>>>>>> Original Data',
+      //   JSON.stringify(groupArray),
+      // );
+      this.setState({rewardMenuList: groupArray});
 
       let data = {
         refreshing: false,
@@ -123,6 +207,7 @@ class RegisterScreen extends React.Component {
   };
 
   componentDidMount() {
+    // this.makeArr();
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.getData();
     });
@@ -267,9 +352,8 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imageStyle}>
-          {/* <GridNew2 /> */}
-          {/* <ImageGrid imageArray={dummyData} image={happyHour} /> */}
-          <FlatList
+          <MenuScreen originalData={this.state.rewardMenuList} />
+          {/* <FlatList
             data={this.state.reward}
             // data={dummyData}
             keyExtractor={item => item?.id}
@@ -283,42 +367,8 @@ class RegisterScreen extends React.Component {
             }
             ListFooterComponent={this.state.refreshing && this.renderFooter}
             onEndReached={this.onEndReached}
-          />
-          {/* <MasonryList
-            data={this.state.reward}
-            keyExtractor={(_, index) => index}
-            numColumns={2}
-            contentContainerStyle={styles.contentContainerStyle}
-            onPressImage={item =>
-              this.props.navigation.navigate('RewardDetail', {
-                category: item.category,
-              })
-            }
-            // renderItem={this.renderItem}
-            // renderItem={({item}) => {
-            //   console.log("itemmmmm", item);
-            // }}
-            renderItem={({item}) => {
-              console.log('item', item?.source);
-              return (
-                <TouchableHighlight
-                  // underlayColor={'#000e'}
-                  onPress={() =>
-                    this.props.navigation.navigate('RewardDetail', {
-                      category: 'Redeem',
-                    })
-                  }
-                  style={[
-                    styles.imageContainer,
-                    item.height && {
-                      height: item.height,
-                    },
-                  ]}>
-                  <Image source={sampleimage?.reward1} style={[styles.image]} />
-                </TouchableHighlight>
-              );
-            }}
           /> */}
+
           {/* <PhotoGrid
               source={this.state.urls}
               ratio={0.5}
