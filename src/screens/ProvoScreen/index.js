@@ -5,6 +5,8 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  TextInput,
+  Text,
 } from 'react-native';
 import {backgrounds, icons, provoCash} from '../../assets/images';
 import styles from './styles';
@@ -26,6 +28,7 @@ import {
 } from '../../Redux/Actions/otherActions';
 import {imageUrl} from '../../Api/configs';
 import {showToast} from '../../Api/HelperFunction';
+import CustomModal from '../../components/CustomModal';
 
 class ProvoScreen extends React.Component {
   constructor(props) {
@@ -39,12 +42,24 @@ class ProvoScreen extends React.Component {
       coins: [],
       walletAmount: 0,
       selectedPackage: null,
+      modal: false,
+      errorMessage: '',
+      transferAmount: 0,
     };
   }
 
   componentDidMount() {
     this.props.getProvoPackages().then(res => {
-      this.setState({coins: res?.provo_package?.data});
+      let all_packgs = res?.provo_package?.data;
+      let obj = {
+        id: 11,
+        icon: '/provo/public/storage/admin/provo_cash_icon/fLU9Gr64bN6QbJSfGPl5HufYHD8zKWI5EirmIpEy.png',
+        type: 'transfer',
+        title: 'Provo Coins Transfer',
+      };
+      all_packgs.push(obj);
+      console.log('Packages Provo >>>>', res?.provo_package?.data);
+      this.setState({coins: all_packgs});
     });
 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -59,6 +74,10 @@ class ProvoScreen extends React.Component {
     this._unsubscribe();
   }
 
+  onClose = () => {
+    this.setState({modal: false});
+  };
+
   renderOptions = ({item, index}) => {
     return (
       <View style={styles.coinContainer}>
@@ -68,18 +87,102 @@ class ProvoScreen extends React.Component {
               ? styles.selectedCoin
               : styles.coinTouch
           }
-          onPress={() => this.setState({selectedPackage: item?.id})}>
+          onPress={() => {
+            if (item?.type === 'transfer') this.setState({modal: true});
+            else this.setState({selectedPackage: item?.id});
+          }}>
           <Image
             source={{uri: imageUrl + item?.icon}}
             style={styles.coinIcon}
           />
         </TouchableHOC>
-        <OutfitMediumText style={styles.coinLabel}>
-          {item?.coin_qty} Provo Coins
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.coinPrice}>
-          ${item.price}
-        </OutfitMediumText>
+        {item?.type === 'transfer' ? (
+          <OutfitMediumText style={styles.coinLabel}>
+            {item?.title}
+          </OutfitMediumText>
+        ) : (
+          <OutfitMediumText style={styles.coinLabel}>
+            {item?.coin_qty} Provo Coins
+          </OutfitMediumText>
+        )}
+        {item.price && (
+          <OutfitMediumText style={styles.coinPrice}>
+            ${item.price}
+          </OutfitMediumText>
+        )}
+      </View>
+    );
+  };
+
+  handleTransfer = () => {
+    console.log('Enter Amount ', this.state.transferAmount);
+    const {email, transferAmount, walletAmount} = this.state;
+    if (!transferAmount) {
+      showToast('Please enter your transfer amount');
+    } else if (transferAmount == 0 || transferAmount < 0) {
+      showToast('Please enter your valid amount');
+    } else if (transferAmount > walletAmount) {
+      showToast('Transfer amount is greater your current wallet amount');
+    } else if (!email) {
+      showToast('Please enter your email address');
+    } else if (
+      !email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+    ) {
+      showToast('Please insert valid email address');
+    } else {
+      let data = {
+        transferAmount,
+        email,
+      };
+      console.log('my transfer data >>>', data);
+    }
+  };
+
+  renderModalComponent = () => {
+    return (
+      <View style={styles.modalContainer}>
+        <TouchableOpacity style={styles.closeButton} onPress={this.onClose}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.heading}>Add Provo Coin Transfer Details </Text>
+        <View style={styles.inputContainer}>
+          <MainInput
+            placeholder="Enter Transfer Amount"
+            ref={r => (this.transferAmount = r)}
+            onSubmitEditing={() => this.email.onFocus()}
+            onChangeText={value =>
+              this.setState({
+                transferAmount: value,
+              })
+            }
+            style={styles.input}
+            maxLength={6}
+          />
+          <View style={{margin: 10}} />
+          <MainInput
+            placeholder="Enter Email Address"
+            ref={r => (this.email = r)}
+            keyboardType="email-address"
+            onChangeText={value =>
+              this.setState({
+                email: value,
+              })
+            }
+            style={styles.input}
+          />
+        </View>
+        {this.state.errorMessage ? (
+          <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+        ) : null}
+
+        <Button
+          title="TRANSFER"
+          onPress={this.handleTransfer}
+          btnContainer={styles.signupBtn}
+        />
       </View>
     );
   };
@@ -196,6 +299,9 @@ class ProvoScreen extends React.Component {
               : this.renderProvoCash()} */}
             {this.renderProvoCash()}
           </KeyboardAwareScrollView>
+          <CustomModal visible={this.state.modal} onClose={this.onClose}>
+            {this.renderModalComponent()}
+          </CustomModal>
         </ImageBackground>
       </View>
     );

@@ -6,10 +6,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: ThemeColors.white,
   },
+  input: {
+    width: 70 * vw,
+  },
   imgbg: {
     width: 100 * vw,
     flex: 1,
     alignItems: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  inputContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: -5,
+    right: 5,
+    // bottom: -20,
+  },
+  heading: {
+    alignItems: 'center',
+    margin: 8,
+    fontSize: 15,
+    fontWeight: 'bold',
   },
   options: {
     width: vw * 64,

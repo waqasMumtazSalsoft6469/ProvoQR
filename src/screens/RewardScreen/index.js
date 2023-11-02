@@ -156,9 +156,9 @@ class RegisterScreen extends React.Component {
 
       const response = await this.props.getRewardList(filters);
       console.log('reward response new 11 11', response?.rewardList?.data);
-      this.setState({
-        reward: response?.rewardList?.data,
-      });
+      // this.setState({
+      //   reward: response?.rewardList?.data,
+      // });
 
       const groupArray = [];
       // Set the maximum number of objects in each "data" sub-array
@@ -181,18 +181,19 @@ class RegisterScreen extends React.Component {
       //   'groupArray ***>>>>>>> Original Data',
       //   JSON.stringify(groupArray),
       // );
-      this.setState({rewardMenuList: groupArray});
+      // this.setState({rewardMenuList: groupArray});
+      this.setState({reward: groupArray});
 
       let data = {
         refreshing: false,
-        reward: response?.rewardList?.data,
+        reward: groupArray,
         totalPages: response?.rewardList?.last_page,
       };
 
       if (filters.page > 1) {
         data = {
           ...data,
-          reward: [...this.state.reward, ...response?.rewardList?.data],
+          reward: [...this.state.reward, ...groupArray],
         };
       }
 
@@ -352,7 +353,14 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imageStyle}>
-          <MenuScreen originalData={this.state.rewardMenuList} />
+          <MenuScreen
+            originalData={this.state.reward}
+            onRefresh={this.onRefresh}
+            refreshing={this.state.refreshing}
+            renderEmptyComponent={this.renderEmptyComponent}
+            renderFooter={this.renderFooter}
+            onEndReached={this.onEndReached}
+          />
           {/* <FlatList
             data={this.state.reward}
             // data={dummyData}

@@ -58,6 +58,7 @@ class MainInput extends React.Component {
     this.input.focus();
   };
   onChangeText = ({nativeEvent}) => {
+    console.log('Enterd Value >>>', nativeEvent.text);
     this.setState({value: nativeEvent.text}, () =>
       this.props.getvalue(this.state.value),
     );
@@ -143,6 +144,7 @@ class MainInput extends React.Component {
               secureTextEntry={hideText}
               ref={r => (this.input = r)}
               multiline={this.props.multiline}
+              maxLength={this.props.maxLength}
             />
           )}
           {this.props.secureTextEntry === true && this.renderEye()}
