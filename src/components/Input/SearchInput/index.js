@@ -20,6 +20,7 @@ const SearchInput = props => {
         onSubmitEditing={props?.onSubmitEditing}
         onFocus={props?.onFocus}
         onBlur={props?.onBlur}
+        blurOnSubmit={false}
       />
       {props?.clearBtn && (
         <TouchableOpacity

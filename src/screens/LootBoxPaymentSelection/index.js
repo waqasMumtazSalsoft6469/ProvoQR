@@ -59,6 +59,7 @@ class LootBoxPaymentMethod extends React.Component {
     const lootbox_id = this.props?.route?.params?.lootbox_id;
     const id = this.props?.route?.params?.id ?? this.props?.restaurant_id?.id;
     console.log('Resturant **>> ID', id);
+    console.log('lootbox id >>', lootbox_id);
     // return;
     this.props.navigation.navigate('ProvoPaymentMethod', {
       packageId: id,
@@ -72,6 +73,9 @@ class LootBoxPaymentMethod extends React.Component {
     const lootbox_id = this.props?.route?.params?.lootbox_id;
     const id = this.props?.route?.params?.id ?? this.props?.restaurant_id?.id;
     // alert(lootbox_id);
+    console.log('Resturant **>> ID', id);
+    console.log('lootbox id >>', lootbox_id);
+    // return;
     const data = {
       restaurant_id: id,
       lootbox_id: lootbox_id,
@@ -102,7 +106,6 @@ class LootBoxPaymentMethod extends React.Component {
   }
 
   render() {
-    console.log('id', this.p);
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {ImageBackground, View, FlatList, Platform, Linking} from 'react-native';
 import {backgrounds} from '../../assets/images';
 import styles from './styles';
@@ -29,6 +29,7 @@ import {
 
 import {getHomeData} from '../../Redux/Actions/otherActions';
 import {useFocusEffect} from '@react-navigation/native';
+import _ from 'lodash';
 
 const HomeScreen = ({navigation}) => {
   const location = useSelector(state => state.GeneralReducer?.location);
@@ -65,8 +66,19 @@ const HomeScreen = ({navigation}) => {
     getData();
   };
 
+  const debouncedSearch = useCallback(
+    _.debounce(text => {
+      // Implement your search logic here
+      // For example, you can filter and update the searchResults state
+      // based on the searchText.
+      // setSearchString(text);
+    }, 500),
+    [],
+  );
+
   const onChangeText = text => {
     setSearchString(text);
+    // debouncedSearch(text);
   };
 
   const handleOnBlur = () => {
@@ -336,13 +348,13 @@ const HomeScreen = ({navigation}) => {
     );
   };
 
-  const renderHeader = () => {
+  const RenderHeader = ({onChangeText}) => {
     return (
       <View style={styles.headerContainer}>
         <SearchInput
           placeholder="Search...."
           value={searchString}
-          onChangeText={onChangeText}
+          onChangeText={v => onChangeText(v)}
           onSubmitEditing={search}
           clearBtn={searchString?.length > 0}
           onClear={handleClear}
@@ -373,17 +385,49 @@ const HomeScreen = ({navigation}) => {
         source={backgrounds.grayBackground}
         style={styles.imageContainer}
         imageStyle={styles.imageStyle}>
+        {/* {renderHeader()} */}
+
         <FlatList
           data={allRestaurant?.data}
           keyExtractor={item => String(item?.id)}
           showsVerticalScrollIndicator={false}
           style={styles.bottomFlatListStyle}
           contentContainerStyle={styles.contentContainerStyle}
-          ListHeaderComponent={renderHeader}
+          // ListHeaderComponent={renderHeader}
+          ListHeaderComponent={
+            <View style={styles.headerContainer}>
+              <SearchInput
+                placeholder="Search...."
+                value={searchString}
+                onChangeText={v => onChangeText(v)}
+                onSubmitEditing={search}
+                clearBtn={searchString?.length > 0}
+                onClear={handleClear}
+                onFocus={handleOnFocus}
+                onBlur={handleOnBlur}
+              />
+              {/* {renderBanner()} */}
+              {renderRecommendedRestaurant()}
+              {renderCategories()}
+
+              <View
+                style={[styles.viewAllBtnContainer, styles.bottomViewAllBtn]}>
+                <OutfitSemiBoldText style={styles.subHeadingText}>
+                  All Places
+                </OutfitSemiBoldText>
+                <TouchableHOC onPress={handleViewAllRestaurantPress}>
+                  <OutfitRegularText style={styles.btnText}>
+                    View All
+                  </OutfitRegularText>
+                </TouchableHOC>
+              </View>
+            </View>
+          }
           renderItem={renderAllRestaurantItem}
           refreshing={refreshing}
           onRefresh={handleOnRefresh}
           ListEmptyComponent={renderEmpty}
+          keyboardDismissMode="none"
         />
         <LocationComponent coordinates={userLocation} />
       </ImageBackground>

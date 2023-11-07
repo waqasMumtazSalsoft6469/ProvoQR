@@ -81,6 +81,12 @@ class PaymentScreen extends React.Component {
     } else if (from == 'lootbox') {
       // alert(`Resturant ID >>>, ${id}`);
       // return;
+      let obj = {
+        restaurantId: id,
+        success: 0,
+        lootbox_id,
+      };
+      console.log('New Obj Payment >>>>', obj);
       this.props.navigation.navigate('LootBoxScreen', {
         restaurantId: id,
         success: 0,
@@ -114,7 +120,7 @@ class PaymentScreen extends React.Component {
       package_id: id,
       lootbox_id,
     };
-    console.log('Parameter Object >>>>', data);
+    console.log('Parameter Object New >>>>', data);
 
     if (from === 'provo') {
       this.props.provoCashPayment(data).then(res => {
@@ -125,7 +131,7 @@ class PaymentScreen extends React.Component {
         }
       });
     } else if (from === 'lootbox') {
-      // alert(id);
+      // alert(lootbox_id);
       // return;
       this.props
         .lootBoxPurchaseByCard({

@@ -57,10 +57,10 @@ class ResturentDetailScreen extends React.Component {
       title: name,
     });
     this.props.restaurantDetails({organisation_id: id}).then(res => {
-      console.log(
-        'Resturants Detail Response Data New 11 ******>>>>>>>>>',
-        res.details,
-      );
+      // console.log(
+      //   'Resturants Detail Response Data New 11 ******>>>>>>>>>',
+      //   res.details,
+      // );
       this.setState({
         details: res?.details,
       });

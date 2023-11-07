@@ -14,11 +14,12 @@ import {icons} from '../../assets/images';
 
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
-  console.log('LootBoxes Data New ****>>>>>>>', JSON.stringify(lootBoxes));
+  // console.log('LootBoxes Data New ****>>>>>>>', JSON.stringify(lootBoxes));
   const lootbox_id = lootBoxes[0]?.lootbox_id;
   const id = props?.route?.params?.id;
   const provoCash = props?.route?.params?.provoCash;
   const lootBoxAmount = props?.route?.params?.lootBoxAmount;
+  // alert(id);
 
   const dispatch = useDispatch();
 
@@ -34,8 +35,6 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
-      console.log('loot_boxes api new', JSON.stringify(res));
-      //  /get/lootbox/prizes
       setResponse(res);
     });
   };
@@ -53,13 +52,21 @@ const LootboxTierScreen = props => {
   useEffect(() => {
     getLootBox();
   }, []);
-  const handleLootBoxPress = () => {
+
+  const handleLootBoxPress = data => {
     if (token) {
+      console.log('LootBox Data >>>', data);
+      // return;
+      const id = data?.organisation_id;
+      const lootBoxAmount = data?.price;
+      const lootbox_id = data?.id;
+      // alert(lootbox_id);
+      // return;
       props.navigation.navigate('LootBoxPaymentMethod', {
-        id,
+        id: id,
         provoCash,
-        lootBoxAmount,
-        lootbox_id,
+        lootBoxAmount: lootBoxAmount,
+        lootbox_id: lootbox_id,
       });
     } else {
       showToast('Please Login First');
@@ -89,7 +96,28 @@ const LootboxTierScreen = props => {
   const renderMenuList = ({item, index}) => {
     return (
       <View key={index}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{flex: 1}}>
+            <OutfitSemiBoldText style={styles.headingTextStyle}>
+              {item?.lootbox?.name}
+            </OutfitSemiBoldText>
+          </View>
+          <Button
+            title={`$${item?.lootbox?.price} BUY`}
+            onPress={() => handleLootBoxPress(item?.lootbox)}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 5,
+          }}>
           <OutfitSemiBoldText style={styles.headingTextStyle}>
             {item?.name}
           </OutfitSemiBoldText>
@@ -160,12 +188,12 @@ const LootboxTierScreen = props => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={lootBoxes}
+        data={response}
         keyExtractor={(_, index) => index}
         renderItem={renderMenuList}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={renderHeader}
+        // ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}
         scrollEventThrottle={160}
