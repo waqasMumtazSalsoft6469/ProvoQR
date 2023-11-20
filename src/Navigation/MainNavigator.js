@@ -12,6 +12,7 @@ import EditProfile from '../screens/EditProfileScreen';
 import EditBillingDetails from '../screens/EditBillingDetail';
 import Payment from '../screens/PaymentScreen';
 import Location from '../screens/LocationScreen';
+import ClaimScreen from '../screens/ClaimScreen';
 
 import AuthNavigator from './AuthNavigator';
 import CompleteProfile from '../screens/CompleteProfile';
@@ -135,6 +136,7 @@ class MainNavigator extends React.Component {
           name="LocationSearchScreen"
         />
         <MainStack.Screen component={RewardDetail} name="RewardDetail" />
+        <MainStack.Screen component={ClaimScreen} name="ClaimScreen" />
       </MainStack.Navigator>
     );
   };

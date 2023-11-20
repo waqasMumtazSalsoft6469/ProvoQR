@@ -71,7 +71,7 @@ class LootBoxScreen extends React.Component {
     this.props.lootBoxDraw(data).then(res => {
       console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
-        console.log('draw res', res);
+        console.log('LootBox Draw Res Data *******>>>>>>', res);
         this.setState({rewardDetail: res});
         this.setState({success: 1});
       } else {
