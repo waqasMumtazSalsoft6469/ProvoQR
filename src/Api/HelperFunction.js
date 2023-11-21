@@ -68,7 +68,7 @@ export const performNetworkRequest = async (url, configs) => {
 };
 export const message = 'Something went wrong';
 export const getMessage = json => {
-  console.log('JSON   KKKKKK', json);
+  console.log('Get Message JSON   KKKKKK ', json);
   switch (typeof json) {
     case 'string': {
       return json;
