@@ -35,6 +35,7 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
+      console.log('Responses Of LootBoxes >>>', res);
       setResponse(res);
     });
   };
@@ -53,9 +54,10 @@ const LootboxTierScreen = props => {
     getLootBox();
   }, []);
 
-  const handleLootBoxPress = data => {
+  const handleLootBoxPress = (data, detail_lootbox) => {
     if (token) {
       console.log('LootBox Data >>>', data);
+      console.log('Detail of selected lootbox >>>', detail_lootbox);
       // return;
       const id = data?.organisation_id;
       const lootBoxAmount = data?.price;
@@ -67,6 +69,7 @@ const LootboxTierScreen = props => {
         provoCash,
         lootBoxAmount: lootBoxAmount,
         lootbox_id: lootbox_id,
+        lootBoxDetails: detail_lootbox,
       });
     } else {
       showToast('Please Login First');
@@ -109,7 +112,7 @@ const LootboxTierScreen = props => {
           </View>
           <Button
             title={`$${item?.lootbox?.price} BUY`}
-            onPress={() => handleLootBoxPress(item?.lootbox)}
+            onPress={() => handleLootBoxPress(item?.lootbox, item)}
           />
         </View>
         <View

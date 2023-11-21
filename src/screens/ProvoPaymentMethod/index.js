@@ -44,6 +44,8 @@ class ProvoPaymentMethod extends React.Component {
       showToast('You have not saved any billing details.');
     } else {
       // alert(this.props?.route?.params?.lootbox_id);
+      const {lootBoxDetails} = this?.props?.route?.params;
+      // console.log('Selected 11 >>', lootBoxDetails);
       // return;
       this.props.navigation.navigate('Payment', {
         option: this.state.selectedOption,
@@ -51,6 +53,7 @@ class ProvoPaymentMethod extends React.Component {
         from: this.props.route?.params?.from,
         navigateTo: this.props.route?.params?.navigateTo,
         lootbox_id: this.props?.route?.params?.lootbox_id,
+        lootBoxDetails: lootBoxDetails,
       });
     }
   };

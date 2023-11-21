@@ -67,7 +67,7 @@ class PaymentScreen extends React.Component {
   };
 
   handleSuccessPress = () => {
-    const {id, from, lootbox_id} = this.props?.route?.params;
+    const {id, from, lootbox_id, lootBoxDetails} = this.props?.route?.params;
     console.log('navigateTo', this.props?.route?.params?.navigateTo);
     console.log('handleSuccessPress from', from);
 
@@ -81,21 +81,23 @@ class PaymentScreen extends React.Component {
     } else if (from == 'lootbox') {
       // alert(`Resturant ID >>>, ${id}`);
       // return;
-      let obj = {
-        restaurantId: id,
-        success: 0,
-        lootbox_id,
-      };
-      console.log('New Obj Payment >>>>', obj);
+      // let obj = {
+      //   restaurantId: id,
+      //   success: 0,
+      //   lootbox_id,
+      // };
+      // console.log('New Obj Payment >>>>', obj);
       this.props.navigation.navigate('LootBoxScreen', {
         restaurantId: id,
         success: 0,
         lootbox_id,
+        lootBoxDetails: lootBoxDetails,
       });
     } else if (from === 'provo') {
       if (this.props?.route?.params?.navigateTo) {
         this.props.navigation.navigate(this.props?.route?.params?.navigateTo, {
           lootbox_id: lootbox_id,
+          lootBoxDetails: lootBoxDetails,
         });
       } else {
         this.props.navigation.navigate('HomeScreen');
@@ -178,8 +180,12 @@ class PaymentScreen extends React.Component {
 
   render() {
     const {billingDetails} = this.props;
-    const {option} = this.props.route.params;
-    console.log(billingDetails?.cvv_num, 'asda');
+    const {option, lootBoxDetails} = this?.props?.route?.params;
+    // console.log(billingDetails?.cvv_num, 'asda');
+    console.log(
+      'Selected LootBox Detail Payment Screen New **>>>',
+      lootBoxDetails,
+    );
     return (
       <View style={styles.container}>
         <ImageBackground

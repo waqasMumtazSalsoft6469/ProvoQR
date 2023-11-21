@@ -25,6 +25,7 @@ import moment from 'moment';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import CountDownTimer from '../../components/CountdownTimer';
+import ClaimScreen from '../ClaimScreen';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +36,8 @@ class LootBoxScreen extends React.Component {
         ? this.props.route.params.success
         : 0,
       rewardDetail: {},
+      lootBoxDetails: {},
+      claim: '',
     };
   }
 
@@ -59,15 +62,7 @@ class LootBoxScreen extends React.Component {
     this.props.navigation.navigate('HomeScreen');
   };
 
-  handleLootBoxDraw = () => {
-    const {restaurantId, lootbox_id} = this.props.route.params;
-    // alert(`Restaurant ID >> ${restaurantId} LootBox ID >> ${lootbox_id}`);
-    // return;
-    const data = {
-      restaurant_id: restaurantId,
-    };
-    console.log('DATA RESTAURANT 22 >>>>', data);
-    // return;
+  handleDrawLootbox = () => {
     this.props.lootBoxDraw(data).then(res => {
       console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
@@ -78,6 +73,23 @@ class LootBoxScreen extends React.Component {
         this.setState({success: 2});
       }
     });
+  };
+
+  handleLootBoxDraw = () => {
+    const {restaurantId, lootbox_id, lootBoxDetails} =
+      this?.props?.route?.params;
+    console.log('lootBoxDetails Selected ***>>>>', lootBoxDetails);
+    const data = {
+      restaurant_id: restaurantId,
+    };
+    console.log('DATA RESTAURANT 22 >>>>', data);
+
+    this.setState({lootBoxDetails, claim: 'claim'});
+    // this?.props?.navigation?.navigate('ClaimScreen', {
+    //   lootBoxDetails: lootBoxDetails,
+    //   restaurant_id: restaurantId,
+    //   _success: this.state.success,
+    // });
   };
 
   componentWillUnmount() {
@@ -127,6 +139,13 @@ class LootBoxScreen extends React.Component {
             btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
             labelStyle={{color: ThemeColors.white}}
           />
+        </View>
+      );
+    } else if (this.state.claim === 'claim') {
+      // return <ClaimScreen lootBoxDetails={this.state.lootBoxDetails} />;
+      return (
+        <View>
+          <Text>jdlfjakdl</Text>
         </View>
       );
     } else if (this.state.success == 1) {
