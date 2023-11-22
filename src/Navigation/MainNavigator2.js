@@ -13,7 +13,6 @@ import EditProfile from '../screens/EditProfileScreen';
 import EditBillingDetails from '../screens/EditBillingDetail';
 import Payment from '../screens/PaymentScreen';
 import Location from '../screens/LocationScreen';
-import ClaimScreen from '../screens/ClaimScreen';
 import {useSelector, useDispatch} from 'react-redux';
 
 import AuthNavigator from './AuthNavigator';
@@ -113,7 +112,6 @@ const MainNavigator = () => {
         component={LocationSearchScreen}
         name="LocationSearchScreen"
       />
-      <MainStack.Screen component={ClaimScreen} name="ClaimScreen" />
       <MainStack.Screen component={RewardDetail} name="RewardDetail" />
     </MainStack.Navigator>
   );

@@ -117,5 +117,43 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     // width: '70%'
   },
+  itemsContainer: {
+    // flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    // backgroundColor: 'red',
+    justifyContent: 'space-around',
+    // marginBottom: 20,
+  },
+  item: {
+    margin: 5,
+    width: '28%',
+    height: 70,
+    padding: 10,
+    paddingVertical: 20,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selectedItem: {
+    // backgroundColor: 'lightblue',
+    borderColor: ThemeColors.primary,
+    borderRadius: 5,
+  },
+  claimButton: {
+    backgroundColor: 'green',
+    padding: 15,
+    borderRadius: 5,
+  },
+  claimButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  heading: {fontSize: vh * 3, textAlign: 'center'},
+  sub_heading: {fontSize: vh * 2, marginTop: 3 * vh},
+  selectedText: {color: ThemeColors.primary},
+  unselectedText: {color: ThemeColors.grayText},
 });
 export default styles;

@@ -6,6 +6,7 @@ import {
   Animated,
   Easing,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import {vh, vw} from '../../Utils/Units';
@@ -25,7 +26,6 @@ import moment from 'moment';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import CountDownTimer from '../../components/CountdownTimer';
-import ClaimScreen from '../ClaimScreen';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +38,7 @@ class LootBoxScreen extends React.Component {
       rewardDetail: {},
       lootBoxDetails: {},
       claim: '',
+      selectedItem: '',
     };
   }
 
@@ -63,16 +64,40 @@ class LootBoxScreen extends React.Component {
   };
 
   handleDrawLootbox = () => {
+    const {restaurantId} = this?.props?.route?.params;
+    const data = {
+      restaurant_id: restaurantId,
+    };
+    console.log('data for Draw >>>', data);
     this.props.lootBoxDraw(data).then(res => {
       console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
         console.log('LootBox Draw Res Data *******>>>>>>', res);
         this.setState({rewardDetail: res});
-        this.setState({success: 1});
+        this.setState({success: 1, claim: ''});
       } else {
-        this.setState({success: 2});
+        this.setState({success: 2, claim: ''});
       }
     });
+  };
+
+  handleItemSelect = item => {
+    this.setState({selectedItem: item});
+  };
+
+  handleClaimItem = () => {
+    // Call your API to claim the selected item here
+    if (Object.keys(this.state.selectedItem).length != 0) {
+      this.handleDrawLootbox();
+      // claimItemApi(selectedItem);
+      // Add any additional logic or navigation after claiming the item
+    } else {
+      alert('Please select any item');
+    }
+  };
+
+  handleSkip = () => {
+    this.setState({claim: ''});
   };
 
   handleLootBoxDraw = () => {
@@ -84,7 +109,7 @@ class LootBoxScreen extends React.Component {
     };
     console.log('DATA RESTAURANT 22 >>>>', data);
 
-    this.setState({lootBoxDetails, claim: 'claim'});
+    this.setState({claim: 'claim', lootBoxDetails});
     // this?.props?.navigation?.navigate('ClaimScreen', {
     //   lootBoxDetails: lootBoxDetails,
     //   restaurant_id: restaurantId,
@@ -139,13 +164,6 @@ class LootBoxScreen extends React.Component {
             btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
             labelStyle={{color: ThemeColors.white}}
           />
-        </View>
-      );
-    } else if (this.state.claim === 'claim') {
-      // return <ClaimScreen lootBoxDetails={this.state.lootBoxDetails} />;
-      return (
-        <View>
-          <Text>jdlfjakdl</Text>
         </View>
       );
     } else if (this.state.success == 1) {
@@ -248,57 +266,118 @@ class LootBoxScreen extends React.Component {
     }
     console.log('draw detail', this.state.rewardDetail);
     return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={backgrounds.redBg}
-          style={styles.imgbg}
-          resizeMode="cover"
-          imageStyle={styles.imgbg}>
-          <TouchableHOC
-            onPress={() => this.props.navigation.goBack()}
-            style={{
-              zIndex: 999,
-              position: 'absolute',
-              top: vh * 6,
-              left: vw * 8,
-            }}>
-            <Image source={icons.backarrow} style={styles.back} />
-          </TouchableHOC>
-          <LottieView
-            resizeMode="cover"
-            ref={animation => {
-              this.animation = animation;
-            }}
-            source={celebAnim}
-            progress={this.progress}
-            style={{
-              height: 100 * vh,
-              width: 100 * vw,
-              backgroundColor: 'transparent',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-            }}
-          />
-          <View
-            style={{
-              alignItems: 'center',
-              marginTop: 8 * vh,
-              // justifyContent: 'center',
-              // height: '100%',
-            }}>
-            <ScrollView
-              contentContainerStyle={{
-                alignItems: 'center',
-                paddingBottom: vh * 8,
-              }}
-              showsVerticalScrollIndicator={false}>
-              {/* <Blacksword style={styles.title}>{this.rendertitle()}</Blacksword> */}
-              {this.getText()}
-            </ScrollView>
+      <>
+        {this.state.claim !== 'claim' && (
+          <View style={styles.container}>
+            <ImageBackground
+              source={backgrounds.redBg}
+              style={styles.imgbg}
+              resizeMode="cover"
+              imageStyle={styles.imgbg}>
+              <TouchableHOC
+                onPress={() => this.props.navigation.goBack()}
+                style={{
+                  zIndex: 999,
+                  position: 'absolute',
+                  top: vh * 6,
+                  left: vw * 8,
+                }}>
+                <Image source={icons.backarrow} style={styles.back} />
+              </TouchableHOC>
+              <LottieView
+                resizeMode="cover"
+                ref={animation => {
+                  this.animation = animation;
+                }}
+                source={celebAnim}
+                progress={this.progress}
+                style={{
+                  height: 100 * vh,
+                  width: 100 * vw,
+                  backgroundColor: 'transparent',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                }}
+              />
+              <View
+                style={{
+                  alignItems: 'center',
+                  marginTop: 8 * vh,
+                  // justifyContent: 'center',
+                  // height: '100%',
+                }}>
+                <ScrollView
+                  contentContainerStyle={{
+                    alignItems: 'center',
+                    paddingBottom: vh * 8,
+                  }}
+                  showsVerticalScrollIndicator={false}>
+                  {/* <Blacksword style={styles.title}>{this.rendertitle()}</Blacksword> */}
+                  {this.getText()}
+                </ScrollView>
+              </View>
+            </ImageBackground>
           </View>
-        </ImageBackground>
-      </View>
+        )}
+        {this.state.claim === 'claim' && (
+          <ScrollView contentContainerStyle={styles.container}>
+            <View
+              style={{
+                flex: 0.5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginHorizontal: 7,
+              }}>
+              <OutfitSemiBoldText style={styles.heading}>
+                Congratulations! You won a {this.state.lootBoxDetails?.name}{' '}
+                Prize!!!!
+              </OutfitSemiBoldText>
+              <OutfitRegularText style={styles.sub_heading}>
+                Please select an item
+              </OutfitRegularText>
+            </View>
+
+            <View style={styles.itemsContainer}>
+              {this.state.lootBoxDetails?.menu?.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.item,
+                    this.state.selectedItem?.id === item?.id
+                      ? styles.selectedItem
+                      : null,
+                  ]}
+                  onPress={() => this.handleItemSelect(item)}>
+                  <OutfitRegularText style={{textAlign: 'center'}}>
+                    {item?.name}
+                  </OutfitRegularText>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View
+              style={{
+                // flex: 1,
+                marginTop: 30,
+                // backgroundColor: 'red',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Button
+                title="Claim"
+                btnContainer={{marginTop: 5 * vh}}
+                onPress={this.handleClaimItem}
+              />
+              <View style={{margin: 10}} />
+              <Button
+                title="SKIP"
+                btnContainer={{marginTop: 5 * vh}}
+                onPress={this.handleSkip}
+              />
+            </View>
+          </ScrollView>
+        )}
+      </>
     );
   }
 }
