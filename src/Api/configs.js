@@ -20,6 +20,7 @@ export const endpoints = {
     getMySubscription: '/user/subscription/plan',
     subscriptionLogs: '/user/subscription/logs',
     provoPackages: '/provo/packages',
+    provoCashTransfer: '/provo-cash/transfer',
     provoWallet: '/provo_wallet',
     provoPayment: '/purchase/provo/cash',
     getBilling: '/get/billing',
@@ -43,6 +44,7 @@ export const endpoints = {
     notifications: '/user/notify',
     lootBoxDraw: '/get/lootbox',
     lootBoxes: '/get/lootbox/prizes',
+    claimLootbox: '/get/lootbox/claim',
   },
 };
 

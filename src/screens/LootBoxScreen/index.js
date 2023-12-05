@@ -26,6 +26,8 @@ import moment from 'moment';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import CountDownTimer from '../../components/CountdownTimer';
+import {claimLootbox} from '../../Redux/Actions/otherActions';
+import {showToast} from '../../Api/HelperFunction';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -85,14 +87,30 @@ class LootBoxScreen extends React.Component {
     this.setState({selectedItem: item});
   };
 
-  handleClaimItem = () => {
+  handleClaimItem = async () => {
     // Call your API to claim the selected item here
     if (Object.keys(this.state.selectedItem).length != 0) {
-      this.handleDrawLootbox();
-      // claimItemApi(selectedItem);
-      // Add any additional logic or navigation after claiming the item
+      const {lootbox_id, lootBoxDetails} = this?.props?.route?.params;
+      let obj = {
+        lootbox_id: lootbox_id,
+        menu_id: this.state?.selectedItem?.id,
+      };
+      console.log('Claim Object >>>', obj);
+      try {
+        let res = await this.props.claimLootbox(obj);
+        console.log('Claim ITem Response >>>', res);
+        if (res?.message) {
+          showToast(res?.message);
+          setTimeout(() => {
+            this.handleDrawLootbox();
+          }, 100);
+        }
+      } catch (error) {
+        console.log('Claim Error .>>', error);
+      }
     } else {
-      alert('Please select any item');
+      // alert('Please select any item');
+      showToast('Please select any item');
     }
   };
 
@@ -390,6 +408,7 @@ const mapDispatchToProps = dispatch => {
   return {
     // explicitly forwarding arguments
     lootBoxDraw: data => dispatch(lootBoxDraw(data)),
+    claimLootbox: data => dispatch(claimLootbox(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(LootBoxScreen);

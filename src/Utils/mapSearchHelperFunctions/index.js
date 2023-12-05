@@ -126,9 +126,10 @@ export const AddressApi = {
   },
   getGeoCode: (address, success) => {
     let url = geocodeUrl + address;
+    console.log('ttt', url);
     // console.log(url)
     fetch(url).then(d => {
-      // console.log(d)
+      console.log('fetch result >>', d);
       d.json().then(data => {
         success(data);
         // console.log('add data',data)

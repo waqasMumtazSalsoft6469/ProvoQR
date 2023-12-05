@@ -34,6 +34,7 @@ import LootboxTierScreen from '../screens/LootboxTierScreen';
 import RewardDetail from '../screens/RewardDetailScreen';
 import RedeemRewardScreen from '../screens/RedeemRewardScreen';
 import LocationSearchScreen from '../screens/LocationSearchScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 const MainStack = createStackNavigator();
 
@@ -51,7 +52,7 @@ const MainNavigator = () => {
 
   return (
     <MainStack.Navigator
-      // initialRouteName='HomeTabs'
+      // initialRouteName="HomeTabs"
       headerMode="screen"
       screenOptions={getNavigationOptions}>
       {/* {!token && (
@@ -65,11 +66,13 @@ const MainNavigator = () => {
           options={{headerShown: false}}
         />
       )}
+
       <MainStack.Screen
         component={Drawer}
         name="Drawer"
         options={{headerShown: false}}
       />
+      {/* <MainStack.Screen component={HomeScreen} name="HomeScreen" /> */}
       <MainStack.Screen component={Location} name="Location" />
       <MainStack.Screen component={Payment} name="Payment" />
       <MainStack.Screen component={Profile} name="Profile" />

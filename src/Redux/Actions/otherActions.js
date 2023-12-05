@@ -166,6 +166,52 @@ export const getProvoWallet = () => {
   };
 };
 
+//Provo Coins Transfer to other user
+export const provoCashTransfer = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await post(
+            endpoints.other.provoCashTransfer,
+            data,
+            true,
+          );
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
+//LootBox Claim
+export const claimLootbox = data => {
+  return async dispatch => {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          dispatch({type: actionTypes.loaderOn});
+
+          const response = await post(endpoints.other.claimLootbox, data);
+          resolve(response);
+        } catch (e) {
+          showToast(getMessage(e));
+          reject(e);
+        } finally {
+          dispatch({type: actionTypes.loaderOff});
+        }
+      }, 300);
+    });
+  };
+};
+
 export const provoCashPayment = detail => {
   return async dispatch => {
     return new Promise((resolve, reject) => {

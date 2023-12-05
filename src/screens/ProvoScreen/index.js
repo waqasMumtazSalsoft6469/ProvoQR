@@ -29,6 +29,7 @@ import {
 import {imageUrl} from '../../Api/configs';
 import {showToast} from '../../Api/HelperFunction';
 import CustomModal from '../../components/CustomModal';
+import {provoCashTransfer} from '../../Redux/Actions/otherActions';
 
 class ProvoScreen extends React.Component {
   constructor(props) {
@@ -47,6 +48,13 @@ class ProvoScreen extends React.Component {
       transferAmount: 0,
     };
   }
+
+  getProvoWalletFunction = () => {
+    this.props.getProvoWallet().then(res => {
+      console.log('provo_wallet', res?.provo_wallet);
+      this.setState({walletAmount: res?.provo_wallet});
+    });
+  };
 
   componentDidMount() {
     this.props.getProvoPackages().then(res => {
@@ -114,7 +122,7 @@ class ProvoScreen extends React.Component {
     );
   };
 
-  handleTransfer = () => {
+  handleTransfer = async () => {
     console.log('Enter Amount ', this.state.transferAmount);
     const {email, transferAmount, walletAmount} = this.state;
     if (!transferAmount) {
@@ -133,57 +141,72 @@ class ProvoScreen extends React.Component {
       showToast('Please insert valid email address');
     } else {
       let data = {
-        transferAmount,
-        email,
+        token: this.props.token,
+        email: email,
+        coins: transferAmount,
       };
       console.log('my transfer data >>>', data);
+      try {
+        let res = await this.props.provoCashTransfer(data);
+        console.log('Transfer Response >>>', res);
+        if (res.success) {
+          this.getProvoWalletFunction();
+          showToast(res.message);
+          this.setState({transferAmount: 0, email: '', modal: false});
+        }
+      } catch (error) {
+        console.log('Error >>>', error);
+      }
     }
   };
 
   renderModalComponent = () => {
     return (
-      <View style={styles.modalContainer}>
-        <TouchableOpacity style={styles.closeButton} onPress={this.onClose}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
-        </TouchableOpacity>
+      <KeyboardAwareScrollView>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity style={styles.closeButton} onPress={this.onClose}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
+          </TouchableOpacity>
 
-        <Text style={styles.heading}>Add Provo Coin Transfer Details </Text>
-        <View style={styles.inputContainer}>
-          <MainInput
-            placeholder="Enter Transfer Amount"
-            ref={r => (this.transferAmount = r)}
-            onSubmitEditing={() => this.email.onFocus()}
-            onChangeText={value =>
-              this.setState({
-                transferAmount: value,
-              })
-            }
-            style={styles.input}
-            maxLength={6}
-          />
-          <View style={{margin: 10}} />
-          <MainInput
-            placeholder="Enter Email Address"
-            ref={r => (this.email = r)}
-            keyboardType="email-address"
-            onChangeText={value =>
-              this.setState({
-                email: value,
-              })
-            }
-            style={styles.input}
+          <Text style={styles.heading}>Add Provo Coin Transfer Details </Text>
+          <View style={styles.inputContainer}>
+            <MainInput
+              placeholder="Enter Transfer Amount"
+              ref={r => (this.transferAmount = r)}
+              onSubmitEditing={() => this.email.onFocus()}
+              onChangeText={value =>
+                this.setState({
+                  transferAmount: value,
+                })
+              }
+              style={styles.input}
+              maxLength={6}
+              keyboardType="number-pad"
+            />
+            <View style={{margin: 10}} />
+            <MainInput
+              placeholder="Enter Email Address"
+              ref={r => (this.email = r)}
+              keyboardType="email-address"
+              onChangeText={value =>
+                this.setState({
+                  email: value,
+                })
+              }
+              style={styles.input}
+            />
+          </View>
+          {this.state.errorMessage ? (
+            <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+          ) : null}
+
+          <Button
+            title="TRANSFER"
+            onPress={this.handleTransfer}
+            btnContainer={styles.signupBtn}
           />
         </View>
-        {this.state.errorMessage ? (
-          <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
-        ) : null}
-
-        <Button
-          title="TRANSFER"
-          onPress={this.handleTransfer}
-          btnContainer={styles.signupBtn}
-        />
-      </View>
+      </KeyboardAwareScrollView>
     );
   };
 
@@ -317,7 +340,7 @@ const mapDispatchToProps = dispatch => {
     // explicitly forwarding arguments
     getProvoPackages: () => dispatch(getProvoPackages()),
     getProvoWallet: () => dispatch(getProvoWallet()),
-
+    provoCashTransfer: data => dispatch(provoCashTransfer(data)),
     // subPackges: () => dispatch(subPackges()),
     // signup: data => dispatch(userSignup(data)),
   };

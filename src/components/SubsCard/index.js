@@ -17,10 +17,10 @@ class SubCard extends React.Component {
     this.state = {};
   }
 
-  _renderitem = ({item, index}) => {
+  _renderitem = (item, index) => {
     const items = this.props.item;
     return (
-      <>
+      <View key={index}>
         <View
           style={{
             flexDirection: 'row',
@@ -44,7 +44,7 @@ class SubCard extends React.Component {
             dashGap={1 * vh}
             dashStyle={{width: 2 * vw}}></Dash>
         )}
-      </>
+      </View>
     );
   };
   setactive = () => {
@@ -95,13 +95,17 @@ class SubCard extends React.Component {
             </OutfitMediumText>
 
             <View style={{alignItems: 'center', marginBottom: vh * 3}}>
-              {this.props.item?.features && (
+              {this.props.item?.features &&
+                this.props.item?.features.map((values, indx) =>
+                  this._renderitem(values, indx),
+                )}
+              {/* {this.props.item?.features && (
                 <FlatList
                   data={this.props.item?.features}
                   style={{marginTop: 2 * vh}}
                   renderItem={this._renderitem}
                 />
-              )}
+              )} */}
             </View>
             <Button
               title="SELECT PLAN"

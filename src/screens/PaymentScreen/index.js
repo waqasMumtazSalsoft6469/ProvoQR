@@ -100,7 +100,8 @@ class PaymentScreen extends React.Component {
           lootBoxDetails: lootBoxDetails,
         });
       } else {
-        this.props.navigation.navigate('HomeScreen');
+        this.props?.navigation?.dispatch(StackActions.replace('MainNavigator'));
+        // this.props.navigation.navigate('HomeScreen');
       }
     } else {
       this.props.navigation.navigate('MySubscription');
