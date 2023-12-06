@@ -94,7 +94,7 @@ class SubCard extends React.Component {
               {this.props.item?.name}
             </OutfitMediumText>
 
-            <View style={{alignItems: 'center', marginBottom: vh * 3}}>
+            <View style={{alignItems: 'center'}}>
               {this.props.item?.features &&
                 this.props.item?.features.map((values, indx) =>
                   this._renderitem(values, indx),
@@ -106,6 +106,12 @@ class SubCard extends React.Component {
                   renderItem={this._renderitem}
                 />
               )} */}
+            </View>
+            <View style={styles.coins}>
+              <OutfitMediumText>Free Coins :</OutfitMediumText>
+              <OutfitMediumText style={{marginLeft: 5}}>
+                {parseInt(this.props?.item?.provo_cash_price)}
+              </OutfitMediumText>
             </View>
             <Button
               title="SELECT PLAN"

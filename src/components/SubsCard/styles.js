@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
     borderRadius: 6 * vh,
     backgroundColor: ThemeColors.white,
   },
+  coins: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: vh * 2.5,
+  },
 
   containerclick: {
     //    paddingHorizontal:2.5*vw,

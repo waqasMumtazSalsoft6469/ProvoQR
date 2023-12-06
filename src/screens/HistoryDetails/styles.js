@@ -12,6 +12,21 @@ const styles = StyleSheet.create({
 
     // height: 100 * vh,
   },
+  tierImage: {
+    resizeMode: 'cover',
+    width: 4 * vh,
+    backgroundColor: 'red',
+    height: 2.7 * vh,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    // marginLeft: 4 * vw,
+  },
+  rewtext: {
+    color: '#818080',
+    lineHeight: 3 * vh,
+    fontSize: 2 * vh,
+    marginLeft: 8,
+  },
   badge: {
     position: 'absolute',
     height: vh * 5,

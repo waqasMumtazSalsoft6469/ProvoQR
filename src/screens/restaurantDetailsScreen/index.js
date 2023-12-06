@@ -184,6 +184,10 @@ class ResturentDetailScreen extends React.Component {
                 <View style={styles.menuContainer}>
                   <TouchableHOC
                     onPress={() =>
+                      // console.log(
+                      //   'Resturant Detail >>>>>',
+                      //   this.state.details,
+                      // )
                       this.props.navigation.navigate('ResturentMenu', {
                         id: this.state.details?.id,
                       })
@@ -268,7 +272,10 @@ class ResturentDetailScreen extends React.Component {
             )}
             {this.state?.details?.lootboxes?.length > 0 && (
               <View style={{alignItems: 'center', marginVertical: vh * 3}}>
-                <Button title="LOOT BOX" onPress={this.handleLootBoxPress} />
+                <Button
+                  title="Beverage Deal"
+                  onPress={this.handleLootBoxPress}
+                />
               </View>
             )}
             {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >

@@ -32,7 +32,7 @@ class MySuscription extends React.Component {
       this.setState({subscription: res?.subscriptionPlans[0]});
     });
     this.props.subPackges().then(res => {
-      // console.log('All Packages >>>>>', res?.packages);
+      console.log('All Packages >>>>>', res?.packages);
       this.setState({packages: res?.packages});
     });
   }
@@ -40,7 +40,7 @@ class MySuscription extends React.Component {
   rendersubscriptions = () => {
     return this.state?.packages.map((item, index) => {
       return (
-        <View style={{marginTop: 5 * vh, alignItems: 'center'}}>
+        <View style={{marginTop: 5 * vh, alignItems: 'center'}} key={index}>
           <SubsCard
             item={item}
             success={(itemIndex, item) => {

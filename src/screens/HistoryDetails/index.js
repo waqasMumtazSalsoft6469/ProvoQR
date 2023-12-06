@@ -41,6 +41,17 @@ class HistoryDetail extends React.Component {
       // ],
     };
   }
+
+  getTintcolor = name => {
+    if (name === 'Gold') {
+      return '#F4CE0C';
+    } else if (name === 'Silver') {
+      return '#ADADAD';
+    } else {
+      return '#E9980F';
+    }
+  };
+
   getData = async () => {
     const id = this.props?.route?.params?.id;
     try {
@@ -75,6 +86,7 @@ class HistoryDetail extends React.Component {
       lootBoxAmount: this.state.response?.lootbox_amount,
     });
   };
+
   handleMapPress = () => {
     // this.props.navigation.navigate('RestaurantDirection', {
     //   latitude: this.state.response?.organisations?.lat,
@@ -105,36 +117,52 @@ class HistoryDetail extends React.Component {
           }
           style={styles.cardimg}
         />
-        <OutfitSemiBoldText style={styles.midHeadingStyle}>
-          Reward Info
-        </OutfitSemiBoldText>
-        <OutfitMediumText style={styles.midTextStyle}>
-          {item?.my_win_lootbox?.menu?.name}
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.rewardDesHeadingText}>
-          Description
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.midTextStyle}>
-          {item?.my_win_lootbox?.menu?.detail}
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.rewardDesHeadingText}>
-          Reward Status
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.midTextStyle}>
-          {item?.status}
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.rewardDesHeadingText}>
-          Reward {item?.status === 'Redeemed' ? 'Redemption' : 'Expiration'}{' '}
-          Date & Time
-        </OutfitMediumText>
-        <OutfitMediumText style={styles.midTextStyle}>
-          {moment(
-            item?.status === 'Redeemed'
-              ? item?.redemption_time
-              : item?.reward_expire_date,
-            "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
-          ).format('DD-MM-YYYY HH:mm:ss')}
-        </OutfitMediumText>
+        <View style={{paddingHorizontal: 6 * vw}}>
+          <View style={styles.rewardHeadContainer}>
+            <Image
+              source={icons.box}
+              style={[
+                styles.tierImage,
+                {
+                  tintColor: this.getTintcolor(item?.my_win_lootbox?.tier_name),
+                },
+              ]}
+            />
+            <OutfitLightText style={styles.rewtext}>
+              {item?.my_win_lootbox?.tier_name}
+            </OutfitLightText>
+          </View>
+          <OutfitSemiBoldText style={styles.midHeadingStyle}>
+            Reward Info
+          </OutfitSemiBoldText>
+          <OutfitMediumText style={styles.midTextStyle}>
+            {item?.my_win_lootbox?.menu?.name}
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.rewardDesHeadingText}>
+            Description
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.midTextStyle}>
+            {item?.my_win_lootbox?.menu?.detail}
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.rewardDesHeadingText}>
+            Reward Status
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.midTextStyle}>
+            {item?.status}
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.rewardDesHeadingText}>
+            Reward {item?.status === 'Redeemed' ? 'Redemption' : 'Expiration'}{' '}
+            Date & Time
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.midTextStyle}>
+            {moment(
+              item?.status === 'Redeemed'
+                ? item?.redemption_time
+                : item?.reward_expire_date,
+              'DD-MM-YYYY HH:mm:ss',
+            ).format('MM/DD/YYYY HH:mm A')}
+          </OutfitMediumText>
+        </View>
         {/* {item?.status === 'Redeemed' ? (
           <>
             <OutfitMediumText style={styles.rewardDesHeadingText}>

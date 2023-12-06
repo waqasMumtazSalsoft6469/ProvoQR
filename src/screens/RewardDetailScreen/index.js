@@ -240,11 +240,6 @@ class RegisterScreen extends React.Component {
               />
             </View>
             <View style={{paddingHorizontal: 6 * vw}}>
-              {/* <View style={{flexDirection: 'row', marginTop: 2 * vh}}>
-                <OutfitSemiBoldText style={styles.recomend}>
-                  About The Reward
-                </OutfitSemiBoldText>
-              </View> */}
               <View style={styles.rewardHeadContainer}>
                 <Image
                   source={icons.box}
@@ -261,14 +256,6 @@ class RegisterScreen extends React.Component {
                   {this.state.details?.my_win_lootbox?.tier_name}
                 </OutfitLightText>
               </View>
-              {/* <OutfitLightText style={styles.redeem}>
-                (Make sure you are in the restaurant at time of redemption.)
-              </OutfitLightText> */}
-              {/* <Image source={icons.rewardCup} style={styles.rewardIcon} /> */}
-              {/* <OutfitRegularText
-                style={{marginBottom: vh * 2, alignSelf: 'center'}}>
-                You are a gold member of this restaurant now!
-              </OutfitRegularText> */}
               <OutfitSemiBoldText style={styles.midHeadingStyle}>
                 Reward Info
               </OutfitSemiBoldText>
