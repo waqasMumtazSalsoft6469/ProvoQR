@@ -69,8 +69,12 @@ class MainNavigator extends React.Component {
     return (
       <MainStack.Navigator
         // initialRouteName='HomeTabs'
-        headerMode="screen"
-        screenOptions={getNavigationOptions}>
+        // headerMode="screen"
+        // screenOptions={getNavigationOptions}
+        screenOptions={{
+          headerMode: 'screen',
+          getNavigationOptions,
+        }}>
         {/* {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )} */}

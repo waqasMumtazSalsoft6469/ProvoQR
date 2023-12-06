@@ -11,7 +11,9 @@ const ProvoStack = () => {
   return (
     <ProvoNavigator.Navigator
       screenOptions={getNavigationOptions}
-      headerMode="screen">
+      // headerMode="screen"
+      // screenOptions={{headerMode: 'screen'}}
+    >
       <ProvoNavigator.Screen component={ProvoScreen} name="ProvoScreen" />
       {/* <ProvoNavigator.Screen component={RewardDetail} name="RewardDetail" /> */}
     </ProvoNavigator.Navigator>

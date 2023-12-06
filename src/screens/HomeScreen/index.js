@@ -141,7 +141,6 @@ class HomeScreen extends React.Component {
       //   this.props.location.coordinate,
       //   'this.props.location.coordinatethis.props.location.coordinate',
       // );
-      console.log('home res restaurants', JSON.stringify(res, null, 2));
 
       this.setState({
         banners: res?.banner,
@@ -182,7 +181,6 @@ class HomeScreen extends React.Component {
   // };
 
   componentDidMount() {
-    console.log('Component Did Mount Location **>>', this.props.location);
     reactNativeEasyPushNotifications.onMessageReceived(notif => {
       console.log('onMessageReceived:', notif);
       // This method is triggered whenever the app is in foreground and we receive the notification

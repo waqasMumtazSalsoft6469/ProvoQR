@@ -53,8 +53,10 @@ const MainNavigator = () => {
   return (
     <MainStack.Navigator
       // initialRouteName="HomeTabs"
-      headerMode="screen"
-      screenOptions={getNavigationOptions}>
+      // headerMode="screen"
+      screenOptions={getNavigationOptions}
+      // screenOptions={() => getNavigationOptions()}
+    >
       {/* {!token && (
           <MainStack.Screen component={AuthNavigator} name="Authstack" />
         )} */}

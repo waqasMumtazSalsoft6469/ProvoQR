@@ -120,7 +120,6 @@ const HomeScreen = ({navigation}) => {
       console.log('Home res params New 55', params);
 
       const res = await dispatch(getHomeData(params));
-      console.log('home res restaurants', JSON.stringify(res, null, 2));
 
       setBanners(res?.banner);
       setRecommended(res?.recommended);
@@ -147,7 +146,6 @@ const HomeScreen = ({navigation}) => {
   );
 
   useEffect(() => {
-    console.log('Component Did Mount Location **>>', location);
     reactNativeEasyPushNotifications.onMessageReceived(notif => {
       console.log('onMessageReceived:', notif);
     });

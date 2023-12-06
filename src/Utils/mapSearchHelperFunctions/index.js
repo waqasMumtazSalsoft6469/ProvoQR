@@ -17,7 +17,6 @@ export const getAddressByLatLong = coordinate => {
     try {
       const response = await fetch(url);
       const jsonResponse = await response.json();
-      console.log('getAddressByLatLong : ', jsonResponse);
       return Promise.resolve(jsonResponse);
     } catch (error) {
       return Promise.reject(error);

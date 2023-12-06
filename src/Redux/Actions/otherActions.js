@@ -7,11 +7,6 @@ import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 
 export const getHomeData = data => {
   return async (dispatch, getState) => {
-    console.log(
-      'getState()?.GeneralReducer?.location? new **>>>>> 1',
-      getState()?.GeneralReducer,
-    );
-    console.log('Get Home Action Data Params >>>>>>>>', data);
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
@@ -27,7 +22,7 @@ export const getHomeData = data => {
             ...data,
             // ...location,
           });
-          console.log('Home Action Response ****>>>', response);
+
           resolve(response);
         } catch (e) {
           showToast(getMessage(e));

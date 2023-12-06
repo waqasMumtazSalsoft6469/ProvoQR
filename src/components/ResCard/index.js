@@ -65,7 +65,7 @@ class ProductItem extends React.Component {
         <View style={styles.tiersContainer}>
           {this.props?.item?.lootboxes?.map((item, index) => {
             return (
-              <View>
+              <View key={index}>
                 <RateCard
                   item={item}
                   index={index}
@@ -97,7 +97,8 @@ class ProductItem extends React.Component {
   };
   render() {
     const location = this.props.location;
-    console.log('location', location);
+    // console.log('location', location);
+    console.log('Items of Data >>>>', this.props.item.id);
     return (
       <View style={[styles.container, this.props?.style]}>
         <TouchableHOC

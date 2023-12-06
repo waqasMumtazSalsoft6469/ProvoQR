@@ -46,7 +46,10 @@ const provo = createStackNavigator();
 const AppStack = props => {
   return (
     <DrawerScreenWrapper {...props}>
-      <App.Navigator screenOptions={{headerShown: false}} headerMode="screen">
+      <App.Navigator
+        screenOptions={{headerShown: false, headerMode: 'screen'}}
+        //  headerMode="screen"
+      >
         <App.Screen component={HomeTabs} name="HomeTabs" />
       </App.Navigator>
     </DrawerScreenWrapper>
@@ -55,7 +58,11 @@ const AppStack = props => {
 const AboutStack = props => {
   return (
     <DrawerScreenWrapper {...props}>
-      <about.Navigator screenOptions={getNavigationOptions} headerMode="screen">
+      <about.Navigator
+        //screenOptions={{headerMode: 'screen'}}
+        screenOptions={getNavigationOptions}
+        // headerMode="screen"
+      >
         <about.Screen component={AboutUs} name="AboutUs" />
       </about.Navigator>
     </DrawerScreenWrapper>
@@ -67,7 +74,9 @@ const ContactStack = props => {
     <DrawerScreenWrapper {...props}>
       <Contact.Navigator
         screenOptions={getNavigationOptions}
-        headerMode="screen">
+        // screenOptions={{headerMode: 'screen'}}
+        // headerMode="screen"
+      >
         <Contact.Screen component={ContactUs} name="ContactUs" />
       </Contact.Navigator>
     </DrawerScreenWrapper>
@@ -77,8 +86,10 @@ const ReqLogsStack = props => {
   return (
     <DrawerScreenWrapper {...props}>
       <ReqLogs.Navigator
+        //screenOptions={{headerMode: 'screen'}}
         screenOptions={getNavigationOptions}
-        headerMode="screen">
+        // headerMode="screen"
+      >
         <ReqLogs.Screen component={RequestLogs} name="RequestLogs" />
       </ReqLogs.Navigator>
     </DrawerScreenWrapper>
@@ -89,7 +100,9 @@ const SubscriptionStack = props => {
     <DrawerScreenWrapper {...props}>
       <subscriptions.Navigator
         screenOptions={getNavigationOptions}
-        headerMode="screen">
+        // headerMode="screen"
+        //</DrawerScreenWrapper>screenOptions={{headerMode: 'screen'}}
+      >
         <subscriptions.Screen
           component={MySubscriptions}
           name="MySubscriptions"
@@ -107,7 +120,9 @@ const ResReqStack = props => {
     <DrawerScreenWrapper {...props}>
       <ResRequest.Navigator
         screenOptions={getNavigationOptions}
-        headerMode="screen">
+        // headerMode="screen"
+        // screenOptions={{headerMode: 'screen'}}
+      >
         <ResRequest.Screen
           component={RestaurantRequest}
           name="RestaurantRequest"
@@ -123,7 +138,9 @@ const SecretKeyStack = props => {
     <DrawerScreenWrapper {...props}>
       <secretkey.Navigator
         screenOptions={getNavigationOptions}
-        headerMode="screen">
+        // headerMode="screen"
+        // screenOptions={{headerMode: 'screen'}}
+      >
         <secretkey.Screen component={SecretKey} name="SecretKey" />
       </secretkey.Navigator>
     </DrawerScreenWrapper>
@@ -135,7 +152,9 @@ const HistoryStack = props => {
     <DrawerScreenWrapper {...props}>
       <history.Navigator
         screenOptions={getNavigationOptions}
-        headerMode="screen">
+        // headerMode="screen"
+        //  screenOptions={{headerMode: 'screen'}}
+      >
         <history.Screen component={History} name="History" />
         <history.Screen component={HistoryDetails} name="HistoryDetails" />
       </history.Navigator>
@@ -146,7 +165,11 @@ const HistoryStack = props => {
 const ProvoStack = props => {
   return (
     <DrawerScreenWrapper {...props}>
-      <provo.Navigator screenOptions={getNavigationOptions} headerMode="screen">
+      <provo.Navigator
+        screenOptions={getNavigationOptions}
+        // headerMode="screen"
+        //screenOptions={{headerMode: 'screen'}}
+      >
         <provo.Screen component={ProvoScreen} name="ProvoScreen" />
       </provo.Navigator>
     </DrawerScreenWrapper>
