@@ -35,8 +35,21 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
-      console.log('Responses Of LootBoxes >>>', res);
-      setResponse(res);
+      console.log('Responses Of LootBoxes New >>>', JSON.stringify(res));
+      const filteredArray = res?.filter(obj => obj?.tiers?.length > 0);
+      // const filteredArray = res?.filter(obj => {
+      //   if (obj?.tiers && typeof obj?.tiers === 'object') {
+      //     return (
+      //       Array.isArray(obj?.tiers?.menu) && obj?.tiers?.menu?.length > 0
+      //     );
+      //   }
+      //   return false;
+      // });
+      console.log(
+        'After Filterd Lootboxes New 22 **>>>',
+        JSON.stringify(filteredArray[0]),
+      );
+      setResponse(filteredArray);
     });
   };
 
@@ -54,10 +67,11 @@ const LootboxTierScreen = props => {
     getLootBox();
   }, []);
 
-  const handleLootBoxPress = (data, detail_lootbox) => {
+  const handleLootBoxPress = data => {
     if (token) {
-      console.log('LootBox Data >>>', data);
-      console.log('Detail of selected lootbox >>>', detail_lootbox);
+      // console.log('LootBox organisation_id >>>', data.organisation_id);
+      // console.log('LootBox price >>>', data.price);
+      // console.log('LootBox ID >>>', data.id);
       // return;
       const id = data?.organisation_id;
       const lootBoxAmount = data?.price;
@@ -69,7 +83,7 @@ const LootboxTierScreen = props => {
         provoCash,
         lootBoxAmount: lootBoxAmount,
         lootbox_id: lootbox_id,
-        lootBoxDetails: detail_lootbox,
+        lootBoxDetails: data,
       });
     } else {
       showToast('Please Login First');
@@ -88,8 +102,38 @@ const LootboxTierScreen = props => {
     );
   };
 
-  const renderItem = ({item}) => {
+  const renderItemMenuCard = ({item}) => {
     return <MenuCard key={item?.id} item={item} />;
+  };
+
+  const renderItem = ({item}) => {
+    if (!Array.isArray(item)) {
+      return (
+        <>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 5,
+            }}>
+            <OutfitSemiBoldText style={styles.headingTextStyle}>
+              {item?.name}
+            </OutfitSemiBoldText>
+            <Image
+              source={icons.box}
+              style={[styles.cardimage, {tintColor: getTintcolor(item?.name)}]}
+            />
+          </View>
+          <FlatList
+            data={item?.menu}
+            // data={item?.menu}
+            style={styles.menuListContainer}
+            renderItem={renderItemMenuCard}
+            showsVerticalScrollIndicator={false}
+          />
+        </>
+      );
+    }
   };
 
   const renderEmpty = () => {
@@ -107,30 +151,16 @@ const LootboxTierScreen = props => {
           }}>
           <View style={{flex: 1}}>
             <OutfitSemiBoldText style={styles.headingTextStyle}>
-              {item?.lootbox?.name}
+              {item?.name}
             </OutfitSemiBoldText>
           </View>
           <Button
-            title={`$${item?.lootbox?.price} BUY`}
-            onPress={() => handleLootBoxPress(item?.lootbox, item)}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 5,
-          }}>
-          <OutfitSemiBoldText style={styles.headingTextStyle}>
-            {item?.name}
-          </OutfitSemiBoldText>
-          <Image
-            source={icons.box}
-            style={[styles.cardimage, {tintColor: getTintcolor(item?.name)}]}
+            title={`$${item?.price} BUY`}
+            onPress={() => handleLootBoxPress(item)}
           />
         </View>
         <FlatList
-          data={item?.menu}
+          data={item?.tiers}
           // data={item?.menu}
           style={styles.menuListContainer}
           renderItem={renderItem}

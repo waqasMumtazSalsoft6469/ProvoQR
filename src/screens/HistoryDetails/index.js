@@ -92,7 +92,9 @@ class HistoryDetail extends React.Component {
     //   latitude: this.state.response?.organisations?.lat,
     //   longitude: this.state.response?.organisations?.lng,
     // });
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${this.state.response?.organisations?.lat},${this.state.response?.organisations?.lng}&dir_action=navigate`;
+    // const url = `https://www.google.com/maps/dir/?api=1&destination=${this.state.response?.organisations?.lat},${this.state.response?.organisations?.lng}&dir_action=navigate`;
+    const url = `https://www.google.com/maps?q=${this.state.response?.organisations?.lat},${this.state.response?.organisations?.lng}`;
+
     const supported = Linking.canOpenURL(url);
     if (supported) {
       Linking.openURL(url);

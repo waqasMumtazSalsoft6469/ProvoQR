@@ -204,7 +204,8 @@ const HomeScreen = ({navigation}) => {
   };
 
   const handleMapBtnPress = item => {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
+    // const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
+    const url = `https://www.google.com/maps?q=${item?.lat},${item?.lng}`;
     const supported = Linking.canOpenURL(url);
     if (supported) {
       Linking.openURL(url);

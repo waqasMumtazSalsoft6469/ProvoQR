@@ -162,7 +162,7 @@ class ProvoScreen extends React.Component {
 
   renderModalComponent = () => {
     return (
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
         <View style={styles.modalContainer}>
           <TouchableOpacity style={styles.closeButton} onPress={this.onClose}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>

@@ -97,7 +97,9 @@ class MapScreen extends React.Component {
   };
 
   handleViewMapPress = (lat, lng) => {
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&dir_action=navigate`;
+    // const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&dir_action=navigate`;
+    const url = `https://www.google.com/maps?q=${lat},${lng}`;
+
     const supported = Linking.canOpenURL(url);
     if (supported) {
       Linking.openURL(url);

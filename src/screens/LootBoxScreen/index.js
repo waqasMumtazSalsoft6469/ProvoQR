@@ -7,6 +7,7 @@ import {
   Easing,
   ScrollView,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import {vh, vw} from '../../Utils/Units';
@@ -41,6 +42,9 @@ class LootBoxScreen extends React.Component {
       lootBoxDetails: {},
       claim: '',
       selectedItem: '',
+      lootBoxName: '',
+      tiersName: [],
+      tiersMenu: [],
     };
   }
 
@@ -96,6 +100,7 @@ class LootBoxScreen extends React.Component {
         menu_id: this.state?.selectedItem?.id,
       };
       console.log('Claim Object >>>', obj);
+      return;
       try {
         let res = await this.props.claimLootbox(obj);
         console.log('Claim ITem Response >>>', res);
@@ -119,15 +124,35 @@ class LootBoxScreen extends React.Component {
   };
 
   handleLootBoxDraw = () => {
+    const tiersName = [];
+    const tiersMenu = [];
     const {restaurantId, lootbox_id, lootBoxDetails} =
       this?.props?.route?.params;
     console.log('lootBoxDetails Selected ***>>>>', lootBoxDetails);
-    const data = {
-      restaurant_id: restaurantId,
-    };
-    console.log('DATA RESTAURANT 22 >>>>', data);
+    const lootBoxTiers = lootBoxDetails?.tiers.filter(
+      obj => !Array.isArray(obj),
+    );
+    console.log('lootBoxTiers >>>', lootBoxTiers);
+    for (const iterator1 of lootBoxTiers) {
+      tiersName.push(iterator1.name);
+      for (const iterator2 of iterator1.menu) {
+        tiersMenu.push(iterator2);
+      }
+    }
+    console.log('tiersName >>', tiersName);
+    console.log('tiersMenu >>', tiersMenu);
 
-    this.setState({claim: 'claim', lootBoxDetails});
+    // const data = {
+    //   restaurant_id: restaurantId,
+    // };
+    // console.log('DATA RESTAURANT 22 >>>>', data);
+
+    this.setState({
+      claim: 'claim',
+      tiersName,
+      tiersMenu,
+      lootBoxName: lootBoxDetails?.name,
+    });
     // this?.props?.navigation?.navigate('ClaimScreen', {
     //   lootBoxDetails: lootBoxDetails,
     //   restaurant_id: restaurantId,
@@ -282,7 +307,7 @@ class LootBoxScreen extends React.Component {
     if (this.state.success == 1) {
       this._startAnim();
     }
-    console.log('draw detail', this.state.rewardDetail);
+    // console.log('draw detail', this.state.rewardDetail);
     return (
       <>
         {this.state.claim !== 'claim' && (
@@ -348,7 +373,12 @@ class LootBoxScreen extends React.Component {
                 marginHorizontal: 7,
               }}>
               <OutfitSemiBoldText style={styles.heading}>
-                Congratulations! You won a {this.state.lootBoxDetails?.name}{' '}
+                Congratulations! You won a{' '}
+                {this.state.tiersName?.map((item, indx) => (
+                  <OutfitSemiBoldText style={styles.heading} key={indx}>
+                    {indx === 0 ? item : `, ${item}`}
+                  </OutfitSemiBoldText>
+                ))}{' '}
                 Prize!!!!
               </OutfitSemiBoldText>
               <OutfitRegularText style={styles.sub_heading}>
@@ -357,7 +387,7 @@ class LootBoxScreen extends React.Component {
             </View>
 
             <View style={styles.itemsContainer}>
-              {this.state.lootBoxDetails?.menu?.map((item, index) => (
+              {this.state.tiersMenu?.map((item, index) => (
                 <TouchableOpacity
                   key={index}
                   style={[
@@ -367,9 +397,19 @@ class LootBoxScreen extends React.Component {
                       : null,
                   ]}
                   onPress={() => this.handleItemSelect(item)}>
-                  <OutfitRegularText style={{textAlign: 'center'}}>
-                    {item?.name}
-                  </OutfitRegularText>
+                  <Text
+                    style={{textAlign: 'center'}}
+                    numberOfLines={3}
+                    ellipsizeMode="tail">
+                    {`${item?.name}`}
+                  </Text>
+                  {/* <OutfitRegularText
+                    style={{
+                      textAlign: 'center',
+                      backgroundColor: 'red',
+                    }}>
+                    {`${item?.name} Hello Test The Circle Width`}
+                  </OutfitRegularText> */}
                 </TouchableOpacity>
               ))}
             </View>

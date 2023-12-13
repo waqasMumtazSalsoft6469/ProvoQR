@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
+    // backgroundColor: 'green',
     // justifyContent: 'center',
     // alignItems: 'center',
   },
