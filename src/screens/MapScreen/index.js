@@ -564,7 +564,7 @@ class MapScreen extends React.Component {
                       By ProvoCash:
                     </OutfitSemiBoldText>
                     <OutfitRegularText style={styles.priceHeadingText}>
-                      ${this.state?.details?.provo_cash_price}
+                      {`${this.state?.details?.provo_cash_price} coin`}
                     </OutfitRegularText>
                   </View>
                 </View>

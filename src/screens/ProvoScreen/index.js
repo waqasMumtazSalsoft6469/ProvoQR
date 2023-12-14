@@ -7,6 +7,8 @@ import {
   FlatList,
   TextInput,
   Text,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import {backgrounds, icons, provoCash} from '../../assets/images';
 import styles from './styles';
@@ -162,51 +164,52 @@ class ProvoScreen extends React.Component {
 
   renderModalComponent = () => {
     return (
-      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
-        <View style={styles.modalContainer}>
-          <TouchableOpacity style={styles.closeButton} onPress={this.onClose}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
-          </TouchableOpacity>
+      <View style={{flex: 1}}>
+        <TouchableOpacity style={styles.closeButton} onPress={this.onClose}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>X</Text>
+        </TouchableOpacity>
+        <KeyboardAvoidingView style={{flex: 1}}>
+          <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
+            <Text style={styles.heading}>Add Provo Coin Transfer Details </Text>
+            <View style={styles.inputContainer}>
+              <MainInput
+                placeholder="Enter Transfer Amount"
+                ref={r => (this.transferAmount = r)}
+                onSubmitEditing={() => this.email.onFocus()}
+                onChangeText={value =>
+                  this.setState({
+                    transferAmount: value,
+                  })
+                }
+                style={styles.input}
+                maxLength={6}
+                keyboardType="number-pad"
+              />
+              <View style={{margin: 10}} />
+              <MainInput
+                placeholder="Enter Email Address"
+                ref={r => (this.email = r)}
+                keyboardType="email-address"
+                onChangeText={value =>
+                  this.setState({
+                    email: value,
+                  })
+                }
+                style={styles.input}
+              />
+            </View>
+            {this.state.errorMessage ? (
+              <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+            ) : null}
 
-          <Text style={styles.heading}>Add Provo Coin Transfer Details </Text>
-          <View style={styles.inputContainer}>
-            <MainInput
-              placeholder="Enter Transfer Amount"
-              ref={r => (this.transferAmount = r)}
-              onSubmitEditing={() => this.email.onFocus()}
-              onChangeText={value =>
-                this.setState({
-                  transferAmount: value,
-                })
-              }
-              style={styles.input}
-              maxLength={6}
-              keyboardType="number-pad"
+            <Button
+              title="TRANSFER"
+              onPress={this.handleTransfer}
+              btnContainer={styles.signupBtn}
             />
-            <View style={{margin: 10}} />
-            <MainInput
-              placeholder="Enter Email Address"
-              ref={r => (this.email = r)}
-              keyboardType="email-address"
-              onChangeText={value =>
-                this.setState({
-                  email: value,
-                })
-              }
-              style={styles.input}
-            />
-          </View>
-          {this.state.errorMessage ? (
-            <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
-          ) : null}
-
-          <Button
-            title="TRANSFER"
-            onPress={this.handleTransfer}
-            btnContainer={styles.signupBtn}
-          />
-        </View>
-      </KeyboardAwareScrollView>
+          </KeyboardAwareScrollView>
+        </KeyboardAvoidingView>
+      </View>
     );
   };
 

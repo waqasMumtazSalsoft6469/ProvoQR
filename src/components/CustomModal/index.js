@@ -10,6 +10,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import {backgrounds} from '../../assets/images';
+import {vh} from '../../Utils/Units';
 
 const CustomModal = ({children, visible, onClose}) => {
   const [inputValue, setInputValue] = useState('');
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: '80%',
-    height: '50%',
+    height: vh * 50,
     backgroundColor: 'white',
     padding: 20,
     // justifyContent: 'center',

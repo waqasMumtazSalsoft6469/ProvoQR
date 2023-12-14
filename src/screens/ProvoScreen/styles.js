@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 70 * vw,
+    padding: 10,
   },
   imgbg: {
     width: 100 * vw,
@@ -26,9 +27,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeButton: {
-    position: 'absolute',
-    top: -5,
-    right: 5,
+    // position: 'absolute',
+    // top: -5,
+    // right: 5,
     // bottom: -20,
   },
   heading: {

@@ -131,17 +131,19 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+  // useEffect(() => {
+  //   getData();
+  // }, [location]);
+
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
+      // getData();
+      if (isActive) getData();
 
-      getData();
-
-      // if (isActive) getData();
-
-      // return () => {
-      //   isActive = false;
-      // };
+      return () => {
+        isActive = false;
+      };
     }, [location]),
   );
 
@@ -158,12 +160,12 @@ const HomeScreen = ({navigation}) => {
       navigation.setOptions({
         headerRight: () => showHeaderRight({navigation}, handleLocationPress),
       });
-      getData();
+      // getData();
     });
 
     const unsubscribeBlur = navigation.addListener('blur', () => {
       setSearchString('');
-      getData();
+      // getData();
     });
 
     if (Platform.OS === 'android') {

@@ -2,6 +2,7 @@ import React from 'react';
 import {ImageBackground, View, Image, FlatList} from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
+import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import styles from './styles';
 import MenuCard from '../../components/MenuCard';
 import {vh, vw} from '../../Utils/Units';
@@ -14,7 +15,8 @@ class ResturentMenuScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: [],
+      menuList: [],
+      menu: {},
     };
   }
 
@@ -22,7 +24,19 @@ class ResturentMenuScreen extends React.Component {
     const {id} = this.props.route.params;
     let data = {restaurant_id: id};
     this.props.getMenu(data).then(res => {
-      this.setState({menu: res?.menu});
+      // Remove empty arrays
+      const filteredData = Object.fromEntries(
+        Object.entries(res?.menu).filter(
+          ([key, value]) => Array.isArray(value) && value.length > 0,
+        ),
+      );
+      const convertedData = Object.entries(filteredData).map(
+        ([key, value]) => ({
+          name: key,
+          menu: value,
+        }),
+      );
+      this.setState({menuList: convertedData});
     });
   }
 
@@ -49,14 +63,30 @@ class ResturentMenuScreen extends React.Component {
   renderMenuList = ({item, index}) => {
     return (
       <>
-        <OutfitSemiBoldText>{item?.name}</OutfitSemiBoldText>
+        <OutfitSemiBoldText style={{fontSize: vh * 2}}>
+          {item?.name.toUpperCase()}
+        </OutfitSemiBoldText>
         <FlatList
-          data={item?.business_menus}
+          data={item?.menu}
           style={{marginTop: 2 * vh}}
           renderItem={this.renderitem}
+          // ListEmptyComponent={this.emptyMenuItem}
         />
         {index < this.state.menu?.length - 1 && this.renderDash()}
       </>
+    );
+  };
+
+  emptyMenuItem = () => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginVertical: 10,
+        }}>
+        <OutfitRegularText>No item avaible</OutfitRegularText>
+      </View>
     );
   };
 
@@ -83,7 +113,7 @@ class ResturentMenuScreen extends React.Component {
             showsVerticalScrollIndicator={false}
             nestedScrollEnabled> */}
           <FlatList
-            data={this.state.menu}
+            data={this.state.menuList}
             style={{marginTop: 2 * vh}}
             renderItem={this.renderMenuList}
             ListEmptyComponent={this.emptyList}

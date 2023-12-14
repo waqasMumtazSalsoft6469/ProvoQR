@@ -100,7 +100,7 @@ class LootBoxScreen extends React.Component {
         menu_id: this.state?.selectedItem?.id,
       };
       console.log('Claim Object >>>', obj);
-      return;
+      // return;
       try {
         let res = await this.props.claimLootbox(obj);
         console.log('Claim ITem Response >>>', res);
@@ -123,6 +123,16 @@ class LootBoxScreen extends React.Component {
     this.setState({claim: ''});
   };
 
+  removeDuplicateObjects = arr => {
+    return arr.filter((obj, index, array) => {
+      // Find the index of the first occurrence of the current object's id
+      const firstIndex = array.findIndex(item => item.id === obj.id);
+
+      // Include the current object only if its index is the first occurrence of the id
+      return index === firstIndex;
+    });
+  };
+
   handleLootBoxDraw = () => {
     const tiersName = [];
     const tiersMenu = [];
@@ -142,6 +152,8 @@ class LootBoxScreen extends React.Component {
     console.log('tiersName >>', tiersName);
     console.log('tiersMenu >>', tiersMenu);
 
+    const removeDuplicateObjects = this.removeDuplicateObjects(tiersMenu);
+    console.log('After Removed Duplicates >>>>>', removeDuplicateObjects);
     // const data = {
     //   restaurant_id: restaurantId,
     // };
@@ -150,7 +162,7 @@ class LootBoxScreen extends React.Component {
     this.setState({
       claim: 'claim',
       tiersName,
-      tiersMenu,
+      tiersMenu: removeDuplicateObjects,
       lootBoxName: lootBoxDetails?.name,
     });
     // this?.props?.navigation?.navigate('ClaimScreen', {
