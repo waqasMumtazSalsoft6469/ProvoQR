@@ -35,21 +35,26 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
-      console.log('Responses Of LootBoxes New >>>', JSON.stringify(res));
-      const filteredArray = res?.filter(obj => obj?.tiers?.length > 0);
-      // const filteredArray = res?.filter(obj => {
-      //   if (obj?.tiers && typeof obj?.tiers === 'object') {
-      //     return (
-      //       Array.isArray(obj?.tiers?.menu) && obj?.tiers?.menu?.length > 0
-      //     );
-      //   }
-      //   return false;
-      // });
-      console.log(
-        'After Filterd Lootboxes New 22 **>>>',
-        JSON.stringify(filteredArray[0]),
-      );
-      setResponse(filteredArray);
+      // console.log('Responses Of LootBoxes New >>>', JSON.stringify(res));
+      // const filteredArray = res?.filter(obj => obj?.tiers?.length > 0);
+
+      const dataAfterFilterd = res?.map(item => ({
+        ...item,
+        tiers: item?.tiers
+          .filter(tier => tier?.menu && tier?.menu?.length > 0)
+          .map(tier => ({
+            ...tier,
+            menu: tier?.menu.filter(
+              menuItem => Object.keys(menuItem).length > 0,
+            ),
+          })),
+      }));
+      // console.log(
+      //   'After Filterd Lootboxes New 33 **>>>',
+      //   JSON.stringify(dataAfterFilterd),
+      // );
+
+      setResponse(dataAfterFilterd);
     });
   };
 
@@ -141,34 +146,36 @@ const LootboxTierScreen = props => {
   };
 
   const renderMenuList = ({item, index}) => {
-    return (
-      <View key={index}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <View style={{flex: 1}}>
-            <OutfitSemiBoldText style={styles.headingTextStyle}>
-              {item?.name}
-            </OutfitSemiBoldText>
+    if (item?.tiers?.length > 0) {
+      return (
+        <View key={index}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <View style={{flex: 1}}>
+              <OutfitSemiBoldText style={styles.headingTextStyle}>
+                {item?.name}
+              </OutfitSemiBoldText>
+            </View>
+            <Button
+              title={`$${item?.price} BUY`}
+              onPress={() => handleLootBoxPress(item)}
+            />
           </View>
-          <Button
-            title={`$${item?.price} BUY`}
-            onPress={() => handleLootBoxPress(item)}
+          <FlatList
+            data={item?.tiers}
+            // data={item?.menu}
+            style={styles.menuListContainer}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
           />
+          {index < lootBoxes?.length - 1 && renderDash()}
         </View>
-        <FlatList
-          data={item?.tiers}
-          // data={item?.menu}
-          style={styles.menuListContainer}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-        />
-        {index < lootBoxes?.length - 1 && renderDash()}
-      </View>
-    );
+      );
+    }
   };
 
   const renderHeader = () => {
