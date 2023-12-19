@@ -43,6 +43,14 @@ const history = createStackNavigator();
 const subscriptions = createStackNavigator();
 const provo = createStackNavigator();
 
+const MyTestScreen = () => {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Helllo Testing Blank Screen</Text>
+    </View>
+  );
+};
+
 const AppStack = props => {
   return (
     <DrawerScreenWrapper {...props}>
@@ -221,7 +229,7 @@ class DrawerNavigation extends Component {
             }}
             component={AppStack}
           />
-          {token && (
+          {/* {token && (
             <Drawer.Screen
               name="RestaurantRequests"
               options={{
@@ -312,7 +320,7 @@ class DrawerNavigation extends Component {
               drawerIcon: drawericons.drawer8,
             }}
             component={ReqLogsStack}
-          />
+          /> */}
         </Drawer.Navigator>
       </ImageBackground>
     );

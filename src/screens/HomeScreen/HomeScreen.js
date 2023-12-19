@@ -1,5 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {ImageBackground, View, FlatList, Platform, Linking} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  FlatList,
+  Platform,
+  Linking,
+  Text,
+} from 'react-native';
 import {backgrounds} from '../../assets/images';
 import styles from './styles';
 import HomeCard from '../../components/ResCard';
@@ -123,8 +130,8 @@ const HomeScreen = ({navigation}) => {
 
       setBanners(res?.banner);
       setRecommended(res?.recommended);
-      setAllRestaurant(res?.allRestaurant);
       setCategories(res?.category);
+      setAllRestaurant(res?.allRestaurant);
       setRefreshing(false);
     } catch (error) {
       setRefreshing(false);
@@ -237,7 +244,12 @@ const HomeScreen = ({navigation}) => {
     );
   };
 
-  const renderCategories = () => {
+  const RenderCategories = ({
+    refreshing,
+    searchString,
+    isSearchFocused,
+    categories,
+  }) => {
     if (
       refreshing ||
       searchString?.length > 0 ||
@@ -245,39 +257,40 @@ const HomeScreen = ({navigation}) => {
       categories?.length < 1
     ) {
       return null;
-    }
-    return (
-      <View>
-        <View style={styles.viewAllBtnContainer}>
-          <OutfitSemiBoldText style={styles.subHeadingText}>
-            Categories
-          </OutfitSemiBoldText>
-          <TouchableHOC onPress={handleViewAllCategoryPress}>
-            <OutfitRegularText style={styles.btnText}>
-              View All
-            </OutfitRegularText>
-          </TouchableHOC>
-        </View>
+    } else {
+      return (
+        <View>
+          <View style={styles.viewAllBtnContainer}>
+            <OutfitSemiBoldText style={styles.subHeadingText}>
+              Categories
+            </OutfitSemiBoldText>
+            <TouchableHOC onPress={handleViewAllCategoryPress}>
+              <OutfitRegularText style={styles.btnText}>
+                View All
+              </OutfitRegularText>
+            </TouchableHOC>
+          </View>
 
-        <FlatList
-          data={categories}
-          keyExtractor={item => String(item?.id)}
-          showsHorizontalScrollIndicator={false}
-          style={styles.categoryStyle}
-          renderItem={renderCategoryItem}
-          horizontal={true}
-          ListEmptyComponent={renderCategoryEmptyComponent}
-          contentContainerStyle={styles.recommendedContentContainerStyle}
-        />
-        <Dash
-          style={styles.dashBorderStyle}
-          dashColor={ThemeColors.dashBorderColor}
-          dashLength={0}
-          dashGap={1 * vh}
-          dashStyle={{width: 2 * vw}}
-        />
-      </View>
-    );
+          <FlatList
+            data={categories}
+            keyExtractor={item => String(item?.id)}
+            showsHorizontalScrollIndicator={false}
+            style={styles.categoryStyle}
+            renderItem={renderCategoryItem}
+            horizontal={true}
+            ListEmptyComponent={renderCategoryEmptyComponent}
+            contentContainerStyle={styles.recommendedContentContainerStyle}
+          />
+          <Dash
+            style={styles.dashBorderStyle}
+            dashColor={ThemeColors.dashBorderColor}
+            dashLength={0}
+            dashGap={1 * vh}
+            dashStyle={{width: 2 * vw}}
+          />
+        </View>
+      );
+    }
   };
 
   const renderRecommendedEmptyRestaurant = () => {
@@ -292,7 +305,12 @@ const HomeScreen = ({navigation}) => {
     );
   };
 
-  const renderRecommendedRestaurant = () => {
+  const RenderRecommendedRestaurant = ({
+    refreshing,
+    searchString,
+    isSearchFocused,
+    recommended,
+  }) => {
     if (
       refreshing ||
       searchString?.length > 0 ||
@@ -300,39 +318,40 @@ const HomeScreen = ({navigation}) => {
       recommended?.length < 1
     ) {
       return null;
-    }
-    return (
-      <View>
-        <View style={styles.viewAllBtnContainer}>
-          <OutfitSemiBoldText style={styles.subHeadingText}>
-            Happy Hour Restaurants
-          </OutfitSemiBoldText>
-          <TouchableHOC onPress={handleViewAllRecommendedRestaurantPress}>
-            <OutfitRegularText style={styles.btnText}>
-              View All
-            </OutfitRegularText>
-          </TouchableHOC>
+    } else {
+      return (
+        <View>
+          <View style={styles.viewAllBtnContainer}>
+            <OutfitSemiBoldText style={styles.subHeadingText}>
+              Happy Hour Restaurants
+            </OutfitSemiBoldText>
+            <TouchableHOC onPress={handleViewAllRecommendedRestaurantPress}>
+              <OutfitRegularText style={styles.btnText}>
+                View All
+              </OutfitRegularText>
+            </TouchableHOC>
+          </View>
+          <FlatList
+            data={recommended}
+            keyExtractor={item => String(item?.id)}
+            showsHorizontalScrollIndicator={false}
+            style={styles.recommendedStyle}
+            contentContainerStyle={styles.recommendedContentContainerStyle}
+            renderItem={renderAllRestaurantItem}
+            horizontal={true}
+            pagingEnabled
+            ListEmptyComponent={renderRecommendedEmptyRestaurant}
+          />
+          <Dash
+            style={styles.dashBorderStyle}
+            dashColor={ThemeColors.dashBorderColor}
+            dashLength={0}
+            dashGap={1 * vh}
+            dashStyle={{width: 2 * vw}}
+          />
         </View>
-        <FlatList
-          data={recommended}
-          keyExtractor={item => String(item?.id)}
-          showsHorizontalScrollIndicator={false}
-          style={styles.recommendedStyle}
-          contentContainerStyle={styles.recommendedContentContainerStyle}
-          renderItem={renderAllRestaurantItem}
-          horizontal={true}
-          pagingEnabled
-          ListEmptyComponent={renderRecommendedEmptyRestaurant}
-        />
-        <Dash
-          style={styles.dashBorderStyle}
-          dashColor={ThemeColors.dashBorderColor}
-          dashLength={0}
-          dashGap={1 * vh}
-          dashStyle={{width: 2 * vw}}
-        />
-      </View>
-    );
+      );
+    }
   };
 
   const renderBanner = () => {
@@ -388,6 +407,9 @@ const HomeScreen = ({navigation}) => {
         imageStyle={styles.imageStyle}>
         {/* {renderHeader()} */}
 
+        {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <Text>Helllo HomeScreen Blank Screen</Text>
+        </View> */}
         <FlatList
           data={allRestaurant?.data}
           keyExtractor={item => String(item?.id)}
@@ -407,9 +429,24 @@ const HomeScreen = ({navigation}) => {
                 onFocus={handleOnFocus}
                 onBlur={handleOnBlur}
               />
-              {/* {renderBanner()} */}
-              {renderRecommendedRestaurant()}
-              {renderCategories()}
+              {/* {renderRecommendedRestaurant()} */}
+              {/* {renderCategories()} */}
+              {
+                <RenderRecommendedRestaurant
+                  refreshing={refreshing}
+                  searchString={searchString}
+                  isSearchFocused={isSearchFocused}
+                  recommended={recommended}
+                />
+              }
+              {
+                <RenderCategories
+                  refreshing={refreshing}
+                  searchString={searchString}
+                  isSearchFocused={isSearchFocused}
+                  categories={categories}
+                />
+              }
 
               <View
                 style={[styles.viewAllBtnContainer, styles.bottomViewAllBtn]}>

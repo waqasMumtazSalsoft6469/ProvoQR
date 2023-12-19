@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
   notselectview: {
     borderRadius: 3 * vh,
     width: 25 * vw,
+    alignItems: 'center',
     justifyContent: 'center',
     height: 5 * vh,
     paddingHorizontal: 3 * vw,
     backgroundColor: ThemeColors.white,
-    alignItems: 'center',
   },
   kgs: {
     borderRadius: 3 * vh,
