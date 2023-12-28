@@ -55,11 +55,11 @@ class RegisterScreen extends React.Component {
   }
 
   componentDidMount() {
-    reactNativeEasyPushNotifications.getDeviceId(id => {
-      console.log('My device id ', id);
-      this.setState({deviceId: id});
-      // This method gives the device id which is returned by the firebase
-    });
+    // reactNativeEasyPushNotifications.getDeviceId(id => {
+    //   console.log('My device id ', id);
+    //   this.setState({deviceId: id});
+    //   // This method gives the device id which is returned by the firebase
+    // });
 
     this._unsubscribe = this.props.navigation.addListener('blur', () => {
       this.setState(initialState);

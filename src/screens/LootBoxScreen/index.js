@@ -154,10 +154,6 @@ class LootBoxScreen extends React.Component {
 
     const removeDuplicateObjects = this.removeDuplicateObjects(tiersMenu);
     console.log('After Removed Duplicates >>>>>', removeDuplicateObjects);
-    // const data = {
-    //   restaurant_id: restaurantId,
-    // };
-    // console.log('DATA RESTAURANT 22 >>>>', data);
 
     this.setState({
       claim: 'claim',
@@ -399,6 +395,7 @@ class LootBoxScreen extends React.Component {
             </View>
 
             <View style={styles.itemsContainer}>
+              {console.log('Menu Item >>>', this.state.tiersMenu)}
               {this.state.tiersMenu?.map((item, index) => (
                 <TouchableOpacity
                   key={index}
@@ -410,10 +407,10 @@ class LootBoxScreen extends React.Component {
                   ]}
                   onPress={() => this.handleItemSelect(item)}>
                   <Text
-                    style={{textAlign: 'center'}}
+                    style={{textAlign: 'center', color: '#000'}}
                     numberOfLines={3}
                     ellipsizeMode="tail">
-                    {`${item?.name}`}
+                    {item?.name}
                   </Text>
                   {/* <OutfitRegularText
                     style={{

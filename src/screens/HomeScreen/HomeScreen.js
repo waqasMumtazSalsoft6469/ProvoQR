@@ -127,6 +127,7 @@ const HomeScreen = ({navigation}) => {
       console.log('Home res params New 55', params);
 
       const res = await dispatch(getHomeData(params));
+      console.log('Response Of Restaurants >>>>', JSON.stringify(res));
 
       setBanners(res?.banner);
       setRecommended(res?.recommended);

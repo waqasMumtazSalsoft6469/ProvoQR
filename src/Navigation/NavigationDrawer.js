@@ -229,7 +229,7 @@ class DrawerNavigation extends Component {
             }}
             component={AppStack}
           />
-          {/* {token && (
+          {token && (
             <Drawer.Screen
               name="RestaurantRequests"
               options={{
@@ -320,7 +320,7 @@ class DrawerNavigation extends Component {
               drawerIcon: drawericons.drawer8,
             }}
             component={ReqLogsStack}
-          /> */}
+          />
         </Drawer.Navigator>
       </ImageBackground>
     );
