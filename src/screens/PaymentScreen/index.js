@@ -18,6 +18,7 @@ import {
   provoCashPayment,
 } from '../../Redux/Actions/otherActions';
 import {DrawerActions, StackActions} from '@react-navigation/native';
+import BackToHome from '../../components/Buttons/BackHome';
 
 class PaymentScreen extends React.Component {
   constructor(props) {
@@ -194,6 +195,7 @@ class PaymentScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imgbg}>
+          <BackToHome />
           <KeyboardAwareScrollView>
             <View style={{alignItems: 'center', marginTop: 10 * vh}}>
               <MainInput

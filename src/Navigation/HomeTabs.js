@@ -38,9 +38,7 @@ const HomeTabs = props => {
       tabBarPosition="bottom">
       <TabNavigator.Screen name="HomeStack" component={HomeStack} />
       <TabNavigator.Screen name="MapStack" component={MapStack} />
-      {/* <TabNavigator.Screen name="QrcodeStack" component={QrcodeStack} /> */}
       {token && <TabNavigator.Screen name="GiftStack" component={GiftStack} />}
-      {/* <TabNavigator.Screen name="Drawer" component={Drawer} /> */}
     </TabNavigator.Navigator>
   );
 };

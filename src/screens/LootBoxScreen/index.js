@@ -29,6 +29,8 @@ import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import CountDownTimer from '../../components/CountdownTimer';
 import {claimLootbox} from '../../Redux/Actions/otherActions';
 import {showToast} from '../../Api/HelperFunction';
+import {imageUrl} from '../../Api/configs';
+import BackToHome from '../../components/Buttons/BackHome';
 class LootBoxScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -45,6 +47,39 @@ class LootBoxScreen extends React.Component {
       lootBoxName: '',
       tiersName: [],
       tiersMenu: [],
+      dummy: {
+        lootbox_id: 11,
+        name: 'Bronze',
+        menu: [
+          {
+            id: 10,
+            name: '4',
+            detail: 'Burger',
+            image:
+              '/provo/public/storage/bussiness/menu/RiBxHJOT4aXYX96jfMiAa2QHuvmEr9MliBrPFHrq.jpg',
+            price: 39,
+            menuType: null,
+          },
+          {
+            id: 38,
+            name: 'burger',
+            detail: 'pizza',
+            image:
+              '/provo/public/storage/bussiness/menu/6o0FWiZxHDHBFWehJZhCtxltWlK128SzKUTpCeZC.jpg',
+            price: 12,
+            menuType: null,
+          },
+          {
+            id: 11,
+            name: 'Broast',
+            detail: 'Broast is tasty try',
+            image:
+              '/provo/public/storage/bussiness/menu/L3wZ5M3QT9T8uNIQEBqCMdRlWAYasPMeWqzCPR3n.jpg',
+            price: 20,
+            menuType: null,
+          },
+        ],
+      },
     };
   }
 
@@ -75,28 +110,34 @@ class LootBoxScreen extends React.Component {
       restaurant_id: restaurantId,
     };
     console.log('data for Draw >>>', data);
+    // this.setState({success: 1, claim: 'claim'});
+    // return;
     this.props.lootBoxDraw(data).then(res => {
-      console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
+      // console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
-        console.log('LootBox Draw Res Data *******>>>>>>', res);
+        // console.log('LootBox Draw Res Data *******>>>>>>', JSON.stringify(res));
         this.setState({rewardDetail: res});
-        this.setState({success: 1, claim: ''});
+        this.setState({claim: 'claim'});
       } else {
         this.setState({success: 2, claim: ''});
       }
     });
   };
 
-  handleItemSelect = item => {
-    this.setState({selectedItem: item});
+  handleItemSelect = (item, lootbox_id) => {
+    let obj = {
+      ...item,
+      lootbox_id,
+    };
+    this.setState({selectedItem: obj});
   };
 
   handleClaimItem = async () => {
     // Call your API to claim the selected item here
     if (Object.keys(this.state.selectedItem).length != 0) {
-      const {lootbox_id, lootBoxDetails} = this?.props?.route?.params;
+      // const {lootbox_id, lootBoxDetails} = this?.props?.route?.params;
       let obj = {
-        lootbox_id: lootbox_id,
+        lootbox_id: this.state?.selectedItem?.lootbox_id,
         menu_id: this.state?.selectedItem?.id,
       };
       console.log('Claim Object >>>', obj);
@@ -107,7 +148,8 @@ class LootBoxScreen extends React.Component {
         if (res?.message) {
           showToast(res?.message);
           setTimeout(() => {
-            this.handleDrawLootbox();
+            // this.handleDrawLootbox();
+            this.setState({success: 1, claim: ''});
           }, 100);
         }
       } catch (error) {
@@ -149,8 +191,6 @@ class LootBoxScreen extends React.Component {
         tiersMenu.push(iterator2);
       }
     }
-    console.log('tiersName >>', tiersName);
-    console.log('tiersMenu >>', tiersMenu);
 
     const removeDuplicateObjects = this.removeDuplicateObjects(tiersMenu);
     console.log('After Removed Duplicates >>>>>', removeDuplicateObjects);
@@ -210,7 +250,7 @@ class LootBoxScreen extends React.Component {
           <Image source={sampleimage.closeBox} style={styles.boxImage} />
           <Button
             title="TAP TO OPEN"
-            onPress={this.handleLootBoxDraw}
+            onPress={this.handleDrawLootbox}
             // style={{marginBottom: }}
             btnContainer={{borderColor: ThemeColors.white, width: vw * 40}}
             labelStyle={{color: ThemeColors.white}}
@@ -382,11 +422,9 @@ class LootBoxScreen extends React.Component {
               }}>
               <OutfitSemiBoldText style={styles.heading}>
                 Congratulations! You won a{' '}
-                {this.state.tiersName?.map((item, indx) => (
-                  <OutfitSemiBoldText style={styles.heading} key={indx}>
-                    {indx === 0 ? item : `, ${item}`}
-                  </OutfitSemiBoldText>
-                ))}{' '}
+                <OutfitSemiBoldText style={styles.heading}>
+                  {this.state.dummy?.name}
+                </OutfitSemiBoldText>{' '}
                 Prize!!!!
               </OutfitSemiBoldText>
               <OutfitRegularText style={styles.sub_heading}>
@@ -395,32 +433,42 @@ class LootBoxScreen extends React.Component {
             </View>
 
             <View style={styles.itemsContainer}>
-              {console.log('Menu Item >>>', this.state.tiersMenu)}
-              {this.state.tiersMenu?.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={[
-                    styles.item,
-                    this.state.selectedItem?.id === item?.id
-                      ? styles.selectedItem
-                      : null,
-                  ]}
-                  onPress={() => this.handleItemSelect(item)}>
-                  <Text
-                    style={{textAlign: 'center', color: '#000'}}
-                    numberOfLines={3}
-                    ellipsizeMode="tail">
-                    {item?.name}
-                  </Text>
-                  {/* <OutfitRegularText
+              {this.state.rewardDetail?.my_win_lootboxes?.menu?.map(
+                (item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.item,
+                      this.state.selectedItem?.id === item?.id
+                        ? styles.selectedItem
+                        : null,
+                    ]}
+                    onPress={() =>
+                      this.handleItemSelect(
+                        item,
+                        this.state.rewardDetail?.my_win_lootboxes?.lootbox_id,
+                      )
+                    }>
+                    <Text
+                      style={styles.menuTitle}
+                      numberOfLines={2}
+                      ellipsizeMode="tail">
+                      {`${item?.name}`}
+                    </Text>
+                    <Image
+                      source={{uri: imageUrl + item?.image}}
+                      style={styles.menuItemImg}
+                    />
+                    {/* <OutfitRegularText
                     style={{
                       textAlign: 'center',
                       backgroundColor: 'red',
                     }}>
                     {`${item?.name} Hello Test The Circle Width`}
                   </OutfitRegularText> */}
-                </TouchableOpacity>
-              ))}
+                  </TouchableOpacity>
+                ),
+              )}
             </View>
             <View
               style={{
@@ -442,6 +490,7 @@ class LootBoxScreen extends React.Component {
                 onPress={this.handleSkip}
               />
             </View>
+            <BackToHome />
           </ScrollView>
         )}
       </>

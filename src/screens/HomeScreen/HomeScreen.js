@@ -124,10 +124,10 @@ const HomeScreen = ({navigation}) => {
         lng: userLocation?.longitude ?? location?.coordinate?.longitude,
       };
 
-      console.log('Home res params New 55', params);
+      console.log('Home res params New 555', params);
 
       const res = await dispatch(getHomeData(params));
-      console.log('Response Of Restaurants >>>>', JSON.stringify(res));
+      console.log('Response Of Restaurants 1 >>>>', JSON.stringify(res));
 
       setBanners(res?.banner);
       setRecommended(res?.recommended);

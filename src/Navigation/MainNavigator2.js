@@ -74,7 +74,6 @@ const MainNavigator = () => {
         name="Drawer"
         options={{headerShown: false}}
       />
-      {/* <MainStack.Screen component={HomeScreen} name="HomeScreen" /> */}
       <MainStack.Screen component={Location} name="Location" />
       <MainStack.Screen component={Payment} name="Payment" />
       <MainStack.Screen component={Profile} name="Profile" />

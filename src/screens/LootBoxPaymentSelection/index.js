@@ -18,6 +18,7 @@ import {
 import {showToast} from '../../Api/HelperFunction';
 import {EventRegister} from 'react-native-event-listeners';
 import {events} from '../../Utils/Constants';
+import BackToHome from '../../components/Buttons/BackHome';
 
 class LootBoxPaymentMethod extends React.Component {
   constructor(props) {
@@ -116,12 +117,13 @@ class LootBoxPaymentMethod extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView>
-          <ImageBackground
-            source={backgrounds.grayBackground}
-            style={styles.imgbg}
-            resizeMode="cover"
-            imageStyle={{width: 100 * vw, height: 100 * vh}}>
+        <ImageBackground
+          source={backgrounds.grayBackground}
+          style={styles.imgbg}
+          resizeMode="cover"
+          imageStyle={{width: 100 * vw, height: 100 * vh}}>
+          <BackToHome />
+          <KeyboardAwareScrollView>
             <View style={{alignItems: 'center', marginTop: 5 * vh}}>
               <OutfitSemiBoldText style={styles.heading}>
                 Payment Method Selection
@@ -149,8 +151,8 @@ class LootBoxPaymentMethod extends React.Component {
                 />
               )}
             </View>
-          </ImageBackground>
-        </KeyboardAwareScrollView>
+          </KeyboardAwareScrollView>
+        </ImageBackground>
         <AlertModal
           visible={this.state.visibleSuccess}
           setVisible={() => this.setState({visibleSuccess: false})}

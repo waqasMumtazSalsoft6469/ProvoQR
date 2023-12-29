@@ -11,6 +11,7 @@ import {showToast} from '../../Api/HelperFunction';
 import {getLootBoxes} from '../../Redux/Actions/otherActions';
 import EmptyComponent from '../../components/EmptyComponent';
 import {icons} from '../../assets/images';
+import BackToHome from '../../components/Buttons/BackHome';
 
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
@@ -227,6 +228,7 @@ const LootboxTierScreen = props => {
 
   return (
     <View style={styles.container}>
+      <BackToHome />
       <FlatList
         data={response}
         keyExtractor={(_, index) => index}

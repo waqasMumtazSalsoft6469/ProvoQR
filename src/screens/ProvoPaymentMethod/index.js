@@ -11,6 +11,7 @@ import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import {getBillingDetails} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
+import BackToHome from '../../components/Buttons/BackHome';
 
 class ProvoPaymentMethod extends React.Component {
   constructor(props) {
@@ -61,12 +62,13 @@ class ProvoPaymentMethod extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView>
-          <ImageBackground
-            source={backgrounds.grayBackground}
-            style={styles.imgbg}
-            resizeMode="cover"
-            imageStyle={{width: 100 * vw, height: 100 * vh}}>
+        <ImageBackground
+          source={backgrounds.grayBackground}
+          style={styles.imgbg}
+          resizeMode="cover"
+          imageStyle={{width: 100 * vw, height: 100 * vh}}>
+          <BackToHome />
+          <KeyboardAwareScrollView>
             <View style={{alignItems: 'center', marginTop: 5 * vh}}>
               <OutfitSemiBoldText style={styles.heading}>
                 Payment Method Selection
@@ -106,8 +108,8 @@ class ProvoPaymentMethod extends React.Component {
                 onPress={this.handleContinue}
               />
             </View>
-          </ImageBackground>
-        </KeyboardAwareScrollView>
+          </KeyboardAwareScrollView>
+        </ImageBackground>
       </View>
     );
   }
