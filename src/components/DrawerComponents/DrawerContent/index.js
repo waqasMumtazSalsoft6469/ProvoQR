@@ -38,6 +38,7 @@ const DrawerContent = props => {
     inputRange: [0, 1],
     outputRange: [-5, 1],
   });
+  console.log('Props Data of Drawer Content >>>>', props);
   return (
     <Animated.View style={[styles.container]}>
       <Animated.View style={{opacity: opacity}}>
@@ -55,6 +56,7 @@ const DrawerContent = props => {
             props.descriptors[item.key].options;
           return (
             <DrawerButton
+              key={`item_${index}`}
               index={index}
               onPress={handleOnDrawerItemPress}
               routeName={item.name}

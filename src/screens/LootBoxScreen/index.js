@@ -105,9 +105,10 @@ class LootBoxScreen extends React.Component {
   };
 
   handleDrawLootbox = () => {
-    const {restaurantId} = this?.props?.route?.params;
+    const {restaurantId, lootbox_id} = this?.props?.route?.params;
     const data = {
       restaurant_id: restaurantId,
+      lootbox_id: lootbox_id,
     };
     console.log('data for Draw >>>', data);
     // this.setState({success: 1, claim: 'claim'});
