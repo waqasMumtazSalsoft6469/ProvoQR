@@ -110,13 +110,13 @@ class LootBoxScreen extends React.Component {
       restaurant_id: restaurantId,
       lootbox_id: lootbox_id,
     };
-    console.log('data for Draw >>>', data);
+    console.log('data for Draw New >>>', data);
     // this.setState({success: 1, claim: 'claim'});
     // return;
     this.props.lootBoxDraw(data).then(res => {
       // console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
-        // console.log('LootBox Draw Res Data *******>>>>>>', JSON.stringify(res));
+        console.log('LootBox Draw Res Data *******>>>>>>', JSON.stringify(res));
         this.setState({rewardDetail: res});
         this.setState({claim: 'claim'});
       } else {
@@ -424,7 +424,7 @@ class LootBoxScreen extends React.Component {
               <OutfitSemiBoldText style={styles.heading}>
                 Congratulations! You won a{' '}
                 <OutfitSemiBoldText style={styles.heading}>
-                  {this.state.dummy?.name}
+                  {this.state.rewardDetail?.my_win_lootboxes?.name}
                 </OutfitSemiBoldText>{' '}
                 Prize!!!!
               </OutfitSemiBoldText>

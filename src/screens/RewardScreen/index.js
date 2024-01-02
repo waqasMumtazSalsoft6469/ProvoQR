@@ -177,10 +177,10 @@ class RegisterScreen extends React.Component {
         // groupArray.push({data: subArray});
         groupArray.push(subArray);
       }
-      // console.log(
-      //   'groupArray ***>>>>>>> Original Data',
-      //   JSON.stringify(groupArray),
-      // );
+      console.log(
+        'groupArray ***>>>>>>> Original Data',
+        JSON.stringify(groupArray),
+      );
       // this.setState({rewardMenuList: groupArray});
       this.setState({reward: groupArray});
 

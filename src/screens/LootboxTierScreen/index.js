@@ -36,7 +36,7 @@ const LootboxTierScreen = props => {
       restaurant_id: id,
     };
     dispatch(getLootBoxes(data)).then(res => {
-      // console.log('Responses Of LootBoxes New >>>', JSON.stringify(res));
+      console.log('Responses Of LootBoxes New 22 >>>', JSON.stringify(res));
       // const filteredArray = res?.filter(obj => obj?.tiers?.length > 0);
 
       const dataAfterFilterd = res?.map(item => ({
