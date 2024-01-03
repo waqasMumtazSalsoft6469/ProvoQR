@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   BackHandler,
+  Text,
 } from 'react-native';
 import {backgrounds, icons, sampleimage} from '../../assets/images';
 
@@ -32,6 +33,7 @@ import {
   showHeaderLeft,
   showHeaderRight,
 } from '../../Navigation/NavigationOptions';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 class RegisterScreen extends React.Component {
   constructor(props) {
@@ -42,6 +44,7 @@ class RegisterScreen extends React.Component {
       successModal: false,
       redeemResponse: {},
       timeLeft: '',
+      activeSlide: 0,
       // cusines: [
       //   {
       //     name: 'Cuisine 01',
@@ -168,7 +171,7 @@ class RegisterScreen extends React.Component {
 
     this.props.getRewardDetail(data).then(res => {
       // alert('alert');
-      console.log('res new **>>', res?.rewardDetail);
+      // console.log('res new **>>', JSON.stringify(res?.rewardDetail));
       this.setState({
         details: res?.rewardDetail,
       });
@@ -207,10 +210,10 @@ class RegisterScreen extends React.Component {
     //     "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
     //   ).diff(moment(), 'minutes'),
     // );
-    console.log(
-      'Reward Detail Data **>>',
-      this.state?.details?.provo_cash_price,
-    );
+    // console.log(
+    //   'Reward Detail Data **>>',
+    //   this.state?.details?.provo_cash_price,
+    // );
 
     return (
       <View style={styles.container}>
@@ -219,27 +222,83 @@ class RegisterScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 90 * vh}}>
-          <ScrollView contentContainerStyle={{paddingBottom: vh * 10}}>
+          <ScrollView
+            contentContainerStyle={{flexGrow: 1, paddingBottom: vh * 10}}>
+            <Carousel
+              data={this.state.details?.my_win_lootbox?.menu}
+              renderItem={({item}) => {
+                return (
+                  <>
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        marginTop: 3 * vh,
+                        // borderRadius: vh * 2,
+                        borderTopLeftRadius: vh * 2,
+                        borderTopRightRadius: vh * 2,
+                      }}>
+                      <Image
+                        source={
+                          item?.image
+                            ? {
+                                uri: imageUrl + item?.image,
+                              }
+                            : sampleimage.placeholder
+                        }
+                        style={styles.cardimg}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        marginLeft: 20,
+                      }}>
+                      <OutfitSemiBoldText style={styles.midHeadingStyle}>
+                        Menu Info
+                      </OutfitSemiBoldText>
+                      <OutfitMediumText style={styles.midTextStyle}>
+                        {item?.name}
+                      </OutfitMediumText>
+                      <OutfitMediumText style={styles.rewardDesHeadingText}>
+                        Description
+                      </OutfitMediumText>
+                      <OutfitMediumText style={styles.midTextStyle}>
+                        {item?.detail}
+                      </OutfitMediumText>
+                    </View>
+                  </>
+                );
+              }}
+              sliderWidth={vw * 100}
+              itemWidth={vw * 100}
+              pagingEnabled={true}
+              // windowSize={1}
+              onSnapToItem={index => this.setState({activeSlide: index})}
+              initialScrollIndex={this.state.activeSlide}
+            />
+            <Pagination
+              dotsLength={this.state.details?.my_win_lootbox?.menu.length}
+              activeDotIndex={this.state.activeSlide}
+              containerStyle={{top: 1 * vh}}
+              dotStyle={styles.dot}
+              inactiveDotStyle={styles.inactiveDot}
+              dotContainerStyle={{
+                marginRight: vw * 0,
+                marginHorizontal: vh * 0.5,
+              }}
+              inactiveDotOpacity={1}
+              activeOpacity={1}
+              inactiveDotScale={1}
+            />
+
             <View
               style={{
-                alignItems: 'center',
-                marginTop: 3 * vh,
-                borderRadius: vh * 2,
+                paddingHorizontal: 6 * vw,
+                // backgroundColor: 'red',
+                // marginBottom: vh * 10,
               }}>
-              <Image
-                source={
-                  this.state.details?.my_win_lootbox?.menu?.image
-                    ? {
-                        uri:
-                          imageUrl +
-                          this.state.details?.my_win_lootbox?.menu?.image,
-                      }
-                    : sampleimage.placeholder
-                }
-                style={styles.cardimg}
-              />
-            </View>
-            <View style={{paddingHorizontal: 6 * vw}}>
+              <OutfitSemiBoldText style={styles.midHeadingStyle}>
+                Reward Info
+              </OutfitSemiBoldText>
               <View style={styles.rewardHeadContainer}>
                 <Image
                   source={icons.box}
@@ -256,18 +315,6 @@ class RegisterScreen extends React.Component {
                   {this.state.details?.my_win_lootbox?.tier_name}
                 </OutfitLightText>
               </View>
-              <OutfitSemiBoldText style={styles.midHeadingStyle}>
-                Reward Info
-              </OutfitSemiBoldText>
-              <OutfitMediumText style={styles.midTextStyle}>
-                {this.state.details?.my_win_lootbox?.menu?.name}
-              </OutfitMediumText>
-              <OutfitMediumText style={styles.rewardDesHeadingText}>
-                Description
-              </OutfitMediumText>
-              <OutfitMediumText style={styles.midTextStyle}>
-                {this.state.details?.my_win_lootbox?.menu?.detail}
-              </OutfitMediumText>
               <OutfitMediumText style={styles.rewardDesHeadingText}>
                 Reward Expiration Date & Time
               </OutfitMediumText>

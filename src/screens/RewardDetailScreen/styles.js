@@ -15,6 +15,24 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     // marginLeft: 4 * vw,
   },
+  carouselItem: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'lightgray',
+  },
+  dot: {
+    width: vw * 2,
+    height: vw * 2,
+    borderRadius: vh,
+    backgroundColor: ThemeColors.primary,
+  },
+  inactiveDot: {
+    width: vw * 2,
+    height: vw * 2,
+    borderRadius: vh,
+    backgroundColor: '#707070',
+  },
   imgbg: {
     width: 100 * vw,
 
@@ -46,7 +64,7 @@ const styles = StyleSheet.create({
   },
   rewardDesHeadingText: {
     color: '#818080',
-    marginTop: vh * 2,
+    marginTop: vh * 1,
     lineHeight: 3 * vh,
     fontSize: 2 * vh,
   },
@@ -95,8 +113,9 @@ const styles = StyleSheet.create({
   cardimg: {
     width: 90 * vw,
     height: 50 * vw,
-
-    borderRadius: 2 * vh,
+    // borderRadius: 2 * vh,
+    borderTopLeftRadius: vh * 2,
+    borderTopRightRadius: vh * 2,
     resizeMode: 'cover',
   },
   rewardIcon: {

@@ -20,11 +20,18 @@ const MenuScreen = ({
   renderFooter,
   onEndReached,
 }) => {
-  console.log('Original Data >>>', originalData);
+  // console.log('Original Data >>>', JSON.stringify(originalData));
   let navigation = useNavigation();
 
   const handleNavigation = item => {
-    // console.log('Selected Item Data >>>>>>>>', item);
+    console.log('Selected Item Data >>>>>>>>', item);
+    // let obj = {
+    //   category: 'Redeem',
+    //   reward_id: item?.id,
+    //   status: item?.status,
+    //   restaurantName: item?.organisations?.name,
+    // };
+    // console.log('New Obje >>>', obj);
     navigation.navigate('RewardDetail', {
       category: 'Redeem',
       reward_id: item?.id,
@@ -48,20 +55,18 @@ const MenuScreen = ({
           <>
             <View style={{width: '50%'}}>
               {item[0] && (
-                <>
-                  <TouchableOpacity
-                    style={styles.rowfirst}
-                    onPress={() => handleNavigation(item[0])}
-                    activeOpacity={0.6}>
-                    <Image
-                      source={{
-                        uri: item[0]?.my_win_lootbox?.menu?.image
-                          ? imageUrl + item[0]?.my_win_lootbox?.menu?.image
-                          : sampleimage.noImage,
-                      }}
-                      style={styles.imageStyle}
-                    />
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[0])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[0]?.my_win_lootbox?.menu[0]?.image
+                        ? imageUrl + item[0]?.my_win_lootbox?.menu[0]?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
                   <Image
                     source={
                       item[0]?.organisations?.image
@@ -70,23 +75,21 @@ const MenuScreen = ({
                     }
                     style={styles.resLogoStyle}
                   />
-                </>
+                </TouchableOpacity>
               )}
               {item[1] && (
-                <>
-                  <TouchableOpacity
-                    style={styles.rowfirst}
-                    onPress={() => handleNavigation(item[1])}
-                    activeOpacity={0.6}>
-                    <Image
-                      source={{
-                        uri: item[1]?.my_win_lootbox?.menu?.image
-                          ? imageUrl + item[1]?.my_win_lootbox?.menu?.image
-                          : sampleimage.noImage,
-                      }}
-                      style={styles.imageStyle}
-                    />
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[1])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[1]?.my_win_lootbox?.menu[1]?.image
+                        ? imageUrl + item[1]?.my_win_lootbox?.menu[1]?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
                   <Image
                     source={
                       item[1]?.organisations?.image
@@ -95,24 +98,22 @@ const MenuScreen = ({
                     }
                     style={styles.resLogoStyle}
                   />
-                </>
+                </TouchableOpacity>
               )}
             </View>
             {item[2] && (
-              <>
-                <TouchableOpacity
-                  style={styles.bigPic}
-                  onPress={() => handleNavigation(item[2])}
-                  activeOpacity={0.6}>
-                  <Image
-                    source={{
-                      uri: item[2]?.my_win_lootbox?.menu?.image
-                        ? imageUrl + item[2]?.my_win_lootbox?.menu?.image
-                        : sampleimage.noImage,
-                    }}
-                    style={styles.imageStyle}
-                  />
-                </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.bigPic}
+                onPress={() => handleNavigation(item[2])}
+                activeOpacity={0.6}>
+                <Image
+                  source={{
+                    uri: item[2]?.my_win_lootbox?.menu[2]?.image
+                      ? imageUrl + item[2]?.my_win_lootbox?.menu[2]?.image
+                      : sampleimage.noImage,
+                  }}
+                  style={styles.imageStyle}
+                />
                 <Image
                   source={
                     item[2]?.organisations?.image
@@ -121,26 +122,24 @@ const MenuScreen = ({
                   }
                   style={styles.resLogoStyle}
                 />
-              </>
+              </TouchableOpacity>
             )}
           </>
         ) : (
           <>
             {item[0] && (
-              <>
-                <TouchableOpacity
-                  style={styles.bigPic}
-                  onPress={() => handleNavigation(item[0])}
-                  activeOpacity={0.6}>
-                  <Image
-                    source={{
-                      uri: item[0]?.my_win_lootbox?.menu?.image
-                        ? imageUrl + item[0]?.my_win_lootbox?.menu?.image
-                        : sampleimage.noImage,
-                    }}
-                    style={styles.imageStyle}
-                  />
-                </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.bigPic}
+                onPress={() => handleNavigation(item[0])}
+                activeOpacity={0.6}>
+                <Image
+                  source={{
+                    uri: item[0]?.my_win_lootbox?.menu[0]?.image
+                      ? imageUrl + item[0]?.my_win_lootbox?.menu[0]?.image
+                      : sampleimage.noImage,
+                  }}
+                  style={styles.imageStyle}
+                />
                 <Image
                   source={
                     item[0]?.organisations?.image
@@ -149,25 +148,23 @@ const MenuScreen = ({
                   }
                   style={styles.resLogoStyle}
                 />
-              </>
+              </TouchableOpacity>
             )}
 
             <View style={{width: '50%'}}>
               {item[1] && (
-                <>
-                  <TouchableOpacity
-                    style={styles.rowfirst}
-                    onPress={() => handleNavigation(item[1])}
-                    activeOpacity={0.6}>
-                    <Image
-                      source={{
-                        uri: item[1]?.my_win_lootbox?.menu?.image
-                          ? imageUrl + item[1]?.my_win_lootbox?.menu?.image
-                          : sampleimage.noImage,
-                      }}
-                      style={styles.imageStyle}
-                    />
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[1])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[1]?.my_win_lootbox?.menu[1]?.image
+                        ? imageUrl + item[1]?.my_win_lootbox?.menu[1]?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
                   <Image
                     source={
                       item[1]?.organisations?.image
@@ -176,23 +173,21 @@ const MenuScreen = ({
                     }
                     style={styles.resLogoStyle}
                   />
-                </>
+                </TouchableOpacity>
               )}
               {item[2] && (
-                <>
-                  <TouchableOpacity
-                    style={styles.rowfirst}
-                    onPress={() => handleNavigation(item[2])}
-                    activeOpacity={0.6}>
-                    <Image
-                      source={{
-                        uri: item[2]?.my_win_lootbox?.menu?.image
-                          ? imageUrl + item[2]?.my_win_lootbox?.menu?.image
-                          : sampleimage.noImage,
-                      }}
-                      style={styles.imageStyle}
-                    />
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rowfirst}
+                  onPress={() => handleNavigation(item[2])}
+                  activeOpacity={0.6}>
+                  <Image
+                    source={{
+                      uri: item[2]?.my_win_lootbox?.menu[2]?.image
+                        ? imageUrl + item[2]?.my_win_lootbox?.menu[2]?.image
+                        : sampleimage.noImage,
+                    }}
+                    style={styles.imageStyle}
+                  />
                   <Image
                     source={
                       item[2]?.organisations?.image
@@ -201,7 +196,7 @@ const MenuScreen = ({
                     }
                     style={styles.resLogoStyle}
                   />
-                </>
+                </TouchableOpacity>
               )}
             </View>
           </>
@@ -214,20 +209,18 @@ const MenuScreen = ({
           flexDirection: 'row',
         }}>
         {item[3] && (
-          <>
-            <TouchableOpacity
-              style={styles.rowcenter}
-              onPress={() => handleNavigation(item[3])}
-              activeOpacity={0.6}>
-              <Image
-                source={{
-                  uri: item[3]?.my_win_lootbox?.menu?.image
-                    ? imageUrl + item[3]?.my_win_lootbox?.menu?.image
-                    : sampleimage.noImage,
-                }}
-                style={styles.imageStyle}
-              />
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.rowcenter}
+            onPress={() => handleNavigation(item[3])}
+            activeOpacity={0.6}>
+            <Image
+              source={{
+                uri: item[3]?.my_win_lootbox?.menu[3]?.image
+                  ? imageUrl + item[3]?.my_win_lootbox?.menu[3]?.image
+                  : sampleimage.noImage,
+              }}
+              style={styles.imageStyle}
+            />
             <Image
               source={
                 item[3]?.organisations?.image
@@ -236,23 +229,21 @@ const MenuScreen = ({
               }
               style={styles.resLogoStyle}
             />
-          </>
+          </TouchableOpacity>
         )}
         {item[4] && (
-          <>
-            <TouchableOpacity
-              style={styles.rowcenter}
-              onPress={() => handleNavigation(item[4])}
-              activeOpacity={0.6}>
-              <Image
-                source={{
-                  uri: item[4]?.my_win_lootbox?.menu?.image
-                    ? imageUrl + item[4]?.my_win_lootbox?.menu?.image
-                    : sampleimage.noImage,
-                }}
-                style={styles.imageStyle}
-              />
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.rowcenter}
+            onPress={() => handleNavigation(item[4])}
+            activeOpacity={0.6}>
+            <Image
+              source={{
+                uri: item[4]?.my_win_lootbox?.menu[4]?.image
+                  ? imageUrl + item[4]?.my_win_lootbox?.menu[4]?.image
+                  : sampleimage.noImage,
+              }}
+              style={styles.imageStyle}
+            />
             <Image
               source={
                 item[4]?.organisations?.image
@@ -261,23 +252,21 @@ const MenuScreen = ({
               }
               style={styles.resLogoStyle}
             />
-          </>
+          </TouchableOpacity>
         )}
         {item[5] && (
-          <>
-            <TouchableOpacity
-              style={styles.rowcenter}
-              onPress={() => handleNavigation(item[5])}
-              activeOpacity={0.6}>
-              <Image
-                source={{
-                  uri: item[5]?.my_win_lootbox?.menu?.image
-                    ? imageUrl + item[5]?.my_win_lootbox?.menu?.image
-                    : sampleimage.noImage,
-                }}
-                style={styles.imageStyle}
-              />
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.rowcenter}
+            onPress={() => handleNavigation(item[5])}
+            activeOpacity={0.6}>
+            <Image
+              source={{
+                uri: item[5]?.my_win_lootbox?.menu[5]?.image
+                  ? imageUrl + item[5]?.my_win_lootbox?.menu[5]?.image
+                  : sampleimage.noImage,
+              }}
+              style={styles.imageStyle}
+            />
             <Image
               source={
                 item[5]?.organisations?.image
@@ -286,7 +275,7 @@ const MenuScreen = ({
               }
               style={styles.resLogoStyle}
             />
-          </>
+          </TouchableOpacity>
         )}
       </View>
     </View>
@@ -350,10 +339,10 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   resLogoStyle: {
-    // position: 'absolute',
-    bottom: vw * 8,
+    position: 'absolute',
+    bottom: vw * 5,
     // right: vw * 5,
-    left: vw * 37,
+    left: vw * 42,
     height: vw * 6,
     width: vw * 6,
     resizeMode: 'contain',
