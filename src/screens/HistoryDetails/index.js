@@ -22,12 +22,14 @@ import {showToast} from '../../Api/HelperFunction';
 import OutfitSemiBoldText from '../../components/Text/OutfitSemiBoldText';
 import OutfitMediumText from '../../components/Text/OutfitMediumText';
 import moment from 'moment';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 class HistoryDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       response: {},
+      activeSlide: 0,
       // cusines: [
       //   {
       //     name: 'Cuisine 01',
@@ -110,7 +112,74 @@ class HistoryDetail extends React.Component {
     );
     return (
       <View style={{width: vw * 90, marginBottom: vh * 3}}>
-        <Image
+        <Carousel
+          data={item?.my_win_lootbox?.menu}
+          renderItem={({item}) => {
+            return (
+              <>
+                <View
+                  style={{
+                    // backgroundColor: 'red',
+                    // alignItems: 'center',
+                    // marginTop: 3 * vh,
+                    // borderRadius: vh * 2,
+                    borderTopLeftRadius: vh * 3,
+                    borderTopRightRadius: vh * 3,
+                  }}>
+                  <Image
+                    source={
+                      item?.image
+                        ? {
+                            uri: imageUrl + item?.image,
+                          }
+                        : sampleimage.placeholder
+                    }
+                    style={styles.cardimg}
+                  />
+                </View>
+                <View
+                // style={{
+                //   marginLeft: 10,
+                // }}
+                >
+                  <OutfitSemiBoldText style={styles.midHeadingStyle}>
+                    Menu Info
+                  </OutfitSemiBoldText>
+                  <OutfitMediumText style={styles.midTextStyle}>
+                    {item?.name}
+                  </OutfitMediumText>
+                  <OutfitMediumText style={styles.rewardDesHeadingText}>
+                    Description
+                  </OutfitMediumText>
+                  <OutfitMediumText style={styles.midTextStyle}>
+                    {item?.detail}
+                  </OutfitMediumText>
+                </View>
+              </>
+            );
+          }}
+          sliderWidth={vw * 100}
+          itemWidth={vw * 100}
+          pagingEnabled={true}
+          // windowSize={1}
+          onSnapToItem={index => this.setState({activeSlide: index})}
+          initialScrollIndex={this.state.activeSlide}
+        />
+        <Pagination
+          dotsLength={item?.my_win_lootbox?.menu?.length}
+          activeDotIndex={this.state.activeSlide}
+          containerStyle={{top: 1 * vh}}
+          dotStyle={styles.dot}
+          inactiveDotStyle={styles.inactiveDot}
+          dotContainerStyle={{
+            marginRight: vw * 0,
+            marginHorizontal: vh * 0.5,
+          }}
+          inactiveDotOpacity={1}
+          activeOpacity={1}
+          inactiveDotScale={1}
+        />
+        {/* <Image
           source={
             item?.my_win_lootbox?.menu?.image
               ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
@@ -118,34 +187,31 @@ class HistoryDetail extends React.Component {
             // sampleimage.placeholder
           }
           style={styles.cardimg}
-        />
-        <View style={{paddingHorizontal: 6 * vw}}>
-          <View style={styles.rewardHeadContainer}>
-            <Image
-              source={icons.box}
-              style={[
-                styles.tierImage,
-                {
-                  tintColor: this.getTintcolor(item?.my_win_lootbox?.tier_name),
-                },
-              ]}
-            />
-            <OutfitLightText style={styles.rewtext}>
-              {item?.my_win_lootbox?.tier_name}
-            </OutfitLightText>
-          </View>
+        /> */}
+        <View
+        // style={{paddingHorizontal: 6 * vw}}
+        >
           <OutfitSemiBoldText style={styles.midHeadingStyle}>
             Reward Info
           </OutfitSemiBoldText>
-          <OutfitMediumText style={styles.midTextStyle}>
-            {item?.my_win_lootbox?.menu?.name}
-          </OutfitMediumText>
-          <OutfitMediumText style={styles.rewardDesHeadingText}>
-            Description
-          </OutfitMediumText>
-          <OutfitMediumText style={styles.midTextStyle}>
-            {item?.my_win_lootbox?.menu?.detail}
-          </OutfitMediumText>
+          {item?.status == 'Available' && (
+            <View style={styles.rewardHeadContainer}>
+              <Image
+                source={icons.box}
+                style={[
+                  styles.tierImage,
+                  {
+                    tintColor: this.getTintcolor(
+                      item?.my_win_lootbox?.tier_name,
+                    ),
+                  },
+                ]}
+              />
+              <OutfitLightText style={styles.rewtext}>
+                {item?.my_win_lootbox?.tier_name}
+              </OutfitLightText>
+            </View>
+          )}
           <OutfitMediumText style={styles.rewardDesHeadingText}>
             Reward Status
           </OutfitMediumText>
@@ -161,8 +227,9 @@ class HistoryDetail extends React.Component {
               item?.status === 'Redeemed'
                 ? item?.redemption_time
                 : item?.reward_expire_date,
-              'DD-MM-YYYY HH:mm:ss',
-            ).format('MM/DD/YYYY HH:mm A')}
+            )
+              .utc()
+              .format('MM/DD/YYYY HH:mm A')}
           </OutfitMediumText>
         </View>
         {/* {item?.status === 'Redeemed' ? (
@@ -313,6 +380,10 @@ class HistoryDetail extends React.Component {
     );
   };
   render() {
+    console.log(
+      'Histories of Reward >>>',
+      this.state.response?.organisations?.reward_histories,
+    );
     return (
       <View style={styles.container}>
         <ImageBackground

@@ -87,7 +87,8 @@ const RedeemRewardScreen = props => {
             Reward Info
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.rewardText}>
-            {restaurant?.my_win_lootbox?.menu?.name}
+            {/* {restaurant?.my_win_lootbox?.menu?.name} */}
+            {restaurant?.my_win_lootbox?.tier_name}
           </OutfitMediumText>
           <OutfitSemiBoldText style={styles.headingText}>
             Restaurant Details

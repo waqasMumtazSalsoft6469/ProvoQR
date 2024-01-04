@@ -84,8 +84,8 @@ const MenuScreen = ({
                   activeOpacity={0.6}>
                   <Image
                     source={{
-                      uri: item[1]?.my_win_lootbox?.menu[1]?.image
-                        ? imageUrl + item[1]?.my_win_lootbox?.menu[1]?.image
+                      uri: item[1]?.my_win_lootbox?.menu[0]?.image
+                        ? imageUrl + item[1]?.my_win_lootbox?.menu[0]?.image
                         : sampleimage.noImage,
                     }}
                     style={styles.imageStyle}
@@ -108,8 +108,8 @@ const MenuScreen = ({
                 activeOpacity={0.6}>
                 <Image
                   source={{
-                    uri: item[2]?.my_win_lootbox?.menu[2]?.image
-                      ? imageUrl + item[2]?.my_win_lootbox?.menu[2]?.image
+                    uri: item[2]?.my_win_lootbox?.menu[0]?.image
+                      ? imageUrl + item[2]?.my_win_lootbox?.menu[0]?.image
                       : sampleimage.noImage,
                   }}
                   style={styles.imageStyle}
@@ -159,8 +159,8 @@ const MenuScreen = ({
                   activeOpacity={0.6}>
                   <Image
                     source={{
-                      uri: item[1]?.my_win_lootbox?.menu[1]?.image
-                        ? imageUrl + item[1]?.my_win_lootbox?.menu[1]?.image
+                      uri: item[1]?.my_win_lootbox?.menu[0]?.image
+                        ? imageUrl + item[1]?.my_win_lootbox?.menu[0]?.image
                         : sampleimage.noImage,
                     }}
                     style={styles.imageStyle}
@@ -182,8 +182,8 @@ const MenuScreen = ({
                   activeOpacity={0.6}>
                   <Image
                     source={{
-                      uri: item[2]?.my_win_lootbox?.menu[2]?.image
-                        ? imageUrl + item[2]?.my_win_lootbox?.menu[2]?.image
+                      uri: item[2]?.my_win_lootbox?.menu[0]?.image
+                        ? imageUrl + item[2]?.my_win_lootbox?.menu[0]?.image
                         : sampleimage.noImage,
                     }}
                     style={styles.imageStyle}
@@ -215,8 +215,8 @@ const MenuScreen = ({
             activeOpacity={0.6}>
             <Image
               source={{
-                uri: item[3]?.my_win_lootbox?.menu[3]?.image
-                  ? imageUrl + item[3]?.my_win_lootbox?.menu[3]?.image
+                uri: item[3]?.my_win_lootbox?.menu[0]?.image
+                  ? imageUrl + item[3]?.my_win_lootbox?.menu[0]?.image
                   : sampleimage.noImage,
               }}
               style={styles.imageStyle}
@@ -238,8 +238,8 @@ const MenuScreen = ({
             activeOpacity={0.6}>
             <Image
               source={{
-                uri: item[4]?.my_win_lootbox?.menu[4]?.image
-                  ? imageUrl + item[4]?.my_win_lootbox?.menu[4]?.image
+                uri: item[4]?.my_win_lootbox?.menu[0]?.image
+                  ? imageUrl + item[4]?.my_win_lootbox?.menu[0]?.image
                   : sampleimage.noImage,
               }}
               style={styles.imageStyle}
@@ -261,8 +261,8 @@ const MenuScreen = ({
             activeOpacity={0.6}>
             <Image
               source={{
-                uri: item[5]?.my_win_lootbox?.menu[5]?.image
-                  ? imageUrl + item[5]?.my_win_lootbox?.menu[5]?.image
+                uri: item[5]?.my_win_lootbox?.menu[0]?.image
+                  ? imageUrl + item[5]?.my_win_lootbox?.menu[0]?.image
                   : sampleimage.noImage,
               }}
               style={styles.imageStyle}

@@ -66,8 +66,10 @@ class History extends React.Component {
         per_page: 10,
       };
 
+      console.log('History Data Obj >>>', filters);
+
       const response = await this.props.getRewardHistory(filters);
-      //   console.log('response', response);
+      console.log('getRewardHistory response >>', response);
       this.setState({
         response: response?.history?.data,
       });
@@ -89,6 +91,7 @@ class History extends React.Component {
         ...data,
       });
     } catch (error) {
+      console.log('History Data Getting Error >>>>', error);
       this.setState({
         refreshing: false,
       });

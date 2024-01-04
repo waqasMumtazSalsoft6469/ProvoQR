@@ -21,11 +21,28 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     // marginLeft: 4 * vw,
   },
+  rewardHeadContainer: {
+    marginTop: vh,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dot: {
+    width: vw * 2,
+    height: vw * 2,
+    borderRadius: vh,
+    backgroundColor: ThemeColors.primary,
+  },
+  inactiveDot: {
+    width: vw * 2,
+    height: vw * 2,
+    borderRadius: vh,
+    backgroundColor: '#707070',
+  },
   rewtext: {
     color: '#818080',
     lineHeight: 3 * vh,
     fontSize: 2 * vh,
-    marginLeft: 8,
+    marginLeft: 10,
   },
   badge: {
     position: 'absolute',
@@ -97,12 +114,6 @@ const styles = StyleSheet.create({
     marginTop: vh,
     fontSize: 1.7 * vh,
   },
-  rewtext: {
-    color: '#818080',
-    marginTop: vh,
-    lineHeight: 3 * vh,
-    fontSize: 2 * vh,
-  },
   imgicon: {
     width: 5 * vw,
     tintColor: '#000000',
@@ -138,8 +149,9 @@ const styles = StyleSheet.create({
   cardimg: {
     width: 90 * vw,
     height: 50 * vw,
-
-    borderRadius: 3 * vh,
+    borderTopLeftRadius: 3 * vh,
+    borderTopRightRadius: 3 * vh,
+    // borderRadius: 3 * vh,
     resizeMode: 'cover',
   },
   menuContainer: {

@@ -292,7 +292,8 @@ class LootBoxScreen extends React.Component {
             Reward Info
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.rewardText}>
-            {this.state?.rewardDetail?.rewards?.my_win_lootbox?.menu?.name}
+            {this.state?.rewardDetail?.my_win_lootboxes?.name}
+            {/* {this.state?.rewardDetail?.rewards?.my_win_lootbox?.menu?.name} */}
           </OutfitMediumText>
           <OutfitSemiBoldText style={styles.headingText}>
             Restaurant Details

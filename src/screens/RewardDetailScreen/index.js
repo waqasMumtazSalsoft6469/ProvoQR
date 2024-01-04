@@ -171,7 +171,10 @@ class RegisterScreen extends React.Component {
 
     this.props.getRewardDetail(data).then(res => {
       // alert('alert');
-      // console.log('res new **>>', JSON.stringify(res?.rewardDetail));
+      console.log(
+        'getRewardDetail res new **>> new',
+        JSON.stringify(res?.rewardDetail),
+      );
       this.setState({
         details: res?.rewardDetail,
       });
