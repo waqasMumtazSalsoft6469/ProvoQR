@@ -127,12 +127,25 @@ const styles = StyleSheet.create({
   cardimg: {
     width: 90 * vw,
     height: 50 * vw,
-
+    overflow: 'visible',
     borderRadius: 4 * vh,
     resizeMode: 'cover',
   },
   menuContainer: {
     flexDirection: 'row',
+  },
+  happyHourIconContainer: {
+    position: 'absolute',
+    top: vh * 10,
+  },
+  happyHourIcon: {
+    height: vh * 13,
+    width: vw * 13,
+    resizeMode: 'contain',
+    position: 'absolute',
+    // top: vh * 0,
+    right: vh * 4,
+    bottom: vh * 17,
   },
   buttonText: {
     color: '#365EB1',

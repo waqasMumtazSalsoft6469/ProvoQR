@@ -42,7 +42,7 @@ const MenuScreen = ({
 
   const renderItems = ({item, index}) => (
     <View key={item[index]}>
-      {console.log('Restuarant Image Logo >>>', item[0]?.organisations)}
+      {/* {console.log('Selected Item Library >>>', item[0])} */}
       <View
         // key={item[index]?.id}
         style={{
@@ -54,7 +54,7 @@ const MenuScreen = ({
         {index % 2 == 0 ? (
           <>
             <View style={{width: '50%'}}>
-              {item[0] && (
+              {item[0] && item[0]?.my_win_lootbox && (
                 <TouchableOpacity
                   style={styles.rowfirst}
                   onPress={() => handleNavigation(item[0])}
@@ -77,7 +77,7 @@ const MenuScreen = ({
                   />
                 </TouchableOpacity>
               )}
-              {item[1] && (
+              {item[1] && item[1]?.my_win_lootbox && (
                 <TouchableOpacity
                   style={styles.rowfirst}
                   onPress={() => handleNavigation(item[1])}
@@ -101,7 +101,7 @@ const MenuScreen = ({
                 </TouchableOpacity>
               )}
             </View>
-            {item[2] && (
+            {item[2] && item[2]?.my_win_lootbox && (
               <TouchableOpacity
                 style={styles.bigPic}
                 onPress={() => handleNavigation(item[2])}
@@ -127,7 +127,7 @@ const MenuScreen = ({
           </>
         ) : (
           <>
-            {item[0] && (
+            {item[0] && item[0]?.my_win_lootbox && (
               <TouchableOpacity
                 style={styles.bigPic}
                 onPress={() => handleNavigation(item[0])}
@@ -152,7 +152,7 @@ const MenuScreen = ({
             )}
 
             <View style={{width: '50%'}}>
-              {item[1] && (
+              {item[1] && item[1]?.my_win_lootbox && (
                 <TouchableOpacity
                   style={styles.rowfirst}
                   onPress={() => handleNavigation(item[1])}
@@ -175,7 +175,7 @@ const MenuScreen = ({
                   />
                 </TouchableOpacity>
               )}
-              {item[2] && (
+              {item[2] && item[2]?.my_win_lootbox && (
                 <TouchableOpacity
                   style={styles.rowfirst}
                   onPress={() => handleNavigation(item[2])}
@@ -208,7 +208,7 @@ const MenuScreen = ({
           height: vh * 15,
           flexDirection: 'row',
         }}>
-        {item[3] && (
+        {item[3] && item[3]?.my_win_lootbox && (
           <TouchableOpacity
             style={styles.rowcenter}
             onPress={() => handleNavigation(item[3])}
@@ -231,7 +231,7 @@ const MenuScreen = ({
             />
           </TouchableOpacity>
         )}
-        {item[4] && (
+        {item[4] && item[4]?.my_win_lootbox && (
           <TouchableOpacity
             style={styles.rowcenter}
             onPress={() => handleNavigation(item[4])}
@@ -254,7 +254,7 @@ const MenuScreen = ({
             />
           </TouchableOpacity>
         )}
-        {item[5] && (
+        {item[5] && item[5]?.my_win_lootbox && (
           <TouchableOpacity
             style={styles.rowcenter}
             onPress={() => handleNavigation(item[5])}

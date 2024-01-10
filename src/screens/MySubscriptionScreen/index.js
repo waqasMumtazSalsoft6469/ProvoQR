@@ -11,8 +11,9 @@ import OutfitLightText from '../../components/Text/OutfitLightText';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
 import {getMySubscription} from '../../Redux/Actions/otherActions';
 import {connect} from 'react-redux';
-import {subPackges} from '../../Redux/Actions/authActions';
+import {subPackges, subscribePackage} from '../../Redux/Actions/authActions';
 import moment from 'moment/moment';
+import {showToast} from '../../Api/HelperFunction';
 
 class MySuscription extends React.Component {
   constructor(props) {
@@ -37,6 +38,18 @@ class MySuscription extends React.Component {
     });
   }
 
+  subScribeFreePackage = async id => {
+    const data = {
+      package_id: id,
+    };
+    console.log('Free Package Data >>>', data);
+    // let res = await dispatch(subscribePackage(data, token));
+    this.props.subscribePackage(data, this.state.token).then(res => {
+      console.log('Free Package Response >>>>', res);
+      showToast(res?.message);
+    });
+  };
+
   rendersubscriptions = () => {
     return this.state?.packages.map((item, index) => {
       return (
@@ -44,11 +57,16 @@ class MySuscription extends React.Component {
           <SubsCard
             item={item}
             success={(itemIndex, item) => {
-              this.props.navigation.navigate('Payment', {
-                id: item?.id,
-                token: this.state.token,
-                from: this?.props?.route?.name,
-              });
+              console.log('Item Package Selected >>>', item);
+              if (item?.name === 'Free Trial') {
+                this.subScribeFreePackage(item?.id);
+              } else {
+                this.props.navigation.navigate('Payment', {
+                  id: item?.id,
+                  token: this.state.token,
+                  from: this?.props?.route?.name,
+                });
+              }
             }}
             index={index}
             activeindex={this.state.activeindex}
@@ -174,6 +192,7 @@ const mapDispatchToProps = dispatch => {
     // explicitly forwarding arguments
     getMySubscription: () => dispatch(getMySubscription()),
     subPackges: () => dispatch(subPackges()),
+    subscribePackage: () => dispatch(subscribePackage()),
     // signup: data => dispatch(userSignup(data)),
   };
 };

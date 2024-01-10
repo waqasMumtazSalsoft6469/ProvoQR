@@ -112,7 +112,7 @@ class HistoryDetail extends React.Component {
     );
     return (
       <View style={{width: vw * 90, marginBottom: vh * 3}}>
-        <Carousel
+        {/* <Carousel
           data={item?.my_win_lootbox?.menu}
           renderItem={({item}) => {
             return (
@@ -178,19 +178,17 @@ class HistoryDetail extends React.Component {
           inactiveDotOpacity={1}
           activeOpacity={1}
           inactiveDotScale={1}
-        />
-        {/* <Image
+        /> */}
+        <Image
           source={
-            item?.my_win_lootbox?.menu?.image
-              ? {uri: imageUrl + item?.my_win_lootbox?.menu?.image}
+            item?.my_win_lootbox?.menu[0]?.image
+              ? {uri: imageUrl + item?.my_win_lootbox?.menu[0]?.image}
               : sampleimage.placeholder
             // sampleimage.placeholder
           }
           style={styles.cardimg}
-        /> */}
-        <View
-        // style={{paddingHorizontal: 6 * vw}}
-        >
+        />
+        <View>
           <OutfitSemiBoldText style={styles.midHeadingStyle}>
             Reward Info
           </OutfitSemiBoldText>
@@ -212,6 +210,15 @@ class HistoryDetail extends React.Component {
               </OutfitLightText>
             </View>
           )}
+          <OutfitMediumText style={styles.midTextStyle}>
+            {item?.my_win_lootbox?.menu[0]?.name}
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.rewardDesHeadingText}>
+            Description
+          </OutfitMediumText>
+          <OutfitMediumText style={styles.midTextStyle}>
+            {item?.my_win_lootbox?.menu[0]?.detail}
+          </OutfitMediumText>
           <OutfitMediumText style={styles.rewardDesHeadingText}>
             Reward Status
           </OutfitMediumText>

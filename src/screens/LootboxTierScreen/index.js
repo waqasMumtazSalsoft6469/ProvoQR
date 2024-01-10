@@ -16,7 +16,7 @@ import BackToHome from '../../components/Buttons/BackHome';
 const LootboxTierScreen = props => {
   const lootBoxes = props?.route?.params?.lootBoxes;
   // console.log('LootBoxes Data New ****>>>>>>>', JSON.stringify(lootBoxes));
-  const lootbox_id = lootBoxes[0]?.lootbox_id;
+  // const lootbox_id = lootBoxes[0]?.lootbox_id;
   const id = props?.route?.params?.id;
   const provoCash = props?.route?.params?.provoCash;
   const lootBoxAmount = props?.route?.params?.lootBoxAmount;

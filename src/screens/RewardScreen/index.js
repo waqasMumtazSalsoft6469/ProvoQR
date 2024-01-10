@@ -155,7 +155,7 @@ class RegisterScreen extends React.Component {
       };
 
       const response = await this.props.getRewardList(filters);
-      console.log('reward response new 11 11', response?.rewardList?.data);
+      // console.log('reward response new 11 11', response?.rewardList?.data);
       // this.setState({
       //   reward: response?.rewardList?.data,
       // });
@@ -177,10 +177,10 @@ class RegisterScreen extends React.Component {
         // groupArray.push({data: subArray});
         groupArray.push(subArray);
       }
-      console.log(
-        'groupArray ***>>>>>>> Original Data',
-        JSON.stringify(groupArray),
-      );
+      // console.log(
+      //   'groupArray ***>>>>>>> Original Data',
+      //   JSON.stringify(groupArray),
+      // );
       // this.setState({rewardMenuList: groupArray});
       this.setState({reward: groupArray});
 

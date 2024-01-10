@@ -116,7 +116,7 @@ class LootBoxScreen extends React.Component {
     this.props.lootBoxDraw(data).then(res => {
       // console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
-        console.log('LootBox Draw Res Data *******>>>>>>', JSON.stringify(res));
+        // console.log('LootBox Draw Res Data *******>>>>>>', JSON.stringify(res));
         this.setState({rewardDetail: res});
         this.setState({claim: 'claim'});
       } else {
@@ -125,10 +125,11 @@ class LootBoxScreen extends React.Component {
     });
   };
 
-  handleItemSelect = (item, lootbox_id) => {
+  handleItemSelect = (item, my_win_lootbox) => {
     let obj = {
       ...item,
-      lootbox_id,
+      lootbox_id: my_win_lootbox?.lootbox_id,
+      purchase_lootbox_payment_id: my_win_lootbox?.purchase_lootbox_payment_id,
     };
     this.setState({selectedItem: obj});
   };
@@ -140,12 +141,14 @@ class LootBoxScreen extends React.Component {
       let obj = {
         lootbox_id: this.state?.selectedItem?.lootbox_id,
         menu_id: this.state?.selectedItem?.id,
+        purchase_lootbox_payment_id:
+          this.state?.selectedItem?.purchase_lootbox_payment_id,
       };
-      console.log('Claim Object >>>', obj);
+      console.log('Claim Object New **>>>', obj);
       // return;
       try {
         let res = await this.props.claimLootbox(obj);
-        console.log('Claim ITem Response >>>', res);
+        console.log('Claim ITem New Response >>>', res);
         if (res?.message) {
           showToast(res?.message);
           setTimeout(() => {
@@ -292,8 +295,8 @@ class LootBoxScreen extends React.Component {
             Reward Info
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.rewardText}>
-            {this.state?.rewardDetail?.my_win_lootboxes?.name}
-            {/* {this.state?.rewardDetail?.rewards?.my_win_lootbox?.menu?.name} */}
+            {/* {this.state?.rewardDetail?.my_win_lootboxes?.name} */}
+            {this.state?.rewardDetail?.rewards?.my_win_lootbox?.tier_name}
           </OutfitMediumText>
           <OutfitSemiBoldText style={styles.headingText}>
             Restaurant Details
@@ -425,7 +428,7 @@ class LootBoxScreen extends React.Component {
               <OutfitSemiBoldText style={styles.heading}>
                 Congratulations! You won a{' '}
                 <OutfitSemiBoldText style={styles.heading}>
-                  {this.state.rewardDetail?.my_win_lootboxes?.name}
+                  {this.state.rewardDetail?.rewards?.my_win_lootbox?.tier_name}
                 </OutfitSemiBoldText>{' '}
                 Prize!!!!
               </OutfitSemiBoldText>
@@ -435,7 +438,7 @@ class LootBoxScreen extends React.Component {
             </View>
 
             <View style={styles.itemsContainer}>
-              {this.state.rewardDetail?.my_win_lootboxes?.menu?.map(
+              {this.state.rewardDetail?.rewards?.my_win_lootbox?.menu?.map(
                 (item, index) => (
                   <TouchableOpacity
                     key={index}
@@ -448,7 +451,7 @@ class LootBoxScreen extends React.Component {
                     onPress={() =>
                       this.handleItemSelect(
                         item,
-                        this.state.rewardDetail?.my_win_lootboxes?.lootbox_id,
+                        this.state.rewardDetail?.rewards?.my_win_lootbox,
                       )
                     }>
                     <Text
@@ -485,12 +488,12 @@ class LootBoxScreen extends React.Component {
                 btnContainer={{marginTop: 5 * vh}}
                 onPress={this.handleClaimItem}
               />
-              <View style={{margin: 10}} />
-              <Button
+              <View style={{margin: 20}} />
+              {/* <Button
                 title="SKIP"
                 btnContainer={{marginTop: 5 * vh}}
                 onPress={this.handleSkip}
-              />
+              /> */}
             </View>
             <BackToHome />
           </ScrollView>

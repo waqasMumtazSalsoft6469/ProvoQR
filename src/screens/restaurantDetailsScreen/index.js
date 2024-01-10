@@ -160,7 +160,12 @@ class ResturentDetailScreen extends React.Component {
             {/* <OutfitSemiBoldText style={styles.headingText}>
               {this.props?.route?.params?.name}
             </OutfitSemiBoldText> */}
-            <View style={{alignItems: 'center', marginTop: 3 * vh}}>
+            <View
+              style={{
+                alignItems: 'center',
+                marginTop: 3 * vh,
+                position: 'relative',
+              }}>
               <Image
                 source={
                   this.state.details?.image
@@ -170,6 +175,15 @@ class ResturentDetailScreen extends React.Component {
                 defaultSource={sampleimage.placeholder}
                 style={styles.cardimg}
               />
+              {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >
+                0 && (
+                // <View style={styles.happyHourIconContainer}>
+                <Image
+                  source={icons.happyHourIcon}
+                  style={styles.happyHourIcon}
+                />
+                // </View>
+              )}
             </View>
             <View style={{paddingHorizontal: 5 * vw}}>
               <View
@@ -272,10 +286,7 @@ class ResturentDetailScreen extends React.Component {
             )}
             {this.state?.details?.lootboxes?.length > 0 && (
               <View style={{alignItems: 'center', marginVertical: vh * 3}}>
-                <Button
-                  title="Beverage Deal"
-                  onPress={this.handleLootBoxPress}
-                />
+                <Button title="LootBoxes" onPress={this.handleLootBoxPress} />
               </View>
             )}
             {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >

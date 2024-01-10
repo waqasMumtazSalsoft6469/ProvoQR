@@ -116,8 +116,8 @@ class RegisterScreen extends React.Component {
       reward_id: id,
     };
     this.props.redeemReward(data).then(res => {
+      console.log('Response of Redeem Reward <<<<>>>>>', res);
       if (res?.success) {
-        console.log('res', res);
         this.setState({visibleModal: false});
         this.props.navigation?.navigate('RedeemRewardScreen', {
           code: res?.code,
@@ -213,10 +213,7 @@ class RegisterScreen extends React.Component {
     //     "YYYY-MM-DD'T'HH:mm:ss.SSSSSS'Z'",
     //   ).diff(moment(), 'minutes'),
     // );
-    // console.log(
-    //   'Reward Detail Data **>>',
-    //   this.state?.details?.provo_cash_price,
-    // );
+    console.log('Reward Detail Data **>>', this.state?.details?.my_win_lootbox);
 
     return (
       <View style={styles.container}>
@@ -227,7 +224,7 @@ class RegisterScreen extends React.Component {
           imageStyle={{width: 100 * vw, height: 90 * vh}}>
           <ScrollView
             contentContainerStyle={{flexGrow: 1, paddingBottom: vh * 10}}>
-            <Carousel
+            {/* <Carousel
               data={this.state.details?.my_win_lootbox?.menu}
               renderItem={({item}) => {
                 return (
@@ -291,13 +288,32 @@ class RegisterScreen extends React.Component {
               inactiveDotOpacity={1}
               activeOpacity={1}
               inactiveDotScale={1}
-            />
+            /> */}
+
+            <View
+              style={{
+                alignItems: 'center',
+                marginTop: 5 * vh,
+                borderRadius: vh * 2,
+              }}>
+              <Image
+                source={
+                  this.state.details?.my_win_lootbox?.menu[0]?.image
+                    ? {
+                        uri:
+                          imageUrl +
+                          this.state.details?.my_win_lootbox?.menu[0]?.image,
+                      }
+                    : sampleimage.placeholder
+                }
+                style={styles.cardimg}
+              />
+            </View>
 
             <View
               style={{
                 paddingHorizontal: 6 * vw,
-                // backgroundColor: 'red',
-                // marginBottom: vh * 10,
+                marginVertical: 6 * vh,
               }}>
               <OutfitSemiBoldText style={styles.midHeadingStyle}>
                 Reward Info
@@ -318,14 +334,22 @@ class RegisterScreen extends React.Component {
                   {this.state.details?.my_win_lootbox?.tier_name}
                 </OutfitLightText>
               </View>
+              <OutfitMediumText style={styles.midTextStyle}>
+                {this.state.details?.my_win_lootbox?.menu[0]?.name}
+              </OutfitMediumText>
+              <OutfitMediumText style={styles.rewardDesHeadingText}>
+                Description
+              </OutfitMediumText>
+              <OutfitMediumText style={styles.midTextStyle}>
+                {this.state.details?.my_win_lootbox?.menu[0]?.detail}
+              </OutfitMediumText>
               <OutfitMediumText style={styles.rewardDesHeadingText}>
                 Reward Expiration Date & Time
               </OutfitMediumText>
               <OutfitMediumText style={styles.midTextStyle}>
-                {moment(
-                  this.state.details?.reward_expire_date,
-                  'DD-MM-YYYY HH:mm:ss',
-                ).format('MM/DD/YYYY HH:mm A')}
+                {moment(this.state.details?.reward_expire_date).format(
+                  'MM/DD/YYYY HH:mm A',
+                )}
               </OutfitMediumText>
             </View>
             {/* <Dash

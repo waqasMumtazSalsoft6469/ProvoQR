@@ -97,8 +97,6 @@ class ProductItem extends React.Component {
   };
   render() {
     const location = this.props.location;
-    // console.log('location', location);
-    console.log('Items of Data >>>>', this.props.item);
     return (
       <View style={[styles.container, this.props?.style]}>
         <TouchableHOC
