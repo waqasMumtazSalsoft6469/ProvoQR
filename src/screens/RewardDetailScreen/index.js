@@ -111,18 +111,25 @@ class RegisterScreen extends React.Component {
   };
 
   handlePopupPress = () => {
-    const id = this.props.route.params.reward_id;
+    const id = this.props?.route?.params?.reward_id;
     const data = {
       reward_id: id,
     };
+    console.log('For Redeem Data **>>>>', data);
     this.props.redeemReward(data).then(res => {
       console.log('Response of Redeem Reward <<<<>>>>>', res);
       if (res?.success) {
         this.setState({visibleModal: false});
-        this.props.navigation?.navigate('RedeemRewardScreen', {
-          code: res?.code,
-          restaurant: this.state.details,
+
+        // this.props.navigation?.navigate('RedeemRewardScreen', {
+        this.props.navigation.navigate('GiftStack', {
+          screen: 'RedeemRewardScreen',
+          params: {
+            code: res?.code,
+            restaurant: this.state.details,
+          },
         });
+
         // this.setState({
         //   visibleModal: false,
         //   redeemResponse: res,
@@ -167,7 +174,7 @@ class RegisterScreen extends React.Component {
       reward_id: id,
     };
 
-    console.log('Reward ID **>>>', data);
+    // console.log('Reward ID **>>>', data);
 
     this.props.getRewardDetail(data).then(res => {
       // alert('alert');

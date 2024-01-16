@@ -17,7 +17,6 @@ export const post = async (endpoint, body, formData = false, queryParams) => {
 
   try {
     const networkResult = await performNetworkRequest(url, configs);
-    console.log('NETWORK RESULT', networkResult);
     const result = await handleResponse(networkResult);
 
     return Promise.resolve(result);
@@ -37,7 +36,6 @@ export const get = async (endpoint, queryParams) => {
     const networkResult = await performNetworkRequest(url, configs);
     console.log('networkResult', networkResult);
     const result = await handleResponse(networkResult);
-
 
     return Promise.resolve(result);
   } catch (e) {
@@ -75,7 +73,6 @@ export const postForSubscription = async (
 
   try {
     const networkResult = await performNetworkRequest(url, configs);
-    console.log('NETWORK RESULT', networkResult);
     const result = await handleResponse(networkResult);
 
     return Promise.resolve(result);

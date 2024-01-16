@@ -52,7 +52,6 @@ const LocationSearchScreen = props => {
     }
   };
   const handleItemPress = async item => {
-    console.log('item', item);
     try {
       const response = await dispatch(getLatlngByAddress(item?.place_id));
       console.log('latlng  res', response);

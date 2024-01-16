@@ -33,8 +33,6 @@ const RestaurantListScreen = props => {
   });
 
   const handleMapBtnPress = item => {
-    // console.log('items >>>>', item);
-    // return;
     const url = `https://www.google.com/maps/dir/?api=1&destination=${item?.lat},${item?.lng}&dir_action=navigate`;
     const supported = Linking.canOpenURL(url);
     if (supported) {

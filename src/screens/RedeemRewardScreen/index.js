@@ -23,6 +23,8 @@ const RedeemRewardScreen = props => {
   const code = props?.route?.params?.code;
   const restaurant = props?.route?.params?.restaurant;
 
+  console.log('Redeem Reward Screen Props >>>>>', props);
+
   const handleRewardBtnPress = () => {
     let sendingData = {
       id: restaurant?.organisation_id,

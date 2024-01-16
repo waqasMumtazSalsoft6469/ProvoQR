@@ -27,7 +27,6 @@ class ProductItem extends React.Component {
   };
 
   render() {
-    console.log('item', this.props.item);
     return (
       <View
         style={[

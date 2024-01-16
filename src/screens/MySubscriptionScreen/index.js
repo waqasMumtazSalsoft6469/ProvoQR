@@ -57,7 +57,6 @@ class MySuscription extends React.Component {
           <SubsCard
             item={item}
             success={(itemIndex, item) => {
-              console.log('Item Package Selected >>>', item);
               if (item?.name === 'Free Trial') {
                 this.subScribeFreePackage(item?.id);
               } else {
