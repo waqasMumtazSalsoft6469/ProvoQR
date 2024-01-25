@@ -34,6 +34,7 @@ import LootboxTierScreen from '../screens/LootboxTierScreen';
 import RewardDetail from '../screens/RewardDetailScreen';
 import RedeemRewardScreen from '../screens/RedeemRewardScreen';
 import LocationSearchScreen from '../screens/LocationSearchScreen';
+import SearchLocationScreen from '../screens/SearchLocationScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 
 const MainStack = createStackNavigator();
@@ -112,9 +113,13 @@ const MainNavigator = () => {
         component={LootboxTierScreen}
         name="LootboxTierScreen"
       />
-      <MainStack.Screen
+      {/* <MainStack.Screen
         component={LocationSearchScreen}
         name="LocationSearchScreen"
+      /> */}
+      <MainStack.Screen
+        component={SearchLocationScreen}
+        name="SearchLocationScreen"
       />
       <MainStack.Screen component={RewardDetail} name="RewardDetail" />
     </MainStack.Navigator>

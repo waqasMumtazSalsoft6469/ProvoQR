@@ -38,7 +38,7 @@ const Subscription = props => {
     const data = {
       package_id: id,
     };
-    console.log('Free Package Data >>>', data);
+    // console.log('Free Package Data >>>', data);
     let res = await dispatch(subscribePackage(data, token));
     console.log('Free Package Response >>>>', res);
     showToast(res?.message);

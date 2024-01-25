@@ -153,7 +153,7 @@ class CompleteProfile extends React.Component {
             </View>
             <View style={{alignItems: 'center'}}>
               <View style={styles.radioContainer}>
-                {this.state.gender.map((val, index) => {
+                {this.state?.gender?.map((val, index) => {
                   return (
                     <TouchableHOC
                       index={index}

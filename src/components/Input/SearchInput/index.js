@@ -5,11 +5,12 @@ import ThemeColors from '../../../Utils/ThemeColors';
 import styles from './styles';
 
 const SearchInput = props => {
+  console.log('SearchInput Ref >>>', props.ref);
   return (
     <View style={[styles.searchbar, props?.style]}>
       <Image source={icons.search} style={styles.search} resizeMode="contain" />
       <TextInput
-        ref={props?.ref}
+        // ref={props?.ref}
         placeholder={props.placeholder}
         returnKeyType={'search'}
         placeholderTextColor="#999999"

@@ -1,4 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import {FlatList, TouchableOpacity, View, Text} from 'react-native';
 import styles from './styles';
 import SearchInput from '../../components/Input/SearchInput';
@@ -7,11 +13,14 @@ import {
   getLatlngByAddress,
 } from '../../Utils/mapSearchHelperFunctions';
 import {useDispatch} from 'react-redux';
+import OutfitRegularText from '../../components/Text/OutfitRegularText';
 
-const LocationSearchScreen = props => {
-  // const {} = props;
+const SearchList = forwardRef((props, ref) => {
+  const {} = props;
 
-  // const inputRef = useRef();
+  console.log('Props Detail >>>', props);
+
+  const inputRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -23,13 +32,10 @@ const LocationSearchScreen = props => {
     console.log('blur', blur);
     setBlur(false);
   };
-  const handleOnblurFunc = () => {
+  const handleOnblur = () => {
     console.log('blur', blur);
     setBlur(true);
   };
-
-  // Comment Code Start
-
   const handleOnSearch = async () => {
     console.log('search', search);
     try {
@@ -54,8 +60,8 @@ const LocationSearchScreen = props => {
     try {
       const response = await dispatch(getLatlngByAddress(item?.place_id));
       console.log('latlng  res', response);
-      props.route.params.handleRoute(response?.results[0]);
-      props.navigation.goBack();
+      props?.props?.route.params.handleRoute(response?.results[0]);
+      props?.props.navigation.goBack();
     } catch (e) {
       // console.log(e);
     }
@@ -78,29 +84,29 @@ const LocationSearchScreen = props => {
         hitSlop={styles.hitslop}>
         <Text style={styles.itemText}>{item?.description}</Text>
         {/* <OutfitRegularText style={styles.itemText}>
-          {item?.description}
-        </OutfitRegularText> */}
+            {item?.description}
+          </OutfitRegularText> */}
         <View style={styles.border} />
       </TouchableOpacity>
     );
   };
 
-  // useEffect(() => {
-  //   inputRef.current && inputRef?.current.;
-  //   // setTimeout(() => {
-  //   //   inputRef?.current?.focus();
-  //   // }, 1000);
-  // }, []);
+  useImperativeHandle(ref, () => ({
+    focusInput: () => {
+      inputRef.current && inputRef.current.focus();
+    },
+    // ... other functions you want to expose ...
+  }));
 
   return (
     <View style={styles.container}>
       <SearchInput
-        // ref={inputRef}
+        ref={inputRef}
         placeholder="Search...."
         value={search}
         onChangeText={value => handleOnChangeText(value)}
         onSubmitEditing={handleOnSearch}
-        onBlur={handleOnblurFunc}
+        onBlur={handleOnblur}
         onFocus={handleOnFocus}
         autoFocus={true}
         // clearBtn={this.state?.searchString?.length > 0}
@@ -116,6 +122,6 @@ const LocationSearchScreen = props => {
       )}
     </View>
   );
-};
+});
 
-export default LocationSearchScreen;
+export default SearchList;

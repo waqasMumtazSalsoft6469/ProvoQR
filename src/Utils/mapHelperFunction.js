@@ -48,8 +48,8 @@ export const getCurrentLocation = () => {
       success => {
         console.log('location success', success);
         let Coords = {
-          latitude: success.coords.latitude,
-          longitude: success.coords.longitude,
+          latitude: success?.coords?.latitude,
+          longitude: success?.coords?.longitude,
         };
 
         return resolve(Coords);

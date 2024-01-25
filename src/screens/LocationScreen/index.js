@@ -30,9 +30,11 @@ import {getAddressByLatLong} from '../../Utils/mapSearchHelperFunctions';
 import {useDispatch} from 'react-redux';
 import {showToast} from '../../Api/HelperFunction';
 import OutfitRegularText from '../../components/Text/OutfitRegularText';
+import LocationSearchModal from '../LocationSearchModal';
 
 const AddressLocation = props => {
   const dispatch = useDispatch();
+  const locationSearchRef = useRef();
   const [initialRegion] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -47,8 +49,18 @@ const AddressLocation = props => {
       longitudeDelta: 0.0421,
     },
   });
+  const [functionsTriggered, setFunctionsTriggered] = useState(false);
   const [searchedAddress, setSearchedAddress] = useState(null);
   const [selection, setSelection] = React.useState({start: 0, end: 0});
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
   const mapRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -71,8 +83,16 @@ const AddressLocation = props => {
     animateToRegion(coordiantes);
   };
 
-  const handleSearchAddress = () => {
-    props.navigation?.navigate('LocationSearchScreen', {handleRoute});
+  const handleSearchAddress = props => {
+    openModal();
+    // alert('Clicked Modal');
+    // props?.navigation?.navigate('LocationSearchScreen', {
+    //   handleRoute,
+    // });
+    // SearchLocationScreen
+    // props?.navigation?.navigate('SearchLocationScreen', {
+    //   handleRoute,
+    // });
   };
 
   const handleDonePress = () => {
@@ -139,9 +159,11 @@ const AddressLocation = props => {
           address: response?.results[0]?.formatted_address,
         },
       });
+      setFunctionsTriggered(true);
       animateToRegion(location);
     } catch (error) {
       showToast(error);
+      setFunctionsTriggered(true);
     }
   };
   const setupMethods = async () => {
@@ -150,6 +172,7 @@ const AddressLocation = props => {
       getUserLocation();
     } catch (error) {
       console.log('location** error ', error);
+      setFunctionsTriggered(true);
     }
   };
 
@@ -219,20 +242,29 @@ const AddressLocation = props => {
             Add a New Address
           </OutfitSemiBoldText>
           <OutfitMediumText style={styles.label}>Address</OutfitMediumText>
-          <TouchableOpacity
-            style={styles.addressContainer}
-            onPress={handleSearchAddress}
-            activeOpacity={0.9}>
-            <ScrollView
-              horizontal
-              contentContainerStyle={{
-                alignItems: 'center',
-              }}>
-              <OutfitRegularText style={styles.addressText}>
-                {searchedAddress ?? 'Search Location'}
-              </OutfitRegularText>
-            </ScrollView>
-          </TouchableOpacity>
+          {functionsTriggered ? (
+            <TouchableOpacity
+              style={styles.addressContainer}
+              onPress={() => handleSearchAddress(props)}
+              activeOpacity={0.9}>
+              <ScrollView
+                horizontal
+                contentContainerStyle={{
+                  alignItems: 'center',
+                }}>
+                <OutfitRegularText style={styles.addressText}>
+                  {searchedAddress ?? 'Search Location'}
+                </OutfitRegularText>
+              </ScrollView>
+            </TouchableOpacity>
+          ) : null}
+
+          <LocationSearchModal
+            visible={modalVisible}
+            onClose={closeModal}
+            handleRoute={handleRoute}
+            // navigation={props.navigation}
+          />
           {/* <MainInput
             selection={selection}
             onSelectionChange={({nativeEvent: {selection, text}}) =>
