@@ -110,11 +110,11 @@ class LootBoxScreen extends React.Component {
       restaurant_id: restaurantId,
       lootbox_id: lootbox_id,
     };
-    console.log('data for Draw New >>>', data);
+    console.log('data for Draw New 11>>>', data);
     // this.setState({success: 1, claim: 'claim'});
     // return;
     this.props.lootBoxDraw(data).then(res => {
-      // console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
+      console.log('Response LootBoxDraw New 11 NEW *****>>>>', res);
       if (res?.message === 'Win') {
         // console.log('LootBox Draw Res Data *******>>>>>>', JSON.stringify(res));
         this.setState({rewardDetail: res});

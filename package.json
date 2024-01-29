@@ -10,7 +10,8 @@
     "test": "jest",
     "lint": "eslint .",
     "postinstall": "patch-package",
-    "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
+    "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "start-max": "node --max-old-space-size=8192 node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",

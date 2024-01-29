@@ -178,7 +178,9 @@ class RegisterScreen extends React.Component {
       this.props.signup(data).then(res => {
         if (res?.success) {
           showToast(res?.message);
-          this.props.navigation.navigate('Subscription', {token: res?.token});
+          setTimeout(() => {
+            this.props.navigation.navigate('Subscription', {token: res?.token});
+          }, 1500);
           // this.setState({formOption: 'Login'});
         }
       });

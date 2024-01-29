@@ -28,8 +28,10 @@ const Subscription = props => {
   useEffect(() => {
     const {token} = props.route?.params;
     dispatch(subPackges(token)).then(res => {
-      console.log(res?.package);
-      setSubscription(res?.packages);
+      // console.log('Packages Response New >>>>>>', res?.packages);
+      let _sorted = res?.packages?.sort((a, b) => a.price - b.price);
+      // console.log('Packages Response After Sorted New *****>>>>>>', _sorted);
+      setSubscription(_sorted);
       // this.setState({subscription: res?.package});
     });
   }, []);
@@ -42,12 +44,14 @@ const Subscription = props => {
     let res = await dispatch(subscribePackage(data, token));
     console.log('Free Package Response >>>>', res);
     showToast(res?.message);
-    if (
-      res?.message ===
-      'You have successfully subscribed to a free trial subscription.'
-    ) {
-      setVisibleSuccess(true);
-    }
+    setTimeout(() => {
+      if (
+        res?.message ===
+        'You have successfully subscribed to a free trial subscription.'
+      ) {
+        setVisibleSuccess(true);
+      }
+    }, 1500);
     // dispatch(
     //   subscribePackage(data, token).then(res => {
     //     showToast(res?.message?.message);

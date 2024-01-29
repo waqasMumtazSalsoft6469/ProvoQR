@@ -34,7 +34,14 @@ class MySuscription extends React.Component {
     });
     this.props.subPackges().then(res => {
       console.log('All Packages >>>>>', res?.packages);
-      this.setState({packages: res?.packages});
+      let _sorted = res?.packages
+        ?.sort((a, b) => a.price - b.price)
+        .filter(x => x?.name !== 'Free Trial');
+      console.log(
+        'All Packages Response After Sorted New *****>>>>>>',
+        _sorted,
+      );
+      this.setState({packages: _sorted});
     });
   }
 
