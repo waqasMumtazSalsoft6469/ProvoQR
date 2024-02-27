@@ -46,7 +46,7 @@ const LocationSearchModal = ({visible, onClose, handleRoute, navigation}) => {
     console.log('search', search);
     try {
       const response = await dispatch(addressPrediction(search));
-      //   console.log('add res', response);
+      console.log('Address prediction response **>>>>', response);
       setResponse(response);
     } catch (e) {
       // console.log(e);

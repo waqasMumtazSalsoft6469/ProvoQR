@@ -87,17 +87,17 @@ class LootBoxScreen extends React.Component {
     // this.props.navigation.dispatch(StackActions.popToTop());
     // // this.props.navigation.popToTop()
 
-    // this.props.navigation.navigate('GiftStack', {
-    //   screen: 'RewardDetail',
-    //   params: {
-    //     reward_id: this.state?.rewardDetail?.rewards?.id,
-    //     status: 'Available',
-    //   },
-    // });
-    this.props.navigation.navigate('RewardDetail', {
-      reward_id: this.state?.rewardDetail?.rewards?.id,
-      status: 'Available',
+    this.props.navigation.navigate('GiftStack', {
+      screen: 'RewardDetail',
+      params: {
+        reward_id: this.state?.rewardDetail?.rewards?.id,
+        status: 'Available',
+      },
     });
+    // this.props.navigation.navigate('RewardDetail', {
+    //   reward_id: this.state?.rewardDetail?.rewards?.id,
+    //   status: 'Available',
+    // });
   };
 
   handleTryAgainPress = () => {

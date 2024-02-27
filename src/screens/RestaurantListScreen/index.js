@@ -16,6 +16,8 @@ const RestaurantListScreen = props => {
   const name = props?.route?.params?.name;
   const id = props?.route?.params?.id;
 
+  console.log('Category Name >>', name, 'Category ID >>', id);
+
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.GeneralReducer.softLoading);
   const location = useSelector(state => state.GeneralReducer?.location);
@@ -84,6 +86,7 @@ const RestaurantListScreen = props => {
           data.category_id = id;
         }
         const response = await dispatch(getAllRestaurant(data));
+        console.log('Category Resturant Data >>>', response?.restaurantList);
         if (response?.restaurantList?.current_page === 1) {
           setRestaurant(response?.restaurantList?.data);
         } else {

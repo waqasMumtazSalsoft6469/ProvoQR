@@ -276,11 +276,14 @@ class RegisterScreen extends React.Component {
       <View>
         <TouchableHighlight
           onPress={() =>
-            this.props.navigation.navigate('RewardDetail', {
-              category: 'Redeem',
-              reward_id: item?.id,
-              status: item?.status,
-              restaurantName: item?.organisations?.name,
+            this.props.navigation.navigate('GiftStack', {
+              screen: 'RewardDetail',
+              params: {
+                category: 'Redeem',
+                reward_id: item?.id,
+                status: item?.status,
+                restaurantName: item?.organisations?.name,
+              },
             })
           }
           style={styles.imageContainer}

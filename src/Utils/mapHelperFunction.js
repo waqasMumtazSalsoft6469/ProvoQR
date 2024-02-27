@@ -42,11 +42,11 @@ export const checkCameraPermissions = async () => {
 };
 
 export const getCurrentLocation = () => {
-  console.log('location success');
+  // console.log('location success');
   return new Promise((resolve, reject) => {
     Geolocation.getCurrentPosition(
       success => {
-        console.log('location success', success);
+        // console.log('Current location success coordinates >>>', success);
         let Coords = {
           latitude: success?.coords?.latitude,
           longitude: success?.coords?.longitude,
@@ -84,6 +84,7 @@ const promptForLocation = async () => {
 
 export const checkPermission = async permission => {
   const result = await check(permission);
+  console.log('Permission Result Response new 223 >>>>>>', result);
   switch (result) {
     case RESULTS.UNAVAILABLE:
       throw new Error(RESULTS.UNAVAILABLE);

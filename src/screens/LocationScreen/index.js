@@ -143,12 +143,13 @@ const AddressLocation = props => {
       // showToast(e);
     }
   };
+
   const getUserLocation = async () => {
     try {
       const location = await getCurrentLocation();
-      console.log('CURRENT LOCATION', location);
+      console.log('CURRENT LOCATION Getted >>>', location);
       const response = await dispatch(getAddressByLatLong(location));
-      console.log('LOCATION ADDRESS', response);
+      console.log('LOCATION ADDRESS With Coords >>>', response);
       setSearchedAddress(response?.results[1].formatted_address);
       setUserLocation({
         location: {

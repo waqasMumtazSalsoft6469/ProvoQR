@@ -59,6 +59,6 @@ export const endpoints = {
 // export const base_url = 'https://team81.customdev.solutions/provo/public/api'; //new URL
 export const base_url = 'https://team81.customdev.solutions/provo/api'; //Latest new URL
 // export const imageUrl = 'https://custom-dev.onlinetestingserver.com/';
-export const imageUrl = 'https://team81.customdev.solutions';
+export const imageUrl = 'https://team81.customdev.solutions/';
 
 // export const imageUrl = 'https://team81.customdev.solutions/'; //new URL

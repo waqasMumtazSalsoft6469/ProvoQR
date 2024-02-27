@@ -227,6 +227,18 @@ class CompleteProfile extends React.Component {
                   height: 6 * vh,
                 }}
               />
+              {/* <View style={{margin: 10}}>
+                <Button
+                  onPress={this.handleComplete}
+                  title="SKIP >>"
+                  btnContainer={{
+                    marginTop: 4 * vh,
+                    paddingHorizontal: 6 * vw,
+                    width: 40 * vw,
+                    height: 6 * vh,
+                  }}
+                />
+              </View> */}
             </View>
           </ScrollView>
         </ImageBackground>

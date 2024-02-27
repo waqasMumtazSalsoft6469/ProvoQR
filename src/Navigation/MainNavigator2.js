@@ -85,34 +85,34 @@ const MainNavigator = () => {
         component={EditBillingDetails}
         name="EditBillingDetails"
       />
-      <MainStack.Screen
+      {/* <MainStack.Screen
         component={ProvoPaymentMethod}
         name="ProvoPaymentMethod"
-      />
-      <MainStack.Screen component={ResturentDetail} name="ResturentDetail" />
-      <MainStack.Screen
+      /> */}
+      {/* <MainStack.Screen component={ResturentDetail} name="ResturentDetail" /> */}
+      {/* <MainStack.Screen
         component={RestaurantDirection}
         name="RestaurantDirection"
-      />
-      <MainStack.Screen component={ResturentMenuScreen} name="ResturentMenu" />
-      <MainStack.Screen
+      /> */}
+      {/* <MainStack.Screen component={ResturentMenuScreen} name="ResturentMenu" /> */}
+      {/* <MainStack.Screen
         component={LootBoxPaymentMethod}
         name="LootBoxPaymentMethod"
-      />
-      <MainStack.Screen
+      /> */}
+      {/* <MainStack.Screen
         component={LootBoxScreen}
         name="LootBoxScreen"
         options={{headerShown: false}}
-      />
+      /> */}
       <MainStack.Screen
         component={HappyHourMenuScreen}
         name="HappyHourMenuScreen"
         options={{headerTransparent: true}}
       />
-      <MainStack.Screen
+      {/* <MainStack.Screen
         component={LootboxTierScreen}
         name="LootboxTierScreen"
-      />
+      /> */}
       {/* <MainStack.Screen
         component={LocationSearchScreen}
         name="LocationSearchScreen"
@@ -121,7 +121,7 @@ const MainNavigator = () => {
         component={SearchLocationScreen}
         name="SearchLocationScreen"
       />
-      <MainStack.Screen component={RewardDetail} name="RewardDetail" />
+      {/* <MainStack.Screen component={RewardDetail} name="RewardDetail" /> */}
     </MainStack.Navigator>
   );
 };

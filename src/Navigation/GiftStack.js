@@ -11,7 +11,7 @@ const MenuStack = () => {
   return (
     <GiftNavigator.Navigator screenOptions={getNavigationOptions}>
       <GiftNavigator.Screen component={RewardScreen} name="RewardScreen" />
-      {/* <GiftNavigator.Screen component={RewardDetail} name="RewardDetail" /> */}
+      <GiftNavigator.Screen component={RewardDetail} name="RewardDetail" />
       <GiftNavigator.Screen
         component={RedeemRewardScreen}
         name="RedeemRewardScreen"

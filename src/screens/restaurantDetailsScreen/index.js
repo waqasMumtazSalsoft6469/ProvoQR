@@ -290,7 +290,7 @@ class ResturentDetailScreen extends React.Component {
               </View>
             )}
             {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >
-              0 && (
+            0 ? (
               <View
                 style={{
                   // marginTop: vh * 3,
@@ -322,6 +322,17 @@ class ResturentDetailScreen extends React.Component {
                   />
                 </TouchableOpacity>
                 {/* <HomeCarouselConmponent /> */}
+              </View>
+            ) : (
+              <View
+                style={{
+                  paddingHorizontal: 5 * vw,
+                  paddingVertical: 5 * vh,
+                  alignItems: 'center',
+                }}>
+                <OutfitSemiBoldText style={styles.recomend}>
+                  Happy Hour not added yet
+                </OutfitSemiBoldText>
               </View>
             )}
           </ScrollView>

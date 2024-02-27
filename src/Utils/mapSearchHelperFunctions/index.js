@@ -4,7 +4,9 @@ const geoBase = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
 const geoBaseLatLng =
   'https://maps.googleapis.com/maps/api/geocode/json?place_id=';
 const geo_Base = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-export const googleApiKey = 'AIzaSyCL2XFs2hqb_aQFKtcUVf9xyhdxLBSFdp0';
+// export const googleApiKey = 'AIzaSyCL2XFs2hqb_aQFKtcUVf9xyhdxLBSFdp0'; //previous key
+export const googleApiKey = 'AIzaSyBXqV9bSEkfm5Wh7OQMj37V-n3F4AiyE40'; //latest key
+
 const geocodeUrl =
   'http://dev61.onlinetestingserver.com/forward-geo-code?address=';
 

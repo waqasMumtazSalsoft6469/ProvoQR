@@ -119,6 +119,7 @@ class RegisterScreen extends React.Component {
     this.props.redeemReward(data).then(res => {
       console.log('Response of Redeem Reward <<<<>>>>>', res);
       if (res?.success) {
+        clearInterval(this.interval); // when Redeem success the clear interval method
         this.setState({visibleModal: false});
 
         // this.props.navigation?.navigate('RedeemRewardScreen', {

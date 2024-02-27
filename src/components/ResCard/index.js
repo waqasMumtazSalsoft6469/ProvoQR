@@ -105,6 +105,7 @@ class ProductItem extends React.Component {
               this.props.onClick();
             }
           }}>
+          {/* {console.log('Image URL >>>', imageUrl + this.props.item?.image)} */}
           <Image
             source={
               this.props.item?.image
@@ -116,7 +117,6 @@ class ProductItem extends React.Component {
               styles.imgcard,
               {width: this.props.history ? 90 * vw : 90 * vw},
             ]}
-            // style={styles.cardimage}
           />
           {this.props.item?.is_happyhour_active && (
             <Image
