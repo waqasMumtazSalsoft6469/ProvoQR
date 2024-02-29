@@ -126,10 +126,17 @@ const HomeScreen = ({navigation}) => {
         lng: userLocation?.longitude ?? location?.coordinate?.longitude,
       };
 
-      // console.log('Home res params New 666', params);
+      // console.log('Home res params New 667', params);
 
       const res = await dispatch(getHomeData(params));
-      // console.log('Response Of Restaurants 22 >>>>', JSON.stringify(res));
+      // console.log(
+      //   'Response Of All Restaurants New 2 >>>>',
+      //   JSON.stringify(res.recommended),
+      // );
+      console.log(
+        'Response Of All Recommended Length >>>>',
+        res.recommended.length,
+      );
 
       setBanners(res?.banner);
       setRecommended(res?.recommended);
@@ -325,6 +332,7 @@ const HomeScreen = ({navigation}) => {
       return (
         <View>
           <View style={styles.viewAllBtnContainer}>
+            {/* <Text>Happy Hour Restaurants</Text> */}
             <OutfitSemiBoldText style={styles.subHeadingText}>
               Happy Hour Restaurants
             </OutfitSemiBoldText>

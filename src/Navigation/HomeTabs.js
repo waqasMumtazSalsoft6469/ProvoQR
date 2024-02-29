@@ -34,7 +34,12 @@ const HomeTabs = props => {
     <TabNavigator.Navigator
       tabBar={tabProps => <MyTabBar {...tabProps} {...props} />}
       // lazy={true}
-      screenOptions={{swipeEnabled: false, lazy: true}}
+      // tabBarOptions={{
+      //   swipeEnabled: false, // Disable swipe between screens
+      //   lazy: true, // Render the screens only when they are focused
+      //   // Add other tabBarOptions as needed
+      // }}
+      screenListeners={{swipeEnabled: false, lazy: true}}
       tabBarPosition="bottom">
       <TabNavigator.Screen name="HomeStack" component={HomeStack} />
       <TabNavigator.Screen name="MapStack" component={MapStack} />
@@ -51,6 +56,12 @@ const MyTabBar = ({state, navigation}, props) => {
         const isFocused = state.index === index;
 
         const onPress = () => {
+          if (route.state != undefined) {
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'MainNavigator'}],
+            });
+          }
           if (route.name == 'Drawer') {
             navigation.toggleDrawer();
           } else if (!isFocused) {

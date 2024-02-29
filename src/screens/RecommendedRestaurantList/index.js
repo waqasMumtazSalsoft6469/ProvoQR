@@ -65,6 +65,7 @@ const RecommendedRestaurantList = props => {
           per_page: 10,
         };
         const response = await dispatch(getRecommendedRestaurant(data));
+        console.log('Recommended Restaurant Data Response 1 >>>>', response);
         if (response?.recommended_restaurantList?.current_page === 1) {
           setRestaurant(response?.recommended_restaurantList?.data);
           setTotalPages(response?.recommended_restaurantList?.total);

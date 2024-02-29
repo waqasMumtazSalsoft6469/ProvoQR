@@ -16,8 +16,12 @@ export const getHomeData = data => {
           };
           // dispatch({type: actionTypes.loaderOn});
 
-          console.log('User Current Location >>>>', location);
-
+          console.log('User Current Location new >>>>', data);
+          let obj = {
+            ...data,
+            ...location,
+          };
+          console.log('New Obj Location User >>>>', obj);
           const response = await get(endpoints.other.home, {
             ...data,
             // ...location,
@@ -493,8 +497,11 @@ export const getRecommendedRestaurant = data => {
       const location = {
         lat: getState()?.GeneralReducer?.location?.coordinate?.latitude,
         lng: getState()?.GeneralReducer?.location?.coordinate?.longitude,
+        // lat: 24.873880539144672,
+        // lng: 67.0672943910021,
       };
-
+      console.log('Recommended Location Obj >>>', location);
+      console.log('Recommended Location Data >>>', data);
       const response = await get(endpoints.other.recommendedRestaurantList, {
         ...data,
         ...location,
