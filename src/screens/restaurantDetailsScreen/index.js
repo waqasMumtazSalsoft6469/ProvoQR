@@ -154,19 +154,33 @@ class ResturentDetailScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: vh * 100}}>
+          {console.log('Resturant Image Path >>>', this.state.details?.image)}
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{paddingBottom: vh * 10}}>
             {/* <OutfitSemiBoldText style={styles.headingText}>
               {this.props?.route?.params?.name}
             </OutfitSemiBoldText> */}
-            <View
-              style={{
-                alignItems: 'center',
-                marginTop: 3 * vh,
-                position: 'relative',
-              }}>
-              <Image
+            <View style={styles.imageContainer}>
+              <ImageBackground
+                source={
+                  this.state.details?.image
+                    ? {uri: imageUrl + this.state.details?.image}
+                    : sampleimage.placeholder
+                }
+                defaultSource={sampleimage.placeholder}
+                style={styles.cardimg}>
+                {this?.state?.details?.happy_hour_deals?.happyhourmenus
+                  ?.length > 0 && (
+                  // <View style={styles.happyHourIconContainer}>
+                  <Image
+                    source={icons.happyHourIcon}
+                    style={styles.happyHourIcon}
+                  />
+                  // </View>
+                )}
+              </ImageBackground>
+              {/* <Image
                 source={
                   this.state.details?.image
                     ? {uri: imageUrl + this.state.details?.image}
@@ -174,16 +188,7 @@ class ResturentDetailScreen extends React.Component {
                 }
                 defaultSource={sampleimage.placeholder}
                 style={styles.cardimg}
-              />
-              {this?.state?.details?.happy_hour_deals?.happyhourmenus?.length >
-                0 && (
-                // <View style={styles.happyHourIconContainer}>
-                <Image
-                  source={icons.happyHourIcon}
-                  style={styles.happyHourIcon}
-                />
-                // </View>
-              )}
+              /> */}
             </View>
             <View style={{paddingHorizontal: 5 * vw}}>
               <View

@@ -104,6 +104,8 @@ class ProfileScreen extends React.Component {
                 marginTop: 5 * vh,
                 paddingHorizontal: 4 * vw,
               }}>
+              {console.log('UserDAta >>>>', userData)}
+              {console.log('imageUrl Profile >>>', imageUrl)}
               <Image
                 source={
                   userData?.image
@@ -131,7 +133,7 @@ class ProfileScreen extends React.Component {
             <View style={{marginTop: 3 * vh, paddingHorizontal: 8 * vw}}>
               <OutfitMediumText style={styles.emailtext}>Age</OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {userData?.age ?? "Edit"}
+                {userData?.age ?? 'Edit'}
               </OutfitRegulerText>
             </View>
             {/* <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
@@ -155,7 +157,7 @@ class ProfileScreen extends React.Component {
                 Gender
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {userData?.gender ?? "Edit"}
+                {userData?.gender ?? 'Edit'}
               </OutfitRegulerText>
             </View>
             <View style={{marginTop: 5 * vh, paddingHorizontal: 8 * vw}}>
@@ -163,7 +165,7 @@ class ProfileScreen extends React.Component {
                 Address
               </OutfitMediumText>
               <OutfitRegulerText style={styles.email}>
-                {userData?.address ?? "Edit"}
+                {userData?.address ?? 'Edit'}
               </OutfitRegulerText>
             </View>
 

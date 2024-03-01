@@ -21,7 +21,11 @@ const HomeNavigator = createStackNavigator();
 const RewardStack = () => {
   return (
     <HomeNavigator.Navigator screenOptions={getNavigationOptions}>
-      <HomeNavigator.Screen component={RewardScreen} name="RewardScreen" />
+      <HomeNavigator.Screen
+        component={RewardScreen}
+        name="RewardScreen"
+        // options={{headerShown: false}}
+      />
       <HomeNavigator.Screen component={RewardDetail} name="RewardDetail" />
     </HomeNavigator.Navigator>
   );
@@ -33,7 +37,7 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={HomeScreen}
         name="HomeScreen"
-        // options={{headerShown: false}}
+        //options={{headerShown: false}}
       />
 
       <HomeNavigator.Screen
@@ -68,7 +72,7 @@ const MenuStack = () => {
       <HomeNavigator.Screen
         component={LootBoxScreen}
         name="LootBoxScreen"
-        // options={{headerShown: false}}
+        options={{headerShown: false}}
       />
       <HomeNavigator.Screen
         component={LootboxTierScreen}

@@ -122,7 +122,7 @@ class LootBoxPaymentMethod extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={{width: 100 * vw, height: 100 * vh}}>
-          <BackToHome />
+          {/* <BackToHome /> */}
           <KeyboardAwareScrollView>
             <View style={{alignItems: 'center', marginTop: 5 * vh}}>
               <OutfitSemiBoldText style={styles.heading}>

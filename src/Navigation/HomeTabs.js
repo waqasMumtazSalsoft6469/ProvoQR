@@ -10,7 +10,11 @@ import {tabicons} from '../assets/images';
 import Drawer from './NavigationDrawer';
 import IconButton from '../components/Buttons/IconButton';
 import {useSelector} from 'react-redux';
-import {DrawerActions} from '@react-navigation/native';
+import {
+  DrawerActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 
 const TabNavigator = createMaterialTopTabNavigator();
 
@@ -54,9 +58,17 @@ const MyTabBar = ({state, navigation}, props) => {
     <View style={styles.container}>
       {state.routes.map((route, index) => {
         const isFocused = state.index === index;
-
+        const isFocusedCurrentScreen = useIsFocused();
         const onPress = () => {
-          if (route.state != undefined) {
+          console.log('Route State New 12 >>>>>>', state);
+          console.log('Clicked Tab Stack >>>', state.routes[index]);
+          console.log('Route New >>>', route);
+          // return;
+          if (
+            route.state &&
+            route.name === 'HomeStack' &&
+            route.state.index != 0
+          ) {
             navigation.reset({
               index: 0,
               routes: [{name: 'MainNavigator'}],

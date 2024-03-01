@@ -221,7 +221,7 @@ const LootboxTierScreen = props => {
 
   return (
     <View style={styles.container}>
-      <BackToHome />
+      {/* <BackToHome /> */}
       <FlatList
         data={response}
         keyExtractor={(_, index) => index}

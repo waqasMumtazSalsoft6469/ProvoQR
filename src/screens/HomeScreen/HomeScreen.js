@@ -38,7 +38,7 @@ import {getHomeData} from '../../Redux/Actions/otherActions';
 import {useFocusEffect} from '@react-navigation/native';
 import _ from 'lodash';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
   const location = useSelector(state => state.GeneralReducer?.location);
   const dispatch = useDispatch(); // Initialize useDispatch to dispatch actions
 
@@ -185,6 +185,14 @@ const HomeScreen = ({navigation}) => {
       // getData();
     });
 
+    const unsubscribe = navigation.addListener('tabPress', e => {
+      // Check which tab is pressed
+      console.log('Press Tab >>>>>>>>>>>>>', route);
+
+      // Optionally, prevent the default behavior (resetting the stack)
+      // e.preventDefault();
+    });
+
     if (Platform.OS === 'android') {
       KeyboardAdjust.setAdjustPan();
     }
@@ -194,6 +202,7 @@ const HomeScreen = ({navigation}) => {
     return () => {
       unsubscribeFocus();
       unsubscribeBlur();
+      unsubscribe();
     };
   }, []);
 

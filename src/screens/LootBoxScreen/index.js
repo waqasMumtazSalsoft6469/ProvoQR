@@ -495,7 +495,7 @@ class LootBoxScreen extends React.Component {
                 onPress={this.handleSkip}
               /> */}
             </View>
-            <BackToHome />
+            {/* <BackToHome /> */}
           </ScrollView>
         )}
       </>

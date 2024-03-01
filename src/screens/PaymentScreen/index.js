@@ -195,7 +195,7 @@ class PaymentScreen extends React.Component {
           style={styles.imgbg}
           resizeMode="cover"
           imageStyle={styles.imgbg}>
-          <BackToHome />
+          {/* <BackToHome /> */}
           <KeyboardAwareScrollView>
             <View style={{alignItems: 'center', marginTop: 10 * vh}}>
               <MainInput

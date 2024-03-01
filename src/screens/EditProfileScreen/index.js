@@ -160,7 +160,8 @@ class EditProfileScreen extends React.Component {
       //     gender: gender,
       //   };
       // }
-
+      console.log('Edit Profile Data >>>>', data.image);
+      // return;
       this.props.editProfile(data).then(res => {
         if (res?.success) {
           showToast(res?.message);
