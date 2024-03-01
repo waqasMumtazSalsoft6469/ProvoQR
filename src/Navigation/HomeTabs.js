@@ -60,9 +60,9 @@ const MyTabBar = ({state, navigation}, props) => {
         const isFocused = state.index === index;
         const isFocusedCurrentScreen = useIsFocused();
         const onPress = () => {
-          console.log('Route State New 12 >>>>>>', state);
-          console.log('Clicked Tab Stack >>>', state.routes[index]);
-          console.log('Route New >>>', route);
+          // console.log('Route State New 12 >>>>>>', state);
+          // console.log('Clicked Tab Stack >>>', state.routes[index]);
+          // console.log('Route New >>>', route);
           // return;
           if (
             route.state &&

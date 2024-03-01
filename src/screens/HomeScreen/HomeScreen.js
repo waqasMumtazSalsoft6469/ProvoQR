@@ -185,14 +185,6 @@ const HomeScreen = ({navigation, route}) => {
       // getData();
     });
 
-    const unsubscribe = navigation.addListener('tabPress', e => {
-      // Check which tab is pressed
-      console.log('Press Tab >>>>>>>>>>>>>', route);
-
-      // Optionally, prevent the default behavior (resetting the stack)
-      // e.preventDefault();
-    });
-
     if (Platform.OS === 'android') {
       KeyboardAdjust.setAdjustPan();
     }
@@ -202,7 +194,6 @@ const HomeScreen = ({navigation, route}) => {
     return () => {
       unsubscribeFocus();
       unsubscribeBlur();
-      unsubscribe();
     };
   }, []);
 
